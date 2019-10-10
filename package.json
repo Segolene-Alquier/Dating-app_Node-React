@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.6.3",
     "pg": "^7.12.1",
     "react": "^16.10.2",
+    "react-dev-utils": "^9.1.0",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0"
   },
