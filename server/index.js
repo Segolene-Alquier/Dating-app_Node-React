@@ -16,6 +16,8 @@ app.get('/', function (req, res) {
 app.get('/users', db.getUsers)
 app.get('/user/:id', db.getUserById)
 app.post('/users', db.createUser)
+// app.put('/user/:id', db.updateUser)
+app.delete('/user/:id', db.deleteUser)
 
 
 app.listen(port, function () {
