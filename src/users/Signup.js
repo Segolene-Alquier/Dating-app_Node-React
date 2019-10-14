@@ -17,6 +17,8 @@ const Signup = () => {
           <input type="text" name="firstName" onChange={handleInputChange} value={inputs.firstName} required />
           <label>Last Name</label>
           <input type="text" name="lastName" onChange={handleInputChange} value={inputs.lastName} required />
+          <label>Username</label>
+          <input type="text" name="userName" onChange={handleInputChange} value={inputs.userName} required />
         </div>
         <div>
           <label>Email Address</label>
