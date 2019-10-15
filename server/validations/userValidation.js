@@ -22,6 +22,9 @@ class UserValidation {
             return (true)
         return (false)
     }
+    rightLength(string, min, max) {
+        return (string.length >= min && string.length <= max)
+    }
     isAlreadyInDB(data) {
 
     }

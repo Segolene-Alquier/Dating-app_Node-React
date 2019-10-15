@@ -21,15 +21,32 @@ const getUsers = (request, response) => {
     })
 }
 
+// TODEBUG
+// const getUserById = (request, response) => {
+//     const id = parseInt(request.params.id)
+//     console.log(getUserby(id, "id"))
+//   response.status(200).json(getUserby(id, "id"))
+// }
+
+// function getUserby(data, type, callback) {
+//   var rows;
+//   rows = pool.query(`SELECT * FROM public."User" WHERE ${type} = $1`, [data], (error, results) => {
+//     if (error) {
+//       throw error
+//     }
+//     rows = results.rows
+//   })
+//   return(rows)
+// }
+
 const getUserById = (request, response) => {
-    const id = parseInt(request.params.id)
-  
-    pool.query('SELECT * FROM public."User" WHERE id = $1', [id], (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).json(results.rows)
-    })
+  const id = parseInt(request.params.id)
+  pool.query('SELECT * FROM public."User" WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
 }
 
 const createUser = (request, response) => {
@@ -37,7 +54,8 @@ const createUser = (request, response) => {
     
     // console.log(check.isEmail(email))
     // console.log(check.isAlphaNum(username))
-    console.log(check.passwordFormat(password))
+    // console.log(check.passwordFormat(password))
+    console.log(check.rightLength(username, 2, 10))
 
     pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email], (error, results) => {
       if (error) { // proteger en cas d'erreur
