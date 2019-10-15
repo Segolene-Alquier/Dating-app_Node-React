@@ -10,5 +10,20 @@ class UserValidation {
             return (false)
         return (true)
     }
+    isAlphaNum(string) {
+        var letterNumber = /^[0-9a-zA-Z]+$/;
+        if (string.match(letterNumber))
+            return true;
+        return (false);
+    }
+    passwordFormat(password) {
+        var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,10}$/;
+        if (password.match(regex))
+            return (true)
+        return (false)
+    }
+    isAlreadyInDB(data) {
+
+    }
 };
 module.exports = UserValidation;
