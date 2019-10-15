@@ -26,11 +26,11 @@ const Signup = () => {
         </div>
         <div>
           <label>Password</label>
-          <input type="password" name="password1" onChange={handleInputChange} value={inputs.password1}/>
+          <input type="password" name="password1" onChange={handleInputChange} value={inputs.password1} required/>
         </div>
         <div>
           <label>Re-enter Password</label>
-          <input type="password" name="password2" onChange={handleInputChange} value={inputs.password2}/>
+          <input type="password" name="password2" onChange={handleInputChange} value={inputs.password2} required/>
         </div>
         <button type="submit">Sign Up</button>
       </form>
