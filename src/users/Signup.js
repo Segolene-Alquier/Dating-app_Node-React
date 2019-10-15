@@ -6,7 +6,7 @@ import useSignUpForm from './CustomHooks';
 const Signup = () => {
   const signup = () => {
     alert(`User Created!
-           Name: ${inputs.firstName} ${inputs.lastName}
+           Name: ${inputs.firstname} ${inputs.surname}
            Email: ${inputs.email}`);
   }
   const {inputs, handleInputChange, handleSubmit} = useSignUpForm(signup);
@@ -14,11 +14,11 @@ const Signup = () => {
         <form onSubmit={handleSubmit}>
         <div>
           <label>First Name</label>
-          <input type="text" name="firstName" onChange={handleInputChange} value={inputs.firstName} required />
+          <input type="text" name="firstname" onChange={handleInputChange} value={inputs.firstname} required />
           <label>Last Name</label>
-          <input type="text" name="lastName" onChange={handleInputChange} value={inputs.lastName} required />
+          <input type="text" name="surname" onChange={handleInputChange} value={inputs.surname} required />
           <label>Username</label>
-          <input type="text" name="userName" onChange={handleInputChange} value={inputs.userName} required />
+          <input type="text" name="username" onChange={handleInputChange} value={inputs.username} required />
         </div>
         <div>
           <label>Email Address</label>

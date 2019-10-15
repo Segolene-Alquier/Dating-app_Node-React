@@ -31,10 +31,11 @@ const createUser = (request, response) => {
     const { firstname, surname, username, password, email } = request.body
   
     pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email], (error, results) => {
-      if (error) {
+      if (error) { // proteger en cas d'erreur
         throw error
+        response.status(201).send(JSON.stringify({created: false}))
       }
-      response.status(201).send(`User added`)
+      response.status(201).send(JSON.stringify({created: true}))
     })
 }
 
