@@ -1,3 +1,6 @@
+const UserValidation = require("../validations/userValidation");
+const check = new UserValidation();
+
 const Pool = require('pg').Pool
 const pool = new Pool({
     user: 'yann',
@@ -7,6 +10,8 @@ const pool = new Pool({
     currentSchema: 'public',
     port: 5432
 })
+
+
 
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM public."User"', (error, results) => {
@@ -29,7 +34,9 @@ const getUserById = (request, response) => {
 
 const createUser = (request, response) => {
     const { firstname, surname, username, password, email } = request.body
-  
+    
+    console.log(check.isEmail(email))
+
     pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email], (error, results) => {
       if (error) { // proteger en cas d'erreur
         throw error
