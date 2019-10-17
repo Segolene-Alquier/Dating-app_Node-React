@@ -1,9 +1,8 @@
 const express = require('express');
-var router = express.Router();
 const bodyParser = require('body-parser');
 const app = express();
 const port = 3001;
-const db = require('./rest/components(C-M-R)/user/model');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(function(req, res, next) {
