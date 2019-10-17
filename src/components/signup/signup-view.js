@@ -1,7 +1,5 @@
 import React from 'react';
-import useSignUpForm from './CustomHooks';
-
-
+import useSignUpForm from './signup-container';
 
 const Signup = () => {
   const signup = () => {
