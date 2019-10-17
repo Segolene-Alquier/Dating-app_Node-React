@@ -21,33 +21,43 @@ const getUsers = (request, response) => {
     })
 }
 
+let resultG = {}
 // TODEBUG
-// const getUserById = (request, response) => {
-//     const id = parseInt(request.params.id)
-//     console.log(getUserby(id, "id"))
-//   response.status(200).json(getUserby(id, "id"))
-// }
+const getUserById = async (request, response) => {
+    const id = parseInt(request.params.id)
+    await getUserby(id, "id")
+  console.log(resultG)
+  response.status(200).json(resultG)
 
-// function getUserby(data, type, callback) {
-//   var rows;
-//   rows = pool.query(`SELECT * FROM public."User" WHERE ${type} = $1`, [data], (error, results) => {
+    // getUserby(id, "id")
+    // console.log(response.status(200).json(getUserby(id, "id")))
+}
+
+async function getUserby(data, type) {
+  // let resultG = {}
+  return pool
+  .query(`SELECT * FROM public."User" WHERE ${type} = $1`, [data], async (error, results) => {
+    // if (error) {
+    //   throw error
+    // }
+    resultG = await results.rows
+    console.log(results)
+    // return results.row
+    // console.log(results.rows)
+    // response.status(200).json(results.rows)
+  })
+  // return resultG
+}
+
+// const getUserById = (request, response) => {
+//   const id = parseInt(request.params.id)
+//   pool.query('SELECT * FROM public."User" WHERE id = $1', [id], (error, results) => {
 //     if (error) {
 //       throw error
 //     }
-//     rows = results.rows
+//     response.status(200).json(results.rows)
 //   })
-//   return(rows)
 // }
-
-const getUserById = (request, response) => {
-  const id = parseInt(request.params.id)
-  pool.query('SELECT * FROM public."User" WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
-}
 
 const createUser = (request, response) => {
     const { firstname, surname, username, password, email } = request.body

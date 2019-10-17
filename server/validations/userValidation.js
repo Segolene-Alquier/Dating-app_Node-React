@@ -26,7 +26,7 @@ class UserValidation {
         return (string.length >= min && string.length <= max)
     }
     isAlreadyInDB(data) {
-
+        
     }
 };
 module.exports = UserValidation;
