@@ -9,7 +9,6 @@ A checker au signup :
 - verifier protection injection sql, cross cxx
 - Ajouter messages erreur pour chaque champ
 - Verifier les inputs onKeyUp
-
 CORS Errors
 
 Unsubscribe les composant quand on exit 
