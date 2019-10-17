@@ -1,4 +1,4 @@
-const UserValidation = require("../validations/userValidation");
+const UserValidation = require("./userValidation");
 const check = new UserValidation();
 
 const Pool = require('pg').Pool
