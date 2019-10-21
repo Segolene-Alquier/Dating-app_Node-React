@@ -1,4 +1,4 @@
-const pool = require("../../../config/database");
+const db = require("../../../config/database");
 
 class User {
 
@@ -17,8 +17,8 @@ class User {
         return (null);
       }
       console.log(`SELECT * FROM public."User" WHERE ${type} = ${value}`)
-      result = await pool.query(`SELECT * FROM public."User" WHERE ${type} = $1`, [value])
-      return (result.rows)
+      result = await db.any(`SELECT * FROM public."User" WHERE ${type} = $1`, [value])
+      return (result)
     }
     catch (err) {
       console.log(err, "in model User.getBy()");
@@ -34,8 +34,8 @@ class User {
         return (null);
       }
       console.log(`SELECT exists(SELECT from public."User" WHERE ${type} = ${value})`)
-      result = await pool.query(`SELECT exists(SELECT from public."User" WHERE ${type} = $1);`, [value])
-      return (result.rows[0].exists)
+      result = await db.any(`SELECT exists(SELECT from public."User" WHERE ${type} = $1);`, [value])
+      return (result[0].exists)
     }
     catch (err) {
       console.log(err, "in model User.exists()");
@@ -46,8 +46,8 @@ class User {
     try {
       let result;
       console.log('SELECT * FROM public."User"')
-      result = await pool.query('SELECT * FROM public."User"')
-      return (result.rows)
+      result = await db.any('SELECT * FROM public."User"')
+      return (result)
     }
     catch (err) {
       console.log(err, "in model User.getAll()");
@@ -57,7 +57,7 @@ class User {
   async create({firstname, surname, username, password, email}) {
     try {
       console.log(`INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${password}, ${email})`)
-      await pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email])      
+      await db.any('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email])      
       return ({created: true})
     }
     catch (err) {
