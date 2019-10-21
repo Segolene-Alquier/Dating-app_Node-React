@@ -56,9 +56,8 @@ class User {
 
   async create({firstname, surname, username, password, email}) {
     try {
-      let result;
       console.log(`INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${password}, ${email})`)
-      result = await pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email])      
+      await pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email])      
       return ({created: true})
     }
     catch (err) {
