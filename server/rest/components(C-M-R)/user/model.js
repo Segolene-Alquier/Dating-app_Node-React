@@ -17,7 +17,7 @@ class User {
         return (null);
       }
       console.log(`SELECT * FROM public."User" WHERE ${type} = ${value}`)
-      result = await db.any(`SELECT * FROM public."User" WHERE ${type} = $1`, [value])
+      result = await db.any(`SELECT * FROM public."User" WHERE $1:name = $2`, [type, value])
       return (result)
     }
     catch (err) {
@@ -34,7 +34,7 @@ class User {
         return (null);
       }
       console.log(`SELECT exists(SELECT from public."User" WHERE ${type} = ${value})`)
-      result = await db.any(`SELECT exists(SELECT from public."User" WHERE ${type} = $1);`, [value])
+      result = await db.any(`SELECT exists(SELECT from public."User" WHERE $1:name = $2);`, [type, value])
       return (result[0].exists)
     }
     catch (err) {
