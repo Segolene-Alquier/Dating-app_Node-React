@@ -1,7 +1,7 @@
 const UserValidation = require("./utils");
 const User = require("./model")
-const check = new UserValidation();
 const user = new User();
+const check = new UserValidation(user);
 
 async function getUsers(request, response) {
     try {
@@ -14,18 +14,6 @@ async function getUsers(request, response) {
     }
 }
 
-// let resultG = {}
-// // TODEBUG
-// const getUserById = async (request, response) => {
-//     const id = parseInt(request.params.id)
-//     await getUserby(id, "id")
-//   console.log(resultG)
-//   response.status(200).json(resultG)
-
-//     // getUserby(id, "id")
-//     // console.log(response.status(200).json(getUserby(id, "id")))
-// }
-
 async function getUserById(request, response) {
     const id = parseInt(request.params.id)
     try {
@@ -37,6 +25,31 @@ async function getUserById(request, response) {
         response.status(206).send(err);
     }
 }
+
+async function usernameExists(request, response) {
+    const username = request.params.username
+    try {
+        let call = await user.exists('username', username)
+        response.status(200).json(call)
+    } 
+    catch (err) {
+        console.log(err);
+        response.status(206).send(err);
+    }
+}
+
+async function emailExists(request, response) {
+    const email = request.params.email
+    try {
+        let call = await user.exists('email', email)
+        response.status(200).json(call)
+    } 
+    catch (err) {
+        console.log(err);
+        response.status(206).send(err);
+    }
+}
+
 
 // const createUser = (request, response) => {
 //     const { firstname, surname, username, password, email } = request.body
@@ -85,6 +98,8 @@ async function getUserById(request, response) {
 module.exports = {
     getUsers,
     getUserById,
+    usernameExists,
+    emailExists,
     // createUser,
     // updateUser,
     // deleteUser,

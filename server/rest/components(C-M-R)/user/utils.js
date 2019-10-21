@@ -1,8 +1,7 @@
 class UserValidation {
-    // constructor(props) {
-    //     super(props);
-    //     console.log(props)
-    // }
+    constructor(User) {
+        this.user = User
+    }
     isEmail(email) {
         let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
         console.log(email)
@@ -25,8 +24,9 @@ class UserValidation {
     rightLength(string, min, max) {
         return (string.length >= min && string.length <= max)
     }
-    isAlreadyInDB(data) {
-        
+    async isAlreadyInDB(data) {
+        // {username, email} = data
+        return (await this.user.exists('username', data.username) || await this.user.exists('email', data.email))
     }
 };
 module.exports = UserValidation;
