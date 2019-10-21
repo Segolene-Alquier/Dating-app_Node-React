@@ -61,7 +61,6 @@ async function emailExists(request, response) {
 
 async function createUser(request, response) {
     const { firstname, surname, username, password, email } = request.body
-    
     const errors = await check.createUserErrors(request.body)
 
     if (errors.length) {
@@ -76,30 +75,23 @@ async function createUser(request, response) {
         console.log(err);
         response.status(206).send(err);
     }
-    // pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email], (error, results) => {
-    //   if (error) { // proteger en cas d'erreur
-    //     throw error
-    //     response.status(201).send(JSON.stringify({created: false}))
-    //   }
-    //   response.status(201).send(JSON.stringify({created: true}))
-    // })
 }
 
-// // const updateUser = (request, response) => {
-// //     const id = parseInt(request.params.id)
-// //     const { name, email } = request.body
-  
-// //     pool.query(
-// //       'UPDATE users SET name = $1, email = $2 WHERE id = $3',
-// //       [name, email, id],
-// //       (error, results) => {
-// //         if (error) {
-// //           throw error
-// //         }
-// //         response.status(200).send(`User modified with ID: ${id}`)
-// //       }
-// //     )
-// // }
+const updateUser = (request, response) => {
+    const id = parseInt(request.params.id)
+    const { name, email } = request.body
+
+    // pool.query(
+    //   'UPDATE users SET name = $1, email = $2 WHERE id = $3',
+    //   [name, email, id],
+    //   (error, results) => {
+    //     if (error) {
+    //       throw error
+    //     }
+    //     response.status(200).send(`User modified with ID: ${id}`)
+    //   }
+    // )
+}
 
 // const deleteUser = (request, response) => {
 //     const id = parseInt(request.params.id)
