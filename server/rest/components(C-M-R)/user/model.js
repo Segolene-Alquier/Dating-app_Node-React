@@ -28,13 +28,14 @@ class User {
   async  exists(type, value) {
     try {
       let result;
+      if (!value) return false;
       if (!this.isValidType(type)) {
         console.log(`User.exists(): ${type} is not an authorized type`);
         return (null);
       }
       console.log(`SELECT exists(SELECT from public."User" WHERE ${type} = ${value})`)
       result = await pool.query(`SELECT exists(SELECT from public."User" WHERE ${type} = $1);`, [value])
-      return (result.rows)
+      return (result.rows[0].exists)
     }
     catch (err) {
       console.log(err, "in model User.exists()");
@@ -50,6 +51,19 @@ class User {
     }
     catch (err) {
       console.log(err, "in model User.getAll()");
+    }
+  }
+
+  async create({firstname, surname, username, password, email}) {
+    try {
+      let result;
+      console.log(`INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${password}, ${email})`)
+      result = await pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email])      
+      return ({created: true})
+    }
+    catch (err) {
+      console.log(err, "in model User.getAll()");
+      return ({created: false, error: err})
     }
   }
 }

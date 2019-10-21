@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 // const db = require('./controller');
-const { getUserById, getUsers, usernameExists, emailExists } = require("./controller")
+const { getUserById, getUsers, usernameExists, emailExists, createUser } = require("./controller")
 
 // list of all users - user
 router.get('/', getUsers)
@@ -12,7 +12,7 @@ router.get('/verification/email', emailExists)
 // get user by id - user
 router.get('/:id', getUserById)
 // create user - user
-// router.post('/', createUser)
+router.post('/', createUser)
 // update user - user
 // router.put('/user/:id', db.updateUser)
 // delete user - user

@@ -34,7 +34,7 @@ async function usernameExists(request, response) {
     }
     try {
         let call = await user.exists('username', username)
-        response.status(200).json(call)
+        response.status(200).json({exists: call})
     } 
     catch (err) {
         console.log(err);
@@ -50,7 +50,7 @@ async function emailExists(request, response) {
     }
     try {
         let call = await user.exists('email', email)
-        response.status(200).json(call)
+        response.status(200).json({exists: call})
     } 
     catch (err) {
         console.log(err);
@@ -59,22 +59,31 @@ async function emailExists(request, response) {
 }
 
 
-// const createUser = (request, response) => {
-//     const { firstname, surname, username, password, email } = request.body
+async function createUser(request, response) {
+    const { firstname, surname, username, password, email } = request.body
     
-//     // console.log(check.isEmail(email))
-//     // console.log(check.isAlphaNum(username))
-//     // console.log(check.passwordFormat(password))
-//     console.log(check.rightLength(username, 2, 10))
+    const errors = await check.createUserErrors(request.body)
 
-//     pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email], (error, results) => {
-//       if (error) { // proteger en cas d'erreur
-//         throw error
-//         response.status(201).send(JSON.stringify({created: false}))
-//       }
-//       response.status(201).send(JSON.stringify({created: true}))
-//     })
-// }
+    if (errors.length) {
+        response.status(201).json({errors: errors})
+        return
+    }
+    try {
+        let call = await user.create({firstname, surname, username, password, email})
+        response.status(200).json(call)
+    } 
+    catch (err) {
+        console.log(err);
+        response.status(206).send(err);
+    }
+    // pool.query('INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)', [firstname, surname, username, password, email], (error, results) => {
+    //   if (error) { // proteger en cas d'erreur
+    //     throw error
+    //     response.status(201).send(JSON.stringify({created: false}))
+    //   }
+    //   response.status(201).send(JSON.stringify({created: true}))
+    // })
+}
 
 // // const updateUser = (request, response) => {
 // //     const id = parseInt(request.params.id)
@@ -108,7 +117,7 @@ module.exports = {
     getUserById,
     usernameExists,
     emailExists,
-    // createUser,
+    createUser,
     // updateUser,
     // deleteUser,
   }
