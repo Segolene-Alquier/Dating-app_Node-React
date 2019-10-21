@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router()
 // const db = require('./controller');
-const { getUserById } = require("./controller")
+const { getUserById, getUsers } = require("./controller")
 
 // list of all users - user
-// router.get('/', getUsers)
+router.get('/', getUsers)
 // get user by id - user
 router.get('/:id', getUserById)
 // create user - user

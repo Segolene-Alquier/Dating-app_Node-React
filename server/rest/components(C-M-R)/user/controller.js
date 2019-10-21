@@ -3,13 +3,16 @@ const User = require("./model")
 const check = new UserValidation();
 const user = new User();
 
-// const getUsers = (request, response) => {
-//     pool.query('SELECT * FROM public."User"', (error, results) => {
-//         if (error)
-//             throw error
-//         response.status(200).json(results.rows)
-//     })
-// }
+async function getUsers(request, response) {
+    try {
+        let call = await user.getAll()
+        response.status(200).json(call)
+    } 
+    catch (err) {
+        console.log(err);
+        response.status(206).send(err);
+    }
+}
 
 // let resultG = {}
 // // TODEBUG
@@ -23,22 +26,6 @@ const user = new User();
 //     // console.log(response.status(200).json(getUserby(id, "id")))
 // }
 
-// async function getUserby(data, type) {
-//   // let resultG = {}
-//   return pool
-//   .query(`SELECT * FROM public."User" WHERE ${type} = $1`, [data], async (error, results) => {
-//     // if (error) {
-//     //   throw error
-//     // }
-//     resultG = await results.rows
-//     console.log(results)
-//     // return results.row
-//     // console.log(results.rows)
-//     // response.status(200).json(results.rows)
-//   })
-//   // return resultG
-// }
-
 async function getUserById(request, response) {
     const id = parseInt(request.params.id)
     try {
@@ -48,7 +35,7 @@ async function getUserById(request, response) {
     catch (err) {
         console.log(err);
         response.status(206).send(err);
-      }
+    }
 }
 
 // const createUser = (request, response) => {
@@ -96,7 +83,7 @@ async function getUserById(request, response) {
 // }
 
 module.exports = {
-    // getUsers,
+    getUsers,
     getUserById,
     // createUser,
     // updateUser,

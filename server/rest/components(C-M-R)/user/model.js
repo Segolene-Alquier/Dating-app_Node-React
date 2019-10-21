@@ -24,6 +24,18 @@ class User {
       console.log(err, "in model User.getBy()");
     }
   }
+
+  async  getAll() {
+    try {
+      let result;
+      console.log('SELECT * FROM public."User"')
+      result = await pool.query('SELECT * FROM public."User"')
+      return (result.rows)
+    }
+    catch (err) {
+      console.log(err, "in model User.getAll()");
+    }
+  }
 }
 
 module.exports = User
