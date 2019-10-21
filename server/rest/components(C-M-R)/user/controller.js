@@ -41,17 +41,14 @@ const user = new User();
 
 async function getUserById(request, response) {
     const id = parseInt(request.params.id)
-
     try {
-        let call = await user.getById(id)
-        console.log(call);
+        let call = await user.getBy('id', id)
         response.status(200).json(call)
     } 
     catch (err) {
         console.log(err);
         response.status(206).send(err);
       }
-  
 }
 
 // const createUser = (request, response) => {

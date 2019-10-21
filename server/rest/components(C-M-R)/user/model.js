@@ -2,24 +2,28 @@ const pool = require("../../../config/database");
 
 class User {
 
-  // constructor() {
-  //   let resultG = {};
+  isValidType(type) {
+    const authorized_types = ['id', 'email', 'username']
+    return authorized_types.some((authorized_type) => {
+      return type === authorized_type
+    })
+  }
 
-  
-  // }
-
-async  getById(id) {
+  async  getBy(type, id) {
     try {
       let result;
-      result = await pool.query('SELECT * FROM public."User" WHERE id = $1', [id])
-      console.log(result.rows);
+      if (!this.isValidType(type)) {
+        console.log(`User.getBy(): ${type} is not an authorized type`);
+        return (null);
+      }
+      console.log(`SELECT * FROM public."User" WHERE ${type} = ${id}`)
+      result = await pool.query(`SELECT * FROM public."User" WHERE ${type} = $1`, [id])
       return (result.rows)
     }
     catch (err) {
-      console.log(err, "in model findOne");
+      console.log(err, "in model User.getBy()");
     }
   }
-
 }
 
 module.exports = User
