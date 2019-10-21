@@ -27,7 +27,11 @@ async function getUserById(request, response) {
 }
 
 async function usernameExists(request, response) {
-    const username = request.params.username
+    const { username } = request.body
+    if (username === undefined) {
+        response.status(206).send("Username is not defined")
+        return
+    }
     try {
         let call = await user.exists('username', username)
         response.status(200).json(call)
@@ -39,7 +43,11 @@ async function usernameExists(request, response) {
 }
 
 async function emailExists(request, response) {
-    const email = request.params.email
+    const { email } = request.body
+    if (email === undefined) {
+        response.status(206).send("Email is not defined")
+        return
+    }
     try {
         let call = await user.exists('email', email)
         response.status(200).json(call)
