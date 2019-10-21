@@ -13,7 +13,7 @@ const cn = {
 
 const db = pgp(cn);
 
-module.exports = db
+module.exports = {db, pgp}
 
 
 // const Pool = require('pg').Pool

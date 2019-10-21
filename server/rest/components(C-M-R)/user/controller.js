@@ -77,20 +77,18 @@ async function createUser(request, response) {
     }
 }
 
-const updateUser = (request, response) => {
+async function updateUser(request, response) {
     const id = parseInt(request.params.id)
     const { name, email } = request.body
-
-    // pool.query(
-    //   'UPDATE users SET name = $1, email = $2 WHERE id = $3',
-    //   [name, email, id],
-    //   (error, results) => {
-    //     if (error) {
-    //       throw error
-    //     }
-    //     response.status(200).send(`User modified with ID: ${id}`)
-    //   }
-    // )
+    console.log(request.body)
+    try {
+        let call = await user.updateById(id, request.body)
+        response.status(200).json(call)
+    } 
+    catch (err) {
+        console.log(err);
+        response.status(206).send(err);
+    }
 }
 
 // const deleteUser = (request, response) => {
@@ -110,6 +108,6 @@ module.exports = {
     usernameExists,
     emailExists,
     createUser,
-    // updateUser,
+    updateUser,
     // deleteUser,
   }

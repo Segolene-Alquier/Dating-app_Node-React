@@ -1,4 +1,4 @@
-const db = require("../../../config/database");
+const {db, pgp} = require("../../../config/database");
 
 class User {
 
@@ -22,6 +22,26 @@ class User {
     }
     catch (err) {
       console.log(err, "in model User.getBy()");
+    }
+  }
+
+  async  updateById(id, values) {
+    try {
+      let result;
+      // if (!this.isValidType(type)) {
+      //   console.log(`User.updateBy(): ${type} is not an authorized type`);
+      //   return (null);
+      // }
+      console.log(`update WHERE id = ${id}`)
+      values['id'] = id
+      console.log(values)
+      const query = pgp.helpers.update(values,values,`User`) + ' WHERE id = $1';
+      console.log(query)
+      db.any(query,[id])
+      return ("hello")
+    }
+    catch (err) {
+      console.log(err, "in model User.updateById()");
     }
   }
 
