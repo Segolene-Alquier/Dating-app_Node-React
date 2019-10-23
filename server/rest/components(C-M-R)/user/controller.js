@@ -79,9 +79,11 @@ async function createUser(request, response) {
 
 async function updateUser(request, response) {
     const id = parseInt(request.params.id)
-    const { name, email } = request.body
-    console.log(request.body)
+    const filtered_values = check.filterInputValues("API", request.body)
+    const errors = await check.updateUserErrors(request.body)
     try {
+        console.log(filtered_values)
+        // let call = "hello"
         let call = await user.updateById(id, request.body)
         response.status(200).json(call)
     } 

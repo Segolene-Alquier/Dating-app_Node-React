@@ -28,17 +28,10 @@ class User {
   async  updateById(id, values) {
     try {
       let result;
-      // if (!this.isValidType(type)) {
-      //   console.log(`User.updateBy(): ${type} is not an authorized type`);
-      //   return (null);
-      // }
-      console.log(`update WHERE id = ${id}`)
-      values['id'] = id
       console.log(values)
       const query = pgp.helpers.update(values,values,`User`) + ' WHERE id = $1';
       console.log(query)
-      db.any(query,[id])
-      return ("hello")
+      console.log(db.any(query,[id]))
     }
     catch (err) {
       console.log(err, "in model User.updateById()");
