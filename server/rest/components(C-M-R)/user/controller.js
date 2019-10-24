@@ -81,10 +81,15 @@ async function updateUser(request, response) {
     const id = parseInt(request.params.id)
     const filtered_values = check.filterInputValues("API", request.body)
     const errors = await check.updateUserErrors(request.body)
+
+    if (errors.length) {
+        response.status(201).json({errors: errors})
+        return
+    }
     try {
         console.log(filtered_values)
-        // let call = "hello"
-        let call = await user.updateById(id, request.body)
+        let call = "hello"
+        // let call = await user.updateById(id, request.body)
         response.status(200).json(call)
     } 
     catch (err) {
