@@ -1,3 +1,6 @@
+const Gender = require("../gender/model")
+const gender = new Gender()
+
 class UserValidation {
     constructor(User) {
         this.user = User
@@ -35,8 +38,8 @@ class UserValidation {
             return ({boolean: false, error: `The ${input_name} is not a boolean`}); 
     }
 
-    async userExists({input, input_name, user_instance}) {
-        let call = await user_instance.exists(input_name, input)
+    async exists({input, input_name, model_instance}) {
+        let call = await model_instance.exists(input_name, input)
         console.log(call)
         if (call === true) 
             return {boolean: false, error: `The ${input_name} already exist`}
@@ -44,9 +47,17 @@ class UserValidation {
             return ({boolean: true});
     }
 
+    async dontExists({input, input_name, model_instance}) {
+        let call = await model_instance.exists(input_name, input)
+        console.log(call)
+        if (call === true) 
+            return ({boolean: true})
+        else
+            return {boolean: false, error: `This ${model_instance} don't exist`};
+    }
+
     async fieldExists({input, input_name, user_instance}) {
         let call = await user_instance.exists(input_name, input)
-        
     }
 
     passwordFormat(password) {
@@ -90,7 +101,8 @@ class UserValidation {
         // await ne fonctionne pas pour les fonctions de check if email exist et check if username exist
         await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user}, [this.isAlphaNum, this.rightLength, this.userExists], errors)
         this.inputTester({input: description, input_name: 'surname', min_length: 2, max_length: 5000}, [this.rightLength], errors)
-        // gender : pas de model gender encore
+        // Gender a tester car await dans fonction en parametre ne fonctionne pas
+        await this.inputTester({input: gender, input_name: 'gender'}, [this.dontExists], errors)        
         // Sexual orientation : pas de model encore
         // Interests : pas de model encore
         // Image: ne sait pas encore comment on va faire
