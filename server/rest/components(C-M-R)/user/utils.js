@@ -111,10 +111,25 @@ class UserValidation {
         this.inputTester({input: notificationMail, input_name: 'notification email', min_length: 2, max_length: 5000}, [this.isBoolean], errors)
         // birthDate : ne sais pas encore le format de date
 
-        console.log(errors)
+        // console.log(errors)
         return (errors)
     }
-
+    // WIP
+    // async inputTester(variable, functions, errors) {
+    //     if (variable['input'] === undefined)
+    //         return
+    //     const requests = functions.map((func) => {
+    //         return func(variable).then((a) => {
+    //             return a
+    //         })
+    //     })
+    //     return Promise.all(requests).then(a => console.log(JSON.stringify(a)))
+    //     // functions.forEach(async test_function => {
+    //     //     const result = await test_function(variable)
+    //     //     if (result['boolean'] === false)
+    //     //         errors.push(result['error'])
+    //     // });
+    // }
     async inputTester(variable, functions, errors) {
         if (variable['input'] === undefined)
             return
