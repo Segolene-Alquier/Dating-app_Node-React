@@ -22,6 +22,7 @@ app.use(function(req, res, next) {
 
 app.use("/users", require("./rest/components(C-M-R)/user/routes"))
 app.use("/genders", require("./rest/components(C-M-R)/gender/routes"))
+app.use("/sexualOrientations", require("./rest/components(C-M-R)/sexualOrientation/routes"))
 
 
 app.listen(port, function () {
