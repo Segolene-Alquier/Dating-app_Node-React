@@ -7,12 +7,17 @@ class UserValidation {
     }
 
     isEmail({input}) {
-        // eslint-disable-next-line no-control-regex
-        const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
-        if (input === '') return {boolean: false, error: `The email is blank`}      
-        if (input.match(regex))
-            return ({boolean: true})
-        return ({boolean: false, error: `The email you entered is not correct`})
+        console.log(input)
+
+        return new Promise(function(resolve, reject) {
+            // eslint-disable-next-line no-control-regex
+            const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+            if (input === '') resolve({boolean: false, error: `The email is blank`})
+            if (input.match(regex))
+                resolve({boolean: true})
+            resolve({boolean: false, error: `The email you entered is not correct`})
+            })
+
     }
 
     isAlphaNum({input, input_name}) {
@@ -91,29 +96,38 @@ class UserValidation {
         return (errors)
     }
 
+
     async updateUserErrors(data) {
         let errors = []
         const { firstname, surname, username, email, gender, sexualOrientation, description, interests, images, profilePicture, location, notificationMail, birthDate } = data
-
-        this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-        this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-        
-        // await ne fonctionne pas pour les fonctions de check if email exist et check if username exist
-        await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user}, [this.isAlphaNum, this.rightLength, this.userExists], errors)
-        this.inputTester({input: description, input_name: 'surname', min_length: 2, max_length: 5000}, [this.rightLength], errors)
-        // Gender a tester car await dans fonction en parametre ne fonctionne pas
-        await this.inputTester({input: gender, input_name: 'gender'}, [this.dontExists], errors)        
-        // Sexual orientation : pas de model encore
-        // Interests : pas de model encore
-        // Image: ne sait pas encore comment on va faire
-        // ProfilePicture: ne sait pas encore comment on va faire
-        // Location : ne sais pas comment verifier que c'est une position correcte
-        this.inputTester({input: notificationMail, input_name: 'notification email', min_length: 2, max_length: 5000}, [this.isBoolean], errors)
-        // birthDate : ne sais pas encore le format de date
-
-        // console.log(errors)
-        return (errors)
+        // console.log(email);
+        this.isEmail({input: email}).then(value => console.log(value))
+        return ([])
     }
+
+    // async updateUserErrors(data) {
+    //     let errors = []
+    //     const { firstname, surname, username, email, gender, sexualOrientation, description, interests, images, profilePicture, location, notificationMail, birthDate } = data
+
+    //     this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
+    //     this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
+        
+    //     // await ne fonctionne pas pour les fonctions de check if email exist et check if username exist
+    //     await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user}, [this.isAlphaNum, this.rightLength, this.userExists], errors)
+    //     this.inputTester({input: description, input_name: 'surname', min_length: 2, max_length: 5000}, [this.rightLength], errors)
+    //     // Gender a tester car await dans fonction en parametre ne fonctionne pas
+    //     await this.inputTester({input: gender, input_name: 'gender'}, [this.dontExists], errors)        
+    //     // Sexual orientation : pas de model encore
+    //     // Interests : pas de model encore
+    //     // Image: ne sait pas encore comment on va faire
+    //     // ProfilePicture: ne sait pas encore comment on va faire
+    //     // Location : ne sais pas comment verifier que c'est une position correcte
+    //     this.inputTester({input: notificationMail, input_name: 'notification email', min_length: 2, max_length: 5000}, [this.isBoolean], errors)
+    //     // birthDate : ne sais pas encore le format de date
+
+    //     // console.log(errors)
+    //     return (errors)
+    // }
     // WIP
     // async inputTester(variable, functions, errors) {
     //     if (variable['input'] === undefined)
@@ -124,21 +138,21 @@ class UserValidation {
     //         })
     //     })
     //     return Promise.all(requests).then(a => console.log(JSON.stringify(a)))
-    //     // functions.forEach(async test_function => {
-    //     //     const result = await test_function(variable)
-    //     //     if (result['boolean'] === false)
-    //     //         errors.push(result['error'])
-    //     // });
+        // functions.forEach(async test_function => {
+        //     const result = await test_function(variable)
+        //     if (result['boolean'] === false)
+        //         errors.push(result['error'])
+        // });
     // }
-    async inputTester(variable, functions, errors) {
-        if (variable['input'] === undefined)
-            return
-        functions.forEach(async test_function => {
-            const result = await test_function(variable)
-            if (result['boolean'] === false)
-                errors.push(result['error'])
-        });
-    }
+    // async inputTester(variable, functions, errors) {
+    //     if (variable['input'] === undefined)
+    //         return
+    //     functions.forEach(async test_function => {
+    //         const result = await test_function(variable)
+    //         if (result['boolean'] === false)
+    //             errors.push(result['error'])
+    //     });
+    // }
 
     filterInputValues(requester, values) {
         let authorized_values = []
