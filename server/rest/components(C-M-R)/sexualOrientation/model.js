@@ -54,4 +54,4 @@ class SexualOrientation {
     }
 }
 
-module.exports = Gender
+module.exports = SexualOrientation

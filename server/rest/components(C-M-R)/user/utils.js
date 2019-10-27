@@ -57,14 +57,25 @@ class UserValidation {
         })
     }
 
-    doesntExist({input, input_name, model_instance}) {
+    doesntExist({input, input_name, model_instance, model_name}) {
         return new Promise(async function(resolve, reject) {
             input = parseInt(input)
             let call = await model_instance.exists(input_name, input)
             if (call === true) 
                 resolve({boolean: true})
             else
-                resolve({boolean: false, error: `This ${model_instance} don't exist`});
+                resolve({boolean: false, error: `This ${model_name} don't exist`});
+        })
+    }
+
+    doesntExistEach({input, input_name, model_instance, model_name}) {
+        return new Promise(async function(resolve, reject) {
+            input = parseInt(input)
+            let call = await model_instance.exists(input_name, input)
+            if (call === true) 
+                resolve({boolean: true})
+            else
+                resolve({boolean: false, error: `This ${model_name} don't exist`});
         })
     }
 
@@ -122,8 +133,9 @@ class UserValidation {
         var surnameIsAlpha = this.isAlpha({input: surname, input_name: 'surname'})
         var surnameRightLength = this.rightLength({input: surname, input_name: 'surname', min_length: 2, max_length: 40})
         var descriptionRightLength = this.rightLength({input: description, input_name: 'surname', min_length: 2, max_length: 5000})
-        var genderDoesntExist = this.doesntExist({input: gender, input_name: 'id', model_instance: genderInstance})
+        var genderDoesntExist = this.doesntExist({input: gender, input_name: 'id', model_instance: genderInstance, model_name : "gender"})
         var notificationIsBoolean = this.isBoolean({input: notificationMail, input_name: 'notification email'})
+        var InterestDoesntExist = this.doesntExist({input: interests, input_name: 'id', model_instance: genderInstance, model_name : "interest"})
         // Sexual orientation : pas de model encore
         // Interests : pas de model encore
         // Image: ne sait pas encore comment on va faire
