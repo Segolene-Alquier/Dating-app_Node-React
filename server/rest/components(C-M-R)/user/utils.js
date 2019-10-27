@@ -43,13 +43,15 @@ class UserValidation {
             return ({boolean: false, error: `The ${input_name} is not a boolean`}); 
     }
 
-    async exists({input, input_name, model_instance}) {
-        let call = await model_instance.exists(input_name, input)
-        console.log(call)
-        if (call === true) 
-            return {boolean: false, error: `The ${input_name} already exist`}
-        else
-            return ({boolean: true});
+    exists({input, input_name, model_instance}) {
+        return new Promise(async function(resolve, reject) {
+            let call = await model_instance.exists(input_name, input)
+            // console.log(call)
+            if (call === true) 
+                resolve( {boolean: false, error: `The ${input_name} already exist`})
+            else
+                resolve({boolean: true});
+        })
     }
 
     async dontExists({input, input_name, model_instance}) {
@@ -98,10 +100,12 @@ class UserValidation {
 
 
     async updateUserErrors(data) {
-        let errors = []
         const { firstname, surname, username, email, gender, sexualOrientation, description, interests, images, profilePicture, location, notificationMail, birthDate } = data
+        var isEmail = this.isEmail({input: email})
+        var exists = this.exists({input: email, input_name: "email", model_instance: this.user})
+        let errors = []
+        Promise.all([isEmail, exists]).then(values => console.log(values))
         // console.log(email);
-        this.isEmail({input: email}).then(value => console.log(value))
         return ([])
     }
 
