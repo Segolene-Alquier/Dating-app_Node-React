@@ -42,7 +42,7 @@ class User {
     try {
       let result;
       if (!value) return false;
-      console.log(type)
+      // console.log(type)
       if (!this.isValidType(type)) {
         console.log(`User.exists(): ${type} is not an authorized type`);
         return (null);

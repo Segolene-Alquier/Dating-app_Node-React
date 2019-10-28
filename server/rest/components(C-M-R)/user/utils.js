@@ -21,7 +21,8 @@ class UserValidation {
     isAlphaNum({input, input_name}) {
         return new Promise(function(resolve, reject) {
         const regex = /^[0-9a-zA-Z]+$/;
-        if (input === '') resolve({boolean: false, error: `The ${input_name} is blank`})
+        if (input === '') {
+            resolve({boolean: false, error: `The ${input_name} is blank`})}
         if (input.match(regex))
             resolve({boolean: true});
         resolve(({boolean: false, error: `The ${input_name} must contain only letters and numbers`}));
@@ -97,53 +98,73 @@ class UserValidation {
 
     rightLength({input, input_name, min_length, max_length}) {
         return new Promise(function(resolve, reject) {
-            if (input === '') resolve({boolean: false, error: `The ${input_name} is blank`})
-            if (input.length >= min_length && input.length <= max_length)
+            if (input === '') {
+                resolve({boolean: false, error: `The ${input_name} is blank`})
+            }
+            if (input.length >= min_length && input.length <= max_length){
                 resolve({boolean: true})
-            else
-            resolve({boolean: false, error: `The ${input_name} must contain between ${min_length} and ${max_length} characters`})
+            } else {
+            resolve({boolean: false, error: `The ${input_name} must contain between ${min_length} and ${max_length} characters`})}
         })
     }
 
-    async createUserErrors(data) {
-        let errors = []
-        const { firstname, surname, username, password, email } = data
+    // async createUserErrors(data) {
+    //     let errors = []
+    //     const { firstname, surname, username, password, email } = data
         
-        // doit encore checker si les variables sont undefined
-        this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-        this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-        await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user}, [this.isAlphaNum, this.rightLength, this.userExists], errors)
-        await this.inputTester({input: email, input_name: 'email', min_length: 3, max_length: 80, user_instance: this.user}, [this.isEmail, this.rightLength, this.userExists], errors)
-        if (await this.user.exists('username', username)) errors.push("This username already exist")
-        if (await this.user.exists('email', email)) errors.push("This email already exist")
+    //     // doit encore checker si les variables sont undefined
+    //     this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
+    //     this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
+    //     await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user}, PPromise.all([this.isAlphaNum, this.rightLength, this.userExists].map(async func => func(arg))), errors)
+    //     await this.inputTester({input: email, input_name: 'email', min_length: 3, max_length: 80, user_instance: this.user}, [this.isEmail, this.rightLength, this.userExists], errors)
+    //     if (await this.user.exists('username', username)) errors.push("This username already exist")
+    //     if (await this.user.exists('email', email)) errors.push("This email already exist")
 
-        return (errors)
+    //     return (errors)
+    // }
+
+    async inputTester(variable, functions, errors) {
+        if (variable['input'] === undefined)
+            return
+        console.log(functions)
+        console.log("--------")
+        console.log(variable)
+        console.log("--------")
+        console.log(errors)
+        console.log("--------")
+
+
+        const promises = functions.map(async oneFunction => {
+            return oneFunction = await oneFunction(variable)
+        });
+        console.log(promises)
+        Promise.all(promises).then(values => console.log(values))
     }
-
 
     async updateUserErrors(data) {
         const { firstname, surname, username, email, gender, sexualOrientation, description, interests, images, profilePicture, location, notificationMail, birthDate } = data
-        var isEmail = this.isEmail({input: email})
-        var emailExists = this.exists({input: email, input_name: "email", model_instance: this.user})
-        var usernameExists = this.exists({input: username, input_name: "username", model_instance: this.user})
-        var usernameIsAlphaNum = this.isAlphaNum({input: username, input_name: 'user name'})
-        var usernameRightLength = this.rightLength({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user})
-        var firstnameIsAlpha = this.isAlpha({input: firstname, input_name: 'first name'})
-        var firstnameRightLength = this.rightLength({input: firstname, input_name: 'first name', min_length: 2, max_length: 40})
-        var surnameIsAlpha = this.isAlpha({input: surname, input_name: 'surname'})
-        var surnameRightLength = this.rightLength({input: surname, input_name: 'surname', min_length: 2, max_length: 40})
-        var descriptionRightLength = this.rightLength({input: description, input_name: 'surname', min_length: 2, max_length: 5000})
-        var genderDoesntExist = this.doesntExist({input: gender, input_name: 'id', model_instance: genderInstance, model_name : "gender"})
-        var notificationIsBoolean = this.isBoolean({input: notificationMail, input_name: 'notification email'})
-        var InterestDoesntExist = this.doesntExist({input: interests, input_name: 'id', model_instance: genderInstance, model_name : "interest"})
+        const isEmail = this.isEmail({input: email})
+        const emailExists = this.exists({input: email, input_name: "email", model_instance: this.user})
+        const usernameExists = this.exists({input: username, input_name: "username", model_instance: this.user})
+        const usernameIsAlphaNum = this.isAlphaNum({input: username, input_name: 'user name'})
+        const usernameRightLength = this.rightLength({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user})
+        const firstnameIsAlpha = this.isAlpha({input: firstname, input_name: 'first name'})
+        const firstnameRightLength = this.rightLength({input: firstname, input_name: 'first name', min_length: 2, max_length: 40})
+        const surnameIsAlpha = this.isAlpha({input: surname, input_name: 'surname'})
+        const surnameRightLength = this.rightLength({input: surname, input_name: 'surname', min_length: 2, max_length: 40})
+        const descriptionRightLength = this.rightLength({input: description, input_name: 'surname', min_length: 2, max_length: 5000})
+        const genderDoesntExist = this.doesntExist({input: gender, input_name: 'id', model_instance: genderInstance, model_name : "gender"})
+        const notificationIsBoolean = this.isBoolean({input: notificationMail, input_name: 'notification email'})
+        const InterestDoesntExist = this.doesntExist({input: interests, input_name: 'id', model_instance: genderInstance, model_name : "interest"})
         // Sexual orientation : pas de model encore
         // Interests : pas de model encore
         // Image: ne sait pas encore comment on va faire
         // ProfilePicture: ne sait pas encore comment on va faire
         // birthDate : ne sais pas encore le format de date        
         let errors = []
+        await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, model_instance: this.user}, [this.isAlphaNum, this.rightLength, this.exists], errors)
 
-        Promise.all([isEmail, emailExists, usernameExists, usernameIsAlphaNum, usernameRightLength, firstnameIsAlpha, firstnameRightLength, surnameIsAlpha, surnameRightLength, descriptionRightLength, genderDoesntExist, notificationIsBoolean]).then(values => console.log(values))
+        // Promise.all([isEmail, emailExists, usernameExists, usernameIsAlphaNum, usernameRightLength, firstnameIsAlpha, firstnameRightLength, surnameIsAlpha, surnameRightLength, descriptionRightLength, genderDoesntExist, notificationIsBoolean]).then(values => console.log(values))
 
         // console.log(email);
         return ([])
@@ -151,10 +172,10 @@ class UserValidation {
 
     // async updateUserErrors(data) {
     //     let errors = []
-    //     const { firstname, surname, username, email, gender, sexualOrientation, description, interests, images, profilePicture, location, notificationMail, birthDate } = data
+    //      { firstname, surname, username, email, gender, sexualOrientation, description, interests, images, profilePicture, location, notificationMail, birthDate } = data
 
     //     this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-    //     this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
+        // this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
         
     // //     // await ne fonctionne pas pour les fonctions de check if email exist et check if username exist
     //     await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user}, [this.isAlphaNum, this.rightLength, this.userExists], errors)
@@ -173,13 +194,7 @@ class UserValidation {
     //     return (errors)
     // }
     // WIP
-    async inputTester(variable, functions, errors) {
-        if (variable['input'] === undefined)
-            return
-        functions.forEach(oneFunction => {
-            oneFunction = oneFunction()
-        });
-    }
+   
 
 
     filterInputValues(requester, values) {
