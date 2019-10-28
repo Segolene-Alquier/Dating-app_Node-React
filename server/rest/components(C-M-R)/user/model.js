@@ -27,7 +27,6 @@ class User {
 
   async  updateById(id, values) {
     try {
-      let result;
       console.log(values)
       const query = pgp.helpers.update(values,values,`User`) + ' WHERE id = $1';
       console.log(query)
@@ -75,8 +74,20 @@ class User {
       return ({created: true})
     }
     catch (err) {
-      console.log(err, "in model User.getAll()");
+      console.log(err, "in model User.create()");
       return ({created: false, error: err})
+    }
+  }
+
+  async delete(id) {
+    try {
+      console.log(`DELETE FROM public."User" WHERE id = ${id}`)
+      await db.any('DELETE FROM public."User" WHERE id = $1 ', [id])      
+      return ({deleted: true})
+    }
+    catch (err) {
+      console.log(err, "in model User.delete()");
+      return ({deleted: false, error: err})
     }
   }
 }

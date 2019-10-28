@@ -94,16 +94,17 @@ async function updateUser(request, response) {
     }
 }
 
-// const deleteUser = (request, response) => {
-//     const id = parseInt(request.params.id)
-  
-//     pool.query('DELETE FROM public."User" WHERE id = $1', [id], (error, results) => {
-//       if (error) {
-//         throw error
-//       }
-//       response.status(200).send(`User deleted with ID: ${id}`)
-//     })
-// }
+async function deleteUser(request, response) {
+    const id = parseInt(request.params.id)
+    try {
+        let call = await user.delete(id)
+        response.status(200).json(call)
+    } 
+    catch (err) {
+        console.log(err);
+        response.status(206).send(err);
+    }
+}
 
 module.exports.getUsers = getUsers 
 module.exports.getUserById = getUserById
@@ -111,4 +112,4 @@ module.exports.usernameExists = usernameExists
 module.exports.emailExists = emailExists
 module.exports.createUser = createUser
 module.exports.updateUser = updateUser
-// module.exports.deleteUser = deleteUser
+module.exports.deleteUser = deleteUser
