@@ -24,7 +24,5 @@ async function getInterestById(request, response) {
     }
 }
 
-module.exports = {
-    getInterests,
-    getInterestById,
-  }
+module.exports.getInterests = getInterests
+module.exports.getInterestById = getInterestById

@@ -24,7 +24,5 @@ async function getGenderById(request, response) {
     }
 }
 
-module.exports = {
-    getGenders,
-    getGenderById,
-  }
+module.exports.getGenders = getGenders
+module.exports.getGenderById = getGenderById

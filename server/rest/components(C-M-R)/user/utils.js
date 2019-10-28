@@ -52,7 +52,7 @@ class UserValidation {
         return new Promise(async function(resolve, reject) {
             let call = await model_instance.exists(input_name, input)
             if (call === true) 
-                resolve( {boolean: false, error: `The ${input_name} already exist`})
+                resolve( {boolean: false, error: `The ${input_name} already exists`})
             else
                 resolve({boolean: true});
         })
@@ -65,7 +65,7 @@ class UserValidation {
             if (result === true) 
                 resolve({boolean: true})
             else
-                resolve({boolean: false, error: `This ${model_name} don't exist`});
+                resolve({boolean: false, error: `This ${model_name} doesn't exist`});
         })
     }
 
@@ -76,7 +76,7 @@ class UserValidation {
             if (call === true) 
                 resolve({boolean: true})
             else
-                resolve({boolean: false, error: `This ${model_name} don't exist`});
+                resolve({boolean: false, error: `This ${model_name} doesn't exist`});
         })
     }
 
@@ -124,21 +124,19 @@ class UserValidation {
     // }
 
     async inputTester(variable, functions, errors) {
-        if (variable['input'] === undefined)
+        if (variable['input'] === undefined) {
             return
-        console.log(functions)
-        console.log("--------")
-        console.log(variable)
-        console.log("--------")
-        console.log(errors)
-        console.log("--------")
-
-
+        }
         const promises = functions.map(async oneFunction => {
             return oneFunction = await oneFunction(variable)
         });
-        console.log(promises)
-        Promise.all(promises).then(values => console.log(values))
+        await Promise.all(promises).then(values => {
+            values.forEach(value => {
+                if (value['boolean'] === false) {
+                    errors.push(value['error'])
+                }
+            })
+        })
     }
 
     async updateUserErrors(data) {
@@ -150,44 +148,15 @@ class UserValidation {
         // ProfilePicture: ne sait pas encore comment on va faire
         // birthDate : ne sais pas encore le format de date        
         let errors = []
-        this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-        this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)        
-        this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, model_instance: this.user}, [this.isAlphaNum, this.rightLength, this.exists], errors)
-        this.inputTester({input: email, input_name: 'email', model_instance: this.user}, [this.isEmail, this.exists], errors)
-        this.inputTester({input: gender, input_name: 'id', model_instance: genderInstance, model_name: "gender"}, [this.doesntExist], errors)
-        this.inputTester({input: notificationMail, input_name: 'notification email'}, [this.isBoolean], errors)
+        await this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
+        await this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)        
+        await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, model_instance: this.user}, [this.isAlphaNum, this.rightLength, this.exists], errors)
+        await this.inputTester({input: email, input_name: 'email', model_instance: this.user}, [this.isEmail, this.exists], errors)
+        await this.inputTester({input: gender, input_name: 'id', model_instance: genderInstance, model_name: "gender"}, [this.doesntExist], errors)
+        await this.inputTester({input: notificationMail, input_name: 'notification email'}, [this.isBoolean], errors)
 
-        // Promise.all([isEmail, emailExists, usernameExists, usernameIsAlphaNum, usernameRightLength, firstnameIsAlpha, firstnameRightLength, surnameIsAlpha, surnameRightLength, descriptionRightLength, genderDoesntExist, notificationIsBoolean]).then(values => console.log(values))
-
-        return ([])
+        return (errors)
     }
-
-    // async updateUserErrors(data) {
-    //     let errors = []
-    //      { firstname, surname, username, email, gender, sexualOrientation, description, interests, images, profilePicture, location, notificationMail, birthDate } = data
-
-    //     this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-        // this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-        
-    // //     // await ne fonctionne pas pour les fonctions de check if email exist et check if username exist
-    //     await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user}, [this.isAlphaNum, this.rightLength, this.userExists], errors)
-    // //     this.inputTester({input: description, input_name: 'surname', min_length: 2, max_length: 5000}, [this.rightLength], errors)
-    // //     // Gender a tester car await dans fonction en parametre ne fonctionne pas
-    //     await this.inputTester({input: gender, input_name: 'gender'}, [this.dontExists], errors)        
-    // //     // Sexual orientation : pas de model encore
-    //     // Interests : pas de model encore
-    //     // Image: ne sait pas encore comment on va faire
-    //     // ProfilePicture: ne sait pas encore comment on va faire
-    //     // Location : ne sais pas comment verifier que c'est une position correcte
-    //     this.inputTester({input: notificationMail, input_name: 'notification email', min_length: 2, max_length: 5000}, [this.isBoolean], errors)
-    //     // birthDate : ne sais pas encore le format de date
-
-    //     // console.log(errors)
-    //     return (errors)
-    // }
-    // WIP
-   
-
 
     filterInputValues(requester, values) {
         let authorized_values = []
@@ -204,4 +173,5 @@ class UserValidation {
         return (filtered_values)
     }
 };
+
 module.exports = UserValidation;
