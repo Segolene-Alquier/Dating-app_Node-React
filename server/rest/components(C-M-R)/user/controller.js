@@ -85,7 +85,7 @@ async function updateUser(request, response) {
         return
     }
     try {
-        let call = await user.updateById(id, request.body)
+        let call = await user.updateById(id, filtered_values)
         response.status(200).json(call)
     } 
     catch (err) {

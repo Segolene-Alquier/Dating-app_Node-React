@@ -1,5 +1,4 @@
 const Gender = require("../gender/model")
-var _ = require('lodash');
 const genderInstance = new Gender()
 
 class UserValidation {
@@ -81,11 +80,11 @@ class UserValidation {
         })
     }
 
-    fieldExists({input, input_name, user_instance}) { // WIP
-        return new Promise(async function(resolve, reject) {
-          let call = await user_instance.exists(input_name, input)
-        })
-    }
+    // fieldExists({input, input_name, user_instance}) { // WIP
+    //     return new Promise(async function(resolve, reject) {
+    //       let call = await user_instance.exists(input_name, input)
+    //     })
+    // }
 
     passwordFormat({input}) {
         return new Promise(function(resolve, reject) {
@@ -111,6 +110,7 @@ class UserValidation {
 
     async createUserErrors(data) {
         let errors = []
+        // eslint-disable-next-line no-unused-vars
         const { firstname, surname, username, password, email } = data
 
         if (!this.mandatoryFields(data)) {
@@ -142,6 +142,7 @@ class UserValidation {
     }
 
     async updateUserErrors(data) {
+        // eslint-disable-next-line no-unused-vars
         const { firstname, surname, username, email, gender, sexualOrientation, description, interests, images, profilePicture, location, notificationMail, birthDate } = data
     
         // Sexual orientation : pas de model encore
@@ -164,7 +165,7 @@ class UserValidation {
     mandatoryFields(data) {
         let mandatoryValues = ['firstname', 'surname', 'username', 'email', 'password']
         let boolean = true
-        mandatoryValues.map(value => {
+        mandatoryValues.forEach(value => {
             if (Object.keys(data).includes(value) === false) {
                 boolean = false
             }
