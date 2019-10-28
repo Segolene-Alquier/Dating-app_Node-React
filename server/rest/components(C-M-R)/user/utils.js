@@ -1,4 +1,5 @@
 const Gender = require("../gender/model")
+var _ = require('lodash');
 const genderInstance = new Gender()
 
 class UserValidation {
@@ -108,20 +109,18 @@ class UserValidation {
         })
     }
 
-    // async createUserErrors(data) {
-    //     let errors = []
-    //     const { firstname, surname, username, password, email } = data
+    async createUserErrors(data) {
+        let errors = []
+        const { firstname, surname, username, password, email } = data
         
-    //     // doit encore checker si les variables sont undefined
-    //     this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-    //     this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-    //     await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, user_instance: this.user}, PPromise.all([this.isAlphaNum, this.rightLength, this.userExists].map(async func => func(arg))), errors)
-    //     await this.inputTester({input: email, input_name: 'email', min_length: 3, max_length: 80, user_instance: this.user}, [this.isEmail, this.rightLength, this.userExists], errors)
-    //     if (await this.user.exists('username', username)) errors.push("This username already exist")
-    //     if (await this.user.exists('email', email)) errors.push("This email already exist")
-
-    //     return (errors)
-    // }
+        // doit encore checker si les variables sont undefined
+        await this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
+        await this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)        
+        await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, model_instance: this.user}, [this.isAlphaNum, this.rightLength, this.exists], errors)
+        await this.inputTester({input: email, input_name: 'email', model_instance: this.user}, [this.isEmail, this.exists], errors)
+        // Password : on sait pas comment va etre le systeme des mots de passe        
+        return (errors)
+    }
 
     async inputTester(variable, functions, errors) {
         if (variable['input'] === undefined) {
@@ -132,11 +131,12 @@ class UserValidation {
         });
         await Promise.all(promises).then(values => {
             values.forEach(value => {
-                if (value['boolean'] === false) {
+                if (value['boolean'] === false && !(errors.includes(value['error']))) {
                     errors.push(value['error'])
                 }
             })
         })
+    
     }
 
     async updateUserErrors(data) {
@@ -146,7 +146,8 @@ class UserValidation {
         // Interests : pas de model encore
         // Image: ne sait pas encore comment on va faire
         // ProfilePicture: ne sait pas encore comment on va faire
-        // birthDate : ne sais pas encore le format de date        
+        // birthDate : ne sais pas encore le format de date
+        // Password : on sait pas comment va etre le systeme des mots de passe        
         let errors = []
         await this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
         await this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)        
