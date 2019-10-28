@@ -112,8 +112,11 @@ class UserValidation {
     async createUserErrors(data) {
         let errors = []
         const { firstname, surname, username, password, email } = data
-        
-        // doit encore checker si les variables sont undefined
+
+        if (!this.mandatoryFields(data)) {
+            errors.push("Some fields were left blank!")
+            return (errors)
+        }
         await this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
         await this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)        
         await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, model_instance: this.user}, [this.isAlphaNum, this.rightLength, this.exists], errors)
@@ -136,7 +139,6 @@ class UserValidation {
                 }
             })
         })
-    
     }
 
     async updateUserErrors(data) {
@@ -157,6 +159,17 @@ class UserValidation {
         await this.inputTester({input: notificationMail, input_name: 'notification email'}, [this.isBoolean], errors)
 
         return (errors)
+    }
+
+    mandatoryFields(data) {
+        let mandatoryValues = ['firstname', 'surname', 'username', 'email', 'password']
+        let boolean = true
+        mandatoryValues.map(value => {
+            if (Object.keys(data).includes(value) === false) {
+                boolean = false
+            }
+        })
+        return (boolean)
     }
 
     filterInputValues(requester, values) {
