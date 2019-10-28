@@ -24,7 +24,6 @@ async function getSexualOrientationById(request, response) {
     }
 }
 
-module.exports = {
-    getSexualOrientations,
-    getSexualOrientationById,
-  }
+
+module.exports.getSexualOrientations = getSexualOrientations
+module.exports.getSexualOrientationById = getSexualOrientationById
