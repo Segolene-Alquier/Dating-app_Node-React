@@ -13,12 +13,25 @@ async function login(request, response) {
 
     try {
         let visitor = await user.getBy('username', username)
-        if (visitor.length <= 0) { 
+        if (visitor.length <= 0) {
+            console.log(username, " doesn't exist")
             response.status(403).json(false)
+            return
         }
         visitor = visitor[0]
         if (visitor['password'] === password) {
-        // create token
+            // create token
+            let token = jwt.sign({userid: visitor['id']}, 'mignon4ever', {expiresIn: "24h"})
+            console.log(token)
+            response.json(true)
+        }
+        else {
+            console.log("Entered Password and Hash do not match!");
+            response.status(401).json({
+                success: false,
+                token: null,
+                err: 'Entered Password and Hash do not match!'
+            })
         }
     } 
     catch (err) {
