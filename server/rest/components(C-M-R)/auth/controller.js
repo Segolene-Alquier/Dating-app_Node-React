@@ -10,20 +10,22 @@ const jwtMW = exjwt({
 async function login(request, response) {
     const { username, password } = request.body
     console.log("User submitted: ", username, password);
-
     try {
         let visitor = await user.getBy('username', username)
         if (visitor.length <= 0) {
             console.log(username, " doesn't exist")
-            response.status(403).json(false)
+            response.json(false)
             return
         }
         visitor = visitor[0]
         if (visitor['password'] === password) {
-            // create token
             let token = jwt.sign({userid: visitor['id']}, 'mignon4ever', {expiresIn: "24h"})
             console.log(token)
-            response.json(true)
+            response.json({
+                success: true,
+                token: token,
+                err: null
+            })
         }
         else {
             console.log("Entered Password and Hash do not match!");

@@ -3,6 +3,8 @@ import {
 } from 'react';
 import axios from 'axios';
 
+import auth from '../auth';
+
 const useLoginForm = callback => {
   const [inputs, setInputs] = useState({
     username: "",
@@ -12,6 +14,7 @@ const useLoginForm = callback => {
     username,
     password
   } = inputs
+
   const handleSubmit = event => {
     if (event) {
       event.preventDefault();
@@ -25,16 +28,22 @@ const useLoginForm = callback => {
         }
       }).then(({
         data
-      }) => {
-        console.log(data)
-        // if (data['created'] === true)
-        //   alert("User created")
-        // else
-        //   alert("User not created")
+      }) => { 
+        if (data['success'] === true) {
+          localStorage.setItem('token', data['token']);
+          console.log("Bravo, tu es connecté.e !")
+          // redirection apres connexion
+          // Afficher alert jolie
+        }
+        else {
+          console.log("Nope, try again")
+        }
+
       })
     }
     callback();
   }
+
   const handleInputChange = event => {
     event.persist();
     const newInput = {

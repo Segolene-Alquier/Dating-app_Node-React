@@ -8,6 +8,7 @@
     "bcrypt": "^3.0.6",
     "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "pg-promise": "^9.3.3",
     "react": "^16.10.2",

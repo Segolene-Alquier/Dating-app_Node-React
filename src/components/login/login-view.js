@@ -3,7 +3,7 @@ import useLoginForm from './login-container';
 
 const Login = () => {
   const login = () => {
-    alert('User Logged!');
+    // console.log('User Logged!');
   }
   const {inputs, handleInputChange, handleSubmit} = useLoginForm(login);
     return (
