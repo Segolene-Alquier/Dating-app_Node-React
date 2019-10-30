@@ -20,14 +20,15 @@ Json web token, verifier chaque requête si JWT l’a
 Stocker JWT dans cookie de session
 Mettre en middleware JWT
 
+## 29/10
+Il nous reste a verifier depuis React que l'utilisateur a un token valide en back (avec JWT.verify).
+On doit donc :
+- Créer en back une fonction avec une route qui va dire si le token est valide (voir checkToken https://medium.com/@faizanv/authentication-for-your-react-and-express-application-w-json-web-tokens-923515826e0#3432)
+- Créer une fonction React qui appelle le back sur la route de verification de token et qui autorise ou non l'affichage de la page. Si non, rediriger vers login
+- Proteger les routes avec la fonction réact qu'on a créé
 
-Etapes validation sign up
-
-- verifie que login = alpha/num char
-- verifie que login pas deja en db
-- verifie que email est format valide
-- verifie que email est pas en db
-- verifie que le format de password est bon
-- verifie que format password2 est bon aussi
-- verifie que les deux passwords sont identiques
-- ensuite j'insere en db
+Ressources : 
+https://medium.com/@faizanv/authentication-for-your-react-and-express-application-w-json-web-tokens-923515826e0#3432
+https://medium.com/dev-bits/a-guide-for-adding-jwt-token-based-authentication-to-your-single-page-nodejs-applications-c403f7cf04f4
+https://medium.com/@romanchvalbo/how-i-set-up-react-and-node-with-json-web-token-for-authentication-259ec1a90352
+https://codesandbox.io/s/nn9rr8o1kl?from-embed

@@ -2,15 +2,42 @@ const User = require("../user/model")
 const user = new User();
 const jwt = require('jsonwebtoken')
 const exjwt = require('express-jwt');
-const jwtMW = exjwt({
-    secret: 'mignon4ever'
-});
+const secret = 'mignon4ever'
 
-
+async function booleanToken(request, response) {
+    let token = request.headers['x-access-token'] || request.headers['authorization']
+    console.log("CHECK TOKEN : ", token)
+    console.log("Headers : ", request.headers)
+    if (token) {
+        if (token.startsWith('Bearer ')) {
+            token = token.slice(7, token.length)
+        }
+        jwt.verify(token, secret, (err, decoded) => {
+            if (err) {
+                return (response.json({
+                    success: false,
+                    message: 'Token is not valid'
+                }))
+            }
+            else {
+                request.decoded = decoded
+                return (response.json({
+                    success: true,
+                    message: 'Token is valid'
+                }))
+            }
+        })
+    }
+    else {
+        return (response.json({
+            success: false,
+            message: 'Auth token not supplied' 
+        }))
+    }
+}
 
 async function login(request, response) {
     const { username, password } = request.body
-    // console.log("JWT : ", jwtMW)
 
     console.log("User submitted: ", username, password);
     try {
@@ -58,3 +85,4 @@ async function logout(request, response) {
 
 module.exports.login = login
 module.exports.logout = logout
+module.exports.booleanToken = booleanToken

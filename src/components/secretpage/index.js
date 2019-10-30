@@ -1,3 +1,3 @@
-import Secret from './login-view'
+import Secret from './secret-view'
 
 export default Secret

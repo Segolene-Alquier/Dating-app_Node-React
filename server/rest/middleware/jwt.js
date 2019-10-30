@@ -6,9 +6,10 @@ const jwt = require('jsonwebtoken')
 const secret = 'mignon4ever'
 
 
-async function withAuth(request, response, next) {
+async function checkToken(request, response, next) {
     let token = request.headers['x-access-token'] || request.headers['authorization']
-    
+    console.log("CHECK TOKEN : ", token)
+    console.log("Headers : ", request.headers)
     if (token) {
         if (token.startsWith('Bearer ')) {
             token = token.slice(7, token.length)
@@ -22,16 +23,17 @@ async function withAuth(request, response, next) {
             }
             else {
                 request.decoded = decoded
+                // console.log("DECODED : ", decoded['userid'])
                 next()
             }
         })
     }
     else {
         return (response.json({
-            succes: false,
+            success: false,
             message: 'Auth token not supplied' 
         }))
     }
 }
 
-module.exports.withAuth = withAuth
+module.exports.checkToken = checkToken
