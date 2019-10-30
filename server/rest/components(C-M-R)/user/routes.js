@@ -1,9 +1,10 @@
 const express = require('express');
+const { withAuth } = require('../../middleware/jwt')
 const router = express.Router()
 const { getUserById, getUsers, usernameExists, emailExists, createUser, updateUser, deleteUser } = require("./controller")
 
 // list of all users - user
-router.get('/', getUsers)
+router.get('/', withAuth, getUsers)
 // username already exists ? - user
 router.get('/verification/username', usernameExists)
 // email already exists ? - user

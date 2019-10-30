@@ -7,8 +7,11 @@ const jwtMW = exjwt({
 });
 
 
+
 async function login(request, response) {
     const { username, password } = request.body
+    // console.log("JWT : ", jwtMW)
+
     console.log("User submitted: ", username, password);
     try {
         let visitor = await user.getBy('username', username)
