@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import React from 'react';
+import React, { Fragment, useContext, useState } from 'react';
+import { AuthContext } from './../app/AuthContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,6 +17,16 @@ const useStyles = makeStyles(theme => ({
 
 const Nav = () => {
   const classes = useStyles();
+  const authContext = useContext(AuthContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  authContext.userData.then(data => {
+    if (data) {
+      setIsLoggedIn(data.success);
+    } else {
+      setIsLoggedIn(false);
+    }
+  });
   return (
     <AppBar position="static">
       <Toolbar>
@@ -23,9 +34,15 @@ const Nav = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-          News
+          Matcha
         </Typography>
-        <Button color="inherit">Login</Button>
+        {isLoggedIn ? (
+          <Button color="inherit">Logout</Button>
+        ) : (
+          <Fragment>
+            <Button color="inherit">Signup</Button> <Button color="inherit">Login</Button>
+          </Fragment>
+        )}
       </Toolbar>
     </AppBar>
   );
