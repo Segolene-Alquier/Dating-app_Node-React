@@ -9,12 +9,13 @@ import SecureRoute from './SecureRoute';
 import NotLoggedRoute from './NotLoggedRoute';
 // import withAuth from '../auth/AuthContainer'
 // import auth from '../auth';
-// const {withAuth} = auth()
+import Nav from '../nav';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <Nav />
         <Route path="/" />
         <NotLoggedRoute path="/signup" component={Signup} />
         <NotLoggedRoute path="/login" component={Login} />
