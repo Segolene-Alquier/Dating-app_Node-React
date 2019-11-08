@@ -6,6 +6,9 @@ export const getToken = () => {
 };
 
 export const checkAuthentification = async (data, setSecureAuth) => {
+  if (isTokenExpired(data.token)) {
+    setSecureAuth(false);
+  }
   const isAuthenticaded = await axios.get('http://localhost:3001/auth/checkToken', {
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -29,19 +32,4 @@ export const isTokenExpired = token => {
     console.log(err);
     return true;
   }
-};
-
-export const loggedIn = () => {
-  const token = getToken();
-  if (token === null || token === undefined) {
-    // pas connecté
-    return false;
-  } else {
-    if (isTokenExpired(token)) {
-      // need to delete expired token ?
-      return false;
-    }
-  }
-  console.log('TOKEN : ', token);
-  return true;
 };
