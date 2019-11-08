@@ -2,9 +2,7 @@ import React from 'react';
 import useLoginForm from './login-container';
 
 const Login = () => {
-  const login = () => {
-    console.log('User Logged!');
-  };
+  const login = () => {};
   const { inputs, handleInputChange, handleSubmit } = useLoginForm(login);
   return (
     <form onSubmit={handleSubmit}>

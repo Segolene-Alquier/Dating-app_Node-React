@@ -16,6 +16,3 @@ Unsubscribe les composant quand on exit
 => sur les hooks
 
 ## 8/11
-
-- On doit redirect quand le login a fonctionné
-- Login: Redirect vers l'accueil si l'utilisateur est deja log
