@@ -1,12 +1,11 @@
-import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { createContext, useState } from 'react';
 import { getToken } from '../auth/AuthContainer';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const currentToken = getToken();
-  const [token, setToken] = useState(currentToken);
+  const [token] = useState(currentToken);
 
   const authContext = {
     token,
