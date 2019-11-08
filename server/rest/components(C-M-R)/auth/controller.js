@@ -1,7 +1,6 @@
 const User = require('../user/model');
 const user = new User();
 const jwt = require('jsonwebtoken');
-const exjwt = require('express-jwt');
 const secret = 'mignon4ever';
 
 async function booleanToken(request, response) {

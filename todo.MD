@@ -41,3 +41,4 @@ https://codesandbox.io/s/nn9rr8o1kl?from-embed
 - On doit redirect quand le login a fonctionné
 - Redirect vers l'accueil si l'utilisateur est deja log
 - Ajouter les verif token expired
+- Eviter d'appeler 2 fois quand route protegé

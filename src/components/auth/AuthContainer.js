@@ -19,6 +19,19 @@ export const checkAuthentification = async (data, setSecureAuth) => {
   setSecureAuth(isAuthenticaded.data.success);
 };
 
+export const getUserData = async token => {
+  if (isTokenExpired(token)) {
+    return null;
+  }
+  const userData = await axios.get('http://localhost:3001/auth/checkToken', {
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+      'x-access-token': token,
+    },
+  });
+  return userData.data.data;
+};
+
 export const isTokenExpired = token => {
   const currentTime = Date.now() / 1000;
   try {
