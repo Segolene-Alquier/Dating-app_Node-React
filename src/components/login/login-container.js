@@ -30,6 +30,7 @@ const useLoginForm = callback => {
             localStorage.setItem('token', data['token']);
             console.log('Bravo, tu es connecté.e !');
             // redirection apres connexion
+            window.location.replace('/');
             // Afficher alert jolie
           } else {
             console.log('Nope, try again');
