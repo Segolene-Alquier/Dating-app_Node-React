@@ -8,6 +8,7 @@ export const getToken = () => {
 export const checkAuthentification = async (data, setSecureAuth) => {
   if (isTokenExpired(data.token)) {
     setSecureAuth(false);
+    return;
   }
   const isAuthenticaded = await axios.get('http://localhost:3001/auth/checkToken', {
     headers: {
