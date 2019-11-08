@@ -1,13 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from './AuthContext';
-import { checkAuthentification } from '../auth/AuthContainer';
 import { Redirect, Route } from 'react-router-dom';
 
 export default ({ component: Component, ...rest }) => {
-  const [secureAuth, setSecureAuth] = useState(true);
   const authContext = useContext(AuthContext);
-
-  checkAuthentification(authContext, setSecureAuth);
+  let defaultValue = authContext.token !== null;
+  const [secureAuth, setSecureAuth] = useState(defaultValue);
+  if (secureAuth === true) {
+    authContext.userData.then(data => setSecureAuth(data.success));
+  }
 
   return (
     <Route
