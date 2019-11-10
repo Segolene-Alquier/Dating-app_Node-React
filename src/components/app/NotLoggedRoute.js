@@ -15,7 +15,17 @@ export default ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         if (secureAuth) {
-          return <Redirect to="/" />;
+          return (
+            <Redirect
+              to={{
+                pathname: '/',
+                state: {
+                  toasterType: 'warning',
+                  toasterMessage: 'You are already logged in!',
+                },
+              }}
+            />
+          );
         } else {
           return <Component {...props} />;
         }
