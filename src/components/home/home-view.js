@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import _ from 'lodash'
 
 const Home = (props) => {
-  const { toasterMessage, toasterType } = props.location.state || {};
+  let { toasterMessage, toasterType } = props.location.state || {};
   if (!_.isUndefined(toasterType) && !_.isUndefined(toasterMessage)) {
     toast(toasterMessage, {
       type: toasterType,

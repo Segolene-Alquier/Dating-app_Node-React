@@ -1,3 +1,3 @@
-// import  from './AuthContainer';
+import { getToken, checkAuthentification, getUserData, isTokenExpired, logout} from './AuthContainer';
 
-// export default auth;
+export { getToken, checkAuthentification, getUserData, isTokenExpired, logout };

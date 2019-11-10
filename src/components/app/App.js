@@ -17,8 +17,8 @@ import Nav from '../nav';
 function App() {
   return (
     <AuthProvider>
-      <Nav />
       <Router>
+        <Nav />
         <Switch>
           <NotLoggedRoute path="/signup" component={Signup} />
           <NotLoggedRoute path="/login" component={Login} />

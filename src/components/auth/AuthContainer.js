@@ -47,3 +47,9 @@ export const isTokenExpired = token => {
     return true;
   }
 };
+
+export const logout = (e, setIsLogout) => {
+  e.preventDefault();
+  localStorage.removeItem('token');
+  setIsLogout(true);
+}
