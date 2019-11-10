@@ -16,7 +16,7 @@ Unsubscribe les composant quand on exit
 => sur les hooks
 
 ## 10/11
-
+- toaster login
 - faire fonctionner liens navbar
 - installer alertes inscription / login
 - integrer front plus sympa

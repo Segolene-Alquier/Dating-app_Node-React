@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useLoginForm from './login-container';
+import { Redirect } from 'react-router-dom';
 
 const Login = () => {
-  const login = () => {};
-  const { inputs, handleInputChange, handleSubmit } = useLoginForm(login);
-  const authenticated = false
-  if (authenticated) {
-    return (<div> Hello</div>)
-  }
-  else {
-    return (
-      <form onSubmit={handleSubmit}>
+  const [redirect, setRedirect] = useState(false);
+
+  const login = success => {
+    setRedirect(success)
+  };
+    const { inputs, handleInputChange, handleSubmit } = useLoginForm(login);
+
+    if (!redirect) {
+      return (
+        <form onSubmit={handleSubmit}>
         <div>
           <label>Username</label>
           <input
@@ -19,7 +21,7 @@ const Login = () => {
             onChange={handleInputChange}
             value={inputs.username}
             required
-          />
+            />
         </div>
         <div>
           <label>Password</label>
@@ -29,10 +31,23 @@ const Login = () => {
             onChange={handleInputChange}
             value={inputs.password}
             required
-          />
+            />
         </div>
         <button type="submit">Log In</button>
       </form>
+    );
+  }
+  else {
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+          state: {
+            toasterType: 'success',
+            toasterMessage: 'You successfully logged in!',
+          },
+        }}
+      />
     );
   }
 };

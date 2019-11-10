@@ -62,11 +62,11 @@ async function login(request, response) {
         err: null,
       });
     } else {
-      console.log('Entered Password and Hash do not match!');
+      console.log('The login and password do not match!');
       response.status(200).json({
         success: false,
         token: null,
-        err: 'Entered Password and Hash do not match!',
+        err: 'The login and password do not match!',
       });
     }
   } catch (err) {

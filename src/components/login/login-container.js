@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const useLoginForm = callback => {
   const [inputs, setInputs] = useState({
@@ -29,15 +30,14 @@ const useLoginForm = callback => {
           if (data['success'] === true) {
             localStorage.setItem('token', data['token']);
             console.log('Bravo, tu es connecté.e !');
-            // redirection apres connexion
-            window.location.replace('/');
+            callback(true)
             // Afficher alert jolie
           } else {
             console.log('Nope, try again');
+            toast.error(data.err);
           }
         });
     }
-    callback();
   };
 
   const handleInputChange = event => {
