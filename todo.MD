@@ -16,3 +16,10 @@ Unsubscribe les composant quand on exit
 => sur les hooks
 
 ## 8/11
+
+- faire fonctionner liens navbar
+- installer alertes inscription / login
+- integrer front plus sympa
+- verifier inputs en front
+- configurer linter avec une norme choisie
+

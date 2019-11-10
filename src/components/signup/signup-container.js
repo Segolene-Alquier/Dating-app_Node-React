@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import axios from 'axios';
+import { errors } from 'spex';
 
 const useSignUpForm = callback => {
   const [inputs, setInputs] = useState({
@@ -33,13 +35,16 @@ const useSignUpForm = callback => {
         )
         .then(({ data }) => {
           if (data['created'] === true) {
-            window.location.replace('/');
+            // window.location.replace('/');
+            callback(true);
           } else {
-            console.log('User not created');
+            console.log(data);
+            data.errors.forEach(error => {
+                toast.error(error);
+            })
           }
         });
     }
-    callback();
   };
   const handleInputChange = event => {
     event.persist();
