@@ -8,7 +8,7 @@ import Home from '../home'
 import { AuthProvider } from './AuthContext';
 import SecureRoute from './SecureRoute';
 import NotLoggedRoute from './NotLoggedRoute';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import withAuth from '../auth/AuthContainer'
 // import auth from '../auth';
