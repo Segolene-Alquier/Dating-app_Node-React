@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {  } from 'react';
 import Signup from '../signup';
 import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from '../login';
 import Secret from '../secretpage';
 import Home from '../home'
@@ -17,12 +17,14 @@ import Nav from '../nav';
 function App() {
   return (
     <AuthProvider>
+      <Nav />
       <Router>
-        <Nav />
-        {/* <NotLoggedRoute path="/" component={Home} /> */}
-        <NotLoggedRoute path="/signup" component={Signup} />
-        <NotLoggedRoute path="/login" component={Login} />
-        <SecureRoute path="/secret" component={Secret} />
+        <Switch>
+          <NotLoggedRoute path="/signup" component={Signup} />
+          <NotLoggedRoute path="/login" component={Login} />
+          <SecureRoute path="/secret" component={Secret} />
+          <Route path="/" component={Home} />
+        </Switch>
       </Router>
       <ToastContainer />
     </AuthProvider>

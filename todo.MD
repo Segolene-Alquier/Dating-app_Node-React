@@ -15,7 +15,7 @@
 Unsubscribe les composant quand on exit
 => sur les hooks
 
-## 8/11
+## 10/11
 
 - faire fonctionner liens navbar
 - installer alertes inscription / login
