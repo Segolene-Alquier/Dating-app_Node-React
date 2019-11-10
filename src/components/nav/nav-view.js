@@ -33,42 +33,55 @@ const Nav = () => {
   });
   if (isLogout) {
     return (
-      <Redirect
-        to={{
-          pathname: '/',
-          state: {
-            toasterType: 'success',
-            toasterMessage: 'Your successfully logged out!',
-          },
-        }}
-      />
+      <Fragment>
+        < Nav />
+        <Redirect
+          to={{
+            pathname: '/',
+            state: {
+              toasterType: 'success',
+              toasterMessage: 'Your successfully logged out!',
+            },
+          }}
+        />
+      </Fragment>
     );
   } else {
     return (
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Matcha
-          </Typography>
-          {isLoggedIn ? (
-            <Button color="inherit" onClick={(e) => { logout(e, setIsLogout)}}>
-              Logout
-            </Button>
-          ) : (
-            <Fragment>
-              <Button color="inherit" href="/signup">
-                Signup
-              </Button>{' '}
-              <Button color="inherit" href="/login">
-                Login
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Matcha
+            </Typography>
+            {isLoggedIn ? (
+              <Button
+                color="inherit"
+                onClick={e => {
+                  logout(e, setIsLogout);
+                }}
+              >
+                Logout
               </Button>
-            </Fragment>
-          )}
-        </Toolbar>
-      </AppBar>
+            ) : (
+              <Fragment>
+                <Button color="inherit" href="/signup">
+                  Signup
+                </Button>{' '}
+                <Button color="inherit" href="/login">
+                  Login
+                </Button>
+              </Fragment>
+            )}
+          </Toolbar>
+        </AppBar>
     );
   }
 };

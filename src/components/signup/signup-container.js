@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { errors } from 'spex';
 
 const useSignUpForm = callback => {
   const [inputs, setInputs] = useState({
