@@ -54,7 +54,7 @@ async function login(request, response) {
     }
     visitor = visitor[0];
     if (visitor['password'] === password) {
-      let token = jwt.sign({ userid: visitor['id'] }, 'mignon4ever', { expiresIn: '24h' });
+      let token = jwt.sign({ userid: visitor['id'] }, 'mignon4ever', { expiresIn: '1d' });
       console.log(token);
       response.json({
         success: true,
