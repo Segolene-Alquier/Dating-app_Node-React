@@ -11,7 +11,7 @@ const useSignUpForm = callback => {
     password1: '',
     password2: '',
   });
-  let { firstname, surname, username, email, password1 } = inputs;
+  const { firstname, surname, username, email, password1 } = inputs;
   const handleSubmit = event => {
     if (event) {
       event.preventDefault();
@@ -20,10 +20,10 @@ const useSignUpForm = callback => {
         .post(
           'http://localhost:3001/users',
           {
-            firstname: firstname,
-            surname: surname,
-            username: username,
-            email: email,
+            firstname,
+            surname,
+            username,
+            email,
             password: password1,
           },
           {
@@ -33,14 +33,14 @@ const useSignUpForm = callback => {
           },
         )
         .then(({ data }) => {
-          if (data['created'] === true) {
+          if (data.created === true) {
             // window.location.replace('/');
             callback(true);
           } else {
             console.log(data);
             data.errors.forEach(error => {
-                toast.error(error);
-            })
+              toast.error(error);
+            });
           }
         });
     }

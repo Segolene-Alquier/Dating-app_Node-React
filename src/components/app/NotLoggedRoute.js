@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useContext } from 'react';
-import { AuthContext } from './AuthContext';
 import { Redirect, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { AuthContext } from './AuthContext';
 
-export default ({ component: Component, ...rest }) => {
+const NotLoggedRoute = ({ component: Component, ...rest }) => {
   const authContext = useContext(AuthContext);
-  let defaultValue = authContext.token !== null;
+  const defaultValue = authContext.token !== null;
   const [secureAuth, setSecureAuth] = useState(defaultValue);
   if (secureAuth === true) {
     authContext.userData.then(data => setSecureAuth(data.success));
@@ -26,10 +28,15 @@ export default ({ component: Component, ...rest }) => {
               }}
             />
           );
-        } else {
-          return <Component {...props} />;
         }
+        return <Component {...props} />;
       }}
     />
   );
 };
+
+NotLoggedRoute.propTypes = {
+  component: PropTypes.element.isRequired,
+};
+
+export default NotLoggedRoute;

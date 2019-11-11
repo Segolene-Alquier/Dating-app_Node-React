@@ -1,9 +1,10 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import _ from 'lodash'
+import _ from 'lodash';
+import PropTypes from 'prop-types';
 
-const Home = (props) => {
-  let { toasterMessage, toasterType } = props.location.state || {};
+const Home = ({ location }) => {
+  const { toasterMessage, toasterType } = location.state || {};
   if (!_.isUndefined(toasterType) && !_.isUndefined(toasterMessage)) {
     toast(toasterMessage, {
       type: toasterType,
@@ -12,5 +13,8 @@ const Home = (props) => {
 
   return <h1>Home Page</h1>;
 };
-
-export default Home
+Home.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  location: PropTypes.object.isRequired,
+};
+export default Home;

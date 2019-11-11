@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import useSignUpForm from './signup-container';
 import { Redirect } from 'react-router-dom';
+import useSignUpForm from './signup-container';
 
 const Signup = () => {
   const [redirect, setRedirect] = useState(false);
@@ -12,77 +12,94 @@ const Signup = () => {
     return (
       <form onSubmit={handleSubmit}>
         <div>
-          <label>First Name</label>
-          <input
-            type="text"
-            name="firstname"
-            onChange={handleInputChange}
-            value={inputs.firstname}
-            required
-          />
-          <label>Last Name</label>
-          <input
-            type="text"
-            name="surname"
-            onChange={handleInputChange}
-            value={inputs.surname}
-            required
-          />
-          <label>Username</label>
-          <input
-            type="text"
-            name="username"
-            onChange={handleInputChange}
-            value={inputs.username}
-            required
-          />
+          <label htmlFor="firstname">
+            First Name
+            <input
+              type="text"
+              name="firstname"
+              onChange={handleInputChange}
+              value={inputs.firstname}
+              id="firstname"
+              required
+            />
+          </label>
+          <label htmlFor="surname">
+            Last Name
+            <input
+              type="text"
+              name="surname"
+              id="surname"
+              onChange={handleInputChange}
+              value={inputs.surname}
+              required
+            />
+          </label>
+          <label htmlFor="username">
+            Username
+            <input
+              type="text"
+              name="username"
+              id="username"
+              onChange={handleInputChange}
+              value={inputs.username}
+              required
+            />
+          </label>
         </div>
         <div>
-          <label>Email Address</label>
-          <input
-            type="email"
-            name="email"
-            onChange={handleInputChange}
-            value={inputs.email}
-            required
-          />
+          <label htmlFor="email">
+            Email Address
+            <input
+              type="email"
+              name="email"
+              id="email"
+              onChange={handleInputChange}
+              value={inputs.email}
+              required
+            />
+          </label>
         </div>
         <div>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password1"
-            onChange={handleInputChange}
-            value={inputs.password1}
-            required
-          />
+          <label htmlFor="password1">
+            Password
+            <input
+              type="password"
+              name="password1"
+              id="password1"
+              onChange={handleInputChange}
+              value={inputs.password1}
+              required
+            />
+          </label>
         </div>
         <div>
-          <label>Re-enter Password</label>
-          <input
-            type="password"
-            name="password2"
-            onChange={handleInputChange}
-            value={inputs.password2}
-            required
-          />
+          <label htmlFor="password2">
+            Re-enter Password
+            <input
+              type="password"
+              name="password2"
+              id="password2"
+              onChange={handleInputChange}
+              value={inputs.password2}
+              required
+            />
+          </label>
         </div>
         <button type="submit">Sign Up</button>
       </form>
     );
-  } else {
-    return (
-      <Redirect
-        to={{
-          pathname: '/',
-          state: {
-            toasterType: 'success',
-            toasterMessage: 'Your account was successfully created!',
-          },
-        }}
-      />
-    );
   }
+  return (
+    <Redirect
+      to={{
+        pathname: '/',
+        state: {
+          toasterType: 'success',
+          toasterMessage: 'Your account was successfully created!',
+        },
+      }}
+    />
+  );
 };
 
 export default Signup;
