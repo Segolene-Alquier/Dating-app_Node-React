@@ -1,192 +1,266 @@
-const Gender = require("../gender/model")
-const genderInstance = new Gender()
+/* eslint-disable no-async-promise-executor */
+/* eslint-disable func-names */
+/* eslint-disable class-methods-use-this */
+const Gender = require('../gender/model');
+
+const genderInstance = new Gender();
 
 class UserValidation {
-    constructor(User) {
-        this.user = User
-    }
+  constructor(User) {
+    this.user = User;
+  }
 
-    isEmail({input}) {
-        return new Promise(function(resolve, reject) {
-            // eslint-disable-next-line no-control-regex
-            const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
-            if (input === '') resolve({boolean: false, error: `The email is blank`})
-            if (input.match(regex))
-                resolve({boolean: true})
-            resolve({boolean: false, error: `The email you entered is not correct`})
-        })
+  isEmail({ input }) {
+    return new Promise(function(resolve) {
+      // eslint-disable-next-line no-control-regex
+      const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+      if (input === '') resolve({ boolean: false, error: `The email is blank` });
+      if (input.match(regex)) resolve({ boolean: true });
+      resolve({ boolean: false, error: `The email you entered is not correct` });
+    });
+  }
 
-    }
+  isAlphaNum({ input, inputName }) {
+    return new Promise(function(resolve) {
+      const regex = /^[0-9a-zA-Z]+$/;
+      if (input === '') {
+        resolve({ boolean: false, error: `The ${inputName} is blank` });
+      }
+      if (input.match(regex)) resolve({ boolean: true });
+      resolve({ boolean: false, error: `The ${inputName} must contain only letters and numbers` });
+    });
+  }
 
-    isAlphaNum({input, input_name}) {
-        return new Promise(function(resolve, reject) {
-        const regex = /^[0-9a-zA-Z]+$/;
-        if (input === '') {
-            resolve({boolean: false, error: `The ${input_name} is blank`})}
-        if (input.match(regex))
-            resolve({boolean: true});
-        resolve(({boolean: false, error: `The ${input_name} must contain only letters and numbers`}));
-        })
-    }
+  isAlpha({ input, inputName }) {
+    return new Promise(function(resolve) {
+      const regex = /^[a-zA-Z]+$/;
+      if (input === '') resolve({ boolean: false, error: `The ${inputName} is blank` });
+      if (input.match(regex)) resolve({ boolean: true });
+      resolve({ boolean: false, error: `The ${inputName} must contain only letters` });
+    });
+  }
 
-    isAlpha({input, input_name}) {
-        return new Promise(function(resolve, reject) {
-        const regex = /^[a-zA-Z]+$/;
-        if (input === '') resolve({boolean: false, error: `The ${input_name} is blank`})
-        if (input.match(regex))
-            resolve({boolean: true})
-        resolve(({boolean: false, error: `The ${input_name} must contain only letters`}))
-        })
-    }
+  isBoolean({ input, inputName }) {
+    return new Promise(function(resolve) {
+      if (input === 'true' || input === 'false') resolve({ boolean: true });
+      else resolve({ boolean: false, error: `The ${inputName} is not a boolean` });
+    });
+  }
 
-    isBoolean({input, input_name}) {
-        return new Promise(function(resolve, reject) {
-        if (input === 'true' || input === 'false')
-            resolve({boolean: true})
-        else
-            resolve(({boolean: false, error: `The ${input_name} is not a boolean`}))
-        })
-    }
+  exists({ input, inputName, modelInstance }) {
+    return new Promise(async function(resolve) {
+      const call = await modelInstance.exists(inputName, input);
+      if (call === true) resolve({ boolean: false, error: `The ${inputName} already exists` });
+      else resolve({ boolean: true });
+    });
+  }
 
-    exists({input, input_name, model_instance}) {
-        return new Promise(async function(resolve, reject) {
-            let call = await model_instance.exists(input_name, input)
-            if (call === true) 
-                resolve( {boolean: false, error: `The ${input_name} already exists`})
-            else
-                resolve({boolean: true});
-        })
-    }
+  doesntExist({ input, inputName, modelInstance, modelName }) {
+    return new Promise(async function(resolve) {
+      const intInput = parseInt(input, 10);
+      const result = await modelInstance.exists(inputName, intInput);
+      if (result === true) resolve({ boolean: true });
+      else resolve({ boolean: false, error: `This ${modelName} doesn't exist` });
+    });
+  }
 
-    doesntExist({input, input_name, model_instance, model_name}) {
-        return new Promise(async function(resolve, reject) {
-            input = parseInt(input)
-            let result = await model_instance.exists(input_name, input)
-            if (result === true) 
-                resolve({boolean: true})
-            else
-                resolve({boolean: false, error: `This ${model_name} doesn't exist`});
-        })
-    }
+  doesntExistEach({ input, inputName, modelInstance, modelName }) {
+    return new Promise(async function(resolve) {
+      const intInput = parseInt(input, 10);
+      const call = await modelInstance.exists(inputName, intInput);
+      if (call === true) resolve({ boolean: true });
+      else resolve({ boolean: false, error: `This ${modelName} doesn't exist` });
+    });
+  }
 
-    doesntExistEach({input, input_name, model_instance, model_name}) {
-        return new Promise(async function(resolve, reject) {
-            input = parseInt(input)
-            let call = await model_instance.exists(input_name, input)
-            if (call === true) 
-                resolve({boolean: true})
-            else
-                resolve({boolean: false, error: `This ${model_name} doesn't exist`});
-        })
-    }
+  passwordFormat({ input }) {
+    return new Promise(function(resolve) {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&.]).{8,10}$/;
+      if (!input) resolve({ boolean: false, error: 'This password is empty!' });
+      if (input.match(regex)) resolve({ boolean: true });
+      resolve({ boolean: false, error: "This password doesn't match!" });
+    });
+  }
 
-    // fieldExists({input, input_name, user_instance}) { // WIP
-    //     return new Promise(async function(resolve, reject) {
-    //       let call = await user_instance.exists(input_name, input)
-    //     })
-    // }
-
-    passwordFormat({input}) {
-        return new Promise(function(resolve, reject) {
-            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&.]).{8,10}$/;
-            if (!input) resolve({boolean: false, error: "This password is empty!"})
-            if (input.match(regex))
-                resolve({boolean: true})
-            resolve({boolean: false, error: "This password doesn't match!"})
-        })
-    }
-
-    rightLength({input, input_name, min_length, max_length}) {
-        return new Promise(function(resolve, reject) {
-            if (input === '') {
-                resolve({boolean: false, error: `The ${input_name} is blank`})
-            }
-            if (input.length >= min_length && input.length <= max_length){
-                resolve({boolean: true})
-            } else {
-            resolve({boolean: false, error: `The ${input_name} must contain between ${min_length} and ${max_length} characters`})}
-        })
-    }
-
-    async createUserErrors(data) {
-        let errors = []
-        // eslint-disable-next-line no-unused-vars
-        const { firstname, surname, username, password, email } = data
-
-        if (!this.mandatoryFields(data)) {
-            errors.push("Some fields were left blank!")
-            return (errors)
-        }
-        await this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-        await this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)        
-        await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, model_instance: this.user}, [this.isAlphaNum, this.rightLength, this.exists], errors)
-        await this.inputTester({input: email, input_name: 'email', model_instance: this.user}, [this.isEmail, this.exists], errors)
-        // Password : on sait pas comment va etre le systeme des mots de passe        
-        return (errors)
-    }
-
-    async inputTester(variable, functions, errors) {
-        if (variable['input'] === undefined) {
-            return
-        }
-        const promises = functions.map(async oneFunction => {
-            return oneFunction = await oneFunction(variable)
+  rightLength({ input, inputName, minLength, maxLength }) {
+    return new Promise(function(resolve) {
+      if (input === '') {
+        resolve({ boolean: false, error: `The ${inputName} is blank` });
+      }
+      if (input.length >= minLength && input.length <= maxLength) {
+        resolve({ boolean: true });
+      } else {
+        resolve({
+          boolean: false,
+          error: `The ${inputName} must contain between ${minLength} and ${maxLength} characters`,
         });
-        await Promise.all(promises).then(values => {
-            values.forEach(value => {
-                if (value['boolean'] === false && !(errors.includes(value['error']))) {
-                    errors.push(value['error'])
-                }
-            })
-        })
-    }
+      }
+    });
+  }
 
-    async updateUserErrors(data) {
-        // eslint-disable-next-line no-unused-vars
-        const { firstname, surname, username, email, gender, sexualOrientation, description, interests, images, profilePicture, location, notificationMail, birthDate } = data
-    
-        // Sexual orientation : pas de model encore
-        // Interests : pas de model encore
-        // Image: ne sait pas encore comment on va faire
-        // ProfilePicture: ne sait pas encore comment on va faire
-        // birthDate : ne sais pas encore le format de date
-        // Password : on sait pas comment va etre le systeme des mots de passe        
-        let errors = []
-        await this.inputTester({input: firstname, input_name: 'first name', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)
-        await this.inputTester({input: surname, input_name: 'surname', min_length: 2, max_length: 40}, [this.isAlpha, this.rightLength], errors)        
-        await this.inputTester({input: username, input_name: 'username', min_length: 2, max_length: 15, model_instance: this.user}, [this.isAlphaNum, this.rightLength, this.exists], errors)
-        await this.inputTester({input: email, input_name: 'email', model_instance: this.user}, [this.isEmail, this.exists], errors)
-        await this.inputTester({input: gender, input_name: 'id', model_instance: genderInstance, model_name: "gender"}, [this.doesntExist], errors)
-        await this.inputTester({input: notificationMail, input_name: 'notification email'}, [this.isBoolean], errors)
+  async createUserErrors(data) {
+    const errors = [];
+    // eslint-disable-next-line no-unused-vars
+    const { firstname, surname, username, email } = data;
 
-        return (errors)
+    if (!this.mandatoryFields(data)) {
+      errors.push('Some fields were left blank!');
+      return errors;
     }
+    await this.inputTester(
+      { input: firstname, inputName: 'first name', minLength: 2, maxLength: 40 },
+      [this.isAlpha, this.rightLength],
+      errors,
+    );
+    await this.inputTester(
+      { input: surname, inputName: 'surname', minLength: 2, maxLength: 40 },
+      [this.isAlpha, this.rightLength],
+      errors,
+    );
+    await this.inputTester(
+      {
+        input: username,
+        inputName: 'username',
+        minLength: 2,
+        maxLength: 15,
+        modelInstance: this.user,
+      },
+      [this.isAlphaNum, this.rightLength, this.exists],
+      errors,
+    );
+    await this.inputTester(
+      { input: email, inputName: 'email', modelInstance: this.user },
+      [this.isEmail, this.exists],
+      errors,
+    );
+    // Password : on sait pas comment va etre le systeme des mots de passe
+    return errors;
+  }
 
-    mandatoryFields(data) {
-        let mandatoryValues = ['firstname', 'surname', 'username', 'email', 'password']
-        let boolean = true
-        mandatoryValues.forEach(value => {
-            if (Object.keys(data).includes(value) === false) {
-                boolean = false
-            }
-        })
-        return (boolean)
+  async inputTester(variable, functions, errors) {
+    if (variable.input === undefined) {
+      return;
     }
+    const promises = functions.map(async oneFunction => {
+      return oneFunction(variable);
+    });
+    await Promise.all(promises).then(values => {
+      values.forEach(value => {
+        if (value.boolean === false && !errors.includes(value.error)) {
+          errors.push(value.error);
+        }
+      });
+    });
+  }
 
-    filterInputValues(requester, values) {
-        let authorized_values = []
-        if (requester === 'API')
-          authorized_values = ['firstname', 'surname', 'username', 'email', 'gender', 'sexualOrientation', 'description', 'interests', 'images', 'profilePicture', 'location', 'notificationMail', 'birthDate']
-        else if (requester === 'backend')
-          authorized_values = ['firstname', 'surname', 'username', 'email', 'gender', 'sexualOrientation', 'description', 'interests', 'images', 'profilePicture', 'location', 'notificationMail', 'lastVisit', 'popularityRate', 'birthDate']
-        const filtered_values = Object.keys(values)
-        .filter(key => authorized_values.includes(key))
-        .reduce((obj, key) => {
-          obj[key] = values[key];
-          return obj;
-        }, {})
-        return (filtered_values)
-    }
-};
+  async updateUserErrors(data) {
+    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line max-len
+    const { firstname, surname, username, email, gender, notificationMail } = data;
+
+    // Sexual orientation : pas de model encore
+    // Interests : pas de model encore
+    // Image: ne sait pas encore comment on va faire
+    // ProfilePicture: ne sait pas encore comment on va faire
+    // birthDate : ne sais pas encore le format de date
+    // Password : on sait pas comment va etre le systeme des mots de passe
+    const errors = [];
+    await this.inputTester(
+      { input: firstname, inputName: 'first name', minLength: 2, maxLength: 40 },
+      [this.isAlpha, this.rightLength],
+      errors,
+    );
+    await this.inputTester(
+      { input: surname, inputName: 'surname', minLength: 2, maxLength: 40 },
+      [this.isAlpha, this.rightLength],
+      errors,
+    );
+    await this.inputTester(
+      {
+        input: username,
+        inputName: 'username',
+        minLength: 2,
+        maxLength: 15,
+        modelInstance: this.user,
+      },
+      [this.isAlphaNum, this.rightLength, this.exists],
+      errors,
+    );
+    await this.inputTester(
+      { input: email, inputName: 'email', modelInstance: this.user },
+      [this.isEmail, this.exists],
+      errors,
+    );
+    await this.inputTester(
+      { input: gender, inputName: 'id', modelInstance: genderInstance, modelName: 'gender' },
+      [this.doesntExist],
+      errors,
+    );
+    await this.inputTester(
+      { input: notificationMail, inputName: 'notification email' },
+      [this.isBoolean],
+      errors,
+    );
+
+    return errors;
+  }
+
+  mandatoryFields(data) {
+    const mandatoryValues = ['firstname', 'surname', 'username', 'email', 'password'];
+    let boolean = true;
+    mandatoryValues.forEach(value => {
+      if (Object.keys(data).includes(value) === false) {
+        boolean = false;
+      }
+    });
+    return boolean;
+  }
+
+  filterInputValues(requester, values) {
+    let authorizedValues = [];
+    if (requester === 'API')
+      authorizedValues = [
+        'firstname',
+        'surname',
+        'username',
+        'email',
+        'gender',
+        'sexualOrientation',
+        'description',
+        'interests',
+        'images',
+        'profilePicture',
+        'location',
+        'notificationMail',
+        'birthDate',
+      ];
+    else if (requester === 'backend')
+      authorizedValues = [
+        'firstname',
+        'surname',
+        'username',
+        'email',
+        'gender',
+        'sexualOrientation',
+        'description',
+        'interests',
+        'images',
+        'profilePicture',
+        'location',
+        'notificationMail',
+        'lastVisit',
+        'popularityRate',
+        'birthDate',
+      ];
+    const filteredValues = Object.keys(values)
+      .filter(key => authorizedValues.includes(key))
+      .reduce((obj, key) => {
+        // eslint-disable-next-line no-param-reassign
+        obj[key] = values[key];
+        return obj;
+      }, {});
+    return filteredValues;
+  }
+}
 
 module.exports = UserValidation;

@@ -1,8 +1,24 @@
+/* eslint-disable no-console */
 import decode from 'jwt-decode';
 import axios from 'axios';
 
 export const getToken = () => {
   return localStorage.getItem('token');
+};
+
+export const isTokenExpired = token => {
+  const currentTime = Date.now() / 1000;
+  try {
+    const decoded = decode(token);
+    if (decoded.exp < currentTime) {
+      console.log('Your token is expired');
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err);
+    return true;
+  }
 };
 
 export const checkAuthentification = async (data, setSecureAuth) => {
@@ -32,24 +48,8 @@ export const getUserData = async token => {
   return userData.data;
 };
 
-export const isTokenExpired = token => {
-  const currentTime = Date.now() / 1000;
-  try {
-    const decoded = decode(token);
-    if (decoded.exp < currentTime) {
-      console.log('Your token is expired');
-      return true;
-    } else {
-      return false;
-    }
-  } catch (err) {
-    console.log(err);
-    return true;
-  }
-};
-
 export const logout = (e, setIsLogout) => {
   e.preventDefault();
   localStorage.removeItem('token');
   setIsLogout(true);
-}
+};
