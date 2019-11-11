@@ -1,8 +1,8 @@
 import {
   getToken,
+  isTokenExpired,
   checkAuthentification,
   getUserData,
-  isTokenExpired,
   logout,
 } from './AuthContainer';
 

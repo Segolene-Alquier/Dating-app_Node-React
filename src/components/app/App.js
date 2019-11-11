@@ -1,14 +1,14 @@
-import React, {  } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import React from 'react';
 import Signup from '../signup';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from '../login';
 import Secret from '../secretpage';
-import Home from '../home'
+import Home from '../home';
 import { AuthProvider } from './AuthContext';
 import SecureRoute from './SecureRoute';
 import NotLoggedRoute from './NotLoggedRoute';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import withAuth from '../auth/AuthContainer'
 // import auth from '../auth';

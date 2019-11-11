@@ -13,6 +13,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "pg-promise": "^9.3.3",
+    "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dev-utils": "^9.1.0",
     "react-dom": "^16.10.2",

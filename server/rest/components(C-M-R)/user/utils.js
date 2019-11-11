@@ -14,9 +14,13 @@ class UserValidation {
     return new Promise(function(resolve) {
       // eslint-disable-next-line no-control-regex
       const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-      if (input === '') resolve({ boolean: false, error: `The email is blank` });
+      if (input === '')
+        resolve({ boolean: false, error: `The email is blank` });
       if (input.match(regex)) resolve({ boolean: true });
-      resolve({ boolean: false, error: `The email you entered is not correct` });
+      resolve({
+        boolean: false,
+        error: `The email you entered is not correct`,
+      });
     });
   }
 
@@ -27,30 +31,39 @@ class UserValidation {
         resolve({ boolean: false, error: `The ${inputName} is blank` });
       }
       if (input.match(regex)) resolve({ boolean: true });
-      resolve({ boolean: false, error: `The ${inputName} must contain only letters and numbers` });
+      resolve({
+        boolean: false,
+        error: `The ${inputName} must contain only letters and numbers`,
+      });
     });
   }
 
   isAlpha({ input, inputName }) {
     return new Promise(function(resolve) {
       const regex = /^[a-zA-Z]+$/;
-      if (input === '') resolve({ boolean: false, error: `The ${inputName} is blank` });
+      if (input === '')
+        resolve({ boolean: false, error: `The ${inputName} is blank` });
       if (input.match(regex)) resolve({ boolean: true });
-      resolve({ boolean: false, error: `The ${inputName} must contain only letters` });
+      resolve({
+        boolean: false,
+        error: `The ${inputName} must contain only letters`,
+      });
     });
   }
 
   isBoolean({ input, inputName }) {
     return new Promise(function(resolve) {
       if (input === 'true' || input === 'false') resolve({ boolean: true });
-      else resolve({ boolean: false, error: `The ${inputName} is not a boolean` });
+      else
+        resolve({ boolean: false, error: `The ${inputName} is not a boolean` });
     });
   }
 
   exists({ input, inputName, modelInstance }) {
     return new Promise(async function(resolve) {
       const call = await modelInstance.exists(inputName, input);
-      if (call === true) resolve({ boolean: false, error: `The ${inputName} already exists` });
+      if (call === true)
+        resolve({ boolean: false, error: `The ${inputName} already exists` });
       else resolve({ boolean: true });
     });
   }
@@ -60,7 +73,8 @@ class UserValidation {
       const intInput = parseInt(input, 10);
       const result = await modelInstance.exists(inputName, intInput);
       if (result === true) resolve({ boolean: true });
-      else resolve({ boolean: false, error: `This ${modelName} doesn't exist` });
+      else
+        resolve({ boolean: false, error: `This ${modelName} doesn't exist` });
     });
   }
 
@@ -69,7 +83,8 @@ class UserValidation {
       const intInput = parseInt(input, 10);
       const call = await modelInstance.exists(inputName, intInput);
       if (call === true) resolve({ boolean: true });
-      else resolve({ boolean: false, error: `This ${modelName} doesn't exist` });
+      else
+        resolve({ boolean: false, error: `This ${modelName} doesn't exist` });
     });
   }
 
@@ -108,7 +123,12 @@ class UserValidation {
       return errors;
     }
     await this.inputTester(
-      { input: firstname, inputName: 'first name', minLength: 2, maxLength: 40 },
+      {
+        input: firstname,
+        inputName: 'first name',
+        minLength: 2,
+        maxLength: 40,
+      },
       [this.isAlpha, this.rightLength],
       errors,
     );
@@ -156,7 +176,14 @@ class UserValidation {
   async updateUserErrors(data) {
     // eslint-disable-next-line no-unused-vars
     // eslint-disable-next-line max-len
-    const { firstname, surname, username, email, gender, notificationMail } = data;
+    const {
+      firstname,
+      surname,
+      username,
+      email,
+      gender,
+      notificationMail,
+    } = data;
 
     // Sexual orientation : pas de model encore
     // Interests : pas de model encore
@@ -166,7 +193,12 @@ class UserValidation {
     // Password : on sait pas comment va etre le systeme des mots de passe
     const errors = [];
     await this.inputTester(
-      { input: firstname, inputName: 'first name', minLength: 2, maxLength: 40 },
+      {
+        input: firstname,
+        inputName: 'first name',
+        minLength: 2,
+        maxLength: 40,
+      },
       [this.isAlpha, this.rightLength],
       errors,
     );
@@ -192,7 +224,12 @@ class UserValidation {
       errors,
     );
     await this.inputTester(
-      { input: gender, inputName: 'id', modelInstance: genderInstance, modelName: 'gender' },
+      {
+        input: gender,
+        inputName: 'id',
+        modelInstance: genderInstance,
+        modelName: 'gender',
+      },
       [this.doesntExist],
       errors,
     );
@@ -206,7 +243,13 @@ class UserValidation {
   }
 
   mandatoryFields(data) {
-    const mandatoryValues = ['firstname', 'surname', 'username', 'email', 'password'];
+    const mandatoryValues = [
+      'firstname',
+      'surname',
+      'username',
+      'email',
+      'password',
+    ];
     let boolean = true;
     mandatoryValues.forEach(value => {
       if (Object.keys(data).includes(value) === false) {

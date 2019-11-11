@@ -26,12 +26,15 @@ export const checkAuthentification = async (data, setSecureAuth) => {
     setSecureAuth(false);
     return;
   }
-  const isAuthenticaded = await axios.get('http://localhost:3001/auth/checkToken', {
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-      'x-access-token': data.token,
+  const isAuthenticaded = await axios.get(
+    'http://localhost:3001/auth/checkToken',
+    {
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'x-access-token': data.token,
+      },
     },
-  });
+  );
   setSecureAuth(isAuthenticaded.data.success);
 };
 
