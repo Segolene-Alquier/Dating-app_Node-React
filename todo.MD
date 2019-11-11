@@ -16,7 +16,8 @@ Unsubscribe les composant quand on exit
 => sur les hooks
 
 ## 10/11
+
 - integrer front plus sympa
 - verifier inputs en front
-- configurer linter avec une norme choisie
 - Refresh la navbar quand on update => Assez difficile comme c'est pas le meme component. Demander a Alex une piste
+- Encrypter les mots de passe

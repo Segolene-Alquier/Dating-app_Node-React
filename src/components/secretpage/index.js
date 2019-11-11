@@ -1,3 +1,3 @@
-import Secret from './secret-view'
+import Secret from './secret-view';
 
-export default Secret
+export default Secret;

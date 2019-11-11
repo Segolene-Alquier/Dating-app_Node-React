@@ -1,10 +1,13 @@
-const User = require('../user/model');
-const user = new User();
 const jwt = require('jsonwebtoken');
+const User = require('../user/model');
+
+const user = new User();
+
 const secret = 'mignon4ever';
 
 async function booleanToken(request, response) {
-  let token = request.headers['x-access-token'] || request.headers['authorization'];
+  let token =
+    request.headers['x-access-token'] || request.headers.authorization;
   if (token) {
     if (token.startsWith('Bearer ')) {
       token = token.slice(7, token.length);
@@ -17,6 +20,7 @@ async function booleanToken(request, response) {
         });
       }
       request.decoded = decoded;
+      return request.decoded;
     });
     const userId = request.decoded.userid;
     const userData = await user.getByFiltered('id', userId, [
@@ -33,12 +37,11 @@ async function booleanToken(request, response) {
       message: 'Token is valid',
       data: userData[0],
     });
-  } else {
-    return response.json({
-      success: false,
-      message: 'Auth token not supplied',
-    });
   }
+  return response.json({
+    success: false,
+    message: 'Auth token not supplied',
+  });
 }
 
 async function login(request, response) {
@@ -46,19 +49,21 @@ async function login(request, response) {
 
   console.log('User submitted: ', username, password);
   try {
-    let visitor = await user.getBy('username', username);
-    if (visitor.length <= 0) {
+    const query = await user.getBy('username', username);
+    if (query.length <= 0) {
       console.log(username, " doesn't exist");
       response.json(false);
       return;
     }
-    visitor = visitor[0];
-    if (visitor['password'] === password) {
-      let token = jwt.sign({ userid: visitor['id'] }, 'mignon4ever', { expiresIn: '1d' });
+    const [visitor] = query;
+    if (visitor.password === password) {
+      const token = jwt.sign({ userid: visitor.id }, 'mignon4ever', {
+        expiresIn: '1d',
+      });
       console.log(token);
       response.json({
         success: true,
-        token: token,
+        token,
         err: null,
       });
     } else {
