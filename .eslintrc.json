@@ -9,6 +9,7 @@
   },
   "rules": {
     "no-console": "off",
+    "class-methods-use-this": "off",
     "jsx-a11y/href-no-hash": ["off"],
     "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
     "max-len": [
