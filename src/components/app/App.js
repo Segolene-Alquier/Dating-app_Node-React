@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import withAuth from '../auth/AuthContainer'
 // import auth from '../auth';
 import Nav from '../nav';
+import Toaster from '../toaster/index';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" component={Home} />
         </Switch>
       </Router>
+      <Toaster />
       <ToastContainer />
     </AuthProvider>
   );

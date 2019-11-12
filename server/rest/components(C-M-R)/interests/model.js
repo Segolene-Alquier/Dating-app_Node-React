@@ -1,7 +1,7 @@
 const { db } = require('../../../config/database');
 
 class Interest {
-  static isValidType(type) {
+  isValidType(type) {
     const authorizedTypes = ['id', 'name'];
     return authorizedTypes.some(authorizedType => {
       return type === authorizedType;
@@ -26,7 +26,7 @@ class Interest {
     }
   }
 
-  static async getAll() {
+  async getAll() {
     try {
       console.log('SELECT * FROM public."Interest"');
       const result = await db.any('SELECT * FROM public."Interest"');

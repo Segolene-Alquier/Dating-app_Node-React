@@ -28,9 +28,7 @@ const Nav = () => {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLogout, setIsLogout] = useState(false);
 
-  console.log('REDIRECT NAV', isLogout);
   authContext.userData.then(data => {
     if (data) {
       setIsLoggedIn(data.success);
@@ -38,22 +36,6 @@ const Nav = () => {
       setIsLoggedIn(false);
     }
   });
-  if (isLogout) {
-    return (
-      <>
-        <Nav />
-        <Redirect
-          to={{
-            pathname: '/',
-            state: {
-              toasterType: 'success',
-              toasterMessage: 'Your successfully logged out!',
-            },
-          }}
-        />
-      </>
-    );
-  }
   return (
     <AppBar position="static">
       <Toolbar>
@@ -72,7 +54,7 @@ const Nav = () => {
           <Button
             color="inherit"
             onClick={e => {
-              logout(e, setIsLogout);
+              logout(e, setIsLoggedIn);
             }}
           >
             Logout

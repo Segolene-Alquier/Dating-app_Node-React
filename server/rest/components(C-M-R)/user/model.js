@@ -1,7 +1,7 @@
 const { db, pgp } = require('../../../config/database');
 
 class User {
-  static isValidType(type) {
+  isValidType(type) {
     const authorizedTypes = ['id', 'email', 'username'];
     return authorizedTypes.some(authorizedType => {
       return type === authorizedType;
@@ -46,7 +46,7 @@ class User {
     }
   }
 
-  static async updateById(id, values) {
+  async updateById(id, values) {
     try {
       console.log(values);
       const query = `${pgp.helpers.update(
@@ -83,7 +83,7 @@ class User {
     }
   }
 
-  static async getAll() {
+  async getAll() {
     try {
       console.log('SELECT * FROM public."User"');
       const result = await db.any('SELECT * FROM public."User"');
@@ -94,7 +94,7 @@ class User {
     }
   }
 
-  static async create({ firstname, surname, username, password, email }) {
+  async create({ firstname, surname, username, password, email }) {
     try {
       console.log(
         `INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${password}, ${email})`,
@@ -110,7 +110,7 @@ class User {
     }
   }
 
-  static async delete(id) {
+  async delete(id) {
     try {
       console.log(`DELETE FROM public."User" WHERE id = ${id}`);
       await db.any('DELETE FROM public."User" WHERE id = $1 ', [id]);

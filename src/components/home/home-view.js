@@ -1,17 +1,17 @@
 import React from 'react';
-import { toast } from 'react-toastify';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
+import Toaster from '../toaster/index';
 
 const Home = ({ location }) => {
-  const { toasterMessage, toasterType } = location.state || {};
-  if (!_.isUndefined(toasterType) && !_.isUndefined(toasterMessage)) {
-    toast(toasterMessage, {
-      type: toasterType,
-    });
-  }
-
-  return <h1>Home Page</h1>;
+  const getParams = queryString.parse(location.search);
+  console.log(getParams);
+  return (
+    <>
+      <h1>Home Page</h1>
+      <Toaster getParams={getParams} />
+    </>
+  );
 };
 Home.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types

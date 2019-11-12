@@ -51,8 +51,9 @@ export const getUserData = async token => {
   return userData.data;
 };
 
-export const logout = (e, setIsLogout) => {
+export const logout = (e, setIsLoggedIn) => {
   e.preventDefault();
   localStorage.removeItem('token');
-  setIsLogout(true);
+  setIsLoggedIn(false);
+  window.location = '/?message=logout_success';
 };

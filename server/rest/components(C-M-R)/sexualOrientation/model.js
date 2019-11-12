@@ -1,7 +1,7 @@
 const { db } = require('../../../config/database');
 
 class SexualOrientation {
-  static isValidType(type) {
+  isValidType(type) {
     const authorizedTypes = ['id', 'name'];
     return authorizedTypes.some(authorizedType => {
       return type === authorizedType;
@@ -30,7 +30,7 @@ class SexualOrientation {
     }
   }
 
-  static async getAll() {
+  async getAll() {
     try {
       console.log('SELECT * FROM public."Gender"');
       const result = await db.any('SELECT * FROM public."Gender"');

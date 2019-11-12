@@ -33,8 +33,8 @@ const useSignUpForm = callback => {
           },
         )
         .then(({ data }) => {
+          console.log('DATA', data);
           if (data.created === true) {
-            // window.location.replace('/');
             callback(true);
           } else {
             console.log(data);

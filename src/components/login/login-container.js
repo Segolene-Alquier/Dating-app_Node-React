@@ -7,7 +7,7 @@ const useLoginForm = callback => {
     username: '',
     password: '',
   });
-  let { username, password } = inputs;
+  const { username, password } = inputs;
 
   const handleSubmit = event => {
     if (event) {
@@ -17,8 +17,8 @@ const useLoginForm = callback => {
         .post(
           'http://localhost:3001/auth/login',
           {
-            username: username,
-            password: password,
+            username,
+            password,
           },
           {
             headers: {
@@ -27,10 +27,10 @@ const useLoginForm = callback => {
           },
         )
         .then(({ data }) => {
-          if (data['success'] === true) {
-            localStorage.setItem('token', data['token']);
+          if (data.success === true) {
+            localStorage.setItem('token', data.token);
             console.log('Bravo, tu es connecté.e !');
-            callback(true)
+            callback(true);
           } else {
             console.log('Nope, try again');
             toast.error(data.err);
