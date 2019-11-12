@@ -2,12 +2,14 @@ const pgp = require('pg-promise')({
     // Initialization Options
 })
 
+const { user, password} = require('./db-log');
+
 const cn = {
     host: 'localhost',
     port: 5432,
     database: 'matcha',
-    user: 'yann',
-    password: 'Bbu4juillet',
+    user: user,
+    password: password,
     currentSchema: 'public'
 };
 
