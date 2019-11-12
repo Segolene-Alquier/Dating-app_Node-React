@@ -17,6 +17,8 @@ Unsubscribe les composant quand on exit
 
 ## 10/11
 
-- integrer front plus sympa
-- Refresh la navbar quand on update => Assez difficile comme c'est pas le meme component. Demander a Alex une piste
+- integrer front material-ui sur les pages signup et login => SEGO
+- faire front page mon profil => SEGO
 - Encrypter les mots de passe
+- validation compte via email https://trello.com/c/YhooitkC/10-envoyer-email-de-confirmation-pour-valider-profil => YANN
+- reset mdp https://trello.com/c/JMxZst4c/13-reinitialisation-mdp => YANN
