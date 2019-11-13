@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import React, { useContext, useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import { AuthContext } from '../app/AuthContext';
 import { logout } from '../auth';
 
