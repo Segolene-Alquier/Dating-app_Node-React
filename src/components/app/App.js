@@ -4,6 +4,7 @@ import React from 'react';
 import Signup from '../signup';
 import './App.css';
 import Login from '../login';
+import Profile from '../profile';
 import Secret from '../secretpage';
 import Home from '../home';
 import { AuthProvider } from './AuthContext';
@@ -24,6 +25,7 @@ function App() {
           <NotLoggedRoute path="/signup" component={Signup} />
           <NotLoggedRoute path="/login" component={Login} />
           <SecureRoute path="/secret" component={Secret} />
+          <SecureRoute path="/profile" component={Profile} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
