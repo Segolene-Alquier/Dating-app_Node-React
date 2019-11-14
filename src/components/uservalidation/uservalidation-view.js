@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const UserValidation = ({ computedMatch }) => {
   const { token } = computedMatch.params;
@@ -18,6 +19,11 @@ const UserValidation = ({ computedMatch }) => {
       }
     });
   return <h1>Chargement en cours</h1>;
+};
+
+UserValidation.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  computedMatch: PropTypes.object.isRequired,
 };
 
 export default UserValidation;
