@@ -82,6 +82,7 @@ const Login = () => {
             autoFocus
           />
           <Button
+            type="submit"
             variant="contained"
             color="primary"
             fullWidth

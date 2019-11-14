@@ -55,85 +55,100 @@ const Signup = () => {
           Sign up
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            margin="normal"
-            htmlFor="firstname"
-            type="text"
-            name="firstname"
-            onChange={handleInputChange}
-            value={inputs.firstname}
-            id="firstname"
-            variant="outlined"
-            label="First Name"
-            required
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            htmlFor="surname"
-            type="text"
-            name="firstname"
-            onChange={handleInputChange}
-            value={inputs.surname}
-            id="surname"
-            label="Last Name"
-            variant="outlined"
-            required
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            htmlFor="username"
-            type="text"
-            name="username"
-            onChange={handleInputChange}
-            value={inputs.username}
-            id="username"
-            variant="outlined"
-            required
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            htmlFor="email"
-            type="email"
-            name="email"
-            onChange={handleInputChange}
-            value={inputs.email}
-            id="email"
-            variant="outlined"
-            label="Email Address"
-            required
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            htmlFor="password1"
-            type="password"
-            name="password1"
-            label="Password"
-            onChange={handleInputChange}
-            value={inputs.password1}
-            id="password1"
-            variant="outlined"
-            required
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            htmlFor="password2"
-            type="password"
-            name="password2"
-            onChange={handleInputChange}
-            value={inputs.password2}
-            id="password2"
-            variant="outlined"
-            label="Re-enter password"
-            required
-          />
-
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                margin="normal"
+                htmlFor="firstname"
+                type="text"
+                name="firstname"
+                onChange={handleInputChange}
+                value={inputs.firstname}
+                id="firstname"
+                variant="outlined"
+                label="First Name"
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                margin="normal"
+                htmlFor="surname"
+                type="text"
+                name="surname"
+                onChange={handleInputChange}
+                value={inputs.surname}
+                id="surname"
+                label="Last Name"
+                variant="outlined"
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="normal"
+                htmlFor="username"
+                type="text"
+                name="username"
+                onChange={handleInputChange}
+                value={inputs.username}
+                id="username"
+                variant="outlined"
+                required
+                label="Username"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="normal"
+                htmlFor="email"
+                type="email"
+                name="email"
+                onChange={handleInputChange}
+                value={inputs.email}
+                id="email"
+                variant="outlined"
+                label="Email Address"
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                margin="normal"
+                htmlFor="password1"
+                type="password"
+                name="password1"
+                label="Password"
+                onChange={handleInputChange}
+                value={inputs.password1}
+                id="password1"
+                variant="outlined"
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                margin="normal"
+                htmlFor="password2"
+                type="password"
+                name="password2"
+                onChange={handleInputChange}
+                value={inputs.password2}
+                id="password2"
+                variant="outlined"
+                label="Re-enter password"
+                required
+              />
+            </Grid>
+          </Grid>
           <Button
+            type="submit"
             variant="contained"
             color="primary"
             fullWidth
