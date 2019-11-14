@@ -1,4 +1,4 @@
-import mailjet from '../config/mailerConfig';
+const { mailjet } = require('../config/mailerConfig');
 
 const sendSigninEmail = async (email, firstname, token) => {
   const request = mailjet.post('send', { version: 'v3.1' }).request({
@@ -26,11 +26,11 @@ const sendSigninEmail = async (email, firstname, token) => {
   });
 
   await request
-    .then(result => {
-      console.log(result.body);
-    })
+    // .then(result => {
+    //   console.log(result.body);
+    // })
     .catch(err => {
-      console.log(err.statusCode);
+      console.log(err);
     });
 };
 

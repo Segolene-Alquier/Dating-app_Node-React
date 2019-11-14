@@ -1,41 +1,31 @@
-const { db, pgp } = require('../../../config/database');
+const TokenGenerator = require('uuid-token-generator');
+const { db } = require('../../../config/database');
+
+const tokgen = new TokenGenerator(256, TokenGenerator.BASE62);
 
 class UserValidation {
   async create({ userId, type }) {
-    if (type !== 'validationKey' && type !== 'resetPasssword') {
-      console.log(err, 'in model User.create()');
+    if (type !== 'validationKey' && type !== 'resetPassword') {
+      console.log('The type is not valid in model UserValidation.create()');
       return {
         created: false,
         error: 'The type is not valid in model UserValidation.create()',
       };
     }
     try {
-      const token = UserValidation.generateToken();
+      const token = tokgen.generate();
       console.log(
         `INSERT INTO public."UserValidation" (userId, ${type}) VALUES (${userId}, ${token})`,
       );
       await db.any(
-        'INSERT INTO public."UserValidation" (userId, $1:name) VALUES ($2, $3)',
+        'INSERT INTO public."UserValidation" ("userId", $1:name) VALUES ($2, $3)',
         [type, userId, token],
       );
-      return { created: true };
+      return { created: true, token };
     } catch (err) {
       console.log(err, 'in model User.create()');
       return { created: false, error: err };
     }
-  }
-
-  generateToken() {
-    const length = 20;
-    const a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'.split(
-      '',
-    );
-    const b = [];
-    for (let i = 0; i < length; i + 1) {
-      const j = (Math.random() * (a.length - 1)).toFixed(0);
-      b[i] = a[j];
-    }
-    return b.join('');
   }
 }
 

@@ -6,4 +6,4 @@ const mailjet = require('node-mailjet').connect(
   mailjetAPISecret,
 );
 
-export default mailjet;
+module.exports.mailjet = mailjet;

@@ -1,3 +1,4 @@
+const { sendSigninEmail } = require('../../../mailer/sendSigninEmail');
 const UserInputTests = require('./utils');
 const UserValidation = require('./../userValidation/model');
 const User = require('./model');
@@ -75,8 +76,12 @@ async function createUser(request, response) {
     });
 
     response.status(200).json(call);
-    // const userId = call.
-    // userValidation.create({ userId: 120, type: 'validationKey' })
+    const userId = call.id;
+    const { token } = await userValidation.create({
+      userId,
+      type: 'validationKey',
+    });
+    await sendSigninEmail(email, firstname, token);
   } catch (err) {
     console.log(err);
     response.status(206).send(err);
