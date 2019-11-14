@@ -13,7 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 // import withAuth from '../auth/AuthContainer'
 // import auth from '../auth';
 import Nav from '../nav';
-import Toaster from '../toaster/index';
+import Toaster from '../toaster';
+import UserValidation from '../uservalidation';
 
 function App() {
   return (
@@ -23,6 +24,11 @@ function App() {
         <Switch>
           <NotLoggedRoute path="/signup" component={Signup} />
           <NotLoggedRoute path="/login" component={Login} />
+          <NotLoggedRoute
+            path="/validation/newaccount/:token"
+            component={UserValidation}
+          />
+
           <SecureRoute path="/secret" component={Secret} />
           <Route path="/" component={Home} />
         </Switch>

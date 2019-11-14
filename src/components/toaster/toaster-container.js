@@ -27,3 +27,16 @@ export const alreadyLoggedin = () => {
 
   toast(toasterMessage, { type: toasterType });
 };
+
+export const userValidated = () => {
+  const toasterType = 'success';
+  const toasterMessage = 'Your account is successfully validated!';
+
+  toast(toasterMessage, { type: toasterType });
+};
+export const userNotValidated = () => {
+  const toasterType = 'warning';
+  const toasterMessage = 'The validation link is not valid!';
+
+  toast(toasterMessage, { type: toasterType });
+};
