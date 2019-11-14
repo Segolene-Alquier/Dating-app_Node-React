@@ -1,8 +1,10 @@
-const UserValidation = require('./utils');
+const UserInputTests = require('./utils');
+const UserValidation = require('./../userValidation/model');
 const User = require('./model');
 
 const user = new User();
-const check = new UserValidation(user);
+const check = new UserInputTests(user);
+const userValidation = new UserValidation(user);
 
 async function getUsers(request, response) {
   try {
@@ -71,7 +73,10 @@ async function createUser(request, response) {
       password,
       email,
     });
+
     response.status(200).json(call);
+    // const userId = call.
+    // userValidation.create({ userId: 120, type: 'validationKey' })
   } catch (err) {
     console.log(err);
     response.status(206).send(err);
