@@ -23,17 +23,11 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.palette.common.white,
     },
   },
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   wrapperProfile: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-  },
-  wrapperTabsProfile: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
     maxWidth: '1500px',
   },
   paper: {
@@ -59,6 +53,7 @@ const useStyles = makeStyles(theme => ({
   },
   picture: {
     padding: theme.spacing(1),
+    maxWidth: '150px',
   },
   profilePicture: {
     border: '3px solid',
@@ -88,7 +83,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(3),
   },
   textField: {
-    maxWidth: '400px',
+    // maxWidth: '400px',
     width: '100%',
   },
   interestChips: {
@@ -210,8 +205,7 @@ const Profile = () => {
         </Grid>
       </Box>
       <Divider className={classes.divider} />
-      <Box className={classes.wrapperProfile}>
-        <div className={classes.wrapperTabsProfile}>
+      <div className={classes.wrapperProfile}>
           <Tabs
             width="100%"
             value={value}
@@ -222,7 +216,10 @@ const Profile = () => {
             <Tab label="About me" {...a11yProps(0)} />
             <Tab label="Parameters" {...a11yProps(1)} />
           </Tabs>
-          <TabPanel value={value} index={0}>
+          <TabPanel
+            value={value}
+            index={0}
+          >
             <Grid container>
               <Grid container sm={8} bgcolor="primary.main" direction="column">
                 <Typography variant="subtitle1">
@@ -543,8 +540,7 @@ const Profile = () => {
               </Grid>
             </form>
           </TabPanel>
-        </div>
-      </Box>
+      </div>
     </>
   );
 };
