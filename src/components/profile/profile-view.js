@@ -11,8 +11,10 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
+import Chip from '@material-ui/core/Chip';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -65,6 +67,19 @@ const useStyles = makeStyles(theme => ({
   formControl: {
     marginBottom: theme.spacing(3),
   },
+  textField: {
+    maxWidth: '400px',
+    width: '100%',
+  },
+  interestChips: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    // alignItems: 'flex-end',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+  },
 }));
 
 function TabPanel(props) {
@@ -111,7 +126,9 @@ const Profile = () => {
   const handleSexualPreference = (event, newSexualPreference) => {
     setSexualPreference(newSexualPreference);
   };
-
+  const handleDelete = () => {
+    console.info('You clicked the delete icon.');
+  };
   return (
     <>
       <Box className={classes.boxUpProfile}>
@@ -296,14 +313,108 @@ const Profile = () => {
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Grid container>
-          <Grid container sm={8} bgcolor="primary.main" direction="column">
-            Mes petites infos
+        <form className={classes.container} noValidate autoComplete="off">
+          <Grid container>
+            <Grid container sm={8} bgcolor="primary.main" direction="column">
+              <div className={classes.formControl}>
+                <Typography variant="subtitle1">
+                  <Box fontWeight="fontWeightBold">Firstname</Box>
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </div>
+              <div className={classes.formControl}>
+                <Typography variant="subtitle1">
+                  <Box fontWeight="fontWeightBold">Surname</Box>
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </div>
+              <div className={classes.formControl}>
+                <Typography variant="subtitle1">
+                  <Box fontWeight="fontWeightBold">Username</Box>
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </div>
+              <div className={classes.formControl}>
+                <Typography variant="subtitle1">
+                  <Box fontWeight="fontWeightBold">Email</Box>
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </div>
+              <div className={classes.formControl}>
+                <Typography variant="subtitle1">
+                  <Box fontWeight="fontWeightBold">Location</Box>
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </div>
+            </Grid>
+            <Grid container sm={4}>
+              <div className={classes.formControl}>
+                <Typography variant="subtitle1">
+                  <Box fontWeight="fontWeightBold">Interests</Box>
+                </Typography>
+                <div className={classes.interestChips}>
+                  <Chip label="Yoga" onDelete={handleDelete} color="primary" />
+                  <Chip label="Food" onDelete={handleDelete} color="primary" />
+                  <Chip
+                    label="Doggos"
+                    onDelete={handleDelete}
+                    color="primary"
+                  />
+                  <Chip
+                    label="Coding"
+                    onDelete={handleDelete}
+                    color="primary"
+                  />
+                  <Chip
+                    label="Fighting patriarchy"
+                    onDelete={handleDelete}
+                    color="primary"
+                  />
+                  <div>
+                    <TextField
+                      id="standard-basic"
+                      placeholder="Add interest"
+                      margin="normal"
+                    />
+                    <Fab
+                      color="secondary"
+                      aria-label="add"
+                      className={classes.fab}
+                      size="small"
+                    >
+                      <AddIcon />
+                    </Fab>
+                  </div>
+                </div>
+              </div>
+            </Grid>
           </Grid>
-          <Grid container sm={4}>
-            WIP
-          </Grid>
-        </Grid>
+        </form>
       </TabPanel>
     </>
   );
