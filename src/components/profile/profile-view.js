@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -129,8 +130,7 @@ const Profile = () => {
   const [notif, setNotif] = React.useState('bothNotif');
   const handleChangeNotif = (event, newNotif) => {
     setNotif(newNotif);
-};
-
+  };
 
   const handleDelete = () => {
     console.info('You clicked the delete icon.');
@@ -425,7 +425,7 @@ const Profile = () => {
                 <RadioGroup
                   aria-label="notif"
                   name="notif"
-                  value={notif}
+                  value={notif}c
                   onChange={handleChangeNotif}
                   row
                 >
@@ -451,6 +451,11 @@ const Profile = () => {
                   />
                 </RadioGroup>
               </FormControl>
+              <Box>
+                <Button variant="contained" color="secondary" size="large">
+                  Save changes
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </form>
