@@ -23,6 +23,19 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.palette.common.white,
     },
   },
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  wrapperProfile: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  wrapperTabsProfile: {
+    maxWidth: '1500px',
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -37,6 +50,12 @@ const useStyles = makeStyles(theme => ({
   },
   boxUpProfile: {
     margin: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  containerUpProfile: {
+    maxWidth: '1500px',
   },
   picture: {
     padding: theme.spacing(1),
@@ -119,12 +138,6 @@ function TabPanel(props) {
   );
 }
 
-// TabPanel.propTypes = {
-//   children: PropTypes.node,
-//   index: PropTypes.any.isRequired,
-//   value: PropTypes.any.isRequired,
-// };
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -157,7 +170,7 @@ const Profile = () => {
   return (
     <>
       <Box className={classes.boxUpProfile}>
-        <Grid container>
+        <Grid container className={classes.containerUpProfile}>
           <Grid
             container
             bgcolor="secondary.main"
@@ -197,315 +210,341 @@ const Profile = () => {
         </Grid>
       </Box>
       <Divider className={classes.divider} />
-      <Tabs
-        width="100%"
-        value={value}
-        onChange={handleChange}
-        aria-label="simple tabs example"
-        className={classes.tabs}
-      >
-        <Tab label="About me" {...a11yProps(0)} />
-        <Tab label="Parameters" {...a11yProps(1)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <Grid container>
-          <Grid container sm={8} bgcolor="primary.main" direction="column">
-            <Typography variant="subtitle1">
-              <Box fontWeight="fontWeightBold">Gender</Box>
-            </Typography>
-            <FormControl component="fieldset" className={classes.formControl}>
-              <RadioGroup
-                aria-label="gender"
-                name="gender"
-                value={gender}
-                onChange={handleChangeGender}
-                row
-              >
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                />
-                <FormControlLabel
-                  value="non-binary"
-                  control={<Radio />}
-                  label="Non-binary"
-                />
-              </RadioGroup>
-            </FormControl>
-            <Typography variant="subtitle1">
-              <Box fontWeight="fontWeightBold">I am looking for</Box>
-            </Typography>
-            <FormControl component="fieldset" className={classes.formControl}>
-              <RadioGroup
-                aria-label="gender"
-                name="gender"
-                value={sexualPreference}
-                onChange={handleSexualPreference}
-                row
-              >
-                <FormControlLabel
-                  value="femalePreference"
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel
-                  value="malePreference"
-                  control={<Radio />}
-                  label="Male"
-                />
-                <FormControlLabel
-                  value="both"
-                  control={<Radio />}
-                  label="Both"
-                />
-              </RadioGroup>
-            </FormControl>
-            <Typography variant="subtitle1">
-              <Box fontWeight="fontWeightBold">My self-summary</Box>
-            </Typography>
-            <TextField
-              id="outlined-multiline-static"
-              multiline
-              rows="4"
-              className={classes.summaryField}
-              margin="normal"
-              variant="outlined"
-            />
-            <Box>
-              <Button variant="contained" color="secondary" size="medium">
-                Save changes
-              </Button>
-            </Box>
-          </Grid>
-          <Grid container sm={4}>
-            <Typography variant="subtitle1">
-              <Box fontWeight="fontWeightBold">My pictures</Box>
-            </Typography>
+      <Box className={classes.wrapperProfile}>
+        <div className={classes.wrapperTabsProfile}>
+          <Tabs
+            width="100%"
+            value={value}
+            onChange={handleChange}
+            aria-label="simple tabs example"
+            className={classes.tabs}
+          >
+            <Tab label="About me" {...a11yProps(0)} />
+            <Tab label="Parameters" {...a11yProps(1)} />
+          </Tabs>
+          <TabPanel value={value} index={0}>
             <Grid container>
-              <Grid container xs={6} sm={6} className={classes.picture}>
-                <img
-                  src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                  alt="My profile"
-                  width="100%"
-                />
-              </Grid>
-              <Grid container xs={6} sm={6} className={classes.picture}>
-                <img
-                  className={classes.profilePicture}
-                  src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                  alt="My profile"
-                  width="100%"
-                />
-              </Grid>
-              <Grid container xs={6} sm={6} className={classes.picture}>
-                <img
-                  src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                  alt="My profile"
-                  width="100%"
-                />
-              </Grid>
-              <Grid container xs={6} sm={6} className={classes.picture}>
-                <img
-                  src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                  alt="My profile"
-                  width="100%"
-                />
-              </Grid>
-              <Grid container xs={6} sm={6} className={classes.picture}>
-                <img
-                  src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                  alt="My profile"
-                  width="100%"
-                />
-              </Grid>
-              <Grid container xs={6} sm={6} className={classes.picture}>
-                <Box
-                  bgcolor="secondary.main"
-                  width="100%"
-                  className={classes.modifyPictureButton}
+              <Grid container sm={8} bgcolor="primary.main" direction="column">
+                <Typography variant="subtitle1">
+                  <Box fontWeight="fontWeightBold">Gender</Box>
+                </Typography>
+                <FormControl
+                  component="fieldset"
+                  className={classes.formControl}
                 >
-                  <p>Modifier les photos</p>
+                  <RadioGroup
+                    aria-label="gender"
+                    name="gender"
+                    value={gender}
+                    onChange={handleChangeGender}
+                    row
+                  >
+                    <FormControlLabel
+                      value="female"
+                      control={<Radio />}
+                      label="Female"
+                    />
+                    <FormControlLabel
+                      value="male"
+                      control={<Radio />}
+                      label="Male"
+                    />
+                    <FormControlLabel
+                      value="non-binary"
+                      control={<Radio />}
+                      label="Non-binary"
+                    />
+                  </RadioGroup>
+                </FormControl>
+                <Typography variant="subtitle1">
+                  <Box fontWeight="fontWeightBold">I am looking for</Box>
+                </Typography>
+                <FormControl
+                  component="fieldset"
+                  className={classes.formControl}
+                >
+                  <RadioGroup
+                    aria-label="gender"
+                    name="gender"
+                    value={sexualPreference}
+                    onChange={handleSexualPreference}
+                    row
+                  >
+                    <FormControlLabel
+                      value="femalePreference"
+                      control={<Radio />}
+                      label="Female"
+                    />
+                    <FormControlLabel
+                      value="malePreference"
+                      control={<Radio />}
+                      label="Male"
+                    />
+                    <FormControlLabel
+                      value="both"
+                      control={<Radio />}
+                      label="Both"
+                    />
+                  </RadioGroup>
+                </FormControl>
+                <Typography variant="subtitle1">
+                  <Box fontWeight="fontWeightBold">My self-summary</Box>
+                </Typography>
+                <TextField
+                  id="outlined-multiline-static"
+                  multiline
+                  rows="4"
+                  className={classes.summaryField}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <Box>
+                  <Button variant="contained" color="secondary" size="medium">
+                    Save changes
+                  </Button>
                 </Box>
               </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <form className={classes.container} noValidate autoComplete="off">
-          <Grid container>
-            <Grid container sm={6} bgcolor="primary.main" direction="column">
-              <div className={classes.formControl}>
+              <Grid container sm={4}>
                 <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">Firstname</Box>
+                  <Box fontWeight="fontWeightBold">My pictures</Box>
                 </Typography>
-                <TextField
-                  id="outlined-basic"
-                  className={classes.textField}
-                  margin="normal"
-                  variant="outlined"
-                />
-              </div>
-              <div className={classes.formControl}>
-                <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">Surname</Box>
-                </Typography>
-                <TextField
-                  id="outlined-basic"
-                  className={classes.textField}
-                  margin="normal"
-                  variant="outlined"
-                />
-              </div>
-              <div className={classes.formControl}>
-                <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">Username</Box>
-                </Typography>
-                <TextField
-                  id="outlined-basic"
-                  className={classes.textField}
-                  margin="normal"
-                  variant="outlined"
-                />
-              </div>
-              <div className={classes.formControl}>
-                <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">Email</Box>
-                </Typography>
-                <TextField
-                  id="outlined-basic"
-                  className={classes.textField}
-                  margin="normal"
-                  variant="outlined"
-                />
-              </div>
-              <div className={classes.formControl}>
-                <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">Location</Box>
-                </Typography>
-                <TextField
-                  id="outlined-basic"
-                  className={classes.textField}
-                  margin="normal"
-                  variant="outlined"
-                />
-              </div>
-            </Grid>
-            <Grid container sm={6} direction="column">
-              <div className={classes.formControl}>
-                <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">Interests</Box>
-                </Typography>
-                <div className={classes.interestChips}>
-                  <Chip label="Yoga" onDelete={handleDelete} color="primary" />
-                  <Chip label="Food" onDelete={handleDelete} color="primary" />
-                  <Chip
-                    label="Doggos"
-                    onDelete={handleDelete}
-                    color="primary"
-                  />
-                  <Chip
-                    label="Coding"
-                    onDelete={handleDelete}
-                    color="primary"
-                  />
-                  <Chip
-                    label="Fighting patriarchy"
-                    onDelete={handleDelete}
-                    color="primary"
-                  />
-                  <div>
-                    <TextField
-                      id="standard-basic"
-                      placeholder="Add interest"
-                      margin="normal"
+                <Grid container>
+                  <Grid container xs={6} sm={6} className={classes.picture}>
+                    <img
+                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
+                      alt="My profile"
+                      width="100%"
                     />
-                    <Fab
-                      color="secondary"
-                      aria-label="add"
-                      className={classes.fab}
-                      size="small"
+                  </Grid>
+                  <Grid container xs={6} sm={6} className={classes.picture}>
+                    <img
+                      className={classes.profilePicture}
+                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
+                      alt="My profile"
+                      width="100%"
+                    />
+                  </Grid>
+                  <Grid container xs={6} sm={6} className={classes.picture}>
+                    <img
+                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
+                      alt="My profile"
+                      width="100%"
+                    />
+                  </Grid>
+                  <Grid container xs={6} sm={6} className={classes.picture}>
+                    <img
+                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
+                      alt="My profile"
+                      width="100%"
+                    />
+                  </Grid>
+                  <Grid container xs={6} sm={6} className={classes.picture}>
+                    <img
+                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
+                      alt="My profile"
+                      width="100%"
+                    />
+                  </Grid>
+                  <Grid container xs={6} sm={6} className={classes.picture}>
+                    <Box
+                      bgcolor="secondary.main"
+                      width="100%"
+                      className={classes.modifyPictureButton}
                     >
-                      <AddIcon />
-                    </Fab>
-                  </div>
-                </div>
-              </div>
-              <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">Notifications</Box>
-              </Typography>
-              <FormControl component="fieldset" className={classes.formControl}>
-                <RadioGroup
-                  aria-label="notif"
-                  name="notif"
-                  value={notif}
-                  onChange={handleChangeNotif}
-                  row
-                >
-                  <FormControlLabel
-                    value="mailNotif"
-                    control={<Radio />}
-                    label="Mail"
-                  />
-                  <FormControlLabel
-                    value="pushNotif"
-                    control={<Radio />}
-                    label="Push"
-                  />
-                  <FormControlLabel
-                    value="bothNotif"
-                    control={<Radio />}
-                    label="Both"
-                  />
-                  <FormControlLabel
-                    value="noNotif"
-                    control={<Radio />}
-                    label="None"
-                  />
-                </RadioGroup>
-              </FormControl>
-              <Box>
-                <Button variant="contained" color="secondary" size="large">
-                  Save changes
-                </Button>
-              </Box>
-              <Paper className={classes.paperAccount}>
-                <Typography variant="h5" component="h5">
-                  Account security
-                </Typography>
-                <div>
-                  <Box className={classes.divAccount}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.buttonAccount}
-                      size="large"
-                    >
-                      Change password
-                    </Button>
-                  </Box>
-                  <Box className={classes.divAccount}>
-                    <Button
-                      className={classes.buttonAccount}
-                      variant="outlined"
-                      color="secondary"
-                      size="large"
-                    >
-                      Delete my account
-                    </Button>
-                  </Box>
-                </div>
-              </Paper>
+                      <p>Modifier les photos</p>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </TabPanel>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <form className={classes.container} noValidate autoComplete="off">
+              <Grid container>
+                <Grid
+                  container
+                  sm={6}
+                  bgcolor="primary.main"
+                  direction="column"
+                >
+                  <div className={classes.formControl}>
+                    <Typography variant="subtitle1">
+                      <Box fontWeight="fontWeightBold">Firstname</Box>
+                    </Typography>
+                    <TextField
+                      id="outlined-basic"
+                      className={classes.textField}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div className={classes.formControl}>
+                    <Typography variant="subtitle1">
+                      <Box fontWeight="fontWeightBold">Surname</Box>
+                    </Typography>
+                    <TextField
+                      id="outlined-basic"
+                      className={classes.textField}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div className={classes.formControl}>
+                    <Typography variant="subtitle1">
+                      <Box fontWeight="fontWeightBold">Username</Box>
+                    </Typography>
+                    <TextField
+                      id="outlined-basic"
+                      className={classes.textField}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div className={classes.formControl}>
+                    <Typography variant="subtitle1">
+                      <Box fontWeight="fontWeightBold">Email</Box>
+                    </Typography>
+                    <TextField
+                      id="outlined-basic"
+                      className={classes.textField}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div className={classes.formControl}>
+                    <Typography variant="subtitle1">
+                      <Box fontWeight="fontWeightBold">Location</Box>
+                    </Typography>
+                    <TextField
+                      id="outlined-basic"
+                      className={classes.textField}
+                      margin="normal"
+                      variant="outlined"
+                    />
+                  </div>
+                </Grid>
+                <Grid container sm={6} direction="column">
+                  <div className={classes.formControl}>
+                    <Typography variant="subtitle1">
+                      <Box fontWeight="fontWeightBold">Interests</Box>
+                    </Typography>
+                    <div className={classes.interestChips}>
+                      <Chip
+                        label="Yoga"
+                        onDelete={handleDelete}
+                        color="primary"
+                      />
+                      <Chip
+                        label="Food"
+                        onDelete={handleDelete}
+                        color="primary"
+                      />
+                      <Chip
+                        label="Doggos"
+                        onDelete={handleDelete}
+                        color="primary"
+                      />
+                      <Chip
+                        label="Coding"
+                        onDelete={handleDelete}
+                        color="primary"
+                      />
+                      <Chip
+                        label="Fighting patriarchy"
+                        onDelete={handleDelete}
+                        color="primary"
+                      />
+                      <div>
+                        <TextField
+                          id="standard-basic"
+                          placeholder="Add interest"
+                          margin="normal"
+                        />
+                        <Fab
+                          color="secondary"
+                          aria-label="add"
+                          className={classes.fab}
+                          size="small"
+                        >
+                          <AddIcon />
+                        </Fab>
+                      </div>
+                    </div>
+                  </div>
+                  <Typography variant="subtitle1">
+                    <Box fontWeight="fontWeightBold">Notifications</Box>
+                  </Typography>
+                  <FormControl
+                    component="fieldset"
+                    className={classes.formControl}
+                  >
+                    <RadioGroup
+                      aria-label="notif"
+                      name="notif"
+                      value={notif}
+                      onChange={handleChangeNotif}
+                      row
+                    >
+                      <FormControlLabel
+                        value="mailNotif"
+                        control={<Radio />}
+                        label="Mail"
+                      />
+                      <FormControlLabel
+                        value="pushNotif"
+                        control={<Radio />}
+                        label="Push"
+                      />
+                      <FormControlLabel
+                        value="bothNotif"
+                        control={<Radio />}
+                        label="Both"
+                      />
+                      <FormControlLabel
+                        value="noNotif"
+                        control={<Radio />}
+                        label="None"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                  <Box>
+                    <Button variant="contained" color="secondary" size="large">
+                      Save changes
+                    </Button>
+                  </Box>
+                  <Paper className={classes.paperAccount}>
+                    <Typography variant="h5" component="h5">
+                      Account security
+                    </Typography>
+                    <div>
+                      <Box className={classes.divAccount}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className={classes.buttonAccount}
+                          size="large"
+                        >
+                          Change password
+                        </Button>
+                      </Box>
+                      <Box className={classes.divAccount}>
+                        <Button
+                          className={classes.buttonAccount}
+                          variant="outlined"
+                          color="secondary"
+                          size="large"
+                        >
+                          Delete my account
+                        </Button>
+                      </Box>
+                    </div>
+                  </Paper>
+                </Grid>
+              </Grid>
+            </form>
+          </TabPanel>
+        </div>
+      </Box>
     </>
   );
 };
