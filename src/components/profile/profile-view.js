@@ -75,11 +75,30 @@ const useStyles = makeStyles(theme => ({
   interestChips: {
     display: 'flex',
     justifyContent: 'flex-start',
-    // alignItems: 'flex-end',
     flexWrap: 'wrap',
     '& > *': {
       margin: theme.spacing(0.5),
     },
+  },
+  paperAccount: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(5),
+    padding: theme.spacing(3, 2),
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexGrow: '1',
+  },
+  divAccount: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: theme.spacing(2),
+  },
+  buttonAccount: {
+    width: '100%',
   },
 }));
 
@@ -425,7 +444,7 @@ const Profile = () => {
                 <RadioGroup
                   aria-label="notif"
                   name="notif"
-                  value={notif}c
+                  value={notif}
                   onChange={handleChangeNotif}
                   row
                 >
@@ -456,6 +475,33 @@ const Profile = () => {
                   Save changes
                 </Button>
               </Box>
+              <Paper className={classes.paperAccount}>
+                <Typography variant="h5" component="h5">
+                  Account security
+                </Typography>
+                <div>
+                  <Box className={classes.divAccount}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.buttonAccount}
+                      size="large"
+                    >
+                      Change password
+                    </Button>
+                  </Box>
+                  <Box className={classes.divAccount}>
+                    <Button
+                      className={classes.buttonAccount}
+                      variant="outlined"
+                      color="secondary"
+                      size="large"
+                    >
+                      Delete my account
+                    </Button>
+                  </Box>
+                </div>
+              </Paper>
             </Grid>
           </Grid>
         </form>
