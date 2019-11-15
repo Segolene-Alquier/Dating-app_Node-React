@@ -126,6 +126,12 @@ const Profile = () => {
   const handleSexualPreference = (event, newSexualPreference) => {
     setSexualPreference(newSexualPreference);
   };
+  const [notif, setNotif] = React.useState('bothNotif');
+  const handleChangeNotif = (event, newNotif) => {
+    setNotif(newNotif);
+};
+
+
   const handleDelete = () => {
     console.info('You clicked the delete icon.');
   };
@@ -315,7 +321,7 @@ const Profile = () => {
       <TabPanel value={value} index={1}>
         <form className={classes.container} noValidate autoComplete="off">
           <Grid container>
-            <Grid container sm={8} bgcolor="primary.main" direction="column">
+            <Grid container sm={6} bgcolor="primary.main" direction="column">
               <div className={classes.formControl}>
                 <Typography variant="subtitle1">
                   <Box fontWeight="fontWeightBold">Firstname</Box>
@@ -372,7 +378,7 @@ const Profile = () => {
                 />
               </div>
             </Grid>
-            <Grid container sm={4}>
+            <Grid container sm={6} direction="column">
               <div className={classes.formControl}>
                 <Typography variant="subtitle1">
                   <Box fontWeight="fontWeightBold">Interests</Box>
@@ -412,6 +418,39 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
+              <Typography variant="subtitle1">
+                <Box fontWeight="fontWeightBold">Notifications</Box>
+              </Typography>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <RadioGroup
+                  aria-label="notif"
+                  name="notif"
+                  value={notif}
+                  onChange={handleChangeNotif}
+                  row
+                >
+                  <FormControlLabel
+                    value="mailNotif"
+                    control={<Radio />}
+                    label="Mail"
+                  />
+                  <FormControlLabel
+                    value="pushNotif"
+                    control={<Radio />}
+                    label="Push"
+                  />
+                  <FormControlLabel
+                    value="bothNotif"
+                    control={<Radio />}
+                    label="Both"
+                  />
+                  <FormControlLabel
+                    value="noNotif"
+                    control={<Radio />}
+                    label="None"
+                  />
+                </RadioGroup>
+              </FormControl>
             </Grid>
           </Grid>
         </form>
