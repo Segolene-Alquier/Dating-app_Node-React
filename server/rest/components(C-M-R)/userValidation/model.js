@@ -20,8 +20,12 @@ class UserValidation {
       console.log(
         `INSERT INTO public."UserValidation" (userId, ${type}) VALUES (${userId}, ${token})`,
       );
+      // await db.any(
+      //   'INSERT INTO public."UserValidation" ("userId", $1:name) VALUES ($2, $3)',
+      //   [type, userId, token],
+      // );
       await db.any(
-        'INSERT INTO public."UserValidation" ("userId", $1:name) VALUES ($2, $3)',
+        'UPDATE public."UserValidation" SET $1:name=$3 WHERE "userId"=$2; INSERT INTO public."UserValidation" ("userId", $1:name) SELECT $2, $3 WHERE NOT EXISTS (SELECT 1 FROM public."UserValidation" WHERE "userId"=$2)',
         [type, userId, token],
       );
       return { created: true, token };
@@ -30,6 +34,11 @@ class UserValidation {
       return { created: false, error: err };
     }
   }
+
+  //   UPDATE table SET field='C', field2='Z' WHERE id=3;
+  // INSERT INTO table (id, field, field2)
+  //        SELECT 3, 'C', 'Z'
+  //        WHERE NOT EXISTS (SELECT 1 FROM table WHERE id=3);
 
   async verifyConfirmationToken({ token }) {
     if (token === undefined) {
