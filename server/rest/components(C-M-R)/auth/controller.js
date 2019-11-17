@@ -57,15 +57,23 @@ async function login(request, response) {
     }
     const [visitor] = query;
     if (visitor.password === password) {
-      const token = jwt.sign({ userid: visitor.id }, 'mignon4ever', {
-        expiresIn: '1d',
-      });
-      console.log(token);
-      response.json({
-        success: true,
-        token,
-        err: null,
-      });
+      if (visitor.validated) {
+        const token = jwt.sign({ userid: visitor.id }, 'mignon4ever', {
+          expiresIn: '1d',
+        });
+        console.log(token);
+        response.json({
+          success: true,
+          token,
+          err: null,
+        });
+      } else {
+        response.status(200).json({
+          success: false,
+          token: null,
+          err: 'The user is not validated',
+        });
+      }
     } else {
       console.log('The login and password do not match!');
       response.status(200).json({
