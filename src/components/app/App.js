@@ -16,6 +16,7 @@ import Nav from '../nav';
 import Toaster from '../toaster';
 import UserValidation from '../uservalidation';
 import ResetForgotPassword from '../ResetforgotPassword';
+import ForgotPassword from '../forgotpassword';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             path="/validation/newaccount/:token"
             component={UserValidation}
           />
+          <NotLoggedRoute path="/forgotpassword" component={ForgotPassword} />
           <NotLoggedRoute
             path="/validation/forgotpassword/:token"
             component={ResetForgotPassword}

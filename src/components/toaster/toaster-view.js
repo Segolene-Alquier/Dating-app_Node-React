@@ -7,6 +7,7 @@ import {
   alreadyLoggedin,
   userValidated,
   userNotValidated,
+  forgotPasswordSuccess,
 } from './toaster-container';
 
 const Toaster = ({ getParams }) => {
@@ -29,6 +30,9 @@ const Toaster = ({ getParams }) => {
         break;
       case 'user_not_validated':
         userNotValidated();
+        break;
+      case 'forgotPassword_success':
+        forgotPasswordSuccess();
         break;
       default:
         break;

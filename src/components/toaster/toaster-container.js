@@ -40,3 +40,9 @@ export const userNotValidated = () => {
 
   toast(toasterMessage, { type: toasterType });
 };
+export const forgotPasswordSuccess = () => {
+  const toasterType = 'success';
+  const toasterMessage = 'You have receive a reset link inside your email';
+
+  toast(toasterMessage, { type: toasterType });
+};
