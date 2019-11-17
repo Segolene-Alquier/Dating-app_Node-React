@@ -46,7 +46,7 @@ class UserValidation {
     try {
       return db
         .one(
-          'DELETE FROM  public."UserValidation" WHERE "validationKey" = $1 RETURNING "userId"',
+          'DELETE FROM  public."UserValidation" WHERE "validationKey" = $1 RETURNING "userId" RETURNING id',
           token,
         )
         .then(({ userId }) => {
@@ -86,7 +86,7 @@ class UserValidation {
     try {
       return db
         .one(
-          'SELECT * FROM  public."UserValidation" WHERE "resetPassword" = $1',
+          'SELECT * FROM public."UserValidation" WHERE "resetPassword" = $1',
           token,
         )
         .then(data => {
@@ -111,6 +111,16 @@ class UserValidation {
     } catch (err) {
       console.log(err, 'in model UserValidation.create()');
       return { success: false, error: err };
+    }
+  }
+
+  async delete({ userId }) {
+    try {
+      db.any('DELETE FROM public."UserValidation" WHERE "userId" = $1', userId);
+      return;
+    } catch (error) {
+      console.log(error, 'in model UserValidation.delete()');
+      return { success: false, error };
     }
   }
 }

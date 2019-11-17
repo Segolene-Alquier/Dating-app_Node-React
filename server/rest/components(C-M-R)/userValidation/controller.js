@@ -64,9 +64,11 @@ async function forgotPasswordUpdate(request, response) {
       token: request.params.token,
     });
     console.log(call);
-    if (call.success) {
+    const { success, userId } = call;
+    if (success) {
       // update password
-      await user.updateById(call.id, { password });
+      await user.updateById(userId, { password });
+      uv.delete({ userId });
       response.status(206).send({ success: true });
     } else {
       response.status(206).send({ success: false, err: call.error });
