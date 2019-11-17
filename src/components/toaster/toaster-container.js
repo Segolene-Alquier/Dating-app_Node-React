@@ -46,3 +46,10 @@ export const forgotPasswordSuccess = () => {
 
   toast(toasterMessage, { type: toasterType });
 };
+
+export const resetPasswordSuccess = () => {
+  const toasterType = 'success';
+  const toasterMessage = 'You have successfully reset the password';
+
+  toast(toasterMessage, { type: toasterType });
+};

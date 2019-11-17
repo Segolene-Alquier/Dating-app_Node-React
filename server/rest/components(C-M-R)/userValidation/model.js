@@ -89,9 +89,10 @@ class UserValidation {
           'SELECT * FROM  public."UserValidation" WHERE "resetPassword" = $1',
           token,
         )
-        .then(() => {
+        .then(data => {
           return {
             success: true,
+            userId: data.userId,
           };
         })
         .catch(error => {

@@ -57,6 +57,27 @@ async function forgotPassword(request, response) {
   }
 }
 
+async function forgotPasswordUpdate(request, response) {
+  const { password } = request.body;
+  try {
+    const call = await uv.verifyForgotPasswordToken({
+      token: request.params.token,
+    });
+    console.log(call);
+    if (call.success) {
+      // update password
+      await user.updateById(call.id, { password });
+      response.status(206).send({ success: true });
+    } else {
+      response.status(206).send({ success: false, err: call.error });
+    }
+  } catch (err) {
+    console.log(err);
+    response.status(206).send(err);
+  }
+}
+
 module.exports.verifyConfirmationToken = verifyConfirmationToken;
 module.exports.forgotPassword = forgotPassword;
 module.exports.verifyForgotPasswordToken = verifyForgotPasswordToken;
+module.exports.forgotPasswordUpdate = forgotPasswordUpdate;

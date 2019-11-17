@@ -8,6 +8,7 @@ import {
   userValidated,
   userNotValidated,
   forgotPasswordSuccess,
+  resetPasswordSuccess,
 } from './toaster-container';
 
 const Toaster = ({ getParams }) => {
@@ -33,6 +34,9 @@ const Toaster = ({ getParams }) => {
         break;
       case 'forgotPassword_success':
         forgotPasswordSuccess();
+        break;
+      case 'reset_password_success':
+        resetPasswordSuccess();
         break;
       default:
         break;
