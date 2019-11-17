@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Nav from '../nav';
 import Toaster from '../toaster';
 import UserValidation from '../uservalidation';
+import ResetForgotPassword from '../ResetforgotPassword';
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
           <NotLoggedRoute
             path="/validation/newaccount/:token"
             component={UserValidation}
+          />
+          <NotLoggedRoute
+            path="/validation/forgotpassword/:token"
+            component={ResetForgotPassword}
           />
 
           <SecureRoute path="/secret" component={Secret} />

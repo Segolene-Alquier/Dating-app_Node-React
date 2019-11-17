@@ -19,6 +19,18 @@ async function verifyConfirmationToken(request, response) {
   }
 }
 
+async function verifyForgotPasswordToken(request, response) {
+  try {
+    const call = await uv.verifyForgotPasswordToken({
+      token: request.params.token,
+    });
+    response.status(200).json(call);
+  } catch (err) {
+    console.log(err);
+    response.status(206).send(err);
+  }
+}
+
 async function forgotPassword(request, response) {
   const { email } = request.body;
   try {
@@ -47,3 +59,4 @@ async function forgotPassword(request, response) {
 
 module.exports.verifyConfirmationToken = verifyConfirmationToken;
 module.exports.forgotPassword = forgotPassword;
+module.exports.verifyForgotPasswordToken = verifyForgotPasswordToken;

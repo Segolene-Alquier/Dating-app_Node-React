@@ -35,11 +35,6 @@ class UserValidation {
     }
   }
 
-  //   UPDATE table SET field='C', field2='Z' WHERE id=3;
-  // INSERT INTO table (id, field, field2)
-  //        SELECT 3, 'C', 'Z'
-  //        WHERE NOT EXISTS (SELECT 1 FROM table WHERE id=3);
-
   async verifyConfirmationToken({ token }) {
     if (token === undefined) {
       console.log('The token is not defined');
@@ -79,11 +74,43 @@ class UserValidation {
       return { success: false, error: err };
     }
   }
+
+  async verifyForgotPasswordToken({ token }) {
+    if (token === undefined) {
+      console.log('The token is not defined');
+      return {
+        success: false,
+        error: 'The token is not defined',
+      };
+    }
+    try {
+      return db
+        .one(
+          'SELECT * FROM  public."UserValidation" WHERE "resetPassword" = $1',
+          token,
+        )
+        .then(() => {
+          return {
+            success: true,
+          };
+        })
+        .catch(error => {
+          if (error.received === 0) {
+            return {
+              success: false,
+              error: 'The confirmation link is not valid',
+            };
+          }
+          console.log(error, 'in model UserValidation.create()');
+          return {
+            success: false,
+            error,
+          };
+        });
+    } catch (err) {
+      console.log(err, 'in model UserValidation.create()');
+      return { success: false, error: err };
+    }
+  }
 }
-// const uv = new UserValidation();
-// console.log(
-//   uv.verifyConfirmationToken({
-//     token: 'DKiVPwcK9MJ14o9xNaEp5rhvIuErfbrLwzvjP0RjF1W',
-//   }),
-// );
 module.exports = UserValidation;
