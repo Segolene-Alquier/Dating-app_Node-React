@@ -46,7 +46,7 @@ class UserValidation {
     try {
       return db
         .one(
-          'DELETE FROM  public."UserValidation" WHERE "validationKey" = $1 RETURNING "userId" RETURNING id',
+          'DELETE FROM  public."UserValidation" WHERE "validationKey" = $1 RETURNING "userId"',
           token,
         )
         .then(({ userId }) => {
