@@ -5,7 +5,7 @@ const Gender = require('../gender/model');
 
 const genderInstance = new Gender();
 
-class UserValidation {
+class UserInputTests {
   constructor(User) {
     this.user = User;
   }
@@ -305,4 +305,4 @@ class UserValidation {
   }
 }
 
-module.exports = UserValidation;
+module.exports = UserInputTests;

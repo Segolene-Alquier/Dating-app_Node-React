@@ -22,3 +22,16 @@ Unsubscribe les composant quand on exit
 - Encrypter les mots de passe
 - validation compte via email https://trello.com/c/YhooitkC/10-envoyer-email-de-confirmation-pour-valider-profil => YANN
 - reset mdp https://trello.com/c/JMxZst4c/13-reinitialisation-mdp => YANN
+
+## 14/11
+
+### Verification token: OK
+
+L'utilisateur recoit un lien pour confirmer le compte
+quand le front recoit l'URL, il fait une requete au back pour confirmer le token
+Si le back retourne true, le front affiche "Utilisateur validé". Le back supprime la ligne dans userValidation et passe utilisateur a verfied => true
+Si le back retourne false, le front affiche l'erreur que le back aura retourné
+
+a faire:
+Au login, si utilisateur n'a pas validé son compte, il faut envoyer message d'erreur "compte non validé et renvoyer un email de validation"
+Afficher message d'erreur en front : ajouter type d'erreur et changer le parsing d'erreur

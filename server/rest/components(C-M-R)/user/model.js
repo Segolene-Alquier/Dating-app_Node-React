@@ -97,13 +97,16 @@ class User {
   async create({ firstname, surname, username, password, email }) {
     try {
       console.log(
-        `INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${password}, ${email})`,
+        `INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${password}, ${email}) RETURNING id`,
       );
-      await db.any(
-        'INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5)',
-        [firstname, surname, username, password, email],
-      );
-      return { created: true };
+      return await db
+        .any(
+          'INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+          [firstname, surname, username, password, email],
+        )
+        .then(data => {
+          return { created: true, id: data[0].id };
+        });
     } catch (err) {
       console.log(err, 'in model User.create()');
       return { created: false, error: err };

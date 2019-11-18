@@ -25,6 +25,10 @@ app.use('/genders', require('./rest/components(C-M-R)/gender/routes'));
 // app.use("/sexualOrientations", require("./rest/components(C-M-R)/sexualOrientation/routes"))
 app.use('/interests', require('./rest/components(C-M-R)/interests/routes'));
 app.use('/auth', require('./rest/components(C-M-R)/auth/routes'));
+app.use(
+  '/validation',
+  require('./rest/components(C-M-R)/userValidation/routes'),
+);
 
 app.listen(port, () => {
   console.log('Example app listening on port 3001!');
