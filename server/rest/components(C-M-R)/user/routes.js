@@ -10,6 +10,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  getMyUserInfo,
 } = require('./controller');
 
 // list of all users - user
@@ -18,6 +19,8 @@ router.get('/', checkToken, getUsers);
 router.get('/verification/username', usernameExists);
 // email already exists ? - user
 router.get('/verification/email', emailExists);
+// get my profile info
+router.get('/profile', checkToken, getMyUserInfo);
 // get user by id - user
 router.get('/:id', checkToken, getUserById);
 // create user - user
