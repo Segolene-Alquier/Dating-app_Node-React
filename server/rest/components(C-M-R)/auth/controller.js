@@ -61,6 +61,11 @@ async function login(request, response) {
         const token = jwt.sign({ userid: visitor.id }, 'mignon4ever', {
           expiresIn: '1d',
         });
+        console.log(
+          await user.updateById(visitor.id, {
+            lastVisit: 'now()',
+          }),
+        );
         console.log(token);
         response.json({
           success: true,
