@@ -406,6 +406,7 @@ const Profile = () => {
                     className={classes.textField}
                     margin="normal"
                     variant="outlined"
+                    type="email"
                   />
                 </div>
                 <div className={classes.formControl}>
@@ -417,6 +418,18 @@ const Profile = () => {
                     className={classes.textField}
                     margin="normal"
                     variant="outlined"
+                  />
+                </div>
+                <div className={classes.formControl}>
+                  <Typography variant="subtitle1">
+                    <Box fontWeight="fontWeightBold">Birthdate</Box>
+                  </Typography>
+                  <TextField
+                    id="outlined-basic"
+                    className={classes.textField}
+                    margin="normal"
+                    variant="outlined"
+                    type="date"
                   />
                 </div>
               </Grid>
