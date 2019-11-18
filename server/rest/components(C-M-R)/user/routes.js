@@ -19,11 +19,11 @@ router.get('/verification/username', usernameExists);
 // email already exists ? - user
 router.get('/verification/email', emailExists);
 // get user by id - user
-router.get('/:id', getUserById);
+router.get('/:id', checkToken, getUserById);
 // create user - user
 router.post('/', createUser);
 // update user - user
-router.put('/:id', updateUser);
+router.put('/', checkToken, updateUser);
 // delete user - user
 router.delete('/:id', deleteUser);
 

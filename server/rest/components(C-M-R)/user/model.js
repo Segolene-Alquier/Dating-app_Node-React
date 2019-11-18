@@ -55,7 +55,7 @@ class User {
         `User`,
       )} WHERE id = $1`;
       console.log(query);
-      console.log(db.any(query, [id]));
+      console.log(await db.any(query, [id]));
     } catch (err) {
       console.log(err, 'in model User.updateById()');
     }

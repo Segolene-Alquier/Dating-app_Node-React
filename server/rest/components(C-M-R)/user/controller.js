@@ -89,7 +89,9 @@ async function createUser(request, response) {
 }
 
 async function updateUser(request, response) {
-  const id = parseInt(request.params.id, 10);
+  // const id = parseInt(request.params.id, 10);
+  const id = request.decoded.userid;
+  // console.log(newId);
   const filteredValues = check.filterInputValues('API', request.body);
   const errors = await check.updateUserErrors(request.body);
   if (errors.length) {
