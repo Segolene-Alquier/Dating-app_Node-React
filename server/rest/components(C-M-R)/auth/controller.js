@@ -24,12 +24,21 @@ async function booleanToken(request, response) {
     });
     const userId = request.decoded.userid;
     const userData = await user.getByFiltered('id', userId, [
-      'id',
       'firstname',
       'surname',
       'username',
-      'validated',
-      'suspended',
+      'email',
+      'location',
+      'birthDate',
+      'popularityRate',
+      'gender',
+      'sexualOrientation',
+      'description',
+      'interests',
+      'images',
+      'profilePicture',
+      'notificationMail',
+      'notificationPush',
     ]);
 
     return response.json({

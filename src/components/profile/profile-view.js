@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -10,12 +10,16 @@ import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
+import { AuthContext } from '../app/AuthContext';
+import UseProfileForm from './profile-container';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -144,18 +148,66 @@ function a11yProps(index) {
 
 const Profile = () => {
   const classes = useStyles();
+  const authContext = useContext(AuthContext);
+
+  const { handleProfileChange, profile } = UseProfileForm(authContext.userData);
+  const {
+    birthDate,
+    description,
+    email,
+    firstname,
+    // gender,
+    images,
+    interests,
+    location,
+    notificationMail,
+    notificationPush,
+    popularityRate,
+    profilePicture,
+    sexualOrientation,
+    surname,
+    username,
+  } = profile;
+
+  // useEffect(() => {
+
+  // });
+
+  console.log(profile);
+
+  // change tabs
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const [gender, setGender] = React.useState('female');
-  const handleChangeGender = (event, newGender) => {
-    setGender(newGender);
+  //   change genders
+  const [gender, setGender] = React.useState({
+    '1': true,
+    '4': true,
+  });
+  const handleChangeGender = name => event => {
+    setGender({ ...gender, [name]: event.target.checked });
   };
-  const [sexualPreference, setSexualPreference] = React.useState('both');
-  const handleSexualPreference = (event, newSexualPreference) => {
-    setSexualPreference(newSexualPreference);
+  // sxual preference
+  const [sexualPreference, setSexualPreference] = React.useState({
+    '2': true,
+    '6': true,
+  });
+  const handleSexualPreference = name => event => {
+    setSexualPreference({ ...sexualPreference, [name]: event.target.checked });
   };
+
+  // strings
+  // const handleInputText = event => {
+  //   console.log('kikou')
+  //   event.persist();
+  //   const newInput = {
+  //     ...profile,
+  //     [event.target.name]: event.target.value,
+  //   };
+  //   setProfile(newInput);
+  // };
+
   const [notif, setNotif] = React.useState('bothNotif');
   const handleChangeNotif = (event, newNotif) => {
     setNotif(newNotif);
@@ -231,57 +283,155 @@ const Profile = () => {
                 <Box fontWeight="fontWeightBold">Gender</Box>
               </Typography>
               <FormControl component="fieldset" className={classes.formControl}>
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender"
-                  value={gender}
-                  onChange={handleChangeGender}
-                  row
-                >
+                <FormGroup row>
                   <FormControlLabel
-                    value="female"
-                    control={<Radio />}
-                    label="Female"
+                    control={
+                      <Checkbox
+                        checked={gender['1']}
+                        onChange={handleChangeGender('1')}
+                        value="Woman"
+                      />
+                    }
+                    label="Woman"
                   />
                   <FormControlLabel
-                    value="male"
-                    control={<Radio />}
-                    label="Male"
+                    control={
+                      <Checkbox
+                        checked={gender['2']}
+                        onChange={handleChangeGender('2')}
+                        value="Man"
+                      />
+                    }
+                    label="Man"
                   />
                   <FormControlLabel
-                    value="non-binary"
-                    control={<Radio />}
+                    control={
+                      <Checkbox
+                        checked={gender['3']}
+                        onChange={handleChangeGender('3')}
+                        value="Cis Woman"
+                      />
+                    }
+                    label="Cis Woman"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={gender['4']}
+                        onChange={handleChangeGender('4')}
+                        value="Cis Man"
+                      />
+                    }
+                    label="Cis Man"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={gender['5']}
+                        onChange={handleChangeGender('5')}
+                        value="Trans Woman"
+                      />
+                    }
+                    label="Trans Woman"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={gender['6']}
+                        onChange={handleChangeGender('6')}
+                        value="Trans Man"
+                      />
+                    }
+                    label="Trans Man"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={gender['7']}
+                        onChange={handleChangeGender('7')}
+                        value="Non-binary"
+                      />
+                    }
                     label="Non-binary"
                   />
-                </RadioGroup>
+                </FormGroup>
               </FormControl>
               <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">I am looking for</Box>
               </Typography>
               <FormControl component="fieldset" className={classes.formControl}>
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender"
-                  value={sexualPreference}
-                  onChange={handleSexualPreference}
-                  row
-                >
+                <FormGroup row>
                   <FormControlLabel
-                    value="femalePreference"
-                    control={<Radio />}
-                    label="Female"
+                    control={
+                      <Checkbox
+                        checked={sexualPreference['1']}
+                        onChange={handleSexualPreference('1')}
+                        value="Woman"
+                      />
+                    }
+                    label="Woman"
                   />
                   <FormControlLabel
-                    value="malePreference"
-                    control={<Radio />}
-                    label="Male"
+                    control={
+                      <Checkbox
+                        checked={sexualPreference['2']}
+                        onChange={handleSexualPreference('2')}
+                        value="Man"
+                      />
+                    }
+                    label="Man"
                   />
                   <FormControlLabel
-                    value="both"
-                    control={<Radio />}
-                    label="Both"
+                    control={
+                      <Checkbox
+                        checked={sexualPreference['3']}
+                        onChange={handleSexualPreference('3')}
+                        value="Cis Woman"
+                      />
+                    }
+                    label="Cis Woman"
                   />
-                </RadioGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={sexualPreference['4']}
+                        onChange={handleSexualPreference('4')}
+                        value="Cis Man"
+                      />
+                    }
+                    label="Cis Man"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={sexualPreference['5']}
+                        onChange={handleSexualPreference('5')}
+                        value="Trans Woman"
+                      />
+                    }
+                    label="Trans Woman"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={sexualPreference['6']}
+                        onChange={handleSexualPreference('6')}
+                        value="Trans Man"
+                      />
+                    }
+                    label="Trans Man"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={sexualPreference['7']}
+                        onChange={handleSexualPreference('7')}
+                        value="Non-binary"
+                      />
+                    }
+                    label="Non-binary"
+                  />
+                </FormGroup>
               </FormControl>
               <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">My self-summary</Box>
@@ -373,6 +523,9 @@ const Profile = () => {
                     className={classes.textField}
                     margin="normal"
                     variant="outlined"
+                    name="firstname"
+                    value={profile.firstname}
+                    onChange={handleProfileChange}
                   />
                 </div>
                 <div className={classes.formControl}>
