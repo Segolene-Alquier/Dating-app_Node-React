@@ -52,7 +52,11 @@ async function login(request, response) {
     const query = await user.getBy('username', username);
     if (query.length <= 0) {
       console.log(username, " doesn't exist");
-      response.json(false);
+      response.status(200).json({
+        success: false,
+        token: null,
+        err: `${username} doesn't exist`,
+      });
       return;
     }
     const [visitor] = query;
