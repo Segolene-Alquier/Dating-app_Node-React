@@ -5,7 +5,6 @@ import Toaster from '../toaster/index';
 
 const Home = ({ location }) => {
   const getParams = queryString.parse(location.search);
-  console.log(getParams);
   return (
     <>
       <h1>Home Page</h1>
