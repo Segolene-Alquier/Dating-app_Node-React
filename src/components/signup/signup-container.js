@@ -11,6 +11,7 @@ const useSignUpForm = callback => {
     password1: '',
     password2: '',
   });
+  console.log('je reutilise');
   const { firstname, surname, username, email, password1 } = inputs;
   const handleSubmit = event => {
     if (event) {

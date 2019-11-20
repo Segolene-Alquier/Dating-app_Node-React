@@ -24,12 +24,21 @@ async function booleanToken(request, response) {
     });
     const userId = request.decoded.userid;
     const userData = await user.getByFiltered('id', userId, [
-      'id',
       'firstname',
       'surname',
       'username',
-      'validated',
-      'suspended',
+      'email',
+      'location',
+      'birthDate',
+      'popularityRate',
+      'gender',
+      'sexualOrientation',
+      'description',
+      'interests',
+      'images',
+      'profilePicture',
+      'notificationMail',
+      'notificationPush',
     ]);
 
     return response.json({
@@ -52,7 +61,11 @@ async function login(request, response) {
     const query = await user.getBy('username', username);
     if (query.length <= 0) {
       console.log(username, " doesn't exist");
-      response.json(false);
+      response.status(200).json({
+        success: false,
+        token: null,
+        err: `${username} doesn't exist`,
+      });
       return;
     }
     const [visitor] = query;
