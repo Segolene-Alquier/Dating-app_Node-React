@@ -21,6 +21,33 @@ export const isTokenExpired = token => {
   }
 };
 
+const geoLocation = () => {
+  return new Promise(resolve => {
+    navigator.geolocation.getCurrentPosition(position => {
+      const currentLocation = [0.0, 0.0];
+      currentLocation[0] = position.coords.latitude;
+      currentLocation[1] = position.coords.longitude;
+      resolve(currentLocation);
+    });
+    setTimeout(resolve, 5000);
+  });
+};
+
+const ipLocation = () => {
+  return new Promise(resolve => {
+    const locationApi = axios.get('https://ipapi.co/json').then(response => {
+      return [response.data.latitude, response.data.longitude];
+    });
+    resolve(locationApi);
+  });
+};
+
+const location = async () => {
+  const ip = ipLocation();
+  const geo = await geoLocation();
+  return geo || ip;
+};
+
 export const checkAuthentification = async (data, setSecureAuth) => {
   if (isTokenExpired(data.token)) {
     setSecureAuth(false);
@@ -42,6 +69,7 @@ export const getUserData = async token => {
   if (!token || isTokenExpired(token)) {
     return null;
   }
+  console.log('ici', await location());
   const userData = await axios.get('http://localhost:3001/auth/checkToken', {
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -49,15 +77,6 @@ export const getUserData = async token => {
     },
   });
   return userData.data;
-};
-
-export const location = async () => {
-  return navigator.geolocation.getCurrentPosition(position => {
-    const currentLocation = [0.0, 0.0];
-    currentLocation[0] = position.coords.latitude;
-    currentLocation[1] = position.coords.longitute;
-    return currentLocation;
-  });
 };
 
 export const logout = (e, setIsLoggedIn) => {
