@@ -17,7 +17,7 @@ const NotLoggedRoute = ({ component: Component, ...rest }) => {
 };
 
 NotLoggedRoute.propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.func.isRequired,
 };
 
 export default NotLoggedRoute;

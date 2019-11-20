@@ -26,6 +26,6 @@ const SecureRoute = ({ component: Component, ...rest }) => {
 };
 
 SecureRoute.propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.func.isRequired,
 };
 export default SecureRoute;

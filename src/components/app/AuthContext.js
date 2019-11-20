@@ -20,5 +20,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 AuthProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.array.isRequired,
 };
