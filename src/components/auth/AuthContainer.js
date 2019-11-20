@@ -51,6 +51,15 @@ export const getUserData = async token => {
   return userData.data;
 };
 
+export const location = async () => {
+  return navigator.geolocation.getCurrentPosition(position => {
+    const currentLocation = [0.0, 0.0];
+    currentLocation[0] = position.coords.latitude;
+    currentLocation[1] = position.coords.longitute;
+    return currentLocation;
+  });
+};
+
 export const logout = (e, setIsLoggedIn) => {
   e.preventDefault();
   localStorage.removeItem('token');

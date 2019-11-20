@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getToken, getUserData } from '../auth/AuthContainer';
+import { getToken, getUserData, location } from '../auth/AuthContainer';
 
 export const AuthContext = createContext();
 
@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const authContext = {
     token,
     userData,
+    location,
   };
 
   return (
