@@ -23,10 +23,12 @@ async function uploadImage(request, response) {
       const buffer = fs.readFileSync(path);
       const type = fileType(buffer);
       const timestamp = Date.now().toString();
-      const fileName = `development/${timestamp}-lg`;
+      const id = request.decoded.userid;
+      const fileName = `development/${id}/${timestamp}`;
       const data = await uploadFile(buffer, fileName, type);
       return response.status(200).send(data);
     } catch (error) {
+      console.log(error);
       return response.status(400).send(error);
     }
   });

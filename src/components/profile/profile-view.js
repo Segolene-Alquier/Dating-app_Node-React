@@ -150,7 +150,12 @@ const Profile = () => {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
 
-  const { handleProfileChange, profile } = UseProfileForm(authContext.userData);
+  const {
+    handleProfileChange,
+    profile,
+    submitFile,
+    handleFileUpload,
+  } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
     description,
@@ -712,6 +717,10 @@ const Profile = () => {
           </form>
         </TabPanel>
       </div>
+      <form onSubmit={submitFile}>
+        <input label="upload file" type="file" onChange={handleFileUpload} />
+        <button type="submit">Send</button>
+      </form>
     </>
   );
 };
