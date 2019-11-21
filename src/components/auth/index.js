@@ -1,9 +1,3 @@
-import {
-  getToken,
-  isTokenExpired,
-  checkAuthentification,
-  getUserData,
-  logout,
-} from './AuthContainer';
+import { getToken, isTokenExpired, getUserData, logout } from './AuthContainer';
 
-export { getToken, checkAuthentification, getUserData, isTokenExpired, logout };
+export { getToken, getUserData, isTokenExpired, logout };

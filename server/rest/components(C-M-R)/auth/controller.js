@@ -23,6 +23,11 @@ async function booleanToken(request, response) {
       return request.decoded;
     });
     const userId = request.decoded.userid;
+    const { lon, lat } = request.query;
+    if (lon && lat) {
+      const location = [parseFloat(lon), parseFloat(lat)];
+      user.updateById(userId, { location });
+    }
     const userData = await user.getByFiltered('id', userId, [
       'firstname',
       'surname',

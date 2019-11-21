@@ -29,7 +29,27 @@ const geoLocation = () => {
       currentLocation[1] = position.coords.longitude;
       resolve(currentLocation);
     });
-    setTimeout(resolve, 5000);
+    setTimeout(resolve, 2000);
+  });
+};
+
+const updateGeoLocationLater = async () => {
+  // return new Promise(resolve => {
+  await navigator.geolocation.getCurrentPosition(async position => {
+    const currentLocation = [0.0, 0.0];
+    currentLocation[0] = position.coords.latitude;
+    currentLocation[1] = position.coords.longitude;
+    const update = await axios.put(
+      'http://localhost:3001/users',
+      { location: currentLocation },
+      {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'x-access-token': getToken(),
+        },
+      },
+    );
+    console.log(update);
   });
 };
 
@@ -45,36 +65,41 @@ const ipLocation = () => {
 const location = async () => {
   const ip = ipLocation();
   const geo = await geoLocation();
+  console.log(geo);
+  if (geo === undefined) {
+    updateGeoLocationLater();
+  }
   return geo || ip;
 };
 
-export const checkAuthentification = async (data, setSecureAuth) => {
-  if (isTokenExpired(data.token)) {
-    setSecureAuth(false);
-    return;
-  }
-  const isAuthenticaded = await axios.get(
-    'http://localhost:3001/auth/checkToken',
-    {
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'x-access-token': data.token,
-      },
-    },
-  );
-  setSecureAuth(isAuthenticaded.data.success);
-};
+// export const checkAuthentification = async (data, setSecureAuth) => {
+//   if (isTokenExpired(data.token)) {
+//     setSecureAuth(false);
+//     return;
+//   }
+//   const isAuthenticaded = await axios.get(
+//     'http://localhost:3001/auth/checkToken',
+//     {
+//       headers: {
+//         'Content-type': 'application/json; charset=UTF-8',
+//         'x-access-token': data.token,
+//       },
+//     },
+//   );
+//   setSecureAuth(isAuthenticaded.data.success);
+// };
 
 export const getUserData = async token => {
   if (!token || isTokenExpired(token)) {
     return null;
   }
-  console.log('ici', await location());
+  const userLocation = await location();
   const userData = await axios.get('http://localhost:3001/auth/checkToken', {
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
       'x-access-token': token,
     },
+    params: { lon: userLocation[0], lat: userLocation[1] },
   });
   return userData.data;
 };
