@@ -65,10 +65,10 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '150px',
   },
   deleteButtonPicture: {
-    position: absolute,
-    top: '5px',
-    right: '5px'
-  }
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+  },
   profilePicture: {
     border: '3px solid',
     borderColor: theme.palette.secondary.main,
@@ -481,6 +481,7 @@ const Profile = () => {
                   Grid={Grid}
                   pictures={profile.images}
                   Box={Box}
+                  Button={Button}
                 />
                 <Grid container xs={6} sm={6} className={classes.picture}>
                   <Box
