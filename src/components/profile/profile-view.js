@@ -20,7 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
-import CurrentPictures from './components/current-pictures'
+import CurrentPictures from './components/current-pictures';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -61,8 +61,14 @@ const useStyles = makeStyles(theme => ({
   },
   picture: {
     padding: theme.spacing(1),
+    position: 'relative',
     maxWidth: '150px',
   },
+  deleteButtonPicture: {
+    position: absolute,
+    top: '5px',
+    right: '5px'
+  }
   profilePicture: {
     border: '3px solid',
     borderColor: theme.palette.secondary.main,
@@ -76,6 +82,8 @@ const useStyles = makeStyles(theme => ({
   },
   modifyPictureButton: {
     display: 'flex',
+    overflow: 'hidden',
+    position: 'relative',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -83,6 +91,13 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     textAlign: 'center',
     fontSize: '1em',
+  },
+  uploadInput: {
+    fontSize: '100px',
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    opacity: '0',
   },
   summaryField: {
     width: '90%',
@@ -473,7 +488,13 @@ const Profile = () => {
                     width="100%"
                     className={classes.modifyPictureButton}
                   >
-                    <p>Modifier les photos</p>
+                    <p>Upload a picture</p>
+                    <input
+                      label="upload file"
+                      type="file"
+                      onChange={handleFileUpload}
+                      className={classes.uploadInput}
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -688,9 +709,6 @@ const Profile = () => {
           </form>
         </TabPanel>
       </div>
-      <form>
-        <input label="upload file" type="file" onChange={handleFileUpload} />
-      </form>
     </>
   );
 };
