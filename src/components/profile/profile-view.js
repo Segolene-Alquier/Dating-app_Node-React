@@ -20,6 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
+import CurrentPictures from './components/current-pictures'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -460,42 +461,12 @@ const Profile = () => {
                 <Box fontWeight="fontWeightBold">My pictures</Box>
               </Typography>
               <Grid container>
-                <Grid container xs={6} sm={6} className={classes.picture}>
-                  <img
-                    src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                    alt="My profile"
-                    width="100%"
-                  />
-                </Grid>
-                <Grid container xs={6} sm={6} className={classes.picture}>
-                  <img
-                    className={classes.profilePicture}
-                    src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                    alt="My profile"
-                    width="100%"
-                  />
-                </Grid>
-                <Grid container xs={6} sm={6} className={classes.picture}>
-                  <img
-                    src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                    alt="My profile"
-                    width="100%"
-                  />
-                </Grid>
-                <Grid container xs={6} sm={6} className={classes.picture}>
-                  <img
-                    src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                    alt="My profile"
-                    width="100%"
-                  />
-                </Grid>
-                <Grid container xs={6} sm={6} className={classes.picture}>
-                  <img
-                    src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                    alt="My profile"
-                    width="100%"
-                  />
-                </Grid>
+                <CurrentPictures
+                  classes={classes}
+                  Grid={Grid}
+                  pictures={profile.images}
+                  Box={Box}
+                />
                 <Grid container xs={6} sm={6} className={classes.picture}>
                   <Box
                     bgcolor="secondary.main"
@@ -717,9 +688,8 @@ const Profile = () => {
           </form>
         </TabPanel>
       </div>
-      <form onSubmit={submitFile}>
+      <form>
         <input label="upload file" type="file" onChange={handleFileUpload} />
-        <button type="submit">Send</button>
       </form>
     </>
   );

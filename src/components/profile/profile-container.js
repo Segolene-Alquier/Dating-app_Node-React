@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
-  const [fileToUpload, setFileToUpload] = useState({ file: null });
+
   if (_.isEmpty(profile))
     userData.then(data => {
       console.log('newstate');
@@ -23,11 +23,10 @@ const UseProfileForm = (userData, token) => {
     setProfile(newInput);
   };
 
-  const submitFile = event => {
-    event.preventDefault();
+  const submitFile = file => {
     const formData = new FormData();
-    console.log(fileToUpload.file[0]);
-    formData.append('file', fileToUpload.file[0]);
+    console.log(file[0]);
+    formData.append('file', file[0]);
     axios
       .post(`http://localhost:3001/images/upload`, formData, {
         headers: {
@@ -37,6 +36,11 @@ const UseProfileForm = (userData, token) => {
       })
       .then(response => {
         console.log(response);
+        const newInput = {
+          ...profile,
+          images: [...profile.images, response.data.Location],
+        };
+        setProfile(newInput);
       })
       .catch(error => {
         console.log(error);
@@ -44,7 +48,7 @@ const UseProfileForm = (userData, token) => {
   };
 
   const handleFileUpload = event => {
-    setFileToUpload({ file: event.target.files });
+    submitFile(event.target.files);
   };
   return {
     handleFileUpload,
