@@ -174,6 +174,7 @@ const Profile = () => {
   } = profile;
 
   // change tabs
+  console.log('noif mail', notificationMail)
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -655,34 +656,28 @@ const Profile = () => {
                     component="fieldset"
                     className={classes.formControl}
                   >
-                    <RadioGroup
-                      aria-label="notif"
-                      name="notif"
-                      value={notif}
-                      onChange={handleChangeNotif}
-                      row
-                    >
+                    <FormGroup row>
                       <FormControlLabel
-                        value="mailNotif"
-                        control={<Radio />}
+                        control={
+                          <Checkbox
+                            checked={notificationMail}
+                            onChange={handleProfileChange}
+                            value="notifMail"
+                          />
+                        }
                         label="Mail"
                       />
                       <FormControlLabel
-                        value="pushNotif"
-                        control={<Radio />}
+                        control={
+                          <Checkbox
+                            checked={notificationPush}
+                            onChange={handleProfileChange}
+                            value="notifPush"
+                          />
+                        }
                         label="Push"
                       />
-                      <FormControlLabel
-                        value="bothNotif"
-                        control={<Radio />}
-                        label="Both"
-                      />
-                      <FormControlLabel
-                        value="noNotif"
-                        control={<Radio />}
-                        label="None"
-                      />
-                    </RadioGroup>
+                    </FormGroup>
                   </FormControl>
                   <Box>
                     <Button

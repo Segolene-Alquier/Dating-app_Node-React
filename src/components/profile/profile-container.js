@@ -1,4 +1,4 @@
-import { useState, use } from 'react';
+import { useState } from 'react';
 import _ from 'lodash';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -11,10 +11,8 @@ const UseProfileForm = (userData, token) => {
 
   if (_.isEmpty(profile))
     userData.then(data => {
-      console.log('newstate');
       setProfile(data.data);
     });
-  console.log(profile);
 
   const handleProfileChange = event => {
     event.persist();
@@ -32,7 +30,6 @@ const UseProfileForm = (userData, token) => {
 
   const handleSubmitParameters = event => {
     event.persist();
-    console.log('changedFields: ', changedFields);
     if (_.isEmpty(changedFields)) {
       toast.error("You didn't make any changes!");
     } else if (event) {
