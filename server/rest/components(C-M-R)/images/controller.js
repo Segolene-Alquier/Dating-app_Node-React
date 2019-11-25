@@ -17,6 +17,15 @@ const uploadFile = (buffer, name, type) => {
   return s3.upload(params).promise();
 };
 
+const deleteFile = url => {
+  const name = url.match(/[^\/]+\/[^\/]+\/[^\/]+$/)[0];
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    Key: name,
+  };
+  return s3.deleteObject(params).promise();
+};
+
 async function uploadImage(request, response) {
   const form = new multiparty.Form();
   form.parse(request, async (error, fields, files) => {
@@ -43,6 +52,7 @@ async function deleteImage(request, response) {
   const { url } = request.body;
   try {
     await user.deleteElementToArrayById(id, 'images', url);
+    await deleteFile(url);
     return response.status(200).send({ success: true });
   } catch (error) {
     console.log(error);
