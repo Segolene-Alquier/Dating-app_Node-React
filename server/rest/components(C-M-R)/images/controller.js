@@ -2,6 +2,9 @@ const multiparty = require('multiparty');
 const fs = require('fs');
 const fileType = require('file-type');
 const { s3 } = require('./../../../config/awsConfig');
+const User = require('../user/model');
+
+const user = new User();
 
 const uploadFile = (buffer, name, type) => {
   const params = {
@@ -26,6 +29,7 @@ async function uploadImage(request, response) {
       const id = request.decoded.userid;
       const fileName = `development/${id}/${timestamp}`;
       const data = await uploadFile(buffer, fileName, type);
+      console.log(await user.updateArrayById(id, 'images', data.Location));
       return response.status(200).send(data);
     } catch (error) {
       console.log(error);
