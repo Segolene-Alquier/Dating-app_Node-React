@@ -61,7 +61,7 @@ class User {
     }
   }
 
-  async updateArrayById(id, type, value) {
+  async addElementToArrayById(id, type, value) {
     try {
       if (!this.isValidType(type)) {
         console.log(`User.getBy(): ${type} is not an authorized type`);
@@ -76,7 +76,28 @@ class User {
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model User.updateArrayById()');
+      console.log(err, 'in model User.addElementToArrayById()');
+      return null;
+    }
+  }
+
+  async deleteElementToArrayById(id, type, value) {
+    try {
+      if (!this.isValidType(type)) {
+        console.log(`User.getBy(): ${type} is not an authorized type`);
+        return null;
+      }
+      console.log(
+        `UPDATE public."User" SET ${type} = ${value} WHERE id = ${id}`,
+      );
+      const result = await db.any(
+        'UPDATE public."User" SET $1:name = array_remove($1:name, $2)',
+        [type, value, id],
+      );
+      console.log('RESULT OF deleteElementToArrayById', result);
+      return result;
+    } catch (err) {
+      console.log(err, 'in model User.deleteElementToArrayById()');
       return null;
     }
   }

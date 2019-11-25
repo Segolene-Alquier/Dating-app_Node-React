@@ -29,7 +29,7 @@ async function uploadImage(request, response) {
       const id = request.decoded.userid;
       const fileName = `development/${id}/${timestamp}`;
       const data = await uploadFile(buffer, fileName, type);
-      console.log(await user.updateArrayById(id, 'images', data.Location));
+      await user.addElementToArrayById(id, 'images', data.Location);
       return response.status(200).send(data);
     } catch (error) {
       console.log(error);
@@ -38,4 +38,17 @@ async function uploadImage(request, response) {
   });
 }
 
+async function deleteImage(request, response) {
+  const id = request.decoded.userid;
+  const { url } = request.body;
+  try {
+    await user.deleteElementToArrayById(id, 'images', url);
+    return response.status(200).send({ success: true });
+  } catch (error) {
+    console.log(error);
+    return response.status(400).send({ success: false, error });
+  }
+}
+
 module.exports.uploadImage = uploadImage;
+module.exports.deleteImage = deleteImage;
