@@ -2,7 +2,13 @@ import React from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Fab from '@material-ui/core/Fab';
 
-const CurrentPictures = ({ pictures, classes, Grid, Box }) => {
+const CurrentPictures = ({
+  pictures,
+  classes,
+  Grid,
+  Box,
+  handleDeleteImage,
+}) => {
   if (pictures) {
     return pictures.map(pictureUrl => (
       <Grid container xs={6} sm={6} className={classes.picture}>
@@ -12,8 +18,12 @@ const CurrentPictures = ({ pictures, classes, Grid, Box }) => {
           color="secondary"
           size="small"
           className={classes.deleteButtonPicture}
+          onClick={() => handleDeleteImage(pictureUrl)}
         >
-          <HighlightOffIcon />
+          <HighlightOffIcon
+            name={pictureUrl}
+            value={pictureUrl}
+          />
         </Fab>
       </Grid>
     ));

@@ -23,10 +23,10 @@ const UseProfileForm = (userData, token) => {
     setProfile(newInput);
   };
 
-  const submitFile = file => {
+  const handleFileUpload = event => {
     const formData = new FormData();
-    console.log(file[0]);
-    formData.append('file', file[0]);
+    console.log(event.target.files[0]);
+    formData.append('file', event.target.files[0]);
     axios
       .post(`http://localhost:3001/images/upload`, formData, {
         headers: {
@@ -47,12 +47,31 @@ const UseProfileForm = (userData, token) => {
       });
   };
 
-  const handleFileUpload = event => {
-    submitFile(event.target.files);
+  const handleDeleteImage = url => {
+    axios
+      .post(`http://localhost:3001/images/delete`, {url}, {
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-access-token': token,
+        },
+      })
+      .then(response => {
+        if (response.data.success === true) {
+          const newInput = {
+            ...profile,
+            images: _.without(profile.images, url),
+          };
+          setProfile(newInput);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
+
   return {
     handleFileUpload,
-    submitFile,
+    handleDeleteImage,
     handleProfileChange,
     profile,
   };

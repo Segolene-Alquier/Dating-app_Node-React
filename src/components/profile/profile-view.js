@@ -168,6 +168,7 @@ const Profile = () => {
 
   const {
     handleProfileChange,
+    handleDeleteImage,
     profile,
     submitFile,
     handleFileUpload,
@@ -482,6 +483,7 @@ const Profile = () => {
                   pictures={profile.images}
                   Box={Box}
                   Button={Button}
+                  handleDeleteImage={handleDeleteImage}
                 />
                 <Grid container xs={6} sm={6} className={classes.picture}>
                   <Box
