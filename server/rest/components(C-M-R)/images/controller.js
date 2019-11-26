@@ -18,7 +18,7 @@ const uploadFile = (buffer, name, type) => {
 };
 
 const deleteFile = url => {
-  const name = url.match(/[^\/]+\/[^\/]+\/[^\/]+$/)[0];
+  const name = url.match(/[^/]+\/[^/]+\/[^/]+$/)[0];
   const params = {
     Bucket: process.env.S3_BUCKET,
     Key: name,
