@@ -16,6 +16,10 @@ const UseProfileForm = (userData, token) => {
 
   const handleProfileChange = event => {
     event.persist();
+
+    // console.log('notif mail', notificationMail);
+    // console.log('notif push', notificationPush);
+
     const newInput = {
       ...profile,
       [event.target.name]: event.target.value,

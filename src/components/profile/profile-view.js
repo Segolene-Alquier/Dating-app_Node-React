@@ -173,8 +173,10 @@ const Profile = () => {
     username,
   } = profile;
 
+  console.log(profile);
+  console.log(profile.notificationMail);
+  console.log(profile.notificationPush);
   // change tabs
-  console.log('noif mail', notificationMail)
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -196,9 +198,12 @@ const Profile = () => {
     setSexualPreference({ ...sexualPreference, [name]: event.target.checked });
   };
 
-  const [notif, setNotif] = React.useState('bothNotif');
-  const handleChangeNotif = (event, newNotif) => {
-    setNotif(newNotif);
+  const [notif, setNotif] = React.useState({
+    // '1': notificationMail,
+    // '2': notificationPush,
+  });
+  const handleChangeNotif = name => event => {
+    setNotif({ ...gender, [name]: event.target.checked });
   };
 
   const handleDelete = () => {
@@ -661,8 +666,8 @@ const Profile = () => {
                         control={
                           <Checkbox
                             checked={notificationMail}
-                            onChange={handleProfileChange}
-                            value="notifMail"
+                            // onChange={handleChangeNotif['1']}
+                            value="notificationMail"
                           />
                         }
                         label="Mail"
@@ -671,8 +676,8 @@ const Profile = () => {
                         control={
                           <Checkbox
                             checked={notificationPush}
-                            onChange={handleProfileChange}
-                            value="notifPush"
+                            // onChange={handleChangeNotif['2']}
+                            value="notificationPush"
                           />
                         }
                         label="Push"
