@@ -36,11 +36,22 @@ const UseProfileForm = (userData, token) => {
       })
       .then(response => {
         console.log(response);
-        const newInput = {
+        if (profile.profilePicture === null) {
+          const newInput = {
+            ...profile,
+            images: [...profile.images, response.data.Location],
+            profilePicture: response.data.Location
+          }
+        setProfile(newInput);
+
+        } else {
+          const newInput = {
           ...profile,
           images: [...profile.images, response.data.Location],
-        };
+          }
         setProfile(newInput);
+
+        }
       })
       .catch(error => {
         console.log(error);

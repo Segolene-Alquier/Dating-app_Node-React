@@ -91,7 +91,7 @@ class User {
         `UPDATE public."User" SET ${type} = ${value} WHERE id = ${id}`,
       );
       const result = await db.any(
-        'UPDATE public."User" SET $1:name = array_remove($1:name, $2)',
+        'UPDATE public."User" SET $1:name = array_remove($1:name, $2), "profilePicture" = NULLIF("profilePicture", $2) WHERE id = $3',
         [type, value, id],
       );
       console.log('RESULT OF deleteElementToArrayById', result);
