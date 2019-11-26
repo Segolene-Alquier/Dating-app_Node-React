@@ -173,9 +173,9 @@ const Profile = () => {
     username,
   } = profile;
 
-  console.log(profile);
-  console.log(profile.notificationMail);
-  console.log(profile.notificationPush);
+  // console.log(profile);
+  // console.log(profile.notificationMail);
+  // console.log(profile.notificationPush);
   // change tabs
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -666,7 +666,7 @@ const Profile = () => {
                         control={
                           <Checkbox
                             checked={notificationMail === true}
-                            // onChange={handleChangeNotif['1']}
+                            onChange={handleProfileChange}
                             name="notificationMail"
                             value="notificationMail"
                           />
@@ -677,7 +677,7 @@ const Profile = () => {
                         control={
                           <Checkbox
                             checked={notificationPush === true}
-                            // onChange={handleChangeNotif['2']}
+                            onChange={handleProfileChange}
                             name="notificationPush"
                             value="notificationPush"
                           />
