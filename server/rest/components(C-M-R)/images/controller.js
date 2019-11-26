@@ -36,7 +36,7 @@ async function uploadImage(request, response) {
       const type = fileType(buffer);
       const timestamp = Date.now().toString();
       const id = request.decoded.userid;
-      const fileName = `development/${id}/${timestamp}`;
+      const fileName = `${process.env.ENVIRONMENT}/${id}/${timestamp}`;
       const data = await uploadFile(buffer, fileName, type);
       await user.addElementToArrayById(id, 'images', data.Location);
       return response.status(200).send(data);
