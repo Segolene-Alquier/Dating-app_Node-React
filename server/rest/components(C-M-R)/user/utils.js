@@ -52,7 +52,7 @@ class UserInputTests {
 
   isBoolean({ input, inputName }) {
     return new Promise(function(resolve) {
-      if (input === 'true' || input === 'false') resolve({ boolean: true });
+      if (input === true || input === false) resolve({ boolean: true });
       else
         resolve({ boolean: false, error: `The ${inputName} is not a boolean` });
     });
@@ -274,6 +274,7 @@ class UserInputTests {
         'profilePicture',
         'location',
         'notificationMail',
+        'notificationPush',
         'birthDate',
       ];
     else if (requester === 'backend')
@@ -290,6 +291,7 @@ class UserInputTests {
         'profilePicture',
         'location',
         'notificationMail',
+        'notificationPush',
         'lastVisit',
         'popularityRate',
         'birthDate',

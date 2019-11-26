@@ -135,8 +135,11 @@ async function updateUser(request, response) {
     return;
   }
   try {
-    const call = await user.updateById(id, filteredValues);
-    response.status(200).json(call);
+    await user.updateById(id, filteredValues);
+    response.status(200).json({
+      success: true,
+      message: 'Your information were sucessfully updated',
+    });
   } catch (err) {
     console.log(err);
     response.status(206).send(err);
