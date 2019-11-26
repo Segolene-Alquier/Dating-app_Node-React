@@ -61,11 +61,21 @@ const UseProfileForm = (userData, token) => {
       )
       .then(response => {
         if (response.data.success === true) {
-          const newInput = {
-            ...profile,
-            images: _.without(profile.images, url),
-          };
-          setProfile(newInput);
+          if (url === profile.profilePicture) {
+            const newInput = {
+              ...profile,
+              images: _.without(profile.images, url),
+              profilePicture:
+                'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png',
+            };
+            setProfile(newInput);
+          } else {
+            const newInput = {
+              ...profile,
+              images: _.without(profile.images, url),
+            };
+            setProfile(newInput);
+          }
         }
       })
       .catch(error => {

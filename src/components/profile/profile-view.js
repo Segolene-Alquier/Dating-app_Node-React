@@ -251,7 +251,7 @@ const Profile = () => {
             justify="center"
           >
             <img
-              src={profile.profilePicture}
+              src={profile.profilePicture || 'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png'}
               alt="My profile"
               width="50%"
             />
