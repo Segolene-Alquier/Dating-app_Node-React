@@ -495,6 +495,7 @@ const Profile = () => {
                     <input
                       label="upload file"
                       type="file"
+                      accept="image/png, image/jpeg"
                       onChange={handleFileUpload}
                       className={classes.uploadInput}
                     />
