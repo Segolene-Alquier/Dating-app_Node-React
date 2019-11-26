@@ -665,8 +665,9 @@ const Profile = () => {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={notificationMail}
+                            checked={notificationMail === true}
                             // onChange={handleChangeNotif['1']}
+                            name="notificationMail"
                             value="notificationMail"
                           />
                         }
@@ -675,8 +676,9 @@ const Profile = () => {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={notificationPush}
+                            checked={notificationPush === true}
                             // onChange={handleChangeNotif['2']}
+                            name="notificationPush"
                             value="notificationPush"
                           />
                         }
