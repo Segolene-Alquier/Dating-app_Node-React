@@ -49,12 +49,16 @@ const UseProfileForm = (userData, token) => {
 
   const handleDeleteImage = url => {
     axios
-      .post(`http://localhost:3001/images/delete`, {url}, {
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-access-token': token,
+      .post(
+        `http://localhost:3001/images/delete`,
+        { url },
+        {
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
         },
-      })
+      )
       .then(response => {
         if (response.data.success === true) {
           const newInput = {
@@ -69,11 +73,20 @@ const UseProfileForm = (userData, token) => {
       });
   };
 
+  const handleChangeProfileImage = pictureUrl => {
+    const newInput = {
+      ...profile,
+      profilePicture: pictureUrl,
+    };
+    setProfile(newInput);
+  };
+
   return {
     handleFileUpload,
     handleDeleteImage,
     handleProfileChange,
     profile,
+    handleChangeProfileImage,
   };
 };
 

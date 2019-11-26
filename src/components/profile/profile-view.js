@@ -172,6 +172,7 @@ const Profile = () => {
     profile,
     submitFile,
     handleFileUpload,
+    handleChangeProfileImage,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
@@ -250,7 +251,7 @@ const Profile = () => {
             justify="center"
           >
             <img
-              src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
+              src={profile.profilePicture}
               alt="My profile"
               width="50%"
             />
@@ -481,9 +482,11 @@ const Profile = () => {
                   classes={classes}
                   Grid={Grid}
                   pictures={profile.images}
+                  profilePicture={profile.profilePicture}
                   Box={Box}
                   Button={Button}
                   handleDeleteImage={handleDeleteImage}
+                  handleChangeProfileImage={handleChangeProfileImage}
                 />
                 <Grid container xs={6} sm={6} className={classes.picture}>
                   <Box
