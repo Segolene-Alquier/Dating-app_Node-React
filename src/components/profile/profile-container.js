@@ -146,7 +146,12 @@ const UseProfileForm = (userData, token) => {
       ...profile,
       profilePicture: pictureUrl,
     };
+    const newChangedFields = {
+      ...changedFields,
+      profilePicture: pictureUrl,
+    };
     setProfile(newInput);
+    setChangedFields(newChangedFields);
   };
 
   return {
