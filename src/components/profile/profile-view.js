@@ -286,6 +286,7 @@ const Profile = () => {
                         <Checkbox
                           checked={gender}
                           onChange={handleProfileChange}
+                          name="gender"
                           value="1"
                         />
                       }
@@ -296,6 +297,7 @@ const Profile = () => {
                         <Checkbox
                           checked={gender}
                           onChange={handleProfileChange}
+                          name="gender"
                           value="2"
                         />
                       }
@@ -306,6 +308,7 @@ const Profile = () => {
                         <Checkbox
                           checked={gender}
                           onChange={handleProfileChange}
+                          name="gender"
                           value="3"
                         />
                       }
@@ -316,6 +319,7 @@ const Profile = () => {
                         <Checkbox
                           checked={gender}
                           onChange={handleProfileChange}
+                          name="gender"
                           value="4"
                         />
                       }
@@ -326,6 +330,7 @@ const Profile = () => {
                         <Checkbox
                           checked={gender}
                           onChange={handleProfileChange}
+                          name="gender"
                           value="5"
                         />
                       }
@@ -336,6 +341,7 @@ const Profile = () => {
                         <Checkbox
                           checked={gender}
                           onChange={handleProfileChange}
+                          name="gender"
                           value="6"
                         />
                       }
@@ -346,6 +352,7 @@ const Profile = () => {
                         <Checkbox
                           checked={gender}
                           onChange={handleProfileChange}
+                          name="gender"
                           value="7"
                         />
                       }

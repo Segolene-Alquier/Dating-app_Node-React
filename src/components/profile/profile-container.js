@@ -16,7 +16,11 @@ const UseProfileForm = (userData, token) => {
 
   const handleProfileChange = event => {
     event.persist();
-    console.log('event :', event.target.type);
+    console.log('event type :', event.target.type);
+    console.log('event name:', event.target.name);
+    console.log('event value', event.target.value);
+    console.log('event check', event.target.checked);
+
     let newInput;
     let newChangedFields;
     if (event.target.type !== 'checkbox') {
@@ -29,20 +33,32 @@ const UseProfileForm = (userData, token) => {
         [event.target.name]: event.target.value,
       };
     } else {
-      newInput = {
-        ...profile,
-        [event.target.name]: event.target.checked,
-      };
-      newChangedFields = {
-        ...changedFields,
-        [event.target.name]: event.target.checked,
-      };
+      if (event.target.name === 'gender') {
+        console.log('kikou');
+        newInput = {
+          ...profile,
+          [event.target.name]: event.target.checked,
+        };
+        newChangedFields = {
+          ...changedFields,
+          [event.target.name]: event.target.checked,
+        };
+      } else {
+        newInput = {
+          ...profile,
+          [event.target.name]: event.target.checked,
+        };
+        newChangedFields = {
+          ...changedFields,
+          [event.target.name]: event.target.checked,
+        };
+      }
     }
     setProfile(newInput);
     setChangedFields(newChangedFields);
-    console.log("value", event.target.value)
+    // console.log("event", event)
     console.log('newInput :', newInput);
-    console.log('changed :', typeof newChangedFields.notificationMail);
+    // console.log('changed :', typeof newChangedFields.notificationMail);
   };
 
   const handleSubmitParameters = event => {
