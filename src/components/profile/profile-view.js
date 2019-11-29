@@ -174,6 +174,7 @@ const Profile = () => {
     handleFileUpload,
     handleChangeProfileImage,
     handleSubmitParameters,
+    isChecked,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
@@ -299,7 +300,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={gender}
+                          checked={isChecked('1')}
                           onChange={handleProfileChange}
                           name="gender"
                           value="1"

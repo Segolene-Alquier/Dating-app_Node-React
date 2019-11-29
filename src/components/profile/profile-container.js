@@ -27,6 +27,15 @@ const UseProfileForm = (userData, token) => {
     };
   };
 
+  const isChecked = fieldId => {
+    console.log('array', profile.gender);
+    console.log('field id', fieldId);
+
+    console.log('includes', profile.gender.includes(fieldId));
+
+    return true;
+  };
+
   const handleNotifChange = event => {
     newInput = {
       ...profile,
@@ -184,6 +193,7 @@ const UseProfileForm = (userData, token) => {
     profile,
     handleChangeProfileImage,
     handleSubmitParameters,
+    isChecked,
   };
 };
 
