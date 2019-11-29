@@ -88,17 +88,15 @@ const UseProfileForm = (userData, token) => {
           const newInput = {
             ...profile,
             images: [...profile.images, response.data.Location],
-            profilePicture: response.data.Location
-          }
-        setProfile(newInput);
-
+            profilePicture: response.data.Location,
+          };
+          setProfile(newInput);
         } else {
           const newInput = {
-          ...profile,
-          images: [...profile.images, response.data.Location],
-          }
-        setProfile(newInput);
-
+            ...profile,
+            images: [...profile.images, response.data.Location],
+          };
+          setProfile(newInput);
         }
       })
       .catch(error => {
@@ -125,6 +123,7 @@ const UseProfileForm = (userData, token) => {
               ...profile,
               images: _.without(profile.images, url),
               profilePicture:
+                _.without(profile.images, url)[0] ||
                 'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png',
             };
             setProfile(newInput);
