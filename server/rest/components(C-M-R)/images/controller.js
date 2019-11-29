@@ -50,6 +50,7 @@ async function uploadImage(request, response) {
       const fileName = `${process.env.ENVIRONMENT}/${id}/${timestamp}`;
       const data = await uploadFile(buffer, fileName, type);
       await user.addElementToArrayById(id, 'images', data.Location);
+      await user.updateProfilePictureIfNotExist(id);
       return response.status(200).send(data);
     } catch (error) {
       console.log(error);
@@ -63,6 +64,7 @@ async function deleteImage(request, response) {
   const { url } = request.body;
   try {
     await user.deleteElementToArrayById(id, 'images', url);
+    await user.updateProfilePictureIfNotExist(id);
     await deleteFile(url);
     return response.status(200).send({ success: true });
   } catch (error) {
