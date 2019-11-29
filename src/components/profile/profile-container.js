@@ -16,17 +16,28 @@ const UseProfileForm = (userData, token) => {
 
   const handleProfileChange = event => {
     event.persist();
-
-    const newInput = {
-      ...profile,
-      [event.target.name]: event.target.value,
-      [event.target.name]: event.target.checked,
-    };
-    const newChangedFields = {
-      ...changedFields,
-      [event.target.name]: event.target.value,
-      [event.target.name]: event.target.checked,
-    };
+    console.log('event :', event.target.type);
+    let newInput;
+    let newChangedFields;
+    if (event.target.type !== 'checkbox') {
+      newInput = {
+        ...profile,
+        [event.target.name]: event.target.value,
+      };
+      newChangedFields = {
+        ...changedFields,
+        [event.target.name]: event.target.value,
+      };
+    } else {
+      newInput = {
+        ...profile,
+        [event.target.name]: event.target.checked,
+      };
+      newChangedFields = {
+        ...changedFields,
+        [event.target.name]: event.target.checked,
+      };
+    }
     setProfile(newInput);
     setChangedFields(newChangedFields);
     console.log("value", event.target.value)
