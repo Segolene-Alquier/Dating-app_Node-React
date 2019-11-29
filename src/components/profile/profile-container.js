@@ -29,6 +29,7 @@ const UseProfileForm = (userData, token) => {
     };
     setProfile(newInput);
     setChangedFields(newChangedFields);
+    console.log("value", event.target.value)
     console.log('newInput :', newInput);
     console.log('changed :', typeof newChangedFields.notificationMail);
   };
