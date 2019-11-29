@@ -35,6 +35,7 @@ app.use(
   '/validation',
   require('./rest/components(C-M-R)/userValidation/routes'),
 );
+app.use('/images', require('./rest/components(C-M-R)/images/routes'));
 
 app.listen(port, () => {
   console.log('Example app listening on port 3001!');

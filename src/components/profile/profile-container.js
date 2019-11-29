@@ -1,6 +1,6 @@
+import axios from 'axios';
 import { useState } from 'react';
 import _ from 'lodash';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 
 // import { AuthContext } from '../app/AuthContext';
@@ -88,9 +88,91 @@ const UseProfileForm = (userData, token) => {
     }
   };
 
+  const handleFileUpload = event => {
+    const formData = new FormData();
+    console.log(event.target.files[0]);
+    formData.append('file', event.target.files[0]);
+    axios
+      .post(`http://localhost:3001/images/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-access-token': token,
+        },
+      })
+      .then(response => {
+        console.log(response);
+        if (profile.profilePicture === null) {
+          const newInput = {
+            ...profile,
+            images: [...profile.images, response.data.Location],
+            profilePicture: response.data.Location
+          }
+        setProfile(newInput);
+
+        } else {
+          const newInput = {
+          ...profile,
+          images: [...profile.images, response.data.Location],
+          }
+        setProfile(newInput);
+
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const handleDeleteImage = url => {
+    axios
+      .post(
+        `http://localhost:3001/images/delete`,
+        { url },
+        {
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
+        },
+      )
+      .then(response => {
+        if (response.data.success === true) {
+          if (url === profile.profilePicture) {
+            const newInput = {
+              ...profile,
+              images: _.without(profile.images, url),
+              profilePicture:
+                'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png',
+            };
+            setProfile(newInput);
+          } else {
+            const newInput = {
+              ...profile,
+              images: _.without(profile.images, url),
+            };
+            setProfile(newInput);
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const handleChangeProfileImage = pictureUrl => {
+    const newInput = {
+      ...profile,
+      profilePicture: pictureUrl,
+    };
+    setProfile(newInput);
+  };
+
   return {
+    handleFileUpload,
+    handleDeleteImage,
     handleProfileChange,
     profile,
+    handleChangeProfileImage,
     handleSubmitParameters,
   };
 };

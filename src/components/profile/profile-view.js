@@ -20,6 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
+import CurrentPictures from './components/current-pictures';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -60,7 +61,13 @@ const useStyles = makeStyles(theme => ({
   },
   picture: {
     padding: theme.spacing(1),
+    position: 'relative',
     maxWidth: '150px',
+  },
+  deleteButtonPicture: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
   },
   profilePicture: {
     border: '3px solid',
@@ -75,6 +82,8 @@ const useStyles = makeStyles(theme => ({
   },
   modifyPictureButton: {
     display: 'flex',
+    overflow: 'hidden',
+    position: 'relative',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -82,6 +91,13 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     textAlign: 'center',
     fontSize: '1em',
+  },
+  uploadInput: {
+    fontSize: '100px',
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    opacity: '0',
   },
   summaryField: {
     width: '90%',
@@ -152,7 +168,11 @@ const Profile = () => {
 
   const {
     handleProfileChange,
+    handleDeleteImage,
     profile,
+    submitFile,
+    handleFileUpload,
+    handleChangeProfileImage,
     handleSubmitParameters,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
@@ -198,14 +218,6 @@ const Profile = () => {
     setSexualPreference({ ...sexualPreference, [name]: event.target.checked });
   };
 
-  // const [notif, setNotif] = React.useState({
-    // '1': notificationMail,
-    // '2': notificationPush,
-  // });
-  // const handleChangeNotif = name => event => {
-  //   setNotif({ ...gender, [name]: event.target.checked });
-  // };
-
   const handleDelete = () => {
     console.info('You clicked the delete icon.');
   };
@@ -221,7 +233,10 @@ const Profile = () => {
             justify="center"
           >
             <img
-              src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
+              src={
+                profile.profilePicture ||
+                'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png'
+              }
               alt="My profile"
               width="50%"
             />
@@ -467,49 +482,30 @@ const Profile = () => {
                   <Box fontWeight="fontWeightBold">My pictures</Box>
                 </Typography>
                 <Grid container>
-                  <Grid container xs={6} sm={6} className={classes.picture}>
-                    <img
-                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                      alt="My profile"
-                      width="100%"
-                    />
-                  </Grid>
-                  <Grid container xs={6} sm={6} className={classes.picture}>
-                    <img
-                      className={classes.profilePicture}
-                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                      alt="My profile"
-                      width="100%"
-                    />
-                  </Grid>
-                  <Grid container xs={6} sm={6} className={classes.picture}>
-                    <img
-                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                      alt="My profile"
-                      width="100%"
-                    />
-                  </Grid>
-                  <Grid container xs={6} sm={6} className={classes.picture}>
-                    <img
-                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                      alt="My profile"
-                      width="100%"
-                    />
-                  </Grid>
-                  <Grid container xs={6} sm={6} className={classes.picture}>
-                    <img
-                      src="https://image.noelshack.com/fichiers/2019/46/4/1573736912-mamie.jpeg"
-                      alt="My profile"
-                      width="100%"
-                    />
-                  </Grid>
+                  <CurrentPictures
+                    classes={classes}
+                    Grid={Grid}
+                    pictures={profile.images}
+                    profilePicture={profile.profilePicture}
+                    Box={Box}
+                    Button={Button}
+                    handleDeleteImage={handleDeleteImage}
+                    handleChangeProfileImage={handleChangeProfileImage}
+                  />
                   <Grid container xs={6} sm={6} className={classes.picture}>
                     <Box
                       bgcolor="secondary.main"
                       width="100%"
                       className={classes.modifyPictureButton}
                     >
-                      <p>Modifier les photos</p>
+                      <p>Upload a picture</p>
+                      <input
+                        label="upload file"
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        onChange={handleFileUpload}
+                        className={classes.uploadInput}
+                      />
                     </Box>
                   </Grid>
                 </Grid>
