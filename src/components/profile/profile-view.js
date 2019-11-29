@@ -480,22 +480,24 @@ const Profile = () => {
                     handleDeleteImage={handleDeleteImage}
                     handleChangeProfileImage={handleChangeProfileImage}
                   />
-                  <Grid container xs={6} sm={6} className={classes.picture}>
-                    <Box
-                      bgcolor="secondary.main"
-                      width="100%"
-                      className={classes.modifyPictureButton}
-                    >
-                      <p>Upload a picture</p>
-                      <input
-                        label="upload file"
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        onChange={handleFileUpload}
-                        className={classes.uploadInput}
-                      />
-                    </Box>
-                  </Grid>
+                  {profile.images && profile.images.length < 5 ? (
+                    <Grid container xs={6} sm={6} className={classes.picture}>
+                      <Box
+                        bgcolor="secondary.main"
+                        width="100%"
+                        className={classes.modifyPictureButton}
+                      >
+                        <p>Upload a picture</p>
+                        <input
+                          label="upload file"
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          onChange={handleFileUpload}
+                          className={classes.uploadInput}
+                        />
+                      </Box>
+                    </Grid>
+                  ) : null}
                 </Grid>
               </Grid>
             </Grid>
