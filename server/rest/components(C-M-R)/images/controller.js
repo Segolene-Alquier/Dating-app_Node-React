@@ -27,6 +27,18 @@ const deleteFile = url => {
 };
 
 async function uploadImage(request, response) {
+  const id = request.decoded.userid;
+  try {
+    const length = await user.getByFiltered('id', id, ['images']).then(data => {
+      return data[0].images.length;
+    });
+    if (length >= 5) {
+      return response.status(400).send('A user can upload only 5 picutre');
+    }
+  } catch (error) {
+    console.log(error);
+    return response.status(400).send(error);
+  }
   const form = new multiparty.Form();
   form.parse(request, async (error, fields, files) => {
     if (error) throw new Error(error);
@@ -35,7 +47,6 @@ async function uploadImage(request, response) {
       const buffer = fs.readFileSync(path);
       const type = fileType(buffer);
       const timestamp = Date.now().toString();
-      const id = request.decoded.userid;
       const fileName = `${process.env.ENVIRONMENT}/${id}/${timestamp}`;
       const data = await uploadFile(buffer, fileName, type);
       await user.addElementToArrayById(id, 'images', data.Location);
