@@ -4,6 +4,8 @@ import _ from 'lodash';
 import { toast } from 'react-toastify';
 
 // import { AuthContext } from '../app/AuthContext';
+let newInput;
+let newChangedFields;
 
 const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
@@ -14,6 +16,40 @@ const UseProfileForm = (userData, token) => {
       setProfile(data.data);
     });
 
+  const handleTextParametersChange = event => {
+    newInput = {
+      ...profile,
+      [event.target.name]: event.target.value,
+    };
+    newChangedFields = {
+      ...changedFields,
+      [event.target.name]: event.target.value,
+    };
+  };
+
+  const handleNotifChange = event => {
+    newInput = {
+      ...profile,
+      [event.target.name]: event.target.checked,
+    };
+    newChangedFields = {
+      ...changedFields,
+      [event.target.name]: event.target.checked,
+    };
+  };
+
+  const handleGenderChange = event => {
+    console.log('kikou');
+    newInput = {
+      ...profile,
+      [event.target.name]: event.target.value,
+    };
+    newChangedFields = {
+      ...changedFields,
+      [event.target.name]: event.target.value,
+    };
+  };
+
   const handleProfileChange = event => {
     event.persist();
     console.log('event type :', event.target.type);
@@ -21,37 +57,13 @@ const UseProfileForm = (userData, token) => {
     console.log('event value', event.target.value);
     console.log('event check', event.target.checked);
 
-    let newInput;
-    let newChangedFields;
     if (event.target.type !== 'checkbox') {
-      newInput = {
-        ...profile,
-        [event.target.name]: event.target.value,
-      };
-      newChangedFields = {
-        ...changedFields,
-        [event.target.name]: event.target.value,
-      };
+      handleTextParametersChange(event);
     } else {
       if (event.target.name === 'gender') {
-        console.log('kikou');
-        newInput = {
-          ...profile,
-          [event.target.name]: event.target.checked,
-        };
-        newChangedFields = {
-          ...changedFields,
-          [event.target.name]: event.target.checked,
-        };
+        handleGenderChange(event);
       } else {
-        newInput = {
-          ...profile,
-          [event.target.name]: event.target.checked,
-        };
-        newChangedFields = {
-          ...changedFields,
-          [event.target.name]: event.target.checked,
-        };
+        handleNotifChange(event);
       }
     }
     setProfile(newInput);
@@ -105,17 +117,15 @@ const UseProfileForm = (userData, token) => {
           const newInput = {
             ...profile,
             images: [...profile.images, response.data.Location],
-            profilePicture: response.data.Location
-          }
-        setProfile(newInput);
-
+            profilePicture: response.data.Location,
+          };
+          setProfile(newInput);
         } else {
           const newInput = {
-          ...profile,
-          images: [...profile.images, response.data.Location],
-          }
-        setProfile(newInput);
-
+            ...profile,
+            images: [...profile.images, response.data.Location],
+          };
+          setProfile(newInput);
         }
       })
       .catch(error => {
