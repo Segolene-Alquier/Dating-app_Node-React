@@ -300,7 +300,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={isChecked('1')}
+                          checked={isChecked(1)}
                           onChange={handleProfileChange}
                           name="gender"
                           value="1"
@@ -311,7 +311,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={gender}
+                          checked={isChecked(2)}
                           onChange={handleProfileChange}
                           name="gender"
                           value="2"
@@ -322,7 +322,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={gender}
+                          checked={isChecked(3)}
                           onChange={handleProfileChange}
                           name="gender"
                           value="3"
@@ -333,7 +333,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={gender}
+                          checked={isChecked(4)}
                           onChange={handleProfileChange}
                           name="gender"
                           value="4"
@@ -344,7 +344,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={gender}
+                          checked={isChecked(5)}
                           onChange={handleProfileChange}
                           name="gender"
                           value="5"
@@ -355,7 +355,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={gender}
+                          checked={isChecked(6)}
                           onChange={handleProfileChange}
                           name="gender"
                           value="6"
@@ -366,7 +366,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={gender}
+                          checked={isChecked(7)}
                           onChange={handleProfileChange}
                           name="gender"
                           value="7"

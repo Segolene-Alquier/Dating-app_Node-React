@@ -29,11 +29,13 @@ const UseProfileForm = (userData, token) => {
 
   const isChecked = fieldId => {
     console.log('array', profile.gender);
-    console.log('field id', fieldId);
+    console.log('field id', typeof fieldId);
 
-    console.log('includes', profile.gender.includes(fieldId));
-
-    return true;
+    if (profile.gender) {
+      const isCkecked = ('includes', profile.gender.includes(fieldId));
+      return isCkecked;
+    }
+    return false;
   };
 
   const handleNotifChange = event => {
