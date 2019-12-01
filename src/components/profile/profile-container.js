@@ -9,6 +9,8 @@ let newChangedFields;
 
 const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
+  const [gender, setGender] = useState({});
+
   const [changedFields, setChangedFields] = useState({});
 
   if (_.isEmpty(profile))
@@ -28,7 +30,6 @@ const UseProfileForm = (userData, token) => {
   };
 
   const isChecked = fieldId => {
-    console.log('array', profile.gender);
     console.log('field id', typeof fieldId);
 
     if (profile.gender) {
@@ -50,7 +51,16 @@ const UseProfileForm = (userData, token) => {
   };
 
   const handleGenderChange = event => {
-    console.log('kikou');
+    // console.log('kikou');
+    // si event check == true, on ajoute event value a l'array profile.gender
+    // si event check == false, on supprime event value de l'array
+    console.log('array', profile.gender);
+    comsole.log('event', event);
+    console.log('event type :', event.target.type);
+    console.log('event name:', event.target.name);
+    console.log('event value', event.target.value);
+    console.log('event check', event.target.checked);
+    // setGender({ ...gender, [name]: event.target.checked }
     newInput = {
       ...profile,
       [event.target.name]: event.target.value,
@@ -63,10 +73,6 @@ const UseProfileForm = (userData, token) => {
 
   const handleProfileChange = event => {
     event.persist();
-    console.log('event type :', event.target.type);
-    console.log('event name:', event.target.name);
-    console.log('event value', event.target.value);
-    console.log('event check', event.target.checked);
 
     if (event.target.type !== 'checkbox') {
       handleTextParametersChange(event);
