@@ -9,8 +9,6 @@ let newChangedFields;
 
 const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
-  const [gender, setGender] = useState({});
-
   const [changedFields, setChangedFields] = useState({});
 
   if (_.isEmpty(profile))
@@ -74,6 +72,17 @@ const UseProfileForm = (userData, token) => {
     };
   };
 
+  const handleSummaryChange = event => {
+    newInput = {
+      ...profile,
+      [event.target.name]: event.target.value,
+    };
+    newChangedFields = {
+      ...changedFields,
+      [event.target.name]: event.target.value,
+    };
+  };
+
   const handleGenderChange = event => {
     const checkboxValue = parseInt(event.target.value, 10);
     if (event.target.checked === true) {
@@ -99,7 +108,11 @@ const UseProfileForm = (userData, token) => {
     event.persist();
 
     if (event.target.type !== 'checkbox') {
-      handleTextParametersChange(event);
+      if (event.target.name === 'description') {
+        handleSummaryChange(event);
+      } else {
+        handleTextParametersChange(event);
+      }
     } else {
       if (event.target.name === 'gender') {
         handleGenderChange(event);
@@ -114,7 +127,6 @@ const UseProfileForm = (userData, token) => {
 
     setProfile(newInput);
     setChangedFields(newChangedFields);
-    // console.log('event', event);
     console.log('newInput :', newInput);
     console.log('changed :', newChangedFields);
   };
@@ -228,6 +240,7 @@ const UseProfileForm = (userData, token) => {
     handleDeleteImage,
     handleProfileChange,
     handleSexualOrientationChange,
+    handleSummaryChange,
     profile,
     handleChangeProfileImage,
     handleSubmitParameters,

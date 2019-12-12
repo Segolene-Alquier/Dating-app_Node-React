@@ -463,6 +463,9 @@ const Profile = () => {
                   className={classes.summaryField}
                   margin="normal"
                   variant="outlined"
+                  name="description"
+                  onChange={handleProfileChange}
+                  value={profile.description}
                 />
                 <Box>
                   <Button
