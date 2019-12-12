@@ -15,6 +15,7 @@
     "express-jwt": "^5.3.1",
     "file-type": "^12.4.0",
     "fs": "0.0.1-security",
+    "google-map-react": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
