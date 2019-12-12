@@ -30,7 +30,7 @@ const UseProfileForm = (userData, token) => {
   };
 
   const isChecked = fieldId => {
-    console.log('field id', typeof fieldId);
+    // console.log('field id', typeof fieldId);
 
     if (profile.gender) {
       const isCkecked = ('includes', profile.gender.includes(fieldId));
@@ -51,23 +51,32 @@ const UseProfileForm = (userData, token) => {
   };
 
   const handleGenderChange = event => {
-    // console.log('kikou');
+    const checkboxValue = parseInt(event.target.value, 10);
     // si event check == true, on ajoute event value a l'array profile.gender
+    if (event.target.checked === true) {
+      profile.gender.push(checkboxValue);
+      profile.gender.sort();
+    }
     // si event check == false, on supprime event value de l'array
+    else {
+      const index = profile.gender.indexOf(checkboxValue);
+      if (index > -1) {
+        profile.gender.splice(index, 1);
+      }
+    }
     console.log('array', profile.gender);
-    comsole.log('event', event);
-    console.log('event type :', event.target.type);
-    console.log('event name:', event.target.name);
-    console.log('event value', event.target.value);
-    console.log('event check', event.target.checked);
-    // setGender({ ...gender, [name]: event.target.checked }
+    console.log('event', event);
+    // console.log('event type :', event.target.type);
+    // console.log('event name :', event.target.name);
+    console.log('event value :', event.target.value);
+    console.log('event check :', event.target.checked);
     newInput = {
       ...profile,
-      [event.target.name]: event.target.value,
+      [event.target.name]: profile.gender,
     };
     newChangedFields = {
       ...changedFields,
-      [event.target.name]: event.target.value,
+      [event.target.name]: profile.gender,
     };
   };
 
@@ -87,7 +96,7 @@ const UseProfileForm = (userData, token) => {
     setChangedFields(newChangedFields);
     // console.log("event", event)
     console.log('newInput :', newInput);
-    // console.log('changed :', typeof newChangedFields.notificationMail);
+    console.log('changed :', newChangedFields);
   };
 
   const handleSubmitParameters = event => {
