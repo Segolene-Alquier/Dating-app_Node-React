@@ -21,6 +21,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import CurrentPictures from './components/current-pictures';
+import Map from './components/location/map';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -493,22 +494,24 @@ const Profile = () => {
                     handleDeleteImage={handleDeleteImage}
                     handleChangeProfileImage={handleChangeProfileImage}
                   />
-                  <Grid container xs={6} sm={6} className={classes.picture}>
-                    <Box
-                      bgcolor="secondary.main"
-                      width="100%"
-                      className={classes.modifyPictureButton}
-                    >
-                      <p>Upload a picture</p>
-                      <input
-                        label="upload file"
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        onChange={handleFileUpload}
-                        className={classes.uploadInput}
-                      />
-                    </Box>
-                  </Grid>
+                  {profile.images && profile.images.length < 5 ? (
+                    <Grid container xs={6} sm={6} className={classes.picture}>
+                      <Box
+                        bgcolor="secondary.main"
+                        width="100%"
+                        className={classes.modifyPictureButton}
+                      >
+                        <p>Upload a picture</p>
+                        <input
+                          label="upload file"
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          onChange={handleFileUpload}
+                          className={classes.uploadInput}
+                        />
+                      </Box>
+                    </Grid>
+                  ) : null}
                 </Grid>
               </Grid>
             </Grid>
@@ -593,6 +596,12 @@ const Profile = () => {
                       value={profile.location}
                       onChange={handleProfileChange}
                     />
+                    {profile.location ? (
+                      <Map
+                        lat={profile.location[0]}
+                        lon={profile.location[1]}
+                      />
+                    ) : null}
                   </div>
                   <div className={classes.formControl}>
                     <Typography variant="subtitle1">

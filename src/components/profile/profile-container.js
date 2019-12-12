@@ -210,6 +210,7 @@ const UseProfileForm = (userData, token) => {
               ...profile,
               images: _.without(profile.images, url),
               profilePicture:
+                _.without(profile.images, url)[0] ||
                 'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png',
             };
             setProfile(newInput);
@@ -232,7 +233,12 @@ const UseProfileForm = (userData, token) => {
       ...profile,
       profilePicture: pictureUrl,
     };
+    const newChangedFields = {
+      ...changedFields,
+      profilePicture: pictureUrl,
+    };
     setProfile(newInput);
+    setChangedFields(newChangedFields);
   };
 
   return {
