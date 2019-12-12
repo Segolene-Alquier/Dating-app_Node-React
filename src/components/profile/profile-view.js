@@ -194,22 +194,12 @@ const Profile = () => {
     username,
   } = profile;
 
-  console.log(profile);
-  // console.log(profile.notificationMail);
-  // console.log(profile.notificationPush);
+  // console.log(profile);
   // change tabs
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  //   change genders
-  // const [gender, setGender] = React.useState({
-  //   '1': true,
-  //   '4': true,
-  // });
-  // const handleChangeGender = name => event => {
-  //   setGender({ ...gender, [name]: event.target.checked });
-  // };
   // sxual preference
   const [sexualPreference, setSexualPreference] = React.useState({
     '2': true,
@@ -300,7 +290,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={isChecked(1)}
+                          checked={isChecked(1, 'gender')}
                           onChange={handleProfileChange}
                           name="gender"
                           value="1"
@@ -311,7 +301,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={isChecked(2)}
+                          checked={isChecked(2, 'gender')}
                           onChange={handleProfileChange}
                           name="gender"
                           value="2"
@@ -322,7 +312,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={isChecked(3)}
+                          checked={isChecked(3, 'gender')}
                           onChange={handleProfileChange}
                           name="gender"
                           value="3"
@@ -333,7 +323,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={isChecked(4)}
+                          checked={isChecked(4, 'gender')}
                           onChange={handleProfileChange}
                           name="gender"
                           value="4"
@@ -344,7 +334,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={isChecked(5)}
+                          checked={isChecked(5, 'gender')}
                           onChange={handleProfileChange}
                           name="gender"
                           value="5"
@@ -355,7 +345,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={isChecked(6)}
+                          checked={isChecked(6, 'gender')}
                           onChange={handleProfileChange}
                           name="gender"
                           value="6"
@@ -366,7 +356,7 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={isChecked(7)}
+                          checked={isChecked(7, 'gender')}
                           onChange={handleProfileChange}
                           name="gender"
                           value="7"
@@ -387,8 +377,8 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={sexualPreference['1']}
-                          onChange={handleSexualPreference('1')}
+                          checked={isChecked(1, 'sexualOrientation')}
+                          onChange={handleProfileChange}
                           value="Woman"
                         />
                       }
@@ -397,8 +387,8 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={sexualPreference['2']}
-                          onChange={handleSexualPreference('2')}
+                          checked={isChecked(2, 'sexualOrientation')}
+                          onChange={handleProfileChange}
                           value="Man"
                         />
                       }
@@ -407,8 +397,8 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={sexualPreference['3']}
-                          onChange={handleSexualPreference('3')}
+                          checked={isChecked(3, 'sexualOrientation')}
+                          onChange={handleProfileChange}
                           value="Cis Woman"
                         />
                       }
@@ -417,8 +407,8 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={sexualPreference['4']}
-                          onChange={handleSexualPreference('4')}
+                          checked={isChecked(4, 'sexualOrientation')}
+                          onChange={handleProfileChange}
                           value="Cis Man"
                         />
                       }
@@ -427,8 +417,8 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={sexualPreference['5']}
-                          onChange={handleSexualPreference('5')}
+                          checked={isChecked(5, 'sexualOrientation')}
+                          onChange={handleProfileChange}
                           value="Trans Woman"
                         />
                       }
@@ -437,8 +427,8 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={sexualPreference['6']}
-                          onChange={handleSexualPreference('6')}
+                          checked={isChecked(6, 'sexualOrientation')}
+                          onChange={handleProfileChange}
                           value="Trans Man"
                         />
                       }
@@ -447,8 +437,8 @@ const Profile = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={sexualPreference['7']}
-                          onChange={handleSexualPreference('7')}
+                          checked={isChecked(7, 'sexualOrientation')}
+                          onChange={handleProfileChange}
                           value="Non-binary"
                         />
                       }

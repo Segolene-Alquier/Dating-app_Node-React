@@ -29,11 +29,14 @@ const UseProfileForm = (userData, token) => {
     };
   };
 
-  const isChecked = fieldId => {
-    // console.log('field id', typeof fieldId);
-
-    if (profile.gender) {
+  const isChecked = (fieldId, type) => {
+    if (type === 'gender' && profile.gender) {
       const isCkecked = ('includes', profile.gender.includes(fieldId));
+      return isCkecked;
+    }
+    if (type === 'sexualOrientation' && profile.sexualOrientation) {
+      const isCkecked =
+        ('includes', profile.sexualOrientation.includes(fieldId));
       return isCkecked;
     }
     return false;
