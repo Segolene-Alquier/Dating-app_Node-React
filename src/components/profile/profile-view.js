@@ -200,14 +200,14 @@ const Profile = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  // sxual preference
-  const [sexualPreference, setSexualPreference] = React.useState({
-    '2': true,
-    '6': true,
-  });
-  const handleSexualPreference = name => event => {
-    setSexualPreference({ ...sexualPreference, [name]: event.target.checked });
-  };
+  // // sxual preference
+  // const [sexualPreference, setSexualPreference] = React.useState({
+  //   '2': true,
+  //   '6': true,
+  // });
+  // const handleSexualPreference = name => event => {
+  //   setSexualPreference({ ...sexualPreference, [name]: event.target.checked });
+  // };
 
   const handleDelete = () => {
     console.info('You clicked the delete icon.');
@@ -379,7 +379,8 @@ const Profile = () => {
                         <Checkbox
                           checked={isChecked(1, 'sexualOrientation')}
                           onChange={handleProfileChange}
-                          value="Woman"
+                          name="sexualOrientation"
+                          value="1"
                         />
                       }
                       label="Woman"
@@ -389,7 +390,8 @@ const Profile = () => {
                         <Checkbox
                           checked={isChecked(2, 'sexualOrientation')}
                           onChange={handleProfileChange}
-                          value="Man"
+                          name="sexualOrientation"
+                          value="2"
                         />
                       }
                       label="Man"
@@ -399,7 +401,8 @@ const Profile = () => {
                         <Checkbox
                           checked={isChecked(3, 'sexualOrientation')}
                           onChange={handleProfileChange}
-                          value="Cis Woman"
+                          name="sexualOrientation"
+                          value="3"
                         />
                       }
                       label="Cis Woman"
@@ -409,7 +412,8 @@ const Profile = () => {
                         <Checkbox
                           checked={isChecked(4, 'sexualOrientation')}
                           onChange={handleProfileChange}
-                          value="Cis Man"
+                          name="sexualOrientation"
+                          value="4"
                         />
                       }
                       label="Cis Man"
@@ -419,7 +423,8 @@ const Profile = () => {
                         <Checkbox
                           checked={isChecked(5, 'sexualOrientation')}
                           onChange={handleProfileChange}
-                          value="Trans Woman"
+                          name="sexualOrientation"
+                          value="5"
                         />
                       }
                       label="Trans Woman"
@@ -429,7 +434,8 @@ const Profile = () => {
                         <Checkbox
                           checked={isChecked(6, 'sexualOrientation')}
                           onChange={handleProfileChange}
-                          value="Trans Man"
+                          name="sexualOrientation"
+                          value="6"
                         />
                       }
                       label="Trans Man"
@@ -439,7 +445,8 @@ const Profile = () => {
                         <Checkbox
                           checked={isChecked(7, 'sexualOrientation')}
                           onChange={handleProfileChange}
-                          value="Non-binary"
+                          name="sexualOrientation"
+                          value="7"
                         />
                       }
                       label="Non-binary"

@@ -53,6 +53,27 @@ const UseProfileForm = (userData, token) => {
     };
   };
 
+  const handleSexualOrientationChange = event => {
+    const checkboxValue = parseInt(event.target.value, 10);
+    if (event.target.checked === true) {
+      profile.sexualOrientation.push(checkboxValue);
+      profile.sexualOrientation.sort();
+    } else {
+      const index = profile.sexualOrientation.indexOf(checkboxValue);
+      if (index > -1) {
+        profile.sexualOrientation.splice(index, 1);
+      }
+    }
+    newInput = {
+      ...profile,
+      [event.target.name]: profile.sexualOrientation,
+    };
+    newChangedFields = {
+      ...changedFields,
+      [event.target.name]: profile.sexualOrientation,
+    };
+  };
+
   const handleGenderChange = event => {
     const checkboxValue = parseInt(event.target.value, 10);
     if (event.target.checked === true) {
@@ -64,12 +85,6 @@ const UseProfileForm = (userData, token) => {
         profile.gender.splice(index, 1);
       }
     }
-    // console.log('array', profile.gender);
-    // console.log('event', event);
-    // // console.log('event type :', event.target.type);
-    // // console.log('event name :', event.target.name);
-    // console.log('event value :', event.target.value);
-    // console.log('event check :', event.target.checked);
     newInput = {
       ...profile,
       [event.target.name]: profile.gender,
@@ -88,13 +103,18 @@ const UseProfileForm = (userData, token) => {
     } else {
       if (event.target.name === 'gender') {
         handleGenderChange(event);
-      } else {
+      }
+      if (event.target.name === 'notificationMail') {
         handleNotifChange(event);
       }
+      if (event.target.name === 'sexualOrientation') {
+        handleSexualOrientationChange(event);
+      }
     }
+
     setProfile(newInput);
     setChangedFields(newChangedFields);
-    // console.log("event", event)
+    // console.log('event', event);
     console.log('newInput :', newInput);
     console.log('changed :', newChangedFields);
   };
@@ -207,6 +227,7 @@ const UseProfileForm = (userData, token) => {
     handleFileUpload,
     handleDeleteImage,
     handleProfileChange,
+    handleSexualOrientationChange,
     profile,
     handleChangeProfileImage,
     handleSubmitParameters,
