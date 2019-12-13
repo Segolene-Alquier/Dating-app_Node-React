@@ -1,4 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+// import { DatePicker } from '@material-ui/pickers';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns'; // choose your lib
+
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -7,11 +11,9 @@ import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Tabs, Tab } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
@@ -196,24 +198,16 @@ const Profile = () => {
     username,
   } = profile;
 
-  // console.log(profile);
   // change tabs
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  // // sxual preference
-  // const [sexualPreference, setSexualPreference] = React.useState({
-  //   '2': true,
-  //   '6': true,
-  // });
-  // const handleSexualPreference = name => event => {
-  //   setSexualPreference({ ...sexualPreference, [name]: event.target.checked });
-  // };
 
   const handleDelete = () => {
     console.info('You clicked the delete icon.');
   };
+
   return (
     <>
       <Box className={classes.boxUpProfile}>
@@ -590,18 +584,26 @@ const Profile = () => {
                   {profile.location ? (
                     <Map lat={profile.location[0]} lon={profile.location[1]} />
                   ) : null}
-                  <InputTextShort
+                  {/* <InputTextShort
                     classes={classes}
                     Typography={Typography}
                     Box={Box}
                     TextField={TextField}
                     profile={profile}
                     handleProfileChange={handleProfileChange}
-                    name="birthdate"
+                    name="birthDate"
                     value={profile.birthDate}
                     title="Birthdate"
                     type="date"
-                  />
+                  /> */}
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+                      label="Basic example"
+                      value={profile.birthDate}
+                      onChange={handleDateChange}
+                      animateYearScrolling
+                    />
+                  </MuiPickersUtilsProvider>
                 </Grid>
                 <Grid
                   container

@@ -10,6 +10,7 @@ let newChangedFields;
 const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
   const [changedFields, setChangedFields] = useState({});
+    const [selectedDate, handleDateChange] = useState(new Date());
 
   if (_.isEmpty(profile))
     userData.then(data => {
