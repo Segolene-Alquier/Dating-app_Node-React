@@ -22,6 +22,7 @@ import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import CurrentPictures from './components/current-pictures';
 import Map from './components/location/map';
+import InputTextShort from './components/inputTextShort';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -526,98 +527,81 @@ const Profile = () => {
                   direction="column"
                   className={classes.gridColumnProfile}
                 >
-                  <div className={classes.formControl}>
-                    <Typography variant="subtitle1">
-                      <Box fontWeight="fontWeightBold">Firstname</Box>
-                    </Typography>
-                    <TextField
-                      id="outlined-basic"
-                      className={classes.textField}
-                      margin="normal"
-                      variant="outlined"
-                      name="firstname"
-                      value={profile.firstname}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                  <div className={classes.formControl}>
-                    <Typography variant="subtitle1">
-                      <Box fontWeight="fontWeightBold">Surname</Box>
-                    </Typography>
-                    <TextField
-                      id="outlined-basic"
-                      className={classes.textField}
-                      margin="normal"
-                      variant="outlined"
-                      name="surname"
-                      value={profile.surname}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                  <div className={classes.formControl}>
-                    <Typography variant="subtitle1">
-                      <Box fontWeight="fontWeightBold">Username</Box>
-                    </Typography>
-                    <TextField
-                      id="outlined-basic"
-                      className={classes.textField}
-                      margin="normal"
-                      variant="outlined"
-                      name="username"
-                      value={profile.username}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                  <div className={classes.formControl}>
-                    <Typography variant="subtitle1">
-                      <Box fontWeight="fontWeightBold">Email</Box>
-                    </Typography>
-                    <TextField
-                      id="outlined-basic"
-                      className={classes.textField}
-                      margin="normal"
-                      variant="outlined"
-                      type="email"
-                      name="email"
-                      value={profile.email}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                  <div className={classes.formControl}>
-                    <Typography variant="subtitle1">
-                      <Box fontWeight="fontWeightBold">Location</Box>
-                    </Typography>
-                    <TextField
-                      id="outlined-basic"
-                      className={classes.textField}
-                      margin="normal"
-                      variant="outlined"
-                      name="location"
-                      value={profile.location}
-                      onChange={handleProfileChange}
-                    />
-                    {profile.location ? (
-                      <Map
-                        lat={profile.location[0]}
-                        lon={profile.location[1]}
-                      />
-                    ) : null}
-                  </div>
-                  <div className={classes.formControl}>
-                    <Typography variant="subtitle1">
-                      <Box fontWeight="fontWeightBold">Birthdate</Box>
-                    </Typography>
-                    <TextField
-                      id="outlined-basic"
-                      className={classes.textField}
-                      margin="normal"
-                      variant="outlined"
-                      type="date"
-                      name="birthdate"
-                      value={profile.birthDate}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
+                  <InputTextShort
+                    classes={classes}
+                    Typography={Typography}
+                    Box={Box}
+                    TextField={TextField}
+                    profile={profile}
+                    handleProfileChange={handleProfileChange}
+                    name="firstname"
+                    value={profile.firstname}
+                    title="Firstname"
+                    type="text"
+                  />
+                  <InputTextShort
+                    classes={classes}
+                    Typography={Typography}
+                    Box={Box}
+                    TextField={TextField}
+                    profile={profile}
+                    handleProfileChange={handleProfileChange}
+                    name="surname"
+                    value={profile.surname}
+                    title="Surname"
+                    type="text"
+                  />
+                  <InputTextShort
+                    classes={classes}
+                    Typography={Typography}
+                    Box={Box}
+                    TextField={TextField}
+                    profile={profile}
+                    handleProfileChange={handleProfileChange}
+                    name="username"
+                    value={profile.username}
+                    title="Username"
+                    type="text"
+                  />
+                  <InputTextShort
+                    classes={classes}
+                    Typography={Typography}
+                    Box={Box}
+                    TextField={TextField}
+                    profile={profile}
+                    handleProfileChange={handleProfileChange}
+                    name="email"
+                    value={profile.email}
+                    title="Email"
+                    type="email"
+                  />
+                  <InputTextShort
+                    classes={classes}
+                    Typography={Typography}
+                    Box={Box}
+                    TextField={TextField}
+                    profile={profile}
+                    handleProfileChange={handleProfileChange}
+                    name="location"
+                    value={profile.location}
+                    title="Location"
+                    type="text"
+                  />
+                  {profile.location ? (
+                    <Map lat={profile.location[0]} lon={profile.location[1]} />
+                  ) : null}
+                  <InputTextShort
+                    classes={classes}
+                    Typography={Typography}
+                    Box={Box}
+                    TextField={TextField}
+                    profile={profile}
+                    handleProfileChange={handleProfileChange}
+                    name="birthdate"
+                    value={profile.birthDate}
+                    title="Birthdate"
+                    type="date"
+                  />
                 </Grid>
                 <Grid
                   container
