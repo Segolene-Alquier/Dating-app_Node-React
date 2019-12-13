@@ -72,23 +72,6 @@ const location = async () => {
   return geo || ip;
 };
 
-// export const checkAuthentification = async (data, setSecureAuth) => {
-//   if (isTokenExpired(data.token)) {
-//     setSecureAuth(false);
-//     return;
-//   }
-//   const isAuthenticaded = await axios.get(
-//     'http://localhost:3001/auth/checkToken',
-//     {
-//       headers: {
-//         'Content-type': 'application/json; charset=UTF-8',
-//         'x-access-token': data.token,
-//       },
-//     },
-//   );
-//   setSecureAuth(isAuthenticaded.data.success);
-// };
-
 export const getUserData = async token => {
   if (!token || isTokenExpired(token)) {
     return null;

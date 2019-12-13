@@ -117,7 +117,10 @@ const UseProfileForm = (userData, token) => {
       if (event.target.name === 'gender') {
         handleGenderChange(event);
       }
-      if (event.target.name === 'notificationMail') {
+      if (
+        event.target.name === 'notificationMail' ||
+        event.target.name === 'notificationPush'
+      ) {
         handleNotifChange(event);
       }
       if (event.target.name === 'sexualOrientation') {
