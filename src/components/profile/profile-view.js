@@ -584,7 +584,7 @@ const Profile = () => {
                   {profile.location ? (
                     <Map lat={profile.location[0]} lon={profile.location[1]} />
                   ) : null}
-                  {/* <InputTextShort
+                  <InputTextShort
                     classes={classes}
                     Typography={Typography}
                     Box={Box}
@@ -592,18 +592,13 @@ const Profile = () => {
                     profile={profile}
                     handleProfileChange={handleProfileChange}
                     name="birthDate"
-                    value={profile.birthDate}
+                    value={
+                      profile.birthDate ? new Date(profile.birthDate).toISOString().split('T')[0] :
+                      new Date().toISOString().split('T')[0]
+                    }
                     title="Birthdate"
                     type="date"
-                  /> */}
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
-                      label="Basic example"
-                      value={profile.birthDate}
-                      onChange={handleDateChange}
-                      animateYearScrolling
-                    />
-                  </MuiPickersUtilsProvider>
+                  />
                 </Grid>
                 <Grid
                   container
