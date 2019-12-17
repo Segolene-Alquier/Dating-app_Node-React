@@ -10,7 +10,7 @@ let newChangedFields;
 const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
   const [changedFields, setChangedFields] = useState({});
-    const [selectedDate, handleDateChange] = useState(new Date());
+  const [selectedDate, handleDateChange] = useState(new Date());
 
   if (_.isEmpty(profile))
     userData.then(data => {
@@ -39,6 +39,17 @@ const UseProfileForm = (userData, token) => {
       return isCkecked;
     }
     return false;
+  };
+
+  const getAge = dateString => {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
   };
 
   const handleNotifChange = event => {
@@ -255,6 +266,7 @@ const UseProfileForm = (userData, token) => {
     handleChangeProfileImage,
     handleSubmitParameters,
     isChecked,
+    getAge,
   };
 };
 

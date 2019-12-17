@@ -1,8 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-// import { DatePicker } from '@material-ui/pickers';
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns'; // choose your lib
-
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -179,6 +175,7 @@ const Profile = () => {
     handleChangeProfileImage,
     handleSubmitParameters,
     isChecked,
+    getAge,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
@@ -237,8 +234,15 @@ const Profile = () => {
               direction="column"
               justify="flex-end"
             >
-              <div>Ségolène</div>
-              <div>27 ans | Paris</div>
+              <div>{profile.firstname}</div>
+              <div>
+                {profile.birthDate
+                  ? getAge(
+                      new Date(profile.birthDate).toISOString().split('T')[0],
+                    )
+                  : null}
+                ans | Paris
+              </div>
             </Grid>
             <Grid
               container
@@ -593,8 +597,11 @@ const Profile = () => {
                     handleProfileChange={handleProfileChange}
                     name="birthDate"
                     value={
-                      profile.birthDate ? new Date(profile.birthDate).toISOString().split('T')[0] :
-                      new Date().toISOString().split('T')[0]
+                      profile.birthDate
+                        ? new Date(profile.birthDate)
+                            .toISOString()
+                            .split('T')[0]
+                        : new Date().toISOString().split('T')[0]
                     }
                     title="Birthdate"
                     type="date"
