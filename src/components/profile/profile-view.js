@@ -236,12 +236,14 @@ const Profile = () => {
             >
               <div>{profile.firstname}</div>
               <div>
-                {profile.birthDate
-                  ? getAge(
-                      new Date(profile.birthDate).toISOString().split('T')[0],
-                    )
-                  : null}
-                ans | Paris
+                <span>
+                  {profile.birthDate
+                    ? getAge(
+                        new Date(profile.birthDate).toISOString().split('T')[0],
+                      )
+                    : 'Age not defined '}
+                </span>
+                | <span>Paris</span>
               </div>
             </Grid>
             <Grid
