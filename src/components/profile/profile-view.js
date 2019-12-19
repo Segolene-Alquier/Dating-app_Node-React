@@ -176,6 +176,7 @@ const Profile = () => {
     handleSubmitParameters,
     isChecked,
     getAge,
+    fetchInterests,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
@@ -193,11 +194,15 @@ const Profile = () => {
     sexualOrientation,
     surname,
     username,
+    interestNames,
   } = profile;
 
   // change tabs
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
+    if (newValue === 1) {
+      fetchInterests();
+    }
     setValue(newValue);
   };
 
@@ -621,30 +626,35 @@ const Profile = () => {
                     </Typography>
                     <div className={classes.interestChips}>
                       <Chip
-                        label="Yoga"
+                        label={email}
+                        onDelete={handleDelete}
+                        color="primary"
+                      />
+                      {/* <Chip
+                        label={interestNames ? interestNames[0].name : 'yo'}
                         onDelete={handleDelete}
                         color="primary"
                       />
                       <Chip
-                        label="Food"
+                        label={interestNames ? interestNames[1].name : null}
+                        onDelete={handleDelete}
+                        color="primary"
+                      /> */}
+                      {/* <Chip
+                        label={fetchInterests(2)}
                         onDelete={handleDelete}
                         color="primary"
                       />
                       <Chip
-                        label="Doggos"
+                        label={fetchInterests(3)}
                         onDelete={handleDelete}
                         color="primary"
                       />
                       <Chip
-                        label="Coding"
+                        label={fetchInterests(4)}
                         onDelete={handleDelete}
                         color="primary"
-                      />
-                      <Chip
-                        label="Fighting patriarchy"
-                        onDelete={handleDelete}
-                        color="primary"
-                      />
+                      /> */}
                       <div>
                         <TextField
                           id="standard-basic"

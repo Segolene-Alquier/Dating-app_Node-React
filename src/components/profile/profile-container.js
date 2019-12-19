@@ -46,11 +46,28 @@ const UseProfileForm = (userData, token) => {
     const birthDate = new Date(dateString);
     let age = today.getFullYear() - birthDate.getFullYear();
     const m = today.getMonth() - birthDate.getMonth();
-    // if (dateString)
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
     return age + ' ans ';
+  };
+
+  const fetchInterests = async () => {
+     await axios
+      .get('http://localhost:3001/interests', {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'x-access-token': token,
+        },
+      })
+      .then(response => {
+        profile.interestNames = response.data;
+        console.log('RESPONSE profile', profile);
+        // return response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const handleNotifChange = event => {
@@ -268,6 +285,7 @@ const UseProfileForm = (userData, token) => {
     handleSubmitParameters,
     isChecked,
     getAge,
+    fetchInterests,
   };
 };
 

@@ -36,7 +36,6 @@ function App() {
             path="/validation/forgotpassword/:token"
             component={ResetForgotPassword}
           />
-
           <SecureRoute path="/secret" component={Secret} />
           <SecureRoute path="/profile" component={Profile} />
           <Route path="/" component={Home} />
