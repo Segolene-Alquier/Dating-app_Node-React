@@ -22,6 +22,8 @@ import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import CurrentPictures from './components/current-pictures';
 import Map from './components/location/map';
+import AddressAutocomplete from './components/location/address-autocomplete';
+
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -597,10 +599,16 @@ const Profile = () => {
                       onChange={handleProfileChange}
                     />
                     {profile.location ? (
-                      <Map
-                        lat={profile.location[0]}
-                        lon={profile.location[1]}
-                      />
+                      <>
+                        <Map
+                          lat={profile.location[0]}
+                          lon={profile.location[1]}
+                        />
+                        <AddressAutocomplete
+                          handleProfileChange={handleProfileChange}
+                          name="location"
+                        />
+                      </>
                     ) : null}
                   </div>
                   <div className={classes.formControl}>
