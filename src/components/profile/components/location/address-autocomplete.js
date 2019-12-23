@@ -5,13 +5,14 @@ import GooglePlacesAutocomplete, {
 } from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/assets/index.css';
 
-const AddressAutocomplete = ({ handleProfileChange }) => {
+const AddressAutocomplete = ({ handleChangeLocation }) => {
   const changeLocation = address => {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(({ lat, lng }) => {
         console.log(lat, lng);
-        // SET LOCATION TODO
+        const newLocation = [lat, lng];
+        handleChangeLocation(newLocation);
       });
   };
   return (

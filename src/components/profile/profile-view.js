@@ -176,6 +176,7 @@ const Profile = () => {
     submitFile,
     handleFileUpload,
     handleChangeProfileImage,
+    handleChangeLocation,
     handleSubmitParameters,
     isChecked,
   } = UseProfileForm(authContext.userData, authContext.token);
@@ -586,7 +587,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className={classes.formControl}>
-                    <Typography variant="subtitle1">
+                    {/* <Typography variant="subtitle1">
                       <Box fontWeight="fontWeightBold">Location</Box>
                     </Typography>
                     <TextField
@@ -597,7 +598,7 @@ const Profile = () => {
                       name="location"
                       value={profile.location}
                       onChange={handleProfileChange}
-                    />
+                    /> */}  
                     {profile.location ? (
                       <>
                         <Map
@@ -605,8 +606,7 @@ const Profile = () => {
                           lon={profile.location[1]}
                         />
                         <AddressAutocomplete
-                          handleProfileChange={handleProfileChange}
-                          name="location"
+                          handleChangeLocation={handleChangeLocation}
                         />
                       </>
                     ) : null}
