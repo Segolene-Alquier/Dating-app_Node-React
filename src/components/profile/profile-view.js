@@ -174,6 +174,7 @@ const Profile = () => {
     submitFile,
     handleFileUpload,
     handleChangeProfileImage,
+    handleInterestChange,
     handleSubmitParameters,
     isChecked,
     getAge,
@@ -626,23 +627,42 @@ const Profile = () => {
                       <Box fontWeight="fontWeightBold">Interests</Box>
                     </Typography>
                     <div className={classes.interestChips}>
-                      {interests
-                        ? interests.map(index => (
+                      {/* {interests
+                        ? interests.map(interest => (
                             <Chip
-                              label={
-                                interestNames ? interestNames[index].name : null
-                              }
+                              label={interest}
                               onDelete={handleDelete}
                               color="primary"
                             />
                           ))
-                        : null}
+                        : null}*/}
                       <div>
                         <Autocomplete
+                          multiple
+                          id="tags-standard"
+                          options={interestNames}
+                          getOptionLabel={option => option.name}
+                          // defaultValue={[{name: "connard"}, {name: "bonjour"}]}
+                          defaultValue={interests ? interests.map(interest => {return ({name: interest})}) : [{name: "bisou"}]}
+                          style={{ width: 300 }}
+                          onChange={handleProfileChange}
+                          name="interest"
+                          renderInput={params => (
+                            <TextField
+                              {...params}
+                              variant="outlined"
+                              placeholder="Add interest"
+                              fullWidth
+                            />
+                          )}
+                        />
+                        {/* <Autocomplete
                           id="combo-box-demo"
                           options={interestNames}
                           getOptionLabel={option => option.name}
                           style={{ width: 300 }}
+                          onChange={handleProfileChange}
+                          name="interest"
                           renderInput={params => (
                             <TextField
                               {...params}
@@ -651,16 +671,16 @@ const Profile = () => {
                               fullWidth
                               margin="normal"
                             />
-                          )}
-                        />
-                        <Fab
+                          )} */}
+                        {/* /> */}
+                        {/* <Fab
                           color="secondary"
                           aria-label="add"
                           className={classes.fab}
                           size="small"
                         >
                           <AddIcon />
-                        </Fab>
+                        </Fab> */}
                       </div>
                     </div>
                   </div>

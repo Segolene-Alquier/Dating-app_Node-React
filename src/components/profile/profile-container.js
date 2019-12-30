@@ -114,6 +114,22 @@ const UseProfileForm = (userData, token) => {
     };
   };
 
+  const handleInterestChange = event => {
+    newInput = {
+      ...profile,
+      interests: [...profile.interests, event.target.textContent],
+    };
+    newChangedFields = {
+      ...changedFields,
+      interests: [...profile.interests, event.target.textContent],
+    };
+
+    // event.target.textContent = '';
+    // console.log('eventtextcontent', event.target.textContent);
+
+    console.log('event', event);
+  };
+
   const handleGenderChange = event => {
     const checkboxValue = parseInt(event.target.value, 10);
     if (event.target.checked === true) {
@@ -141,6 +157,9 @@ const UseProfileForm = (userData, token) => {
     if (event.target.type !== 'checkbox') {
       if (event.target.name === 'description') {
         handleSummaryChange(event);
+      }
+      if (event.type === 'click') {
+        handleInterestChange(event);
       } else {
         handleTextParametersChange(event);
       }
@@ -283,6 +302,7 @@ const UseProfileForm = (userData, token) => {
     handleSummaryChange,
     profile,
     handleChangeProfileImage,
+    handleInterestChange,
     handleSubmitParameters,
     isChecked,
     getAge,
