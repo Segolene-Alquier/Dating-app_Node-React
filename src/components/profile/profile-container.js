@@ -53,7 +53,7 @@ const UseProfileForm = (userData, token) => {
   };
 
   const fetchInterests = async () => {
-     await axios
+    await axios
       .get('http://localhost:3001/interests', {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
@@ -63,6 +63,7 @@ const UseProfileForm = (userData, token) => {
       .then(response => {
         profile.interestNames = response.data;
         console.log('RESPONSE profile', profile);
+        setProfile(profile);
         // return response.data;
       })
       .catch(error => {

@@ -16,6 +16,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import CurrentPictures from './components/current-pictures';
@@ -197,12 +198,12 @@ const Profile = () => {
     interestNames,
   } = profile;
 
+  useEffect(() => {
+    fetchInterests();
+  });
   // change tabs
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
-    if (newValue === 1) {
-      fetchInterests();
-    }
     setValue(newValue);
   };
 
@@ -625,41 +626,32 @@ const Profile = () => {
                       <Box fontWeight="fontWeightBold">Interests</Box>
                     </Typography>
                     <div className={classes.interestChips}>
-                      <Chip
-                        label={email}
-                        onDelete={handleDelete}
-                        color="primary"
-                      />
-                      {/* <Chip
-                        label={interestNames ? interestNames[0].name : 'yo'}
-                        onDelete={handleDelete}
-                        color="primary"
-                      />
-                      <Chip
-                        label={interestNames ? interestNames[1].name : null}
-                        onDelete={handleDelete}
-                        color="primary"
-                      /> */}
-                      {/* <Chip
-                        label={fetchInterests(2)}
-                        onDelete={handleDelete}
-                        color="primary"
-                      />
-                      <Chip
-                        label={fetchInterests(3)}
-                        onDelete={handleDelete}
-                        color="primary"
-                      />
-                      <Chip
-                        label={fetchInterests(4)}
-                        onDelete={handleDelete}
-                        color="primary"
-                      /> */}
+                      {interests
+                        ? interests.map(index => (
+                            <Chip
+                              label={
+                                interestNames ? interestNames[index].name : null
+                              }
+                              onDelete={handleDelete}
+                              color="primary"
+                            />
+                          ))
+                        : null}
                       <div>
-                        <TextField
-                          id="standard-basic"
-                          placeholder="Add interest"
-                          margin="normal"
+                        <Autocomplete
+                          id="combo-box-demo"
+                          options={interestNames}
+                          getOptionLabel={option => option.name}
+                          style={{ width: 300 }}
+                          renderInput={params => (
+                            <TextField
+                              {...params}
+                              placeholder="Add interest"
+                              variant="outlined"
+                              fullWidth
+                              margin="normal"
+                            />
+                          )}
                         />
                         <Fab
                           color="secondary"
