@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   wrapperProfile: {
     display: 'flex',
@@ -208,9 +208,10 @@ const Profile = () => {
     interestNames,
   } = profile;
 
-  useEffect(() => {
-    fetchInterests();
-  });
+  // useEffect(() => {
+  //   fetchInterests();
+  // });
+
   // change tabs
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -264,7 +265,7 @@ const Profile = () => {
                     ? getAge(
                         new Date(profile.birthDate).toISOString().split('T')[0],
                       )
-                    : 'Age not defined '}
+                    : 'nope'}
                 </span>
                 | <span>Paris</span>
               </div>
@@ -610,9 +611,7 @@ const Profile = () => {
                     title="Location"
                     type="text"
                   />
-                  {profile.location ? (
-                    <Map lat={profile.location[0]} lon={profile.location[1]} />
-                  ) : null}
+                  {<Map lat={profile.location[0]} lon={profile.location[1]} />}
                   <InputTextShort
                     classes={classes}
                     Typography={Typography}
@@ -622,11 +621,7 @@ const Profile = () => {
                     handleProfileChange={handleProfileChange}
                     name="birthDate"
                     value={
-                      profile.birthDate
-                        ? new Date(profile.birthDate)
-                            .toISOString()
-                            .split('T')[0]
-                        : new Date().toISOString().split('T')[0]
+                      new Date(profile.birthDate).toISOString().split('T')[0]
                     }
                     title="Birthdate"
                     type="date"
@@ -643,31 +638,23 @@ const Profile = () => {
                       <Box fontWeight="fontWeightBold">Interests</Box>
                     </Typography>
                     <div className={classes.interestChips}>
-                      {/* {interests
-                        ? interests.map(interest => (
-                            <Chip
-                              label={interest}
-                              onDelete={handleDelete}
-                              color="primary"
-                            />
-                          ))
-                        : null}*/}
                       <div>
                         <Autocomplete
                           multiple
-                          id="tags-standard"
+                          // id="tags-standard"
                           options={interestNames}
                           getOptionLabel={option => option.name}
-                          // defaultValue={[{name: "connard"}, {name: "bonjour"}]}
-                          defaultValue={
-                            interests
-                              ? interests.map(interest => {
-                                  return { name: interest };
-                                })
-                              : [{ name: 'bisou' }]
-                          }
+                          defaultValue={interests.map(interest => {
+                            return { name: interest };
+                          })}
                           style={{ width: 300 }}
-                          onChange={handleProfileChange}
+                          // renderTags={(defaultValue,getTagProps) => {
+                          //   console.log('props', getTagProps(defaultValue));
+                          // }}
+                          // onClick={test => console.log("click",test)}
+                          onChange={test => console.log(test.currentTarget)}
+
+                          // onChange={handleProfileChange}
                           name="interest"
                           renderInput={params => (
                             <TextField
@@ -678,31 +665,6 @@ const Profile = () => {
                             />
                           )}
                         />
-                        {/* <Autocomplete
-                          id="combo-box-demo"
-                          options={interestNames}
-                          getOptionLabel={option => option.name}
-                          style={{ width: 300 }}
-                          onChange={handleProfileChange}
-                          name="interest"
-                          renderInput={params => (
-                            <TextField
-                              {...params}
-                              placeholder="Add interest"
-                              variant="outlined"
-                              fullWidth
-                              margin="normal"
-                            />
-                          )} */}
-                        {/* /> */}
-                        {/* <Fab
-                          color="secondary"
-                          aria-label="add"
-                          className={classes.fab}
-                          size="small"
-                        >
-                          <AddIcon />
-                        </Fab> */}
                       </div>
                     </div>
                   </div>

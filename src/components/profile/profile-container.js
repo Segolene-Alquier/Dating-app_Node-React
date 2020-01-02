@@ -13,11 +13,29 @@ const UseProfileForm = (userData, token) => {
   const [changedFields, setChangedFields] = useState({});
   // const [selectedDate, handleDateChange] = useState(new Date());
 
-  if (_.isEmpty(profile))
-    userData.then(data => {
-      setProfile(data.data);
-      setLoaded(true)
+  const fetchInterests = axios
+    .get('http://localhost:3001/interests', {
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'x-access-token': token,
+      },
+    })
+    .then(response => {
+      console.log('RESPONSE profile', profile);
+      return response.data;
+    })
+    .catch(error => {
+      console.log(error);
     });
+
+  if (_.isEmpty(profile)) {
+    Promise.all([userData, fetchInterests]).then(values => {
+      const tempUserData = values[0].data;
+      tempUserData.interestNames = values[1];
+      setProfile(tempUserData);
+      setLoaded(true);
+    });
+  }
 
   const handleTextParametersChange = event => {
     newInput = {
@@ -52,25 +70,6 @@ const UseProfileForm = (userData, token) => {
       age--;
     }
     return age + ' ans ';
-  };
-
-  const fetchInterests = async () => {
-    await axios
-      .get('http://localhost:3001/interests', {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          'x-access-token': token,
-        },
-      })
-      .then(response => {
-        profile.interestNames = response.data;
-        console.log('RESPONSE profile', profile);
-        setProfile(profile);
-        // return response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
   };
 
   const handleNotifChange = event => {
