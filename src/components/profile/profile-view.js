@@ -648,13 +648,7 @@ const Profile = () => {
                             return { name: interest };
                           })}
                           style={{ width: 300 }}
-                          // renderTags={(defaultValue,getTagProps) => {
-                          //   console.log('props', getTagProps(defaultValue));
-                          // }}
-                          // onClick={test => console.log("click",test)}
-                          onChange={test => console.log(test.currentTarget)}
-
-                          // onChange={handleProfileChange}
+                          onChange={handleProfileChange}
                           name="interest"
                           renderInput={params => (
                             <TextField

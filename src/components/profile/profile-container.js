@@ -116,15 +116,28 @@ const UseProfileForm = (userData, token) => {
   };
 
   const handleInterestChange = event => {
-    newInput = {
-      ...profile,
-      interests: [...profile.interests, event.target.textContent],
-    };
-    newChangedFields = {
-      ...changedFields,
-      interests: [...profile.interests, event.target.textContent],
-    };
-
+    if (event.target.textContent === '') {
+      const interestToDelete = event.currentTarget.closest('div').textContent;
+      let newInterests = profile.interests;
+      newInterests.splice(profile.interests.indexOf(interestToDelete), 1);
+      newInput = {
+        ...profile,
+        interests: newInterests,
+      };
+      newChangedFields = {
+        ...changedFields,
+        interests: newInterests,
+      };
+    } else {
+      newInput = {
+        ...profile,
+        interests: [...profile.interests, event.target.textContent],
+      };
+      newChangedFields = {
+        ...changedFields,
+        interests: [...profile.interests, event.target.textContent],
+      };
+    }
     // event.target.textContent = '';
     // console.log('eventtextcontent', event.target.textContent);
 
