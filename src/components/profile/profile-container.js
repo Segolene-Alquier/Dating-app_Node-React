@@ -9,12 +9,14 @@ let newChangedFields;
 
 const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
+  const [loaded, setLoaded] = useState(false);
   const [changedFields, setChangedFields] = useState({});
   // const [selectedDate, handleDateChange] = useState(new Date());
 
   if (_.isEmpty(profile))
     userData.then(data => {
       setProfile(data.data);
+      setLoaded(true)
     });
 
   const handleTextParametersChange = event => {
@@ -301,6 +303,7 @@ const UseProfileForm = (userData, token) => {
     handleSexualOrientationChange,
     handleSummaryChange,
     profile,
+    loaded,
     handleChangeProfileImage,
     handleInterestChange,
     handleSubmitParameters,

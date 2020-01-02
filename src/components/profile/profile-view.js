@@ -17,6 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import CurrentPictures from './components/current-pictures';
@@ -28,6 +29,13 @@ const useStyles = makeStyles(theme => ({
     body: {
       backgroundColor: theme.palette.common.white,
     },
+  },
+  progress: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   wrapperProfile: {
     display: 'flex',
@@ -171,6 +179,7 @@ const Profile = () => {
     handleProfileChange,
     handleDeleteImage,
     profile,
+    loaded,
     submitFile,
     handleFileUpload,
     handleChangeProfileImage,
@@ -212,6 +221,13 @@ const Profile = () => {
     console.info('You clicked the delete icon.');
   };
 
+  if (loaded === false) {
+    return (
+      <div className={classes.progress}>
+        <CircularProgress color="secondary" />
+      </div>
+    );
+  }
   return (
     <>
       <Box className={classes.boxUpProfile}>
@@ -643,7 +659,13 @@ const Profile = () => {
                           options={interestNames}
                           getOptionLabel={option => option.name}
                           // defaultValue={[{name: "connard"}, {name: "bonjour"}]}
-                          defaultValue={interests ? interests.map(interest => {return ({name: interest})}) : [{name: "bisou"}]}
+                          defaultValue={
+                            interests
+                              ? interests.map(interest => {
+                                  return { name: interest };
+                                })
+                              : [{ name: 'bisou' }]
+                          }
                           style={{ width: 300 }}
                           onChange={handleProfileChange}
                           name="interest"
