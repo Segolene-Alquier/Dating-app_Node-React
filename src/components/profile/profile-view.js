@@ -26,7 +26,6 @@ import Map from './components/location/map';
 import InputTextShort from './components/inputTextShort';
 import AddressAutocomplete from './components/location/address-autocomplete';
 
-
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
@@ -71,10 +70,38 @@ const useStyles = makeStyles(theme => ({
   gridColumnProfile: {
     padding: theme.spacing(1),
   },
-  picture: {
+  gridPicture: {
+    // backgroundColor: 'yellow',
+  },
+  pictureContainer: {
     padding: theme.spacing(1),
+    // backgroundColor: 'red',
+    // paddingBottom: '100%',
+    // height: '0',
+    // position: 'relative',
+    width: '100%',
+    // maxWidth: '150px',
+  },
+  pictureContainer2: {
+    overflow: 'hidden',
+    // padding: theme.spacing(1),
+    backgroundColor: 'green',
+    paddingBottom: '100%',
+    height: '0',
     position: 'relative',
-    maxWidth: '150px',
+    width: '100%',
+  },
+  pictureButtonContainer: {
+    overflow: 'hidden',
+    // padding: theme.spacing(1),
+    backgroundColor: 'green',
+    paddingBottom: '100%',
+    height: '0',
+    position: 'relative',
+    width: '100%',
+  },
+  picture: {
+    objectFit: 'cover',
   },
   deleteButtonPicture: {
     position: 'absolute',
@@ -85,6 +112,7 @@ const useStyles = makeStyles(theme => ({
     border: '3px solid',
     borderColor: theme.palette.secondary.main,
     boxSizing: 'border-box',
+    objectFit: 'cover',
   },
   tabs: {
     margin: theme.spacing(1),
@@ -504,34 +532,43 @@ const Profile = () => {
                   <Box fontWeight="fontWeightBold">My pictures</Box>
                 </Typography>
                 <Grid container>
-                  <CurrentPictures
-                    classes={classes}
-                    Grid={Grid}
-                    pictures={profile.images}
-                    profilePicture={profile.profilePicture}
-                    Box={Box}
-                    Button={Button}
-                    handleDeleteImage={handleDeleteImage}
-                    handleChangeProfileImage={handleChangeProfileImage}
-                  />
-                  {profile.images && profile.images.length < 5 ? (
-                    <Grid container xs={6} sm={6} className={classes.picture}>
-                      <Box
-                        bgcolor="secondary.main"
-                        width="100%"
-                        className={classes.modifyPictureButton}
+                  <Grid container className={classes.gridPicture} xsm={12}>
+                    <CurrentPictures
+                      classes={classes}
+                      Grid={Grid}
+                      pictures={profile.images}
+                      profilePicture={profile.profilePicture}
+                      Box={Box}
+                      Button={Button}
+                      handleDeleteImage={handleDeleteImage}
+                      handleChangeProfileImage={handleChangeProfileImage}
+                    />
+                    {profile.images && profile.images.length < 5 ? (
+                      <Grid
+                        item
+                        xs={6}
+                        sm={4}
+                        xl={4}
+                        className={classes.pictureContainer}
                       >
-                        <p>Upload a picture</p>
-                        <input
-                          label="upload file"
-                          type="file"
-                          accept="image/png, image/jpeg"
-                          onChange={handleFileUpload}
-                          className={classes.uploadInput}
-                        />
-                      </Box>
-                    </Grid>
-                  ) : null}
+                         <div className={classes.pictureButtonContainer}>
+                          <Box
+                            bgcolor="secondary.main"
+                            className={classes.modifyPictureButton}
+                          >
+                            <p>Upload a picture</p>
+                            <input
+                              label="upload file"
+                              type="file"
+                              accept="image/png, image/jpeg"
+                              onChange={handleFileUpload}
+                              className={classes.uploadInput}
+                            />
+                          </Box>
+                        </div>
+                      </Grid>
+                    ) : null}
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
