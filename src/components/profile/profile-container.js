@@ -3,7 +3,6 @@ import { useState } from 'react';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 
-// import { AuthContext } from '../app/AuthContext';
 let newInput;
 let newChangedFields;
 
@@ -11,25 +10,26 @@ const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [changedFields, setChangedFields] = useState({});
-  // const [selectedDate, handleDateChange] = useState(new Date());
 
-  const fetchInterests = axios
-    .get('http://localhost:3001/interests', {
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'x-access-token': token,
-      },
-    })
-    .then(response => {
-      console.log('RESPONSE profile', profile);
-      return response.data;
-    })
-    .catch(error => {
-      console.log(error);
-    });
+  const fetchInterests = () =>
+    axios
+      .get('http://localhost:3001/interests', {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'x-access-token': token,
+        },
+      })
+      .then(response => {
+        console.log('fetchInterests');
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
   if (_.isEmpty(profile)) {
-    Promise.all([userData, fetchInterests]).then(values => {
+    console.log('is empty');
+    Promise.all([userData, fetchInterests()]).then(values => {
       const tempUserData = values[0].data;
       tempUserData.interestNames = values[1];
       setProfile(tempUserData);
@@ -304,7 +304,7 @@ const UseProfileForm = (userData, token) => {
     setChangedFields(newChangedFields);
   };
 
-    const handleChangeLocation = newLocation => {
+  const handleChangeLocation = newLocation => {
     const newInput = {
       ...profile,
       location: newLocation,
