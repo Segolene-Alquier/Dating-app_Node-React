@@ -50,6 +50,19 @@ class UserInputTests {
     });
   }
 
+  isAlphaSpaceDash({ input, inputName }) {
+    return new Promise(function(resolve) {
+      const regex = /^[\w\s#-]+$/;
+      if (input === '')
+        resolve({ boolean: false, error: `The ${inputName} is blank` });
+      if (input.match(regex)) resolve({ boolean: true });
+      resolve({
+        boolean: false,
+        error: `The ${inputName} must contain only letters`,
+      });
+    });
+  }
+
   isBoolean({ input, inputName }) {
     return new Promise(function(resolve) {
       if (input === true || input === false) resolve({ boolean: true });
@@ -198,12 +211,12 @@ class UserInputTests {
         minLength: 2,
         maxLength: 40,
       },
-      [this.isAlpha, this.rightLength],
+      [this.isAlphaSpaceDash, this.rightLength],
       errors,
     );
     await this.inputTester(
       { input: surname, inputName: 'surname', minLength: 2, maxLength: 40 },
-      [this.isAlpha, this.rightLength],
+      [this.isAlphaSpaceDash, this.rightLength],
       errors,
     );
     await this.inputTester(
