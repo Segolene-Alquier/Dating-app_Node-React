@@ -5,7 +5,7 @@ import GooglePlacesAutocomplete, {
 } from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/assets/index.css';
 
-const AddressAutocomplete = ({ handleChangeLocation }) => {
+const AddressAutocomplete = ({ handleChangeLocation, classes }) => {
   const changeLocation = address => {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
@@ -18,6 +18,7 @@ const AddressAutocomplete = ({ handleChangeLocation }) => {
   return (
     <>
       <GooglePlacesAutocomplete
+        inputClassName={classes.textField}
         onSelect={result => {
           changeLocation(result.description);
         }}
