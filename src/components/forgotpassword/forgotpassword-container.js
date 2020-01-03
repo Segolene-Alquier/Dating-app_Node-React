@@ -7,30 +7,35 @@ const useForgotPasswordForm = callback => {
     email: '',
   });
   const { email } = inputs;
-  const handleSubmit = event => {
+
+  const sendForgotPassword = email => {
+    axios
+      .post(
+        'http://localhost:3001/validation/forgotpasswordcreate',
+        {
+          email,
+        },
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        },
+      )
+      .then(({ data }) => {
+        console.log('DATA', data);
+        if (data.success === true) {
+          callback(true);
+        } else {
+          toast.error(data.err);
+        }
+      });
+  };
+
+  const handleSubmit = async event => {
     if (event) {
       event.preventDefault();
       console.log(inputs);
-      axios
-        .post(
-          'http://localhost:3001/validation/forgotpasswordcreate',
-          {
-            email,
-          },
-          {
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
-          },
-        )
-        .then(({ data }) => {
-          console.log('DATA', data);
-          if (data.success === true) {
-            callback(true);
-          } else {
-            toast.error(data.err);
-          }
-        });
+      await sendForgotPassword(email);
     }
   };
   const handleInputChange = event => {
@@ -45,6 +50,7 @@ const useForgotPasswordForm = callback => {
     handleSubmit,
     handleInputChange,
     inputs,
+    sendForgotPassword,
   };
 };
 

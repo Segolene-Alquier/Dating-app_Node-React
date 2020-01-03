@@ -25,6 +25,8 @@ import CurrentPictures from './components/current-pictures';
 import Map from './components/location/map';
 import InputTextShort from './components/inputTextShort';
 import AddressAutocomplete from './components/location/address-autocomplete';
+import useForgotPasswordForm from './../forgotpassword/forgotpassword-container'
+import { toast } from 'react-toastify';
 
 
 const useStyles = makeStyles(theme => ({
@@ -216,6 +218,10 @@ const Profile = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const { sendForgotPassword } = useForgotPasswordForm(() =>
+    toast.success("You received a reset password link by Email"),
+  );
 
   if (loaded === false) {
     return (
@@ -714,6 +720,7 @@ const Profile = () => {
                           color="primary"
                           className={classes.buttonAccount}
                           size="large"
+                          onClick={() => sendForgotPassword(profile.email)}
                         >
                           Change password
                         </Button>
