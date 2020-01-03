@@ -83,6 +83,14 @@ const UseProfileForm = (userData, token) => {
     };
   };
 
+  const handleChangeCity = cityToChange => {
+    newInput = {
+      ...profile,
+      city: cityToChange,
+    };
+    setProfile(newInput);
+  };
+
   const handleSexualOrientationChange = event => {
     const checkboxValue = parseInt(event.target.value, 10);
     if (event.target.checked === true) {
@@ -321,6 +329,7 @@ const UseProfileForm = (userData, token) => {
     handleFileUpload,
     handleDeleteImage,
     handleProfileChange,
+    handleChangeCity,
     handleSexualOrientationChange,
     handleSummaryChange,
     profile,

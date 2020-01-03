@@ -25,6 +25,7 @@ import CurrentPictures from './components/current-pictures';
 import Map from './components/location/map';
 import InputTextShort from './components/inputTextShort';
 import AddressAutocomplete from './components/location/address-autocomplete';
+import CityGuess from './components/location/cityGuess'
 import useForgotPasswordForm from './../forgotpassword/forgotpassword-container'
 import { toast } from 'react-toastify';
 
@@ -189,6 +190,7 @@ const Profile = () => {
     handleChangeProfileImage,
     handleInterestChange,
     handleChangeLocation,
+    handleChangeCity,
     handleSubmitParameters,
     isChecked,
     getAge,
@@ -268,7 +270,7 @@ const Profile = () => {
                       )
                     : 'nope'}
                 </span>
-                | <span>Paris</span>
+                | <span>{profile.location ? <CityGuess handleChangeCity={handleChangeCity} lat={profile.location[0]} lon={profile.location[1]} profile={profile} /> : 'unknown city'}</span>
               </div>
             </Grid>
             <Grid
