@@ -18,6 +18,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import pink from '@material-ui/core/colors/pink';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import CurrentPictures from './components/current-pictures';
@@ -128,13 +129,12 @@ const useStyles = makeStyles(theme => ({
   },
   paperAccount: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(5),
-    padding: theme.spacing(3, 2),
+    padding: theme.spacing(5, 2),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
-    flexGrow: '1',
+    backgroundColor: theme.palette.secondary.A300,
   },
   divAccount: {
     width: '100%',
@@ -208,18 +208,10 @@ const Profile = () => {
     interestNames,
   } = profile;
 
-  // useEffect(() => {
-  //   fetchInterests();
-  // });
-
   // change tabs
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
-  };
-
-  const handleDelete = () => {
-    console.info('You clicked the delete icon.');
   };
 
   if (loaded === false) {
@@ -641,7 +633,6 @@ const Profile = () => {
                       <div>
                         <Autocomplete
                           multiple
-                          // id="tags-standard"
                           options={interestNames}
                           getOptionLabel={option => option.name}
                           defaultValue={interests.map(interest => {
@@ -705,8 +696,8 @@ const Profile = () => {
                     </Button>
                   </Box>
                   <Paper className={classes.paperAccount}>
-                    <Typography variant="h5" component="h5">
-                      Account security
+                    <Typography variant="h5" component="h5" paragraph="true">
+                      <Box fontWeight="fontWeightBold">Account security</Box>
                     </Typography>
                     <div>
                       <Box className={classes.divAccount}>

@@ -138,10 +138,6 @@ const UseProfileForm = (userData, token) => {
         interests: [...profile.interests, event.target.textContent],
       };
     }
-    // event.target.textContent = '';
-    // console.log('eventtextcontent', event.target.textContent);
-
-    console.log('event', event);
   };
 
   const handleGenderChange = event => {
