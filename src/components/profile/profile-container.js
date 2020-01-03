@@ -304,6 +304,19 @@ const UseProfileForm = (userData, token) => {
     setChangedFields(newChangedFields);
   };
 
+    const handleChangeLocation = newLocation => {
+    const newInput = {
+      ...profile,
+      location: newLocation,
+    };
+    const newChangedFields = {
+      ...changedFields,
+      location: newLocation,
+    };
+    setProfile(newInput);
+    setChangedFields(newChangedFields);
+  };
+
   return {
     handleFileUpload,
     handleDeleteImage,
@@ -314,6 +327,7 @@ const UseProfileForm = (userData, token) => {
     loaded,
     handleChangeProfileImage,
     handleInterestChange,
+    handleChangeLocation,
     handleSubmitParameters,
     isChecked,
     getAge,
