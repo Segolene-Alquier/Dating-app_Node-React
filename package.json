@@ -24,6 +24,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "material-ui-pickers": "^2.2.4",
+    "moment": "^2.24.0",
     "multiparty": "^4.2.1",
     "node-mailjet": "^3.3.1",
     "pg-native": "^3.0.0",
