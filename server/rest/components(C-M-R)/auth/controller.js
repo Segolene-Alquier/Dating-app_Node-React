@@ -59,7 +59,7 @@ async function booleanToken(request, response) {
 }
 
 async function login(request, response) {
-  const { username, password } = request.body;
+  const { username, password, lon, lat } = request.body;
 
   console.log('User submitted: ', username, password);
   try {
@@ -79,11 +79,19 @@ async function login(request, response) {
         const token = jwt.sign({ userid: visitor.id }, 'mignon4ever', {
           expiresIn: '1d',
         });
-        console.log(
-          await user.updateById(visitor.id, {
-            lastVisit: 'now()',
-          }),
-        );
+        if (lon && lat) {
+          const location = [parseFloat(lon), parseFloat(lat)];
+          console.log(
+            user.updateById(visitor.id, { location, lastVisit: 'now()' }),
+          );
+        } else {
+          console.log(
+            await user.updateById(visitor.id, {
+              lastVisit: 'now()',
+            }),
+          );
+        }
+
         console.log(token);
         response.json({
           success: true,

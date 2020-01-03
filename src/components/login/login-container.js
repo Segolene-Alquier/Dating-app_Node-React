@@ -9,16 +9,69 @@ const useLoginForm = callback => {
   });
   const { username, password } = inputs;
 
-  const handleSubmit = event => {
+  const ipLocation = () => {
+    return new Promise(resolve => {
+      const locationApi = axios.get('https://ipapi.co/json').then(response => {
+        return [response.data.latitude, response.data.longitude];
+      });
+      resolve(locationApi);
+    });
+  };
+  const geoLocation = () => {
+    return new Promise(resolve => {
+      navigator.geolocation.getCurrentPosition(position => {
+        const currentLocation = [0.0, 0.0];
+        currentLocation[0] = position.coords.latitude;
+        currentLocation[1] = position.coords.longitude;
+        resolve(currentLocation);
+      });
+      setTimeout(resolve, 2000);
+    });
+  };
+
+  // const location =
+  // };
+
+  const userLocation = async () => {
+    const ip = ipLocation();
+    const geo = await geoLocation();
+    console.log(ip);
+    console.log(geo);
+    return geo || ip;
+  };
+
+  // const updateGeoLocationLater = async () => {
+  //   // return new Promise(resolve => {
+  //   await navigator.geolocation.getCurrentPosition(async position => {
+  //     const currentLocation = [0.0, 0.0];
+  //     currentLocation[0] = position.coords.latitude;
+  //     currentLocation[1] = position.coords.longitude;
+  //     const update = await axios.put(
+  //       'http://localhost:3001/users',
+  //       { location: currentLocation },
+  //       {
+  //         headers: {
+  //           'Content-type': 'application/json; charset=UTF-8',
+  //           'x-access-token': getToken(),
+  //         },
+  //       },
+  //     );
+  //     console.log(update);
+  //   });
+  // };
+
+  const handleSubmit = async event => {
     if (event) {
       event.preventDefault();
-      console.log(inputs);
+      const location = await userLocation();
       axios
         .post(
           'http://localhost:3001/auth/login',
           {
             username,
             password,
+            lat: location[1],
+            lon: location[0],
           },
           {
             headers: {
