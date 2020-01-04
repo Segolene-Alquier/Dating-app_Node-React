@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
+import ModalCrop from './components/modal';
 
 let newInput;
 let newChangedFields;
@@ -10,6 +11,7 @@ const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [changedFields, setChangedFields] = useState({});
+  // const [show, setShow] = useState(false);
 
   const fetchInterests = () =>
     axios
@@ -225,6 +227,10 @@ const UseProfileForm = (userData, token) => {
     const formData = new FormData();
     console.log(event.target.files[0]);
     formData.append('file', event.target.files[0]);
+    if (event.target.files[0]) {
+      // display the modal
+      setShow(true);
+    }
     axios
       .post(`http://localhost:3001/images/upload`, formData, {
         headers: {

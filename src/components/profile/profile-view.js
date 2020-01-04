@@ -18,13 +18,17 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import pink from '@material-ui/core/colors/pink';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import CurrentPictures from './components/current-pictures';
 import Map from './components/location/map';
 import InputTextShort from './components/inputTextShort';
 import AddressAutocomplete from './components/location/address-autocomplete';
+// import Modal from '@material-ui/core/Modal';
+import ModalCrop from './components/modal'
+// import MicroModal from 'micromodal';
+import CropperImg from './components/cropper/cropper';
+
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -156,6 +160,14 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       margin: theme.spacing(0.5),
     },
+  },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   },
   paperAccount: {
     marginTop: theme.spacing(3),
@@ -531,6 +543,8 @@ const Profile = () => {
                 <Typography variant="subtitle1">
                   <Box fontWeight="fontWeightBold">My pictures</Box>
                 </Typography>
+                {/* <CropperImg /> */}
+
                 <Grid container>
                   <Grid container className={classes.gridPicture} xsm={12}>
                     <CurrentPictures
@@ -551,7 +565,7 @@ const Profile = () => {
                         xl={4}
                         className={classes.pictureContainer}
                       >
-                         <div className={classes.pictureButtonContainer}>
+                        <div className={classes.pictureButtonContainer}>
                           <Box
                             bgcolor="secondary.main"
                             className={classes.modifyPictureButton}
@@ -773,6 +787,7 @@ const Profile = () => {
           </TabPanel>
         </form>
       </div>
+      {/* <ModalCrop /> */}
     </>
   );
 };
