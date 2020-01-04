@@ -195,6 +195,7 @@ const Profile = () => {
     isChecked,
     getAge,
     fetchInterests,
+    deleteUser,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
@@ -733,6 +734,7 @@ const Profile = () => {
                           variant="outlined"
                           color="secondary"
                           size="large"
+                          onClick={() => deleteUser()}
                         >
                           Delete my account
                         </Button>

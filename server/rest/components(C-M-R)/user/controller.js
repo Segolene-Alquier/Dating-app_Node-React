@@ -147,7 +147,7 @@ async function updateUser(request, response) {
 }
 
 async function deleteUser(request, response) {
-  const id = parseInt(request.params.id, 10);
+  const id = request.decoded.userid;
   try {
     const call = await user.delete(id);
     response.status(200).json(call);

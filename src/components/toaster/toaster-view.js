@@ -9,6 +9,7 @@ import {
   userNotValidated,
   forgotPasswordSuccess,
   resetPasswordSuccess,
+  deleteSuccess,
 } from './toaster-container';
 
 const Toaster = ({ getParams }) => {
@@ -19,6 +20,9 @@ const Toaster = ({ getParams }) => {
         break;
       case 'logout_success':
         logoutSuccess();
+        break;
+      case 'delete_success':
+        deleteSuccess();
         break;
       case 'signup_success':
         signupSuccess();

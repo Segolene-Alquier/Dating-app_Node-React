@@ -14,6 +14,13 @@ export const logoutSuccess = () => {
   toast(toasterMessage, { type: toasterType });
 };
 
+export const deleteSuccess = () => {
+  const toasterType = 'success';
+  const toasterMessage = 'Your account was successfully deleted! Bye bye!';
+
+  toast(toasterMessage, { type: toasterType });
+};
+
 export const signupSuccess = () => {
   const toasterType = 'success';
   const toasterMessage = 'You successfully signed up!';

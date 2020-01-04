@@ -325,6 +325,29 @@ const UseProfileForm = (userData, token) => {
     setChangedFields(newChangedFields);
   };
 
+  const deleteUser = () => {
+    const confirmation = window.confirm(
+      'Are you sure you want to delete your account ?',
+    );
+    if (confirmation) {
+      axios
+        .delete(`http://localhost:3001/users/`, {
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
+        })
+        .then(response => {
+          if (response.data.deleted === true) {
+            localStorage.removeItem('token');
+            window.location = '/?message=delete_success';
+          } else {
+            console.log(response.data);
+          }
+        });
+    }
+  };
+
   return {
     handleFileUpload,
     handleDeleteImage,
@@ -341,6 +364,7 @@ const UseProfileForm = (userData, token) => {
     isChecked,
     getAge,
     fetchInterests,
+    deleteUser,
   };
 };
 
