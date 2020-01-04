@@ -29,9 +29,6 @@ const useLoginForm = callback => {
     });
   };
 
-  // const location =
-  // };
-
   const userLocation = async () => {
     const ip = ipLocation();
     const geo = await geoLocation();
@@ -39,26 +36,6 @@ const useLoginForm = callback => {
     console.log(geo);
     return geo || ip;
   };
-
-  // const updateGeoLocationLater = async () => {
-  //   // return new Promise(resolve => {
-  //   await navigator.geolocation.getCurrentPosition(async position => {
-  //     const currentLocation = [0.0, 0.0];
-  //     currentLocation[0] = position.coords.latitude;
-  //     currentLocation[1] = position.coords.longitude;
-  //     const update = await axios.put(
-  //       'http://localhost:3001/users',
-  //       { location: currentLocation },
-  //       {
-  //         headers: {
-  //           'Content-type': 'application/json; charset=UTF-8',
-  //           'x-access-token': getToken(),
-  //         },
-  //       },
-  //     );
-  //     console.log(update);
-  //   });
-  // };
 
   const handleSubmit = async event => {
     if (event) {
