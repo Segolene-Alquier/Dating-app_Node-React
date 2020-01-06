@@ -10,6 +10,7 @@ import {
   forgotPasswordSuccess,
   resetPasswordSuccess,
   deleteSuccess,
+  userNotFound,
 } from './toaster-container';
 
 const Toaster = ({ getParams }) => {
@@ -41,6 +42,9 @@ const Toaster = ({ getParams }) => {
         break;
       case 'reset_password_success':
         resetPasswordSuccess();
+        break;
+      case 'user_not_found':
+        userNotFound();
         break;
       default:
         break;

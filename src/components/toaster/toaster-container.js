@@ -35,6 +35,13 @@ export const alreadyLoggedin = () => {
   toast(toasterMessage, { type: toasterType });
 };
 
+export const userNotFound = () => {
+  const toasterType = 'warning';
+  const toasterMessage = "This user doesn't exist!";
+
+  toast(toasterMessage, { type: toasterType });
+};
+
 export const userValidated = () => {
   const toasterType = 'success';
   const toasterMessage = 'Your account is successfully validated!';

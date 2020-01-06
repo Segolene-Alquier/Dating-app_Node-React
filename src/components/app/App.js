@@ -5,6 +5,7 @@ import Signup from '../signup';
 import './App.css';
 import Login from '../login';
 import Profile from '../profile';
+import ProfileShow from '../profileshow';
 import Secret from '../secretpage';
 import Home from '../home';
 import { AuthProvider } from './AuthContext';
@@ -37,6 +38,7 @@ function App() {
             component={ResetForgotPassword}
           />
           <SecureRoute path="/secret" component={Secret} />
+          <SecureRoute path="/profile/:username" component={ProfileShow} />
           <SecureRoute path="/profile" component={Profile} />
           <Route path="/" component={Home} />
         </Switch>
