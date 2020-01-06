@@ -17,7 +17,7 @@ const SecureRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         if (secureAuth) {
-          return <Component {...props} />;
+          return <Component {...props} {...rest} />;
         }
         return <Redirect to="/Login" />;
       }}
