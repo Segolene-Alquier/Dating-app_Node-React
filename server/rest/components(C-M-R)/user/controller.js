@@ -2,6 +2,7 @@ const { sendSigninEmail } = require('../../../mailer/sendSigninEmail');
 const UserInputTests = require('./utils');
 const UserValidation = require('./../userValidation/model');
 const User = require('./model');
+const { deleteFile } = require('../images/controller');
 
 const user = new User();
 const check = new UserInputTests(user);
@@ -148,7 +149,12 @@ async function updateUser(request, response) {
 
 async function deleteUser(request, response) {
   const id = request.decoded.userid;
+  
   try {
+    const imagesToDelete = await user.getByFiltered('id', id, ['images']);
+    imagesToDelete[0].images.forEach(imageToDelete =>
+      deleteFile(imageToDelete),
+    );
     const call = await user.delete(id);
     response.status(200).json(call);
   } catch (err) {

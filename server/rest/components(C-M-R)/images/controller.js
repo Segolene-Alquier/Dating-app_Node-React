@@ -75,3 +75,4 @@ async function deleteImage(request, response) {
 
 module.exports.uploadImage = uploadImage;
 module.exports.deleteImage = deleteImage;
+module.exports.deleteFile = deleteFile;
