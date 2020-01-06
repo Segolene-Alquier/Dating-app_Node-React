@@ -67,6 +67,34 @@ async function getUserById(request, response) {
   }
 }
 
+async function getUserByUsername(request, response) {
+  const { username } = request.params;
+  console.log('username', username)
+  try {
+    const call = await user.getByFiltered('username', username, [
+      'firstname',
+      'location', // a voir si on traite avant de l'envoyer
+      'birthDate', // a voir si on traite avant de l'envoyer
+      'popularityRate',
+      'gender',
+      'sexualOrientation',
+      'description',
+      'interests',
+      'images',
+      'profilePicture',
+    ]);
+   if (call[0] === undefined) {
+      return response
+        .status(200)
+        .json({ success: false, message: "This user doesn't exist." });
+   }
+    response.status(200).json({ founded: true, ...call[0] });
+  } catch (err) {
+    console.log(err);
+    response.status(206).send(err);
+  }
+}
+
 async function usernameExists(request, response) {
   const { username } = request.body;
   if (username === undefined) {
@@ -171,3 +199,4 @@ module.exports.emailExists = emailExists;
 module.exports.createUser = createUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
+module.exports.getUserByUsername = getUserByUsername;

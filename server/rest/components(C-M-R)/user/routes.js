@@ -4,6 +4,7 @@ const { checkToken } = require('../../middleware/jwt');
 const router = express.Router();
 const {
   getUserById,
+  getUserByUsername,
   getUsers,
   usernameExists,
   emailExists,
@@ -19,6 +20,8 @@ router.get('/', checkToken, getUsers);
 router.get('/verification/username', usernameExists);
 // email already exists ? - user
 router.get('/verification/email', emailExists);
+// get profile of visited User
+router.get('/profile/:username', checkToken, getUserByUsername);
 // get my profile info
 router.get('/profile', checkToken, getMyUserInfo);
 // get user by id - user
