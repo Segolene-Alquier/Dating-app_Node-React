@@ -1,5 +1,9 @@
 const { sendSigninEmail } = require('../../../mailer/sendSigninEmail');
-const { UserInputTests, saveVisit } = require('./utils');
+const {
+  UserInputTests,
+  saveVisit,
+  checkIfProfileCompleted,
+} = require('./utils');
 const UserValidation = require('./../userValidation/model');
 const User = require('./model');
 const { deleteFile } = require('../images/controller');
@@ -91,6 +95,14 @@ async function getUserByUsername(request, response) {
     }
     const userIdVisitor = request.decoded.userid;
     const userIdVisited = call[0].id;
+    if ((await checkIfProfileCompleted(userIdVisitor)) === false) {
+      return response
+        .status(200)
+        .json({
+          authorized: false,
+          message: 'You need to complete your profile first!',
+        });
+    }
     if (userIdVisitor != userIdVisited) {
       saveVisit(userIdVisitor, userIdVisited);
     }

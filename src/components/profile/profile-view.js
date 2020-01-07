@@ -27,6 +27,8 @@ import InputTextShort from './components/inputTextShort';
 import AddressAutocomplete from './components/location/address-autocomplete';
 import CityGuess from './components/location/cityGuess'
 import useForgotPasswordForm from './../forgotpassword/forgotpassword-container'
+import Toaster from '../toaster'
+import queryString from 'query-string';
 import { toast } from 'react-toastify';
 
 
@@ -176,9 +178,11 @@ function a11yProps(index) {
   };
 }
 
-const Profile = () => {
+const Profile = (params) => {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
+  const locationParams = params.location
+  const getParams = queryString.parse(locationParams.search);
 
   const {
     handleProfileChange,
@@ -223,13 +227,14 @@ const Profile = () => {
   };
 
   const { sendForgotPassword } = useForgotPasswordForm(() =>
-    toast.success("You received a reset password link by Email"),
+    toast.success('You received a reset password link by Email'),
   );
 
   if (loaded === false) {
     return (
       <div className={classes.progress}>
         <CircularProgress color="secondary" />
+        {profile.username ? null : <Toaster getParams={getParams} /> }
       </div>
     );
   }
@@ -271,7 +276,19 @@ const Profile = () => {
                       )
                     : 'nope'}
                 </span>
-                | <span>{profile.location ? <CityGuess handleChangeCity={handleChangeCity} lat={profile.location[0]} lon={profile.location[1]} profile={profile} /> : 'unknown city'}</span>
+                |{' '}
+                <span>
+                  {profile.location ? (
+                    <CityGuess
+                      handleChangeCity={handleChangeCity}
+                      lat={profile.location[0]}
+                      lon={profile.location[1]}
+                      profile={profile}
+                    />
+                  ) : (
+                    'unknown city'
+                  )}
+                </span>
               </div>
             </Grid>
             <Grid

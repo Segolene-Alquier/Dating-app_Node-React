@@ -31,13 +31,15 @@ const ProfileShowContainer = visitedUsername => {
     // });
     fetchVisitedProfile().then(data => {
       if (data.founded === true) {
-        setVisitedProfile(data)
-        setLoaded(true)
+        setVisitedProfile(data);
+        setLoaded(true);
       } else {
         if (data.success === false) {
           window.location = '/?message=user_not_found';
         } else {
-          console.log(data.message)
+          if (data.authorized === false) {
+            window.location = '/profile?message=profile_not_completed';
+          }
         }
       }
     });

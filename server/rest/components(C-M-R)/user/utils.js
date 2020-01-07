@@ -3,6 +3,8 @@
 /* eslint-disable class-methods-use-this */
 const Gender = require('../gender/model');
 const Visit = require('../visit/model');
+const User = require('../user/model');
+const _ = require('lodash');
 
 const genderInstance = new Gender();
 
@@ -328,5 +330,33 @@ const saveVisit = (userIdVisitor, userIdVisited) => {
     .then(response => console.log(response));
 };
 
+const checkIfProfileCompleted = userid => {
+  const user = new User();
+  return user
+    .getByFiltered('id', userid, [
+      'firstname',
+      'surname',
+      'username',
+      'email',
+      'description',
+      'images',
+      'birthDate',
+      'profilePicture',
+      'location',
+      'gender',
+      'sexualOrientation',
+      'interests',
+    ])
+    .then(data => {
+      const { birthDate } = data[0];
+      delete data[0].birthDate;
+      if (birthDate === null) {
+        return false
+      }
+      return !_.some(data[0], _.isEmpty);
+    });
+};
+
 module.exports.UserInputTests = UserInputTests;
 module.exports.saveVisit = saveVisit;
+module.exports.checkIfProfileCompleted = checkIfProfileCompleted;

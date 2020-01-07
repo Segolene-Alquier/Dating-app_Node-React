@@ -11,6 +11,7 @@ import {
   resetPasswordSuccess,
   deleteSuccess,
   userNotFound,
+  profileNotCompleted,
 } from './toaster-container';
 
 const Toaster = ({ getParams }) => {
@@ -45,6 +46,9 @@ const Toaster = ({ getParams }) => {
         break;
       case 'user_not_found':
         userNotFound();
+        break;
+      case 'profile_not_completed':
+        profileNotCompleted();
         break;
       default:
         break;
