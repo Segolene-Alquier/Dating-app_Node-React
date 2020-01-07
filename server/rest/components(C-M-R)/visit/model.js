@@ -2,7 +2,7 @@ const { db } = require('../../../config/database');
 
 class Visit {
   isValidType(type) {
-    const authorizedTypes = ['id'];
+    const authorizedTypes = ['id', 'visitor', 'visited'];
     return authorizedTypes.some(authorizedType => {
       return type === authorizedType;
     });

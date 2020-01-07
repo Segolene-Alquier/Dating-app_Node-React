@@ -1,11 +1,9 @@
 const express = require('express');
+const { checkToken } = require('../../middleware/jwt');
 
 const router = express.Router();
-const { getVisits, getVisitById } = require('./controller');
+const { getVisits, getVisitsFromCurrentUser } = require('./controller');
 
-// list of all Visits - Visit
-router.get('/', getVisits);
-// get Visit by id - Visit
-router.get('/:id', getVisitById);
-
+// get the list of visit from the current user
+router.get('/', checkToken, getVisitsFromCurrentUser);
 module.exports = router;

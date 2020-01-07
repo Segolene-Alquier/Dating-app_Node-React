@@ -12,10 +12,10 @@ async function getVisits(request, response) {
   }
 }
 
-async function getVisitById(request, response) {
-  const id = parseInt(request.params.id, 10);
+async function getVisitsFromCurrentUser(request, response) {
+  const id = request.decoded.userid;
   try {
-    const call = await visits.getBy('id', id);
+    const call = await visits.getBy('visited', id);
     response.status(200).json(call);
   } catch (err) {
     console.log(err);
@@ -24,4 +24,4 @@ async function getVisitById(request, response) {
 }
 
 module.exports.getVisits = getVisits;
-module.exports.getVisitById = getVisitById;
+module.exports.getVisitsFromCurrentUser = getVisitsFromCurrentUser;
