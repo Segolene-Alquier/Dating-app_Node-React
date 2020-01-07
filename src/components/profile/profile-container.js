@@ -11,8 +11,9 @@ const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [changedFields, setChangedFields] = useState({});
-  // const [show, setShow] = useState(false);
+  const [imageToSave, setImageToSave] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [croppedImage, setCroppedImage] = useState(null);
 
   const fetchInterests = () =>
     axios
@@ -224,41 +225,66 @@ const UseProfileForm = (userData, token) => {
     }
   };
 
-  const handleFileUpload = event => {
+  const readFile = file => {
+    return new Promise(resolve => {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => resolve(reader.result), false);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const blobToFile = (theBlob, fileName) => {
+    theBlob.lastModifiedDate = new Date();
+    theBlob.name = fileName;
+    return theBlob;
+  };
+
+  const handleFileUpload = async event => {
     const formData = new FormData();
-    console.log(event.target.files[0]);
+    // console.log(event.target.files[0]);
     formData.append('file', event.target.files[0]);
+
     if (event.target.files[0]) {
+      console.log('yo');
       // display the modal
+      const imageDataUrl = await readFile(event.target.files[0]);
       setShowModal(true);
+      setImageToSave(imageDataUrl);
+      // var imageDB = blobToFile(imageDataUrl, 'coucou.png');
+      // formData.append('file', imageDB);
+
+      // console.log('file[0] : ', event.target.files[0]);
+      // console.log('imageDataUrl', imageDataUrl);
+      // console.log('formData', formData);
+
+      axios
+        .post(`http://localhost:3001/images/upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'x-access-token': token,
+          },
+        })
+        .then(response => {
+          console.log(response);
+          if (profile.profilePicture === null) {
+            const newInput = {
+              ...profile,
+              images: [...profile.images, response.data.Location],
+              profilePicture: response.data.Location,
+            };
+            setProfile(newInput);
+          } else {
+            const newInput = {
+              ...profile,
+              images: [...profile.images, response.data.Location],
+            };
+            setProfile(newInput);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
-    axios
-      .post(`http://localhost:3001/images/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'x-access-token': token,
-        },
-      })
-      .then(response => {
-        console.log(response);
-        if (profile.profilePicture === null) {
-          const newInput = {
-            ...profile,
-            images: [...profile.images, response.data.Location],
-            profilePicture: response.data.Location,
-          };
-          setProfile(newInput);
-        } else {
-          const newInput = {
-            ...profile,
-            images: [...profile.images, response.data.Location],
-          };
-          setProfile(newInput);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
   };
 
   const handleDeleteImage = url => {
@@ -341,6 +367,10 @@ const UseProfileForm = (userData, token) => {
     fetchInterests,
     showModal,
     setShowModal,
+    imageToSave,
+    setImageToSave,
+    croppedImage,
+    setCroppedImage,
   };
 };
 

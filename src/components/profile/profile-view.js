@@ -24,9 +24,7 @@ import CurrentPictures from './components/current-pictures';
 import Map from './components/location/map';
 import InputTextShort from './components/inputTextShort';
 import AddressAutocomplete from './components/location/address-autocomplete';
-// import Modal from '@material-ui/core/Modal';
 import ModalCrop from './components/modal';
-// import MicroModal from 'micromodal';
 import CropperImg from './components/cropper/cropper';
 
 const useStyles = makeStyles(theme => ({
@@ -232,6 +230,10 @@ const Profile = () => {
     fetchInterests,
     showModal,
     setShowModal,
+    imageToSave,
+    setImageToSave,
+    croppedImage,
+    setCroppedImage,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
@@ -788,7 +790,14 @@ const Profile = () => {
           </TabPanel>
         </form>
       </div>
-      <ModalCrop showModal={showModal} setShowModal={setShowModal} />
+      <ModalCrop
+        showModal={showModal}
+        setShowModal={setShowModal}
+        imageToSave={imageToSave}
+        // croppedImage={croppedImage}
+        // setCroppedImage={setCroppedImage}
+        // setImageToSave={setImageToSave}
+      />
     </>
   );
 };

@@ -3,7 +3,14 @@ import Modal from 'react-bootstrap/Modal';
 import CropperImg from './cropper/cropper';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const ModalCrop = ({ showModal, setShowModal }) => {
+const ModalCrop = ({
+  showModal,
+  setShowModal,
+  imageToSave,
+  // croppedImage,
+  // setCroppedImage,
+  // setImageToSave,
+}) => {
   return (
     <>
       <Modal
@@ -18,7 +25,11 @@ const ModalCrop = ({ showModal, setShowModal }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CropperImg />
+          <CropperImg
+            imageToSave={imageToSave}
+            // croppedImage={croppedImage}
+            // setCroppedImage={setCroppedImage}
+          />
         </Modal.Body>
       </Modal>
     </>
