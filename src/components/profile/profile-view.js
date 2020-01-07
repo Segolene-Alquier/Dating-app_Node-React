@@ -25,10 +25,9 @@ import Map from './components/location/map';
 import InputTextShort from './components/inputTextShort';
 import AddressAutocomplete from './components/location/address-autocomplete';
 // import Modal from '@material-ui/core/Modal';
-import ModalCrop from './components/modal'
+import ModalCrop from './components/modal';
 // import MicroModal from 'micromodal';
 import CropperImg from './components/cropper/cropper';
-
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -231,6 +230,8 @@ const Profile = () => {
     isChecked,
     getAge,
     fetchInterests,
+    showModal,
+    setShowModal,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
@@ -787,7 +788,7 @@ const Profile = () => {
           </TabPanel>
         </form>
       </div>
-      {/* <ModalCrop /> */}
+      <ModalCrop showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

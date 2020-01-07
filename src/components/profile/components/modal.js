@@ -3,18 +3,12 @@ import Modal from 'react-bootstrap/Modal';
 import CropperImg from './cropper/cropper';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const ModalCrop = () => {
-  const [show, setShow] = useState(false);
-
+const ModalCrop = ({ showModal, setShowModal }) => {
   return (
     <>
-      {/* <button variant="primary" onClick={() => setShow(true)}>
-        Custom Width Modal
-      </button> */}
-
       <Modal
-        show={show}
-        onHide={() => setShow(false)}
+        show={showModal}
+        onHide={() => setShowModal(false)}
         dialogClassName="modal-90w"
         aria-labelledby="example-custom-modal-styling-title"
       >

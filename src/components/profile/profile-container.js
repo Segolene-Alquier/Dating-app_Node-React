@@ -12,6 +12,7 @@ const UseProfileForm = (userData, token) => {
   const [loaded, setLoaded] = useState(false);
   const [changedFields, setChangedFields] = useState({});
   // const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const fetchInterests = () =>
     axios
@@ -229,7 +230,7 @@ const UseProfileForm = (userData, token) => {
     formData.append('file', event.target.files[0]);
     if (event.target.files[0]) {
       // display the modal
-      setShow(true);
+      setShowModal(true);
     }
     axios
       .post(`http://localhost:3001/images/upload`, formData, {
@@ -338,6 +339,8 @@ const UseProfileForm = (userData, token) => {
     isChecked,
     getAge,
     fetchInterests,
+    showModal,
+    setShowModal,
   };
 };
 
