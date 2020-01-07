@@ -6,6 +6,7 @@ import './App.css';
 import Login from '../login';
 import Profile from '../profile';
 import ProfileShow from '../profileshow';
+import Visit from '../visit';
 import Secret from '../secretpage';
 import Home from '../home';
 import { AuthProvider } from './AuthContext';
@@ -40,6 +41,7 @@ function App() {
           <SecureRoute path="/secret" component={Secret} />
           <SecureRoute path="/profile/:username" component={ProfileShow} />
           <SecureRoute path="/profile" component={Profile} />
+          <SecureRoute path="/visits" component={Visit} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
