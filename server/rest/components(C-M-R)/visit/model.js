@@ -33,9 +33,11 @@ class Visit {
         console.log(`Visit.getBy(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(`SELECT * FROM public."Visit" WHERE ${type} = ${value}`);
+      console.log(
+        `SELECT firstname, birthDate, location, popularityRate, profilePicture, date FROM public."Visit" WHERE ${type} = ${value}`,
+      );
       const result = await db.any(
-        `SELECT * FROM public."Visit" WHERE $1:name = $2`,
+        `SELECT firstname, "birthDate", location, "popularityRate", "profilePicture", date FROM public."Visit", public."User"  WHERE $1:name = $2 AND "Visit".visitor = "User".id `,
         [type, value],
       );
       return result;
