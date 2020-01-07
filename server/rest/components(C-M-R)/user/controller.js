@@ -1,5 +1,5 @@
 const { sendSigninEmail } = require('../../../mailer/sendSigninEmail');
-const UserInputTests = require('./utils');
+const { UserInputTests, saveVisit } = require('./utils');
 const UserValidation = require('./../userValidation/model');
 const User = require('./model');
 const { deleteFile } = require('../images/controller');
@@ -69,9 +69,10 @@ async function getUserById(request, response) {
 
 async function getUserByUsername(request, response) {
   const { username } = request.params;
-  console.log('username', username)
+  console.log('username', username);
   try {
     const call = await user.getByFiltered('username', username, [
+      'id',
       'firstname',
       'location', // a voir si on traite avant de l'envoyer
       'birthDate', // a voir si on traite avant de l'envoyer
@@ -83,11 +84,16 @@ async function getUserByUsername(request, response) {
       'images',
       'profilePicture',
     ]);
-   if (call[0] === undefined) {
+    if (call[0] === undefined) {
       return response
         .status(200)
         .json({ success: false, message: "This user doesn't exist." });
-   }
+    }
+    const userIdVisitor = request.decoded.userid;
+    const userIdVisited = call[0].id;
+    if (userIdVisitor != userIdVisited) {
+      saveVisit(userIdVisitor, userIdVisited);
+    }
     response.status(200).json({ founded: true, ...call[0] });
   } catch (err) {
     console.log(err);
@@ -177,7 +183,7 @@ async function updateUser(request, response) {
 
 async function deleteUser(request, response) {
   const id = request.decoded.userid;
-  
+
   try {
     const imagesToDelete = await user.getByFiltered('id', id, ['images']);
     imagesToDelete[0].images.forEach(imageToDelete =>

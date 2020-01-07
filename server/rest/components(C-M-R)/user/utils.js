@@ -2,6 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable class-methods-use-this */
 const Gender = require('../gender/model');
+const Visit = require('../visit/model');
 
 const genderInstance = new Gender();
 
@@ -320,4 +321,12 @@ class UserInputTests {
   }
 }
 
-module.exports = UserInputTests;
+const saveVisit = (userIdVisitor, userIdVisited) => {
+  const visit = new Visit();
+  visit
+    .create(userIdVisitor, userIdVisited)
+    .then(response => console.log(response));
+};
+
+module.exports.UserInputTests = UserInputTests;
+module.exports.saveVisit = saveVisit;
