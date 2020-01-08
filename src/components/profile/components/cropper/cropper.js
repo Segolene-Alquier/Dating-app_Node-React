@@ -4,7 +4,6 @@ import Slider from '@material-ui/core/Slider';
 import Cropper from 'react-easy-crop';
 import Button from '@material-ui/core/Button';
 import getCroppedImg from './cropImage';
-// import ImgDialog from './ImgDialog';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useCropperStyles = makeStyles(() => ({
@@ -39,7 +38,15 @@ const useCropperStyles = makeStyles(() => ({
   },
 }));
 
-const CropperImg = ({ imageToSave, croppedImage, setCroppedImage, upload }) => {
+const CropperImg = ({
+  imageToSave,
+  croppedImage,
+  setCroppedImage,
+  upload,
+  finalImage,
+  setFinalImage,
+  sendCroppedImageServer,
+}) => {
   const classes = useCropperStyles();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -51,7 +58,11 @@ const CropperImg = ({ imageToSave, croppedImage, setCroppedImage, upload }) => {
 
   const showCroppedImage = useCallback(async () => {
     try {
-      temp = await getCroppedImg(imageToSave, croppedAreaPixels, upload);
+      temp = await getCroppedImg(
+        imageToSave,
+        croppedAreaPixels,
+        upload
+      );
       console.log('donee', { temp });
       setCroppedImage(temp);
     } catch (e) {
@@ -113,7 +124,7 @@ const CropperImg = ({ imageToSave, croppedImage, setCroppedImage, upload }) => {
         <ArrowBackIcon color="white" />
       </Button>
       <Button
-        // onClick={}
+        onClick={() => {closeCroppedImg(); sendCroppedImageServer(finalImage);}}
         variant="contained"
         color="secondary"
         classes={{ root: classes.cropButton }}

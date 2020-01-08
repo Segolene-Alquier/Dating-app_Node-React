@@ -9,8 +9,10 @@ const ModalCrop = ({
   imageToSave,
   croppedImage,
   setCroppedImage,
-  upload
-  // setImageToSave,
+  upload,
+  finalImage,
+  setFinalImage,
+  sendCroppedImageServer,
 }) => {
   return (
     <>
@@ -31,6 +33,9 @@ const ModalCrop = ({
             croppedImage={croppedImage}
             setCroppedImage={setCroppedImage}
             upload={upload}
+            finalImage={finalImage}
+            setFinalImage={setFinalImage}
+            sendCroppedImageServer={sendCroppedImageServer}
           />
         </Modal.Body>
       </Modal>

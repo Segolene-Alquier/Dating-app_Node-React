@@ -14,6 +14,7 @@ const UseProfileForm = (userData, token) => {
   const [imageToSave, setImageToSave] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [croppedImage, setCroppedImage] = useState(null);
+  const [finalImage, setFinalImage] = useState(null);
 
   const fetchInterests = () =>
     axios
@@ -239,17 +240,7 @@ const UseProfileForm = (userData, token) => {
     return theBlob;
   };
 
-  const upload = imageBlob => {
-    // from blob to formData
-    console.log('blob image upload', imageBlob);
-    let image = blobToFile(imageBlob, "coucou.png");
-    console.log(' image upload', image);
-
-    const formData = new FormData();
-    // // console.log(event.target.files[0]);
-    formData.append('file', image);
-        console.log('formData 2', formData);
-
+  const sendCroppedImageServer = formData => {
     axios
       .post(`http://localhost:3001/images/upload`, formData, {
         headers: {
@@ -277,6 +268,19 @@ const UseProfileForm = (userData, token) => {
       .catch(error => {
         console.log(error);
       });
+      setShowModal(false);
+  };
+
+  const upload = imageBlob => {
+    // from blob to formData
+    // console.log('blob image upload', imageBlob);
+    let image = blobToFile(imageBlob, 'coucou.png');
+    // console.log('image upload', image);
+
+    const formData = new FormData();
+    formData.append('file', image);
+    // console.log('formData 2', formData);
+    setFinalImage(formData);
   };
 
   const handleFileUpload = async event => {
@@ -373,6 +377,9 @@ const UseProfileForm = (userData, token) => {
     croppedImage,
     setCroppedImage,
     upload,
+    finalImage,
+    setFinalImage,
+    sendCroppedImageServer,
   };
 };
 
