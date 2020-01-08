@@ -9,7 +9,12 @@ const SecureRoute = ({ component: Component, ...rest }) => {
   const defaultValue = authContext.token !== null;
   const [secureAuth, setSecureAuth] = useState(defaultValue);
   if (secureAuth === true) {
-    authContext.userData.then(data => setSecureAuth(data.success));
+    authContext.userData.then(data => {
+      if (data === null) {
+        window.location = '/login';
+      }
+      setSecureAuth(data.success);
+    });
   }
 
   return (
