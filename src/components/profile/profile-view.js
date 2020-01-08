@@ -236,7 +236,6 @@ const Profile = () => {
     setCroppedImage,
     upload,
     finalImage,
-    setFinalImage,
     sendCroppedImageServer,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
@@ -802,9 +801,7 @@ const Profile = () => {
         setCroppedImage={setCroppedImage}
         upload={upload}
         finalImage={finalImage}
-        setFinalImage={setFinalImage}
         sendCroppedImageServer={sendCroppedImageServer}
-        // setImageToSave={setImageToSave}
       />
     </>
   );

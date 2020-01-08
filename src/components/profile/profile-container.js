@@ -272,20 +272,14 @@ const UseProfileForm = (userData, token) => {
   };
 
   const upload = imageBlob => {
-    // from blob to formData
-    // console.log('blob image upload', imageBlob);
     let image = blobToFile(imageBlob, 'coucou.png');
-    // console.log('image upload', image);
-
     const formData = new FormData();
     formData.append('file', image);
-    // console.log('formData 2', formData);
     setFinalImage(formData);
   };
 
   const handleFileUpload = async event => {
     if (event.target.files[0]) {
-      // display the modal
       const imageDataUrl = await readFile(event.target.files[0]);
       setShowModal(true);
       setImageToSave(imageDataUrl);
@@ -378,7 +372,6 @@ const UseProfileForm = (userData, token) => {
     setCroppedImage,
     upload,
     finalImage,
-    setFinalImage,
     sendCroppedImageServer,
   };
 };

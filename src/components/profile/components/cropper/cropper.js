@@ -44,7 +44,6 @@ const CropperImg = ({
   setCroppedImage,
   upload,
   finalImage,
-  setFinalImage,
   sendCroppedImageServer,
 }) => {
   const classes = useCropperStyles();
@@ -58,11 +57,7 @@ const CropperImg = ({
 
   const showCroppedImage = useCallback(async () => {
     try {
-      temp = await getCroppedImg(
-        imageToSave,
-        croppedAreaPixels,
-        upload
-      );
+      temp = await getCroppedImg(imageToSave, croppedAreaPixels, upload);
       console.log('donee', { temp });
       setCroppedImage(temp);
     } catch (e) {
@@ -124,7 +119,10 @@ const CropperImg = ({
         <ArrowBackIcon color="white" />
       </Button>
       <Button
-        onClick={() => {closeCroppedImg(); sendCroppedImageServer(finalImage);}}
+        onClick={() => {
+          closeCroppedImg();
+          sendCroppedImageServer(finalImage);
+        }}
         variant="contained"
         color="secondary"
         classes={{ root: classes.cropButton }}
