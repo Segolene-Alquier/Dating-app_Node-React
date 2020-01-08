@@ -71,34 +71,17 @@ const useStyles = makeStyles(theme => ({
   gridColumnProfile: {
     padding: theme.spacing(1),
   },
-  gridPicture: {
-    // backgroundColor: 'yellow',
-  },
   pictureContainer: {
     padding: theme.spacing(1),
-    // backgroundColor: 'red',
-    // paddingBottom: '100%',
-    // height: '0',
-    // position: 'relative',
-    width: '100%',
-    // maxWidth: '150px',
-  },
-  pictureContainer2: {
-    overflow: 'hidden',
-    // padding: theme.spacing(1),
-    backgroundColor: 'green',
-    paddingBottom: '100%',
-    height: '0',
     position: 'relative',
     width: '100%',
+    height: 'fit-content',
   },
   pictureButtonContainer: {
     overflow: 'hidden',
-    // padding: theme.spacing(1),
     backgroundColor: 'green',
-    paddingBottom: '100%',
-    height: '0',
     position: 'relative',
+    height: 'fit-content',
     width: '100%',
   },
   picture: {
@@ -108,6 +91,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: '10px',
     right: '10px',
+    padding: '0px',
   },
   profilePicture: {
     border: '3px solid',
@@ -549,10 +533,8 @@ const Profile = () => {
                 <Typography variant="subtitle1">
                   <Box fontWeight="fontWeightBold">My pictures</Box>
                 </Typography>
-                {/* <CropperImg /> */}
-
                 <Grid container>
-                  <Grid container className={classes.gridPicture} xsm={12}>
+                  <Grid container xsm={12}>
                     <CurrentPictures
                       classes={classes}
                       Grid={Grid}

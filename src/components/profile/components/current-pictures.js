@@ -14,28 +14,26 @@ const CurrentPictures = ({
   if (pictures) {
     return pictures.map(pictureUrl => (
       <Grid item xs={6} sm={4} xl={4} className={classes.pictureContainer}>
-        <div className={classes.pictureContainer2}>
-          <img
-            src={pictureUrl}
-            alt="My profile"
-            width="100%"
-            className={
-              profilePicture === pictureUrl
-                ? classes.profilePicture
-                : classes.picture
-            }
-            onClick={() => handleChangeProfileImage(pictureUrl)}
-          />
-          <Fab
-            variant="contained"
-            color="secondary"
-            size="small"
-            className={classes.deleteButtonPicture}
-            onClick={() => handleDeleteImage(pictureUrl)}
-          >
-            <HighlightOffIcon name={pictureUrl} value={pictureUrl} />
-          </Fab>
-        </div>
+        <img
+          src={pictureUrl}
+          alt="My profile"
+          width="100%"
+          className={
+            profilePicture === pictureUrl
+              ? classes.profilePicture
+              : classes.picture
+          }
+          onClick={() => handleChangeProfileImage(pictureUrl)}
+        />
+        <Fab
+          variant="contained"
+          color="secondary"
+          size="small"
+          className={classes.deleteButtonPicture}
+          onClick={() => handleDeleteImage(pictureUrl)}
+        >
+          <HighlightOffIcon name={pictureUrl} value={pictureUrl} />
+        </Fab>
       </Grid>
     ));
   }
