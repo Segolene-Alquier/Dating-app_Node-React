@@ -234,6 +234,7 @@ const Profile = () => {
     setImageToSave,
     croppedImage,
     setCroppedImage,
+    upload
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
@@ -794,8 +795,9 @@ const Profile = () => {
         showModal={showModal}
         setShowModal={setShowModal}
         imageToSave={imageToSave}
-        // croppedImage={croppedImage}
-        // setCroppedImage={setCroppedImage}
+        croppedImage={croppedImage}
+        setCroppedImage={setCroppedImage}
+        upload={upload}
         // setImageToSave={setImageToSave}
       />
     </>

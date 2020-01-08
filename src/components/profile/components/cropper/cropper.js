@@ -39,26 +39,22 @@ const useCropperStyles = makeStyles(() => ({
   },
 }));
 
-const CropperImg = image => {
+const CropperImg = ({ imageToSave, croppedImage, setCroppedImage, upload }) => {
   const classes = useCropperStyles();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null);
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
+  let temp;
 
   const showCroppedImage = useCallback(async () => {
     try {
-          const croppedImage = await getCroppedImg(
-            image.imageToSave,
-            croppedAreaPixels,
-          );
-          console.log('donee', { croppedImage });
-          setCroppedImage(croppedImage);
-          console.log('croppe image', croppedImage);
-        } catch (e) {
+      temp = await getCroppedImg(imageToSave, croppedAreaPixels, upload);
+      console.log('donee', { temp });
+      setCroppedImage(temp);
+    } catch (e) {
       console.error(e);
     }
   }, [croppedAreaPixels]);
@@ -72,7 +68,7 @@ const CropperImg = image => {
       <div className={classes.cropWrapper}>
         <div className={classes.cropContainer}>
           <Cropper
-            image={image.imageToSave}
+            image={imageToSave}
             crop={crop}
             zoom={zoom}
             aspect={1 / 1}

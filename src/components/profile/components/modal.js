@@ -7,8 +7,9 @@ const ModalCrop = ({
   showModal,
   setShowModal,
   imageToSave,
-  // croppedImage,
-  // setCroppedImage,
+  croppedImage,
+  setCroppedImage,
+  upload
   // setImageToSave,
 }) => {
   return (
@@ -27,8 +28,9 @@ const ModalCrop = ({
         <Modal.Body>
           <CropperImg
             imageToSave={imageToSave}
-            // croppedImage={croppedImage}
-            // setCroppedImage={setCroppedImage}
+            croppedImage={croppedImage}
+            setCroppedImage={setCroppedImage}
+            upload={upload}
           />
         </Modal.Body>
       </Modal>

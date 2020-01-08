@@ -239,51 +239,52 @@ const UseProfileForm = (userData, token) => {
     return theBlob;
   };
 
-  const handleFileUpload = async event => {
-    const formData = new FormData();
-    // console.log(event.target.files[0]);
-    formData.append('file', event.target.files[0]);
+  const upload = imageBlob => {
+    // from blob to formData
+    console.log('blob image upload', imageBlob);
+    let image = blobToFile(imageBlob, "coucou.png");
+    console.log(' image upload', image);
 
+    const formData = new FormData();
+    // // console.log(event.target.files[0]);
+    formData.append('file', image);
+        console.log('formData 2', formData);
+
+    axios
+      .post(`http://localhost:3001/images/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-access-token': token,
+        },
+      })
+      .then(response => {
+        console.log(response);
+        if (profile.profilePicture === null) {
+          const newInput = {
+            ...profile,
+            images: [...profile.images, response.data.Location],
+            profilePicture: response.data.Location,
+          };
+          setProfile(newInput);
+        } else {
+          const newInput = {
+            ...profile,
+            images: [...profile.images, response.data.Location],
+          };
+          setProfile(newInput);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const handleFileUpload = async event => {
     if (event.target.files[0]) {
-      console.log('yo');
       // display the modal
       const imageDataUrl = await readFile(event.target.files[0]);
       setShowModal(true);
       setImageToSave(imageDataUrl);
-      // var imageDB = blobToFile(imageDataUrl, 'coucou.png');
-      // formData.append('file', imageDB);
-
-      // console.log('file[0] : ', event.target.files[0]);
-      // console.log('imageDataUrl', imageDataUrl);
-      // console.log('formData', formData);
-
-      axios
-        .post(`http://localhost:3001/images/upload`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'x-access-token': token,
-          },
-        })
-        .then(response => {
-          console.log(response);
-          if (profile.profilePicture === null) {
-            const newInput = {
-              ...profile,
-              images: [...profile.images, response.data.Location],
-              profilePicture: response.data.Location,
-            };
-            setProfile(newInput);
-          } else {
-            const newInput = {
-              ...profile,
-              images: [...profile.images, response.data.Location],
-            };
-            setProfile(newInput);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
     }
   };
 
@@ -371,6 +372,7 @@ const UseProfileForm = (userData, token) => {
     setImageToSave,
     croppedImage,
     setCroppedImage,
+    upload,
   };
 };
 
