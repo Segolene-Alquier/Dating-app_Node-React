@@ -78,6 +78,7 @@ async function getUserByUsername(request, response) {
     const call = await user.getByFiltered('username', username, [
       'id',
       'firstname',
+      'username',
       'location', // a voir si on traite avant de l'envoyer
       'birthDate', // a voir si on traite avant de l'envoyer
       'popularityRate',

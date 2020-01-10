@@ -34,10 +34,10 @@ class Visit {
         return null;
       }
       console.log(
-        `SELECT firstname, birthDate, location, popularityRate, profilePicture, date FROM public."Visit" WHERE ${type} = ${value}`,
+        `SELECT firstname, username, birthDate, location, popularityRate, profilePicture, date FROM public."Visit" WHERE ${type} = ${value}`,
       );
       const result = await db.any(
-        `SELECT firstname, "birthDate", location, "popularityRate", "profilePicture", date FROM public."Visit", public."User"  WHERE $1:name = $2 AND "Visit".visitor = "User".id `,
+        `SELECT firstname, username, "birthDate", location, "popularityRate", "profilePicture", date FROM public."Visit", public."User"  WHERE $1:name = $2 AND "Visit".visitor = "User".id ORDER BY date DESC`,
         [type, value],
       );
       return result;

@@ -274,7 +274,7 @@ const Profile = (params) => {
                     ? getAge(
                         new Date(profile.birthDate).toISOString().split('T')[0],
                       )
-                    : 'nope'}
+                    : 'age not defined'}
                 </span>
                 |{' '}
                 <span>
