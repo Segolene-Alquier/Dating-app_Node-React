@@ -11,6 +11,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
+import moment from 'moment';
 import { getDistance } from 'geolib';
 
 const useStyles = makeStyles(theme => ({
@@ -31,6 +32,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function MediaCard({ field, visitorProfile }) {
   const classes = useStyles();
+
+    const {
+      firstname,
+      username,
+      birthDate,
+      location,
+      popularityRate,
+      profilePicture,
+      date,
+    } = field;
 
   const getAge = dateString => {
     const today = new Date();
@@ -54,15 +65,8 @@ export default function MediaCard({ field, visitorProfile }) {
     return ` | ${dist} km`
   }
 
-  const {
-    firstname,
-    username,
-    birthDate,
-    location,
-    popularityRate,
-    profilePicture,
-    date,
-  } = field;
+  const lastVisit = moment(date).fromNow();
+
   return (
     <Card className={classes.card}>
       <CardActionArea
@@ -100,7 +104,7 @@ export default function MediaCard({ field, visitorProfile }) {
             component="h6"
             align="center"
           >
-            1 hour ago
+            {lastVisit}
           </Typography>
         </CardContent>
       </CardActionArea>
