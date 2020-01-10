@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 const Visit = ({ computedMatch }) => {
   const visitedUsername = computedMatch.params.username;
 
-  const { visitedProfile, loaded } = VisitContainer(visitedUsername);
+  const { visitedProfile, visitorProfile, loaded } = VisitContainer(visitedUsername);
   const classes = useStyles();
 
   if (loaded === false) {
@@ -53,7 +53,7 @@ const Visit = ({ computedMatch }) => {
         <Grid container spacing={3}>
           {_.map(visitedProfile, field => (
             <Grid item xs={12} sm={4} md={3} lg={2} className={classes.center}>
-              <MediaCard field={field} className={classes.fullsize} />
+              <MediaCard field={field} visitorProfile={visitorProfile} className={classes.fullsize} />
             </Grid>
           ))}
         </Grid>

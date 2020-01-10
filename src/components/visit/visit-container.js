@@ -6,6 +6,7 @@ import { AuthContext } from '../app/AuthContext';
 const VisitContainer = () => {
   const [loaded, setLoaded] = useState(false);
   const [visitedProfile, setVisitedProfile] = useState([])
+  const [visitorProfile, setVisitorProfile] = useState({})
   const authContext = useContext(AuthContext);
   const { userData, token } = authContext;
 
@@ -25,24 +26,20 @@ const VisitContainer = () => {
       });
 
   if (_.isEmpty(visitedProfile)) {
-    fetchVisitHistory().then(data => {
-      console.log(data)
-      setVisitedProfile(data)
-      setLoaded(true);
-      // if (data.founded === true) {
-      //   setVisitedProfile(data);
-      //   setLoaded(true);
-      // } else {
-      //   if (data.success === false) {
-      //     window.location = '/?message=user_not_found';
-      //   } else {
-      //     console.log(data.message);
-      //   }
-      // }
+    Promise.all([userData, fetchVisitHistory()]).then(values => {
+      console.log(values);
+      setVisitedProfile(values[1]);
+      setVisitorProfile(
+        values[0]
+          .data,
+      );
+      setLoaded(
+        true,
+      );
     });
   }
 
-  return { visitedProfile, loaded };
+  return { visitedProfile, visitorProfile, loaded };
 };
 
 export default VisitContainer;

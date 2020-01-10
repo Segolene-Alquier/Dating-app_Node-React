@@ -11,6 +11,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
+import { getDistance } from 'geolib';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MediaCard({ field }) {
+export default function MediaCard({ field, visitorProfile }) {
   const classes = useStyles();
 
   const getAge = dateString => {
@@ -42,6 +43,17 @@ export default function MediaCard({ field }) {
     return age + ' ans ';
   };
 
+  const distance = () => {
+    const { location: visitorLocation } = visitorProfile;
+    let dist = getDistance(
+      { latitude: location[0], longitude: location[1] },
+      { latitude: visitorLocation[0], longitude: visitorLocation[1] },
+    );
+    dist = Math.round(dist / 1000)
+    console.log(dist)
+    return ` | ${dist} km`
+  }
+
   const {
     firstname,
     username,
@@ -53,8 +65,11 @@ export default function MediaCard({ field }) {
   } = field;
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={() => {window.location =
-                                        `/profile/${username}`}}>
+      <CardActionArea
+        onClick={() => {
+          window.location = `/profile/${username}`;
+        }}
+      >
         <CardMedia
           className={classes.media}
           image={
@@ -76,7 +91,7 @@ export default function MediaCard({ field }) {
             {birthDate
               ? getAge(new Date(birthDate).toISOString().split('T')[0])
               : 'age not defined '}
-            | 3km
+            {location ? distance() : ''}
           </Typography>
 
           <Typography
