@@ -17,7 +17,10 @@ const ModalCrop = ({
     <>
       <Modal
         show={showModal}
-        onHide={() => setShowModal(false)}
+        onHide={() => {
+          setShowModal(false);
+          setCroppedImage(null);
+        }}
         dialogClassName="modal-90w"
         aria-labelledby="example-custom-modal-styling-title"
       >

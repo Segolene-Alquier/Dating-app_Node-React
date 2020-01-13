@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import Cropper from 'react-easy-crop';
 import Button from '@material-ui/core/Button';
-import getCroppedImg from './cropImage';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import getCroppedImg from './cropImage';
 
 const useCropperStyles = makeStyles(() => ({
   cropWrapper: {
