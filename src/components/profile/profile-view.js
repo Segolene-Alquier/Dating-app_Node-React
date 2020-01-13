@@ -23,13 +23,12 @@ import UseProfileForm from './profile-container';
 import CurrentPictures from './components/current-pictures';
 import Map from './components/location/map';
 import InputTextShort from './components/inputTextShort';
+import UpperBoxProfile from './components/upperBoxProfile';
 import AddressAutocomplete from './components/location/address-autocomplete';
-import CityGuess from './components/location/cityGuess'
-import useForgotPasswordForm from './../forgotpassword/forgotpassword-container'
-import Toaster from '../toaster'
+import useForgotPasswordForm from './../forgotpassword/forgotpassword-container';
+import Toaster from '../toaster';
 import queryString from 'query-string';
 import { toast } from 'react-toastify';
-
 import ModalCrop from './components/modal';
 import CropperImg from './components/cropper/cropper';
 
@@ -200,10 +199,10 @@ function a11yProps(index) {
   };
 }
 
-const Profile = (params) => {
+const Profile = params => {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
-  const locationParams = params.location
+  const locationParams = params.location;
   const getParams = queryString.parse(locationParams.search);
 
   const {
@@ -265,76 +264,18 @@ const Profile = (params) => {
     return (
       <div className={classes.progress}>
         <CircularProgress color="secondary" />
-        {profile.username ? null : <Toaster getParams={getParams} /> }
+        {profile.username ? null : <Toaster getParams={getParams} />}
       </div>
     );
   }
   return (
     <>
-      <Box className={classes.boxUpProfile}>
-        <Grid container className={classes.containerUpProfile}>
-          <Grid
-            container
-            bgcolor="secondary.main"
-            xs={5}
-            sm={3}
-            justify="center"
-          >
-            <img
-              src={
-                profile.profilePicture ||
-                'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png'
-              }
-              alt="My profile"
-              width="50%"
-            />
-          </Grid>
-          <Grid container bgcolor="secondary.main" xs={7} sm={9}>
-            <Grid
-              container
-              bgcolor="secondary.main"
-              xs={6}
-              sm={9}
-              direction="column"
-              justify="flex-end"
-            >
-              <div>{profile.firstname}</div>
-              <div>
-                <span>
-                  {profile.birthDate
-                    ? getAge(
-                        new Date(profile.birthDate).toISOString().split('T')[0],
-                      )
-                    : 'Age undefined '}
-                </span>
-                |{' '}
-                <span>
-                  {profile.location ? (
-                    <CityGuess
-                      handleChangeCity={handleChangeCity}
-                      lat={profile.location[0]}
-                      lon={profile.location[1]}
-                      profile={profile}
-                    />
-                  ) : (
-                    'unknown city'
-                  )}
-                </span>
-              </div>
-            </Grid>
-            <Grid
-              container
-              bgcolor="secondary.main"
-              xs={6}
-              sm={3}
-              justify="center"
-              alignItems="flex-end"
-            >
-              <Avatar className={classes.avatar}>78 %</Avatar>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Box>
+      <UpperBoxProfile
+        classes={classes}
+        profile={profile}
+        getAge={getAge}
+        handleChangeCity={handleChangeCity}
+      />
       <Divider className={classes.divider} />
       <div className={classes.wrapperProfile}>
         <form>
