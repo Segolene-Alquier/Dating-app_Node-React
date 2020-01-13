@@ -20,10 +20,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
-import CurrentPictures from './components/current-pictures';
 import Map from './components/location/map';
 import InputTextShort from './components/inputTextShort';
 import UpperBoxProfile from './components/upperBoxProfile';
+import TabPanelProfile from './components/tabPanelProfile';
 import AddressAutocomplete from './components/location/address-autocomplete';
 import useForgotPasswordForm from './../forgotpassword/forgotpassword-container';
 import Toaster from '../toaster';
@@ -177,13 +177,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function TabPanel(props) {
-  const { children, value, index } = props;
+  const { children, valueTab, index } = props;
 
   return (
     <Typography
       component="div"
       role="tabpanel"
-      hidden={value !== index}
+      hidden={valueTab !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
     >
@@ -251,9 +251,9 @@ const Profile = params => {
   } = profile;
 
   // change tabs
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const [valueTab, setValueTab] = React.useState(0);
+  const handleChange = (event, newValueTab) => {
+    setValueTab(newValueTab);
   };
 
   const { sendForgotPassword } = useForgotPasswordForm(() =>
@@ -281,7 +281,7 @@ const Profile = params => {
         <form>
           <Tabs
             width="100%"
-            value={value}
+            valueTab={valueTab}
             onChange={handleChange}
             aria-label="simple tabs example"
             className={classes.tabs}
@@ -289,261 +289,20 @@ const Profile = params => {
             <Tab label="About me" {...a11yProps(0)} />
             <Tab label="Parameters" {...a11yProps(1)} />
           </Tabs>
-          <TabPanel value={value} index={0}>
-            <Grid container>
-              <Grid
-                container
-                sm={8}
-                bgcolor="primary.main"
-                direction="column"
-                className={classes.gridColumnProfile}
-              >
-                <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">Gender</Box>
-                </Typography>
-                <FormControl
-                  component="fieldset"
-                  className={classes.formControl}
-                >
-                  <FormGroup row>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(1, 'gender')}
-                          onChange={handleProfileChange}
-                          name="gender"
-                          value="1"
-                        />
-                      }
-                      label="Woman"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(2, 'gender')}
-                          onChange={handleProfileChange}
-                          name="gender"
-                          value="2"
-                        />
-                      }
-                      label="Man"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(3, 'gender')}
-                          onChange={handleProfileChange}
-                          name="gender"
-                          value="3"
-                        />
-                      }
-                      label="Cis Woman"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(4, 'gender')}
-                          onChange={handleProfileChange}
-                          name="gender"
-                          value="4"
-                        />
-                      }
-                      label="Cis Man"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(5, 'gender')}
-                          onChange={handleProfileChange}
-                          name="gender"
-                          value="5"
-                        />
-                      }
-                      label="Trans Woman"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(6, 'gender')}
-                          onChange={handleProfileChange}
-                          name="gender"
-                          value="6"
-                        />
-                      }
-                      label="Trans Man"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(7, 'gender')}
-                          onChange={handleProfileChange}
-                          name="gender"
-                          value="7"
-                        />
-                      }
-                      label="Non-binary"
-                    />
-                  </FormGroup>
-                </FormControl>
-                <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">I am looking for</Box>
-                </Typography>
-                <FormControl
-                  component="fieldset"
-                  className={classes.formControl}
-                >
-                  <FormGroup row>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(1, 'sexualOrientation')}
-                          onChange={handleProfileChange}
-                          name="sexualOrientation"
-                          value="1"
-                        />
-                      }
-                      label="Woman"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(2, 'sexualOrientation')}
-                          onChange={handleProfileChange}
-                          name="sexualOrientation"
-                          value="2"
-                        />
-                      }
-                      label="Man"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(3, 'sexualOrientation')}
-                          onChange={handleProfileChange}
-                          name="sexualOrientation"
-                          value="3"
-                        />
-                      }
-                      label="Cis Woman"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(4, 'sexualOrientation')}
-                          onChange={handleProfileChange}
-                          name="sexualOrientation"
-                          value="4"
-                        />
-                      }
-                      label="Cis Man"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(5, 'sexualOrientation')}
-                          onChange={handleProfileChange}
-                          name="sexualOrientation"
-                          value="5"
-                        />
-                      }
-                      label="Trans Woman"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(6, 'sexualOrientation')}
-                          onChange={handleProfileChange}
-                          name="sexualOrientation"
-                          value="6"
-                        />
-                      }
-                      label="Trans Man"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isChecked(7, 'sexualOrientation')}
-                          onChange={handleProfileChange}
-                          name="sexualOrientation"
-                          value="7"
-                        />
-                      }
-                      label="Non-binary"
-                    />
-                  </FormGroup>
-                </FormControl>
-                <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">My self-summary</Box>
-                </Typography>
-                <TextField
-                  id="outlined-multiline-static"
-                  multiline
-                  rows="4"
-                  className={classes.summaryField}
-                  margin="normal"
-                  variant="outlined"
-                  name="description"
-                  onChange={handleProfileChange}
-                  value={profile.description}
-                />
-                <Box>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    size="medium"
-                    onClick={handleSubmitParameters}
-                  >
-                    Save changes
-                  </Button>
-                </Box>
-              </Grid>
-              <Grid container sm={4} className={classes.gridColumnProfile}>
-                <Typography variant="subtitle1">
-                  <Box fontWeight="fontWeightBold">My pictures</Box>
-                </Typography>
-                <Grid container>
-                  <Grid container xsm={12}>
-                    <CurrentPictures
-                      classes={classes}
-                      Grid={Grid}
-                      pictures={profile.images}
-                      profilePicture={profile.profilePicture}
-                      Box={Box}
-                      Button={Button}
-                      handleDeleteImage={handleDeleteImage}
-                      handleChangeProfileImage={handleChangeProfileImage}
-                    />
-                    {profile.images && profile.images.length < 5 ? (
-                      <Grid
-                        item
-                        xs={6}
-                        sm={4}
-                        xl={4}
-                        className={classes.pictureContainer}
-                      >
-                        <div className={classes.pictureButtonContainer}>
-                          <Box
-                            bgcolor="secondary.main"
-                            className={classes.modifyPictureButton}
-                          >
-                            <p>Upload a picture</p>
-                            <input
-                              label="upload file"
-                              type="file"
-                              accept="image/png, image/jpeg"
-                              onChange={handleFileUpload}
-                              className={classes.uploadInput}
-                            />
-                          </Box>
-                        </div>
-                      </Grid>
-                    ) : null}
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanelProfile
+            valueTab={valueTab}
+            index={0}
+            classes={classes}
+            profile={profile}
+            isChecked={isChecked}
+            handleProfileChange={handleProfileChange}
+            handleSubmitParameters={handleSubmitParameters}
+            handleFileUpload={handleFileUpload}
+            handleChangeProfileImage={handleChangeProfileImage}
+            handleDeleteImage={handleDeleteImage}
+          />
+
+          <TabPanel valueTab={valueTab} index={1}>
             <Box className={classes.container} noValidate autoComplete="off">
               <Grid container>
                 <Grid
