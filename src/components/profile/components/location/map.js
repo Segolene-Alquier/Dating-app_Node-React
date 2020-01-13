@@ -11,8 +11,8 @@ const Marker = () => (
 );
 
 const Map = ({ lat, lon }) => {
-  const [center, setCenter] = useState({ lat, lng: lon });
-  const [zoom, setZoom] = useState(11);
+  const [center] = useState({ lat, lng: lon });
+  const [zoom] = useState(11);
   return (
     <div style={{ height: '40vh', width: '100%' }}>
       <GoogleMapReact

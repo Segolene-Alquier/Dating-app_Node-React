@@ -70,7 +70,8 @@ export const resetPasswordSuccess = () => {
 
 export const profileNotCompleted = () => {
   const toasterType = 'warning';
-  const toasterMessage = 'You need to complete your profile in order to access to other profiles';
+  const toasterMessage =
+    'You need to complete your profile in order to access to other profiles';
 
   toast(toasterMessage, { type: toasterType });
 };

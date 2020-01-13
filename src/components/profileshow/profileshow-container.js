@@ -7,7 +7,7 @@ const ProfileShowContainer = visitedUsername => {
   const [visitedProfile, setVisitedProfile] = useState({});
   const [loaded, setLoaded] = useState(false);
   const authContext = useContext(AuthContext);
-  const { userData, token } = authContext;
+  const { token } = authContext;
 
   const fetchVisitedProfile = () =>
     axios
@@ -25,10 +25,6 @@ const ProfileShowContainer = visitedUsername => {
       });
 
   if (_.isEmpty(visitedProfile)) {
-    // Promise.all([fetchVisitedProfile]).then(values => {
-    //   setVisitedProfile(values[0]);
-    //   setLoaded(true);
-    // });
     fetchVisitedProfile().then(data => {
       if (data.founded === true) {
         setVisitedProfile(data);
