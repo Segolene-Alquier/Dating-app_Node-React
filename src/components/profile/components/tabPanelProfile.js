@@ -9,6 +9,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CurrentPictures from './current-pictures';
+import FormCheckBox from './formCheckBox';
+import InputTextShort from './inputTextShort';
 
 function TabPanel(props) {
   const { children, valueTab, index } = props;
@@ -33,7 +35,6 @@ function a11yProps(index) {
   };
 }
 
-
 const TabPanelProfile = ({
   valueTab,
   index,
@@ -56,187 +57,49 @@ const TabPanelProfile = ({
           direction="column"
           className={classes.gridColumnProfile}
         >
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">Gender</Box>
-          </Typography>
-          <FormControl component="fieldset" className={classes.formControl}>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(1, 'gender')}
-                    onChange={handleProfileChange}
-                    name="gender"
-                    value="1"
-                  />
-                }
-                label="Woman"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(2, 'gender')}
-                    onChange={handleProfileChange}
-                    name="gender"
-                    value="2"
-                  />
-                }
-                label="Man"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(3, 'gender')}
-                    onChange={handleProfileChange}
-                    name="gender"
-                    value="3"
-                  />
-                }
-                label="Cis Woman"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(4, 'gender')}
-                    onChange={handleProfileChange}
-                    name="gender"
-                    value="4"
-                  />
-                }
-                label="Cis Man"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(5, 'gender')}
-                    onChange={handleProfileChange}
-                    name="gender"
-                    value="5"
-                  />
-                }
-                label="Trans Woman"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(6, 'gender')}
-                    onChange={handleProfileChange}
-                    name="gender"
-                    value="6"
-                  />
-                }
-                label="Trans Man"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(7, 'gender')}
-                    onChange={handleProfileChange}
-                    name="gender"
-                    value="7"
-                  />
-                }
-                label="Non-binary"
-              />
-            </FormGroup>
-          </FormControl>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">I am looking for</Box>
-          </Typography>
-          <FormControl component="fieldset" className={classes.formControl}>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(1, 'sexualOrientation')}
-                    onChange={handleProfileChange}
-                    name="sexualOrientation"
-                    value="1"
-                  />
-                }
-                label="Woman"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(2, 'sexualOrientation')}
-                    onChange={handleProfileChange}
-                    name="sexualOrientation"
-                    value="2"
-                  />
-                }
-                label="Man"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(3, 'sexualOrientation')}
-                    onChange={handleProfileChange}
-                    name="sexualOrientation"
-                    value="3"
-                  />
-                }
-                label="Cis Woman"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(4, 'sexualOrientation')}
-                    onChange={handleProfileChange}
-                    name="sexualOrientation"
-                    value="4"
-                  />
-                }
-                label="Cis Man"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(5, 'sexualOrientation')}
-                    onChange={handleProfileChange}
-                    name="sexualOrientation"
-                    value="5"
-                  />
-                }
-                label="Trans Woman"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(6, 'sexualOrientation')}
-                    onChange={handleProfileChange}
-                    name="sexualOrientation"
-                    value="6"
-                  />
-                }
-                label="Trans Man"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isChecked(7, 'sexualOrientation')}
-                    onChange={handleProfileChange}
-                    name="sexualOrientation"
-                    value="7"
-                  />
-                }
-                label="Non-binary"
-              />
-            </FormGroup>
-          </FormControl>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">My self-summary</Box>
-          </Typography>
-          <TextField
-            id="outlined-multiline-static"
-            multiline
-            rows="4"
-            className={classes.summaryField}
-            margin="normal"
-            variant="outlined"
+          <FormCheckBox
+            title="Gender"
+            classes={classes}
+            isChecked={isChecked}
+            handleProfileChange={handleProfileChange}
+            name="gender"
+            label={[
+              'Woman',
+              'Man',
+              'Cis Woman',
+              'Cis Man',
+              'Trans Woman',
+              'Trans Man',
+              'Non-binary',
+            ]}
+          />
+          <FormCheckBox
+            title="I am looking for"
+            classes={classes}
+            isChecked={isChecked}
+            handleProfileChange={handleProfileChange}
+            name="sexualOrientation"
+            label={[
+              'Woman',
+              'Man',
+              'Cis Woman',
+              'Cis Man',
+              'Trans Woman',
+              'Trans Man',
+              'Non-binary',
+            ]}
+          />
+          <InputTextShort
+            classes={classes}
+            Typography={Typography}
+            Box={Box}
+            TextField={TextField}
+            profile={profile}
+            handleProfileChange={handleProfileChange}
             name="description"
-            onChange={handleProfileChange}
             value={profile.description}
+            title="My self-summary"
+            type="text"
           />
           <Box>
             <Button
