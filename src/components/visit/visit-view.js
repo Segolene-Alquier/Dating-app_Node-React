@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import MediaCard from './components/media-card';
 import VisitContainer from './visit-container';
 import Title from './components/title';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -52,17 +53,26 @@ const Visit = ({ computedMatch }) => {
     <>
       <Title textTitle="History of visit" />
       <div className={classes.wrapper}>
-        <Grid container spacing={3}>
-          {_.map(visitedProfile, field => (
-            <Grid item xs={12} sm={4} md={3} lg={2} className={classes.center}>
-              <MediaCard
-                field={field}
-                visitorProfile={visitorProfile}
-                className={classes.fullsize}
-              />
-            </Grid>
-          ))}
-        </Grid>
+        <Container>
+          <Grid container spacing={3}>
+            {_.map(visitedProfile, field => (
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                md={3}
+                lg={2}
+                className={classes.center}
+              >
+                <MediaCard
+                  field={field}
+                  visitorProfile={visitorProfile}
+                  className={classes.fullsize}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
       </div>
     </>
   );
