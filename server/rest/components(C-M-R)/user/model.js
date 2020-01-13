@@ -170,6 +170,10 @@ class User {
   async delete(id) {
     try {
       console.log(`DELETE FROM public."User" WHERE id = ${id}`);
+      await db.any(
+        'DELETE FROM public."Visit" WHERE visitor = $1 OR visited = $1 ',
+        [id],
+      );
       await db.any('DELETE FROM public."User" WHERE id = $1 ', [id]);
       return { deleted: true };
     } catch (err) {
