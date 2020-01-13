@@ -25,7 +25,7 @@ const VisitContainer = () => {
         console.log(error);
       });
 
-  if (_.isEmpty(visitedProfile)) {
+  if (_.isEmpty(visitedProfile) && loaded === false) {
     Promise.all([userData, fetchVisitHistory()]).then(values => {
       console.log(values);
       setVisitedProfile(values[1]);

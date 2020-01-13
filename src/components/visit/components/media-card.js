@@ -59,7 +59,6 @@ export default function MediaCard({ field, visitorProfile }) {
       { latitude: visitorLocation[0], longitude: visitorLocation[1] },
     );
     dist = Math.round(dist / 1000);
-    console.log(dist);
     return ` | ${dist} km`;
   };
 
