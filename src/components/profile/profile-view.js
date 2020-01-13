@@ -1,34 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Tabs, Tab } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import TextField from '@material-ui/core/TextField';
-import Chip from '@material-ui/core/Chip';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
-import Map from './components/location/map';
-import InputTextShort from './components/inputTextShort';
 import UpperBoxProfile from './components/upperBoxProfile';
-import TabPanelProfile from './components/tabPanelProfile';
-import AddressAutocomplete from './components/location/address-autocomplete';
-import useForgotPasswordForm from './../forgotpassword/forgotpassword-container';
+import TabPanelProfileAbout from './components/tabPanelProfileAbout';
+import TabPanelProfileParameters from './components/tabPanelProfileParameters';
 import Toaster from '../toaster';
-import queryString from 'query-string';
 import { toast } from 'react-toastify';
+
+import queryString from 'query-string';
 import ModalCrop from './components/modal';
 import CropperImg from './components/cropper/cropper';
 
@@ -256,10 +241,6 @@ const Profile = params => {
     setValueTab(newValueTab);
   };
 
-  const { sendForgotPassword } = useForgotPasswordForm(() =>
-    toast.success('You received a reset password link by Email'),
-  );
-
   if (loaded === false) {
     return (
       <div className={classes.progress}>
@@ -289,7 +270,7 @@ const Profile = params => {
             <Tab label="About me" {...a11yProps(0)} />
             <Tab label="Parameters" {...a11yProps(1)} />
           </Tabs>
-          <TabPanelProfile
+          <TabPanelProfileAbout
             valueTab={valueTab}
             index={0}
             classes={classes}
@@ -301,207 +282,21 @@ const Profile = params => {
             handleChangeProfileImage={handleChangeProfileImage}
             handleDeleteImage={handleDeleteImage}
           />
-
-          <TabPanel valueTab={valueTab} index={1}>
-            <Box className={classes.container} noValidate autoComplete="off">
-              <Grid container>
-                <Grid
-                  container
-                  sm={6}
-                  bgcolor="primary.main"
-                  direction="column"
-                  className={classes.gridColumnProfile}
-                >
-                  <InputTextShort
-                    classes={classes}
-                    Typography={Typography}
-                    Box={Box}
-                    TextField={TextField}
-                    profile={profile}
-                    handleProfileChange={handleProfileChange}
-                    name="firstname"
-                    value={profile.firstname}
-                    title="Firstname"
-                    type="text"
-                  />
-                  <InputTextShort
-                    classes={classes}
-                    Typography={Typography}
-                    Box={Box}
-                    TextField={TextField}
-                    profile={profile}
-                    handleProfileChange={handleProfileChange}
-                    name="surname"
-                    value={profile.surname}
-                    title="Surname"
-                    type="text"
-                  />
-                  <InputTextShort
-                    classes={classes}
-                    Typography={Typography}
-                    Box={Box}
-                    TextField={TextField}
-                    profile={profile}
-                    handleProfileChange={handleProfileChange}
-                    name="username"
-                    value={profile.username}
-                    title="Username"
-                    type="text"
-                  />
-                  <InputTextShort
-                    classes={classes}
-                    Typography={Typography}
-                    Box={Box}
-                    TextField={TextField}
-                    profile={profile}
-                    handleProfileChange={handleProfileChange}
-                    name="email"
-                    value={profile.email}
-                    title="Email"
-                    type="email"
-                  />
-                  <Typography variant="subtitle1">
-                    <Box fontWeight="fontWeightBold">Location</Box>
-                  </Typography>
-                  <div className={classes.formControl}>
-                    {profile.location ? (
-                      <>
-                        <AddressAutocomplete
-                          classes={classes}
-                          // className={classes.textField}
-                          handleChangeLocation={handleChangeLocation}
-                        />
-                        <Map
-                          lat={profile.location[0]}
-                          lon={profile.location[1]}
-                        />
-                      </>
-                    ) : null}
-                  </div>
-                  <InputTextShort
-                    classes={classes}
-                    Typography={Typography}
-                    Box={Box}
-                    TextField={TextField}
-                    profile={profile}
-                    handleProfileChange={handleProfileChange}
-                    name="birthDate"
-                    value={
-                      new Date(profile.birthDate).toISOString().split('T')[0]
-                    }
-                    title="Birthdate"
-                    type="date"
-                  />
-                </Grid>
-                <Grid
-                  container
-                  sm={6}
-                  direction="column"
-                  className={classes.gridColumnProfile}
-                >
-                  <div className={classes.formControl}>
-                    <Typography variant="subtitle1">
-                      <Box fontWeight="fontWeightBold">Interests</Box>
-                    </Typography>
-                    <div className={classes.interestChips}>
-                      <div>
-                        <Autocomplete
-                          multiple
-                          options={interestNames}
-                          getOptionLabel={option => option.name}
-                          defaultValue={interests.map(interest => {
-                            return { name: interest };
-                          })}
-                          style={{ width: 300 }}
-                          onChange={handleProfileChange}
-                          name="interest"
-                          renderInput={params => (
-                            <TextField
-                              {...params}
-                              variant="outlined"
-                              placeholder="Add interest"
-                              fullWidth
-                            />
-                          )}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <Typography variant="subtitle1">
-                    <Box fontWeight="fontWeightBold">Notifications</Box>
-                  </Typography>
-                  <FormControl
-                    component="fieldset"
-                    className={classes.formControl}
-                  >
-                    <FormGroup row>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={notificationMail === true}
-                            onChange={handleProfileChange}
-                            name="notificationMail"
-                            value="notificationMail"
-                          />
-                        }
-                        label="Mail"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={notificationPush === true}
-                            onChange={handleProfileChange}
-                            name="notificationPush"
-                            value="notificationPush"
-                          />
-                        }
-                        label="Push"
-                      />
-                    </FormGroup>
-                  </FormControl>
-                  <Box>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                      onClick={handleSubmitParameters}
-                    >
-                      Save changes
-                    </Button>
-                  </Box>
-                  <Paper className={classes.paperAccount}>
-                    <Typography variant="h5" component="h5" paragraph="true">
-                      <Box fontWeight="fontWeightBold">Account security</Box>
-                    </Typography>
-                    <div>
-                      <Box className={classes.divAccount}>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className={classes.buttonAccount}
-                          size="large"
-                          onClick={() => sendForgotPassword(profile.email)}
-                        >
-                          Change password
-                        </Button>
-                      </Box>
-                      <Box className={classes.divAccount}>
-                        <Button
-                          className={classes.buttonAccount}
-                          variant="outlined"
-                          color="secondary"
-                          size="large"
-                          onClick={() => deleteUser()}
-                        >
-                          Delete my account
-                        </Button>
-                      </Box>
-                    </div>
-                  </Paper>
-                </Grid>
-              </Grid>
-            </Box>
-          </TabPanel>
+          <TabPanelProfileParameters
+            valueTab={valueTab}
+            index={1}
+            classes={classes}
+            profile={profile}
+            isChecked={isChecked}
+            handleProfileChange={handleProfileChange}
+            handleSubmitParameters={handleSubmitParameters}
+            interests={interests}
+            interestNames={interestNames}
+            handleChangeLocation={handleChangeLocation}
+            notificationMail={notificationMail}
+            notificationPush={notificationPush}
+            deleteUser={deleteUser}
+          />
         </form>
       </div>
       <ModalCrop
