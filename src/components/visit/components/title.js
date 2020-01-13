@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   hero: {
     backgroundColor: 'hsla(230,84%,63%,1)',
     width: '100%',

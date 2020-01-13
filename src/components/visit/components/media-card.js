@@ -2,10 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
@@ -33,15 +31,15 @@ const useStyles = makeStyles(theme => ({
 export default function MediaCard({ field, visitorProfile }) {
   const classes = useStyles();
 
-    const {
-      firstname,
-      username,
-      birthDate,
-      location,
-      popularityRate,
-      profilePicture,
-      date,
-    } = field;
+  const {
+    firstname,
+    username,
+    birthDate,
+    location,
+    popularityRate,
+    profilePicture,
+    date,
+  } = field;
 
   const getAge = dateString => {
     const today = new Date();
@@ -49,9 +47,9 @@ export default function MediaCard({ field, visitorProfile }) {
     let age = today.getFullYear() - birthDate.getFullYear();
     const m = today.getMonth() - birthDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+      age -= 1;
     }
-    return age + ' ans ';
+    return `${age} ans `;
   };
 
   const distance = () => {
@@ -60,10 +58,10 @@ export default function MediaCard({ field, visitorProfile }) {
       { latitude: location[0], longitude: location[1] },
       { latitude: visitorLocation[0], longitude: visitorLocation[1] },
     );
-    dist = Math.round(dist / 1000)
-    console.log(dist)
-    return ` | ${dist} km`
-  }
+    dist = Math.round(dist / 1000);
+    console.log(dist);
+    return ` | ${dist} km`;
+  };
 
   const lastVisit = moment(date).fromNow();
 

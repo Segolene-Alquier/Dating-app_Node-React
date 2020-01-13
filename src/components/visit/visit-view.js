@@ -1,13 +1,13 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-import MediaCard from './components/media-card';
 import _ from 'lodash';
+import Grid from '@material-ui/core/Grid';
+import MediaCard from './components/media-card';
 import VisitContainer from './visit-container';
 import Title from './components/title';
-import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
@@ -35,7 +35,9 @@ const useStyles = makeStyles(theme => ({
 const Visit = ({ computedMatch }) => {
   const visitedUsername = computedMatch.params.username;
 
-  const { visitedProfile, visitorProfile, loaded } = VisitContainer(visitedUsername);
+  const { visitedProfile, visitorProfile, loaded } = VisitContainer(
+    visitedUsername,
+  );
   const classes = useStyles();
 
   if (loaded === false) {
@@ -48,12 +50,16 @@ const Visit = ({ computedMatch }) => {
 
   return (
     <>
-      <Title textTitle={'History of visit'} />
+      <Title textTitle="History of visit" />
       <div className={classes.wrapper}>
         <Grid container spacing={3}>
           {_.map(visitedProfile, field => (
             <Grid item xs={12} sm={4} md={3} lg={2} className={classes.center}>
-              <MediaCard field={field} visitorProfile={visitorProfile} className={classes.fullsize} />
+              <MediaCard
+                field={field}
+                visitorProfile={visitorProfile}
+                className={classes.fullsize}
+              />
             </Grid>
           ))}
         </Grid>

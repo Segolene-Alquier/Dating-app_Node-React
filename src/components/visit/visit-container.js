@@ -5,8 +5,8 @@ import { AuthContext } from '../app/AuthContext';
 
 const VisitContainer = () => {
   const [loaded, setLoaded] = useState(false);
-  const [visitedProfile, setVisitedProfile] = useState([])
-  const [visitorProfile, setVisitorProfile] = useState({})
+  const [visitedProfile, setVisitedProfile] = useState([]);
+  const [visitorProfile, setVisitorProfile] = useState({});
   const authContext = useContext(AuthContext);
   const { userData, token } = authContext;
 
@@ -29,13 +29,8 @@ const VisitContainer = () => {
     Promise.all([userData, fetchVisitHistory()]).then(values => {
       console.log(values);
       setVisitedProfile(values[1]);
-      setVisitorProfile(
-        values[0]
-          .data,
-      );
-      setLoaded(
-        true,
-      );
+      setVisitorProfile(values[0].data);
+      setLoaded(true);
     });
   }
 
