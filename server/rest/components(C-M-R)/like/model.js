@@ -11,15 +11,15 @@ class Like {
   async create(likingUserId, likedUserId) {
     try {
       console.log(
-        `INSERT INTO public."Like" (likingUser, likedUser, date) VALUES (${likingUserId}, ${likedUserId} RETURNING id)`,
+        `INSERT INTO public."Like" (likingUser, likedUser, date) VALUES (${likingUserId}, ${likedUserId}, Now() RETURNING id)`,
       );
       return await db
         .any(
-          'INSERT INTO public."Like" (likingUser, likedUser, date) VALUES ($1, $2, NOW()) RETURNING id',
+          'INSERT INTO public."Like" ("likingUser", "likedUser", date) VALUES ($1, $2, NOW()) RETURNING id',
           [likingUserId, likedUserId],
         )
         .then(data => {
-          return { created: true, id: data[0].id };
+          return { success: true, created: true, id: data[0].id };
         });
     } catch (err) {
       console.log(err, 'in model Like.create()');
@@ -58,24 +58,35 @@ class Like {
     }
   }
 
-  async exists(type, value) {
+  async exists(likingUser, likedUser) {
     try {
-      if (!value) return false;
-      if (!this.isValidType(type)) {
-        console.log(`Like.exists(): ${type} is not an authorized type`);
-        return null;
-      }
       console.log(
-        `SELECT exists(SELECT from public."Like" WHERE ${type} = ${value})`,
+        `SELECT exists(SELECT from public."Like" WHERE "likingUser" = ${likingUser} AND "likedUser" = ${likedUser})`,
       );
-      const result = await db.none(
-        `SELECT exists(SELECT from public."Like" WHERE id = ALL($2));`,
-        [value],
+      const result = await db.any(
+        `SELECT exists(SELECT from public."Like" WHERE "likingUser" = $1 AND "likedUser" = $2);`,
+        [likingUser, likedUser],
       );
       return result[0].exists;
     } catch (err) {
       console.log(err, 'in model Like.exists()');
       return null;
+    }
+  }
+
+  async delete(likingUser, likedUser) {
+    try {
+      console.log(
+        `DELETE FROM public."Like" WHERE "likingUser" = ${likingUser} AND "likedUser" = ${likedUser}`,
+      );
+      await db.any(
+        'DELETE FROM public."Like" WHERE "likingUser" = $1  AND "likedUser" = $2',
+        [likingUser, likedUser],
+      );
+      return { success: true, deleted: true };
+    } catch (err) {
+      console.log(err, 'in model User.delete()');
+      return { deleted: false, error: err };
     }
   }
 }
