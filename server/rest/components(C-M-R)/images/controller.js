@@ -33,7 +33,7 @@ async function uploadImage(request, response) {
       return data[0].images.length;
     });
     if (length >= 5) {
-      return response.status(400).send('A user can upload only 5 picutre');
+      return response.status(400).send('A user can only upload 5 pictures');
     }
   } catch (error) {
     console.log(error);

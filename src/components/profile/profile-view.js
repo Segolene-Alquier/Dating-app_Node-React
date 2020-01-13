@@ -18,7 +18,6 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import pink from '@material-ui/core/colors/pink';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import CurrentPictures from './components/current-pictures';
@@ -31,6 +30,8 @@ import Toaster from '../toaster'
 import queryString from 'query-string';
 import { toast } from 'react-toastify';
 
+import ModalCrop from './components/modal';
+import CropperImg from './components/cropper/cropper';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -76,20 +77,33 @@ const useStyles = makeStyles(theme => ({
   gridColumnProfile: {
     padding: theme.spacing(1),
   },
-  picture: {
+  pictureContainer: {
     padding: theme.spacing(1),
     position: 'relative',
-    maxWidth: '150px',
+    width: '100%',
+    height: 'fit-content',
+  },
+  pictureButtonContainer: {
+    overflow: 'hidden',
+    backgroundColor: 'green',
+    position: 'relative',
+    height: 'fit-content',
+    width: '100%',
+  },
+  picture: {
+    objectFit: 'cover',
   },
   deleteButtonPicture: {
     position: 'absolute',
     top: '10px',
     right: '10px',
+    padding: '0px',
   },
   profilePicture: {
     border: '3px solid',
     borderColor: theme.palette.secondary.main,
     boxSizing: 'border-box',
+    objectFit: 'cover',
   },
   tabs: {
     margin: theme.spacing(1),
@@ -133,6 +147,14 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       margin: theme.spacing(0.5),
     },
+  },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   },
   paperAccount: {
     marginTop: theme.spacing(3),
@@ -200,6 +222,15 @@ const Profile = (params) => {
     getAge,
     fetchInterests,
     deleteUser,
+    showModal,
+    setShowModal,
+    imageToSave,
+    setImageToSave,
+    croppedImage,
+    setCroppedImage,
+    upload,
+    finalImage,
+    sendCroppedImageServer,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
     birthDate,
@@ -530,34 +561,43 @@ const Profile = (params) => {
                   <Box fontWeight="fontWeightBold">My pictures</Box>
                 </Typography>
                 <Grid container>
-                  <CurrentPictures
-                    classes={classes}
-                    Grid={Grid}
-                    pictures={profile.images}
-                    profilePicture={profile.profilePicture}
-                    Box={Box}
-                    Button={Button}
-                    handleDeleteImage={handleDeleteImage}
-                    handleChangeProfileImage={handleChangeProfileImage}
-                  />
-                  {profile.images && profile.images.length < 5 ? (
-                    <Grid container xs={6} sm={6} className={classes.picture}>
-                      <Box
-                        bgcolor="secondary.main"
-                        width="100%"
-                        className={classes.modifyPictureButton}
+                  <Grid container xsm={12}>
+                    <CurrentPictures
+                      classes={classes}
+                      Grid={Grid}
+                      pictures={profile.images}
+                      profilePicture={profile.profilePicture}
+                      Box={Box}
+                      Button={Button}
+                      handleDeleteImage={handleDeleteImage}
+                      handleChangeProfileImage={handleChangeProfileImage}
+                    />
+                    {profile.images && profile.images.length < 5 ? (
+                      <Grid
+                        item
+                        xs={6}
+                        sm={4}
+                        xl={4}
+                        className={classes.pictureContainer}
                       >
-                        <p>Upload a picture</p>
-                        <input
-                          label="upload file"
-                          type="file"
-                          accept="image/png, image/jpeg"
-                          onChange={handleFileUpload}
-                          className={classes.uploadInput}
-                        />
-                      </Box>
-                    </Grid>
-                  ) : null}
+                        <div className={classes.pictureButtonContainer}>
+                          <Box
+                            bgcolor="secondary.main"
+                            className={classes.modifyPictureButton}
+                          >
+                            <p>Upload a picture</p>
+                            <input
+                              label="upload file"
+                              type="file"
+                              accept="image/png, image/jpeg"
+                              onChange={handleFileUpload}
+                              className={classes.uploadInput}
+                            />
+                          </Box>
+                        </div>
+                      </Grid>
+                    ) : null}
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
@@ -764,6 +804,16 @@ const Profile = (params) => {
           </TabPanel>
         </form>
       </div>
+      <ModalCrop
+        showModal={showModal}
+        setShowModal={setShowModal}
+        imageToSave={imageToSave}
+        croppedImage={croppedImage}
+        setCroppedImage={setCroppedImage}
+        upload={upload}
+        finalImage={finalImage}
+        sendCroppedImageServer={sendCroppedImageServer}
+      />
     </>
   );
 };

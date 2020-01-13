@@ -13,13 +13,15 @@ const CurrentPictures = ({
 }) => {
   if (pictures) {
     return pictures.map(pictureUrl => (
-      <Grid container xs={6} sm={6} className={classes.picture}>
+      <Grid item xs={6} sm={4} xl={4} className={classes.pictureContainer}>
         <img
           src={pictureUrl}
           alt="My profile"
           width="100%"
           className={
-            profilePicture === pictureUrl ? classes.profilePicture : ''
+            profilePicture === pictureUrl
+              ? classes.profilePicture
+              : classes.picture
           }
           onClick={() => handleChangeProfileImage(pictureUrl)}
         />
@@ -36,7 +38,7 @@ const CurrentPictures = ({
     ));
   }
   return (
-    <Grid container xs={6} sm={6} className={classes.picture}>
+    <Grid container xs={6} sm={6} className={classes.pictureContainer}>
       <Box
         bgcolor="secondary.main"
         width="100%"

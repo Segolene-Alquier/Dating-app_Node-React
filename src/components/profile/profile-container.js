@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
+import ModalCrop from './components/modal';
 
 let newInput;
 let newChangedFields;
@@ -10,6 +11,10 @@ const UseProfileForm = (userData, token) => {
   const [profile, setProfile] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [changedFields, setChangedFields] = useState({});
+  const [imageToSave, setImageToSave] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [finalImage, setFinalImage] = useState(null);
 
   const fetchInterests = () =>
     axios
@@ -229,10 +234,21 @@ const UseProfileForm = (userData, token) => {
     }
   };
 
-  const handleFileUpload = event => {
-    const formData = new FormData();
-    console.log(event.target.files[0]);
-    formData.append('file', event.target.files[0]);
+  const readFile = file => {
+    return new Promise(resolve => {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => resolve(reader.result), false);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const blobToFile = (theBlob, fileName) => {
+    theBlob.lastModifiedDate = new Date();
+    theBlob.name = fileName;
+    return theBlob;
+  };
+
+  const sendCroppedImageServer = formData => {
     axios
       .post(`http://localhost:3001/images/upload`, formData, {
         headers: {
@@ -260,6 +276,22 @@ const UseProfileForm = (userData, token) => {
       .catch(error => {
         console.log(error);
       });
+      setShowModal(false);
+  };
+
+  const upload = imageBlob => {
+    let image = blobToFile(imageBlob, 'coucou.png');
+    const formData = new FormData();
+    formData.append('file', image);
+    setFinalImage(formData);
+  };
+
+  const handleFileUpload = async event => {
+    if (event.target.files[0]) {
+      const imageDataUrl = await readFile(event.target.files[0]);
+      setShowModal(true);
+      setImageToSave(imageDataUrl);
+    }
   };
 
   const handleDeleteImage = url => {
@@ -365,6 +397,15 @@ const UseProfileForm = (userData, token) => {
     getAge,
     fetchInterests,
     deleteUser,
+    showModal,
+    setShowModal,
+    imageToSave,
+    setImageToSave,
+    croppedImage,
+    setCroppedImage,
+    upload,
+    finalImage,
+    sendCroppedImageServer,
   };
 };
 
