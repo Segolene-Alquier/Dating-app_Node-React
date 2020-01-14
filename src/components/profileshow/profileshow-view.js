@@ -1,6 +1,10 @@
 import React, { useContext } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 import ProfileShowContainer from './profileshow-container';
@@ -49,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   containerUpProfile: {
     maxWidth: '1500px',
   },
-  gridColumnProfile: {
+  LeftColumnPublicProfile: {
     padding: theme.spacing(1),
   },
   pictureContainer: {
@@ -86,34 +90,8 @@ const useStyles = makeStyles(theme => ({
   divider: {
     margin: theme.spacing(1),
   },
-  modifyPictureButton: {
-    display: 'flex',
-    overflow: 'hidden',
-    position: 'relative',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: 'white',
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    fontSize: '1em',
-  },
-  uploadInput: {
-    fontSize: '100px',
-    position: 'absolute',
-    left: '0',
-    top: '0',
-    opacity: '0',
-  },
   summaryField: {
     width: '90%',
-  },
-  formControl: {
-    marginBottom: theme.spacing(3),
-  },
-  textField: {
-    maxWidth: '400px',
-    width: '100%',
   },
   interestChips: {
     display: 'flex',
@@ -146,9 +124,6 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     marginBottom: theme.spacing(2),
-  },
-  buttonAccount: {
-    width: '100%',
   },
 }));
 
@@ -202,7 +177,43 @@ const ProfileShow = ({ computedMatch }) => {
         handleChangeCity={handleChangeCity}
       />
       <Divider className={classes.divider} />
-
+      <Grid container>
+        <Grid
+          container
+          sm={6}
+          bgcolor="primary.main"
+          direction="column"
+          className={classes.LeftColumnPublicProfile}
+        >
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold">
+              {visitedProfile.firstname} identifies as
+            </Box>
+          </Typography>
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold">
+              {visitedProfile.firstname} is looking for
+            </Box>
+          </Typography>
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold">
+              {visitedProfile.firstname} in a few words
+            </Box>
+          </Typography>
+        </Grid>
+        <Grid container sm={6} className={classes.LeftColumnPublicProfile}>
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold">
+              {visitedProfile.firstname}'s pictures
+            </Box>
+          </Typography>
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold">
+              {visitedProfile.firstname}'s interests
+            </Box>
+          </Typography>
+        </Grid>
+      </Grid>
       {_.map(visitedProfile, temporaryField => (
         <p>{temporaryField}</p>
       ))}
