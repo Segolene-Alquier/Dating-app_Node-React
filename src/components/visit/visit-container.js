@@ -35,6 +35,12 @@ const VisitContainer = () => {
         }
       );
     setVisitedProfile(newVisitedProfile);
+    axios.get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'x-access-token': token,
+      },
+    });
   };
 
   const fetchVisitHistory = () =>
