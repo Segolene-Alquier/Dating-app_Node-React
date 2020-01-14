@@ -11,11 +11,10 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { toast } from 'react-toastify';
-import Toaster from './../../toaster';
 import InputTextShort from './inputTextShort';
 import AddressAutocomplete from './location/address-autocomplete';
 import Map from './location/map';
-import useForgotPasswordForm from './../../forgotpassword/forgotpassword-container';
+import useForgotPasswordForm from '../../forgotpassword/forgotpassword-container';
 
 function TabPanel(props) {
   const { children, valueTab, index } = props;
@@ -33,13 +32,6 @@ function TabPanel(props) {
   );
 }
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 const TabPanelProfileParameters = ({
   valueTab,
   index,
@@ -55,7 +47,6 @@ const TabPanelProfileParameters = ({
   notificationPush,
   deleteUser,
 }) => {
-
   const { sendForgotPassword } = useForgotPasswordForm(() =>
     toast.success('You received a reset password link by Email'),
   );
@@ -184,17 +175,6 @@ const TabPanelProfileParameters = ({
             <Typography variant="subtitle1">
               <Box fontWeight="fontWeightBold">Notifications</Box>
             </Typography>
-            {/* <FormCheckBox
-              title="Gender"
-              classes={classes}
-              isChecked={isChecked}
-              handleProfileChange={handleProfileChange}
-              name="gender"
-              label={[
-                "Mail",
-                "Push",
-              ]}
-            /> */}
             <FormControl component="fieldset" className={classes.formControl}>
               <FormGroup row>
                 <FormControlLabel

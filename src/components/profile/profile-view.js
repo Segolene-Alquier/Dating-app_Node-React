@@ -1,21 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Tabs, Tab } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import queryString from 'query-string';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import UpperBoxProfile from './components/upperBoxProfile';
 import TabPanelProfileAbout from './components/tabPanelProfileAbout';
 import TabPanelProfileParameters from './components/tabPanelProfileParameters';
 import Toaster from '../toaster';
-import { toast } from 'react-toastify';
-
-import queryString from 'query-string';
 import ModalCrop from './components/modal';
-import CropperImg from './components/cropper/cropper';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -160,22 +155,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
 }));
-
-function TabPanel(props) {
-  const { children, valueTab, index } = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={valueTab !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-    >
-      <Box p={3}>{children}</Box>
-    </Typography>
-  );
-}
 
 function a11yProps(index) {
   return {

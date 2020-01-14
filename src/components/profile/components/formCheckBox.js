@@ -14,94 +14,32 @@ const formCheckBox = ({
   name,
   label,
 }) => {
-  return (
-    <>
-      <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{title}</Box>
-      </Typography>
-      <FormControl component="fieldset" className={classes.formControl}>
-        <FormGroup row>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isChecked(1, name)}
-                onChange={handleProfileChange}
-                name={name}
-                value="1"
+  if (label) {
+    return (
+      <>
+        <Typography variant="subtitle1">
+          <Box fontWeight="fontWeightBold">{title}</Box>
+        </Typography>
+        <FormControl component="fieldset" className={classes.formControl}>
+          <FormGroup row>
+            {label.map((checkbox, index) => (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isChecked(index + 1, name)}
+                    onChange={handleProfileChange}
+                    name={name}
+                    value={(index + 1).toString(10)}
+                  />
+                }
+                label={label[index]}
               />
-            }
-            label={label[0]}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isChecked(2, name)}
-                onChange={handleProfileChange}
-                name={name}
-                value="2"
-              />
-            }
-            label={label[1]}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isChecked(3, name)}
-                onChange={handleProfileChange}
-                name={name}
-                value="3"
-              />
-            }
-            label={label[2]}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isChecked(4, name)}
-                onChange={handleProfileChange}
-                name={name}
-                value="4"
-              />
-            }
-            label={label[3]}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isChecked(5, name)}
-                onChange={handleProfileChange}
-                name={name}
-                value="5"
-              />
-            }
-            label={label[4]}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isChecked(6, name)}
-                onChange={handleProfileChange}
-                name={name}
-                value="6"
-              />
-            }
-            label={label[5]}
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isChecked(7, name)}
-                onChange={handleProfileChange}
-                name={name}
-                value="7"
-              />
-            }
-            label={label[6]}
-          />
-        </FormGroup>
-      </FormControl>
-    </>
-  );
+            ))}
+          </FormGroup>
+        </FormControl>
+      </>
+    );
+  }
 };
 
 export default formCheckBox;
