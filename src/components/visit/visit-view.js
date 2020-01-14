@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
 const Visit = ({ computedMatch }) => {
   const visitedUsername = computedMatch.params.username;
 
-  const { visitedProfile, visitorProfile, loaded } = VisitContainer(
+  const { visitedProfile, visitorProfile, loaded, handleLike } = VisitContainer(
     visitedUsername,
   );
   const classes = useStyles();
@@ -68,6 +68,7 @@ const Visit = ({ computedMatch }) => {
                   field={field}
                   visitorProfile={visitorProfile}
                   className={classes.fullsize}
+                  handleLike={handleLike}
                 />
               </Grid>
             ))}
