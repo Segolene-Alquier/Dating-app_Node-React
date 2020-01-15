@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '1500px',
   },
   columnPublicProfile: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(0, 2),
   },
   pictureContainer: {
     padding: theme.spacing(1),
@@ -74,6 +74,10 @@ const useStyles = makeStyles(theme => ({
   },
   divider: {
     margin: theme.spacing(1),
+  },
+  item: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(1),
   },
   summary: {
     padding: theme.spacing(3),
@@ -96,11 +100,14 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 4, 3),
   },
   carousel: {
-    width: '50%',
+    // width: '50%',
   },
   slide: {
-    padding: 15,
-    minHeight: 100,
+    // width: '100%',
+    // padding: 15,
+    minWidth: '100px',
+    maxWidth: '450px',
+    objectFit: 'cover',
     color: '#fff',
   },
   slide1: {
@@ -147,114 +154,93 @@ const ProfileShow = ({ computedMatch }) => {
         handleChangeCity={handleChangeCity}
       />
       <Divider className={classes.divider} />
-      <Grid container>
-        <Grid
-          container
-          sm={6}
-          direction="column"
-          className={classes.columnPublicProfile}
-        >
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              {visitedProfile.firstname} identifies as
-            </Box>
-          </Typography>
-          {_.isEmpty(visitedProfile.gender) ? (
-            <p>No gender defined so far</p>
-          ) : (
-            <ChipsList classes={classes} list={visitedProfile.gender} type='gender'/>
-          )}
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              {visitedProfile.firstname} is looking for
-            </Box>
-          </Typography>
-          {_.isEmpty(visitedProfile.sexualOrientation) ? (
-            <p>No preference defined so far</p>
-          ) : (
-            <ChipsList
-              classes={classes}
-              list={visitedProfile.sexualOrientation}
-              type='preference'
-            />
-          )}
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              {visitedProfile.firstname} in a few words
-            </Box>
-          </Typography>
-          <Paper elevation={3} className={classes.summary}>
-            <p>{visitedProfile.description}</p>
-          </Paper>
+      <div className={classes.wrapperProfile}>
+        <Grid container>
+          <Grid
+            container
+            sm={6}
+            direction="column"
+            className={classes.columnPublicProfile}
+          >
+            <Typography variant="subtitle1" className={classes.item}>
+              <Box fontWeight="fontWeightBold">
+                {visitedProfile.firstname} identifies as
+              </Box>
+            </Typography>
+            {_.isEmpty(visitedProfile.gender) ? (
+              <p>No gender defined so far</p>
+            ) : (
+              <ChipsList
+                classes={classes}
+                list={visitedProfile.gender}
+                type="gender"
+              />
+            )}
+            <Typography variant="subtitle1" className={classes.item}>
+              <Box fontWeight="fontWeightBold">
+                {visitedProfile.firstname} is looking for
+              </Box>
+            </Typography>
+            {_.isEmpty(visitedProfile.sexualOrientation) ? (
+              <p>No preference defined so far</p>
+            ) : (
+              <ChipsList
+                classes={classes}
+                list={visitedProfile.sexualOrientation}
+                type="preference"
+              />
+            )}
+            <Typography variant="subtitle1" className={classes.item}>
+              <Box fontWeight="fontWeightBold">
+                {visitedProfile.firstname} in a few words
+              </Box>
+            </Typography>
+            <Paper elevation={3} className={classes.summary}>
+              {_.isEmpty(visitedProfile.description) ? (
+                <p>No description defined so far</p>
+              ) : (
+                <p>{visitedProfile.description}</p>
+              )}
+            </Paper>
+          </Grid>
+          <Grid
+            container
+            sm={6}
+            direction="column"
+            className={classes.columnPublicProfile}
+          >
+            <Typography variant="subtitle1" className={classes.item}>
+              <Box fontWeight="fontWeightBold">
+                {visitedProfile.firstname}'s interests
+              </Box>
+            </Typography>
+            {_.isEmpty(visitedProfile.interests) ? (
+              <p>No interests defined so far</p>
+            ) : (
+              <ChipsList
+                classes={classes}
+                list={visitedProfile.interests}
+                type="interests"
+              />
+            )}
+            <Typography variant="subtitle1" className={classes.item}>
+              <Box fontWeight="fontWeightBold">
+                {visitedProfile.firstname}'s pictures
+              </Box>
+            </Typography>
+            <SwipeableViews className={classes.carousel} enableMouseEvents>
+              {visitedProfile.images.map((image, index) => (
+                <div className={(classes.slide)}>
+                  <img src={visitedProfile.images[index]} />
+                </div>
+              ))}
+            </SwipeableViews>
+          </Grid>
         </Grid>
-        <Grid
-          container
-          sm={6}
-          direction="column"
-          className={classes.columnPublicProfile}
-        >
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              {visitedProfile.firstname}'s interests
-            </Box>
-          </Typography>
-          {_.isEmpty(visitedProfile.interests) ? (
-            <p>No interests defined so far</p>
-          ) : (
-            <ChipsList classes={classes} list={visitedProfile.interests} type='interests' />
-          )}
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              {visitedProfile.firstname}'s pictures
-            </Box>
-          </Typography>
-          <SwipeableViews className={classes.carousel}>
-            <div className={(classes.slide, classes.slide1)}>slide n°1</div>
-            <div className={(classes.slide, classes.slide2)}>slide n°2</div>
-            <div className={(classes.slide, classes.slide3)}>slide n°3</div>
-          </SwipeableViews>
-          {/* <div style={{ position: 'relative', width: '100%', height: 500 }}>
-            <AutoRotatingCarousel
-              label="Get started"
-              // open={state.open}
-              // onClose={() => setState({ open: false })}
-              // onStart={() => setState({ open: false })}
-              style={{ position: 'absolute' }}
-            >
-              <Slide
-                media={
-                  <img src="http://www.icons101.com/icon_png/size_256/id_79394/youtube.png" />
-                }
-                mediaBackgroundStyle={{ backgroundColor: red[400] }}
-                style={{ backgroundColor: red[600] }}
-                title="This is a very cool feature"
-                subtitle="Just using this will blow your mind."
-              />
-              <Slide
-                media={
-                  <img src="http://www.icons101.com/icon_png/size_256/id_80975/GoogleInbox.png" />
-                }
-                mediaBackgroundStyle={{ backgroundColor: blue[400] }}
-                style={{ backgroundColor: blue[600] }}
-                title="Ever wanted to be popular?"
-                subtitle="Well just mix two colors and your are good to go!"
-              />
-              <Slide
-                media={
-                  <img src="http://www.icons101.com/icon_png/size_256/id_76704/Google_Settings.png" />
-                }
-                mediaBackgroundStyle={{ backgroundColor: green[400] }}
-                style={{ backgroundColor: green[600] }}
-                title="May the force be with you"
-                subtitle="The Force is a metaphysical and ubiquitous power in the Star Wars fictional universe."
-              />
-            </AutoRotatingCarousel> */}
-          {/* </div> */}
-        </Grid>
-      </Grid>
-      {_.map(visitedProfile, temporaryField => (
+      </div>
+      {/* {_.map(visitedProfile, temporaryField => (
         <p>{temporaryField}</p>
-      ))}
+      ))} */}
     </>
   );
 };
