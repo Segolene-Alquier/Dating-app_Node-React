@@ -40,7 +40,7 @@ const VisitContainer = () => {
         'Content-type': 'application/json; charset=UTF-8',
         'x-access-token': token,
       },
-    });
+    }).then(result => console.log(result));
   };
 
   const fetchVisitHistory = () =>

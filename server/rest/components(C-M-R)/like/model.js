@@ -15,11 +15,16 @@ class Like {
       );
       return await db
         .any(
-          'INSERT INTO public."Like" ("likingUser", "likedUser", date) VALUES ($1, $2, NOW()) RETURNING id',
+          'INSERT INTO public."Like" ("likingUser", "likedUser", date) VALUES ($1, $2, NOW()) RETURNING id, EXISTS(SELECT * FROM public."Like" WHERE "likingUser" = $2 AND "likedUser" = $1) AS match',
           [likingUserId, likedUserId],
         )
         .then(data => {
-          return { success: true, created: true, id: data[0].id };
+          return {
+            success: true,
+            created: true,
+            id: data[0].id,
+            match: data[0].match,
+          };
         });
     } catch (err) {
       console.log(err, 'in model Like.create()');
