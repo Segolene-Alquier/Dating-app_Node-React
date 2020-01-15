@@ -26,6 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
+    "material-auto-rotating-carousel": "^3.0.2",
     "material-ui-pickers": "^2.2.4",
     "micromodal": "^0.4.2",
     "moment": "^2.24.0",
@@ -45,6 +46,7 @@
     "react-google-places-autocomplete": "^1.6.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
+    "react-swipeable-views": "^0.13.3",
     "react-toastify": "^5.4.1",
     "uuid-token-generator": "^1.0.0"
   },

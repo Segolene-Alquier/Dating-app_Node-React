@@ -4,13 +4,17 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
+import { AutoRotatingCarousel, Slide } from 'material-auto-rotating-carousel';
+import SwipeableViews from 'react-swipeable-views';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 import ProfileShowContainer from './profileshow-container';
 import UpperBoxProfile from '../profile/components/upperBoxProfile';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from '../profile/profile-container';
+import ChipsList from './components/chipsList';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -53,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   containerUpProfile: {
     maxWidth: '1500px',
   },
-  LeftColumnPublicProfile: {
+  columnPublicProfile: {
     padding: theme.spacing(1),
   },
   pictureContainer: {
@@ -62,26 +66,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: 'fit-content',
   },
-  pictureButtonContainer: {
-    overflow: 'hidden',
-    backgroundColor: 'green',
-    position: 'relative',
-    height: 'fit-content',
-    width: '100%',
-  },
   picture: {
-    objectFit: 'cover',
-  },
-  deleteButtonPicture: {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    padding: '0px',
-  },
-  profilePicture: {
-    border: '3px solid',
-    borderColor: theme.palette.secondary.main,
-    boxSizing: 'border-box',
     objectFit: 'cover',
   },
   tabs: {
@@ -90,10 +75,11 @@ const useStyles = makeStyles(theme => ({
   divider: {
     margin: theme.spacing(1),
   },
-  summaryField: {
-    width: '90%',
+  summary: {
+    padding: theme.spacing(3),
+    // width: '90%',
   },
-  interestChips: {
+  genderChips: {
     display: 'flex',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
@@ -109,21 +95,22 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  paperAccount: {
-    marginTop: theme.spacing(3),
-    padding: theme.spacing(5, 2),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: theme.palette.secondary.A300,
+  carousel: {
+    width: '50%',
   },
-  divAccount: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: theme.spacing(2),
+  slide: {
+    padding: 15,
+    minHeight: 100,
+    color: '#fff',
+  },
+  slide1: {
+    background: '#FEA900',
+  },
+  slide2: {
+    background: '#B3DC4A',
+  },
+  slide3: {
+    background: '#6AC0FF',
   },
 }));
 
@@ -131,32 +118,15 @@ const ProfileShow = ({ computedMatch }) => {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
   const visitedUsername = computedMatch.params.username;
-
+  // const Slide = require('./Slide').default;
+  const { red, blue, green } = require('@material-ui/core/colors');
   const {
-    // handleProfileChange,
-    // handleDeleteImage,
     // profile,
     // loaded,
-    // submitFile,
-    // handleFileUpload,
-    // handleChangeProfileImage,
-    // handleInterestChange,
-    // handleChangeLocation,
     handleChangeCity,
-    // handleSubmitParameters,
     // isChecked,
     getAge,
     // fetchInterests,
-    // deleteUser,
-    // showModal,
-    // setShowModal,
-    // imageToSave,
-    // setImageToSave,
-    // croppedImage,
-    // setCroppedImage,
-    // upload,
-    // finalImage,
-    // sendCroppedImageServer,
   } = UseProfileForm(authContext.userData, authContext.token);
   const { visitedProfile, loaded } = ProfileShowContainer(visitedUsername);
 
@@ -181,37 +151,105 @@ const ProfileShow = ({ computedMatch }) => {
         <Grid
           container
           sm={6}
-          bgcolor="primary.main"
           direction="column"
-          className={classes.LeftColumnPublicProfile}
+          className={classes.columnPublicProfile}
         >
           <Typography variant="subtitle1">
             <Box fontWeight="fontWeightBold">
               {visitedProfile.firstname} identifies as
             </Box>
           </Typography>
+          {_.isEmpty(visitedProfile.gender) ? (
+            <p>No gender defined so far</p>
+          ) : (
+            <ChipsList classes={classes} list={visitedProfile.gender} type='gender'/>
+          )}
           <Typography variant="subtitle1">
             <Box fontWeight="fontWeightBold">
               {visitedProfile.firstname} is looking for
             </Box>
           </Typography>
+          {_.isEmpty(visitedProfile.sexualOrientation) ? (
+            <p>No preference defined so far</p>
+          ) : (
+            <ChipsList
+              classes={classes}
+              list={visitedProfile.sexualOrientation}
+              type='preference'
+            />
+          )}
           <Typography variant="subtitle1">
             <Box fontWeight="fontWeightBold">
               {visitedProfile.firstname} in a few words
             </Box>
           </Typography>
+          <Paper elevation={3} className={classes.summary}>
+            <p>{visitedProfile.description}</p>
+          </Paper>
         </Grid>
-        <Grid container sm={6} className={classes.LeftColumnPublicProfile}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              {visitedProfile.firstname}'s pictures
-            </Box>
-          </Typography>
+        <Grid
+          container
+          sm={6}
+          direction="column"
+          className={classes.columnPublicProfile}
+        >
           <Typography variant="subtitle1">
             <Box fontWeight="fontWeightBold">
               {visitedProfile.firstname}'s interests
             </Box>
           </Typography>
+          {_.isEmpty(visitedProfile.interests) ? (
+            <p>No interests defined so far</p>
+          ) : (
+            <ChipsList classes={classes} list={visitedProfile.interests} type='interests' />
+          )}
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold">
+              {visitedProfile.firstname}'s pictures
+            </Box>
+          </Typography>
+          <SwipeableViews className={classes.carousel}>
+            <div className={(classes.slide, classes.slide1)}>slide n°1</div>
+            <div className={(classes.slide, classes.slide2)}>slide n°2</div>
+            <div className={(classes.slide, classes.slide3)}>slide n°3</div>
+          </SwipeableViews>
+          {/* <div style={{ position: 'relative', width: '100%', height: 500 }}>
+            <AutoRotatingCarousel
+              label="Get started"
+              // open={state.open}
+              // onClose={() => setState({ open: false })}
+              // onStart={() => setState({ open: false })}
+              style={{ position: 'absolute' }}
+            >
+              <Slide
+                media={
+                  <img src="http://www.icons101.com/icon_png/size_256/id_79394/youtube.png" />
+                }
+                mediaBackgroundStyle={{ backgroundColor: red[400] }}
+                style={{ backgroundColor: red[600] }}
+                title="This is a very cool feature"
+                subtitle="Just using this will blow your mind."
+              />
+              <Slide
+                media={
+                  <img src="http://www.icons101.com/icon_png/size_256/id_80975/GoogleInbox.png" />
+                }
+                mediaBackgroundStyle={{ backgroundColor: blue[400] }}
+                style={{ backgroundColor: blue[600] }}
+                title="Ever wanted to be popular?"
+                subtitle="Well just mix two colors and your are good to go!"
+              />
+              <Slide
+                media={
+                  <img src="http://www.icons101.com/icon_png/size_256/id_76704/Google_Settings.png" />
+                }
+                mediaBackgroundStyle={{ backgroundColor: green[400] }}
+                style={{ backgroundColor: green[600] }}
+                title="May the force be with you"
+                subtitle="The Force is a metaphysical and ubiquitous power in the Star Wars fictional universe."
+              />
+            </AutoRotatingCarousel> */}
+          {/* </div> */}
         </Grid>
       </Grid>
       {_.map(visitedProfile, temporaryField => (
