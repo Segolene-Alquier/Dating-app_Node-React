@@ -100,24 +100,16 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 4, 3),
   },
   carousel: {
-    // width: '50%',
+    width: '100%',
+    maxWidth: '450px',
   },
   slide: {
-    // width: '100%',
-    // padding: 15,
-    minWidth: '100px',
+    width: '100%',
     maxWidth: '450px',
-    objectFit: 'cover',
-    color: '#fff',
+    objectFit: 'contain',
   },
-  slide1: {
-    background: '#FEA900',
-  },
-  slide2: {
-    background: '#B3DC4A',
-  },
-  slide3: {
-    background: '#6AC0FF',
+  imageSlider: {
+    width: '100%',
   },
 }));
 
@@ -125,15 +117,12 @@ const ProfileShow = ({ computedMatch }) => {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
   const visitedUsername = computedMatch.params.username;
-  // const Slide = require('./Slide').default;
-  const { red, blue, green } = require('@material-ui/core/colors');
   const {
     // profile,
     // loaded,
     handleChangeCity,
     // isChecked,
     getAge,
-    // fetchInterests,
   } = UseProfileForm(authContext.userData, authContext.token);
   const { visitedProfile, loaded } = ProfileShowContainer(visitedUsername);
 
@@ -230,8 +219,11 @@ const ProfileShow = ({ computedMatch }) => {
             </Typography>
             <SwipeableViews className={classes.carousel} enableMouseEvents>
               {visitedProfile.images.map((image, index) => (
-                <div className={(classes.slide)}>
-                  <img src={visitedProfile.images[index]} />
+                <div className={classes.slide}>
+                  <img
+                    className={classes.imageSlider}
+                    src={visitedProfile.images[index]}
+                  />
                 </div>
               ))}
             </SwipeableViews>
