@@ -40,6 +40,9 @@ class Visit {
         `SELECT firstname, username, "birthDate", location, "popularityRate", "profilePicture", date, visitor, EXISTS(SELECT * FROM public."Like" WHERE "likingUser" = $2 AND "likedUser" = visitor) AS liking, EXISTS(SELECT * FROM public."Like" WHERE "likedUser" = $2 AND "likingUser" = visitor) AS liked  FROM public."Visit", public."User" WHERE $1:name = $2 AND "Visit".visitor = "User".id ORDER BY date DESC`,
         [type, value],
       );
+      result.forEach(element => {
+        element.match = element.liked && element.liking;
+      });
       return result;
     } catch (err) {
       console.log(err, 'in model Visit.getBy()');
