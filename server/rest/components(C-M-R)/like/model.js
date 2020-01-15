@@ -74,6 +74,24 @@ class Like {
     }
   }
 
+  async relationship(visitorUser, visitedUser) {
+    try {
+      console.log(
+        `SELECT exists(SELECT from public."Like" WHERE "likingUser" = $1 AND "likedUser" = $2) AS visitorlikevisited, exists(SELECT from public."Like" WHERE "likedUser" = $1 AND "likingUser" = $2) AS visitedlikevisitor`,
+      );
+      const result = await db.any(
+        `SELECT exists(SELECT from public."Like" WHERE "likingUser" = $1 AND "likedUser" = $2) AS visitorlikevisited, exists(SELECT from public."Like" WHERE "likedUser" = $1 AND "likingUser" = $2) AS visitedlikevisitor`,
+        [visitorUser, visitedUser],
+      );
+      result[0].match =
+        result[0].visitorlikevisited && result[0].visitedlikevisitor;
+      return result[0];
+    } catch (err) {
+      console.log(err, 'in model Like.exists()');
+      return null;
+    }
+  }
+
   async delete(likingUser, likedUser) {
     try {
       console.log(
