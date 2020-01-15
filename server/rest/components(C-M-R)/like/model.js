@@ -102,11 +102,12 @@ class Like {
       console.log(
         `DELETE FROM public."Like" WHERE "likingUser" = ${likingUser} AND "likedUser" = ${likedUser}`,
       );
-      await db.any(
-        'DELETE FROM public."Like" WHERE "likingUser" = $1  AND "likedUser" = $2',
+      const result = await db.any(
+        'DELETE FROM public."Like" WHERE "likingUser" = $1  AND "likedUser" = $2 RETURNING EXISTS(SELECT from public."Like" WHERE "likedUser" = $1 AND "likingUser" = $2) AS unmatch',
         [likingUser, likedUser],
       );
-      return { success: true, deleted: true };
+      console.log(result[0].unmatch);
+      return { success: true, deleted: true, unmatch: result[0].unmatch };
     } catch (err) {
       console.log(err, 'in model User.delete()');
       return { deleted: false, error: err };
