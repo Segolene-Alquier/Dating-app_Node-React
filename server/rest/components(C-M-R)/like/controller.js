@@ -19,10 +19,17 @@ async function likeUnlikeUserId(request, response) {
   try {
     const alreadyLiked = await likes.exists(likingUser, likedUser);
     if (alreadyLiked) {
-      response.status(200).json(await likes.delete(likingUser, likedUser));
+      const query = await likes.delete(likingUser, likedUser);
+      if (query.unmatch) {
+        // delete match
+      }
     } else {
-      response.status(200).json(await likes.create(likingUser, likedUser));
+      const query = await likes.create(likingUser, likedUser);
+      if (query.match) {
+        // create match
+      }
     }
+    response.status(200).json(query);
   } catch (err) {
     console.log(err);
     response.status(206).send(err);
