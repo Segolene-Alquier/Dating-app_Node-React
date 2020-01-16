@@ -24,7 +24,7 @@ async function likeUnlikeUserId(request, response) {
     if (alreadyLiked) {
       query = await likes.delete(likingUser, likedUser);
       if (query.unmatch) {
-        // delete match
+        matchs.delete(likingUser, likedUser);
       }
     } else {
       query = await likes.create(likingUser, likedUser);

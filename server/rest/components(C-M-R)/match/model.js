@@ -31,6 +31,22 @@ class Match {
     }
   }
 
+  async delete(user1, user2) {
+    try {
+      console.log(
+        `DELETE FROM public."Match" WHERE "user1" = ${user1} AND "user2" = ${user2}`,
+      );
+      await db.any(
+        'DELETE FROM public."Match" WHERE ("user1" = $1  AND "user2" = $2) OR ("user1" = $2  AND "user2" = $1)',
+        [user1, user2],
+      );
+      return { success: true, deleted: true };
+    } catch (err) {
+      console.log(err, 'in model User.delete()');
+      return { deleted: false, error: err };
+    }
+  }
+
   async getBy(type, value) {
     try {
       if (!this.isValidType(type)) {
