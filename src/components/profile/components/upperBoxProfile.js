@@ -3,8 +3,15 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import CityGuess from './location/cityGuess';
+import LoggedDot from '../../profileshow/components/loggedDot';
 
-const UpperBoxProfile = ({classes, profile, getAge, handleChangeCity}) => {
+const UpperBoxProfile = ({
+  classes,
+  profile,
+  getAge,
+  handleChangeCity,
+  type,
+}) => {
   return (
     <Box className={classes.boxUpProfile}>
       <Grid container className={classes.containerUpProfile}>
@@ -49,6 +56,7 @@ const UpperBoxProfile = ({classes, profile, getAge, handleChangeCity}) => {
                   'unknown city'
                 )}
               </span>
+              { type === 'public' ? <LoggedDot loggedState={true} /> : null}
             </div>
           </Grid>
           <Grid

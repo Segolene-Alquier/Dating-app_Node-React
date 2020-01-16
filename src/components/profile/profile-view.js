@@ -235,6 +235,7 @@ const Profile = params => {
         profile={profile}
         getAge={getAge}
         handleChangeCity={handleChangeCity}
+        type='private'
       />
       <Divider className={classes.divider} />
       <div className={classes.wrapperProfile}>

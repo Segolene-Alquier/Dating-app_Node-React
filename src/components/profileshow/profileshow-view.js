@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
-import { AutoRotatingCarousel, Slide } from 'material-auto-rotating-carousel';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
@@ -111,6 +110,18 @@ const useStyles = makeStyles(theme => ({
   imageSlider: {
     width: '100%',
   },
+  loggedDot: {
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+    backgroundColor: '#64dd17',
+  },
+  notLoggedDot: {
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+    backgroundColor: '#b0bec5',
+  },
 }));
 
 const ProfileShow = ({ computedMatch }) => {
@@ -118,8 +129,6 @@ const ProfileShow = ({ computedMatch }) => {
   const authContext = useContext(AuthContext);
   const visitedUsername = computedMatch.params.username;
   const {
-    // profile,
-    // loaded,
     handleChangeCity,
     // isChecked,
     getAge,
@@ -141,6 +150,7 @@ const ProfileShow = ({ computedMatch }) => {
         profile={visitedProfile}
         getAge={getAge}
         handleChangeCity={handleChangeCity}
+        type="public"
       />
       <Divider className={classes.divider} />
       <div className={classes.wrapperProfile}>
