@@ -218,14 +218,18 @@ const ProfileShow = ({ computedMatch }) => {
               </Box>
             </Typography>
             <SwipeableViews className={classes.carousel} enableMouseEvents>
-              {visitedProfile.images.map((image, index) => (
-                <div className={classes.slide}>
-                  <img
-                    className={classes.imageSlider}
-                    src={visitedProfile.images[index]}
-                  />
-                </div>
-              ))}
+              {_.isEmpty(visitedProfile.images) ? (
+                <p>No pictures uploaded so far</p>
+              ) : (
+                visitedProfile.images.map((image, index) => (
+                  <div className={classes.slide}>
+                    <img
+                      className={classes.imageSlider}
+                      src={visitedProfile.images[index]}
+                    />
+                  </div>
+                ))
+              )}
             </SwipeableViews>
           </Grid>
         </Grid>
