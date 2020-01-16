@@ -1,6 +1,8 @@
 const Like = require('./model');
+const Match = require('./../match/model');
 
 const likes = new Like();
+const matchs = new Match();
 
 async function getLikesFromCurrentUser(request, response) {
   const id = request.decoded.userid;
@@ -18,15 +20,17 @@ async function likeUnlikeUserId(request, response) {
   const likedUser = parseInt(request.params.id, 10);
   try {
     const alreadyLiked = await likes.exists(likingUser, likedUser);
+    let query;
     if (alreadyLiked) {
-      const query = await likes.delete(likingUser, likedUser);
+      query = await likes.delete(likingUser, likedUser);
       if (query.unmatch) {
         // delete match
       }
     } else {
-      const query = await likes.create(likingUser, likedUser);
+      query = await likes.create(likingUser, likedUser);
       if (query.match) {
-        // create match
+        const matchQuery = await matchs.create(likingUser, likedUser);
+        query.matchId = matchQuery.id;
       }
     }
     response.status(200).json(query);

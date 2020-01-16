@@ -9,6 +9,28 @@ class Match {
     });
   }
 
+  async create(user1, user2) {
+    try {
+      console.log(
+        `INSERT INTO public."Match" (user1, user2, date) VALUES (${user1}, ${user2}, Now() RETURNING id`,
+      );
+      return await db
+        .any(
+          'INSERT INTO public."Match" ("user1", "user2", date) VALUES ($1, $2, NOW()) RETURNING id',
+          [user1, user2],
+        )
+        .then(data => {
+          return {
+            created: true,
+            id: data[0].id,
+          };
+        });
+    } catch (err) {
+      console.log(err, 'in model Like.create()');
+      return { created: false, error: err };
+    }
+  }
+
   async getBy(type, value) {
     try {
       if (!this.isValidType(type)) {
