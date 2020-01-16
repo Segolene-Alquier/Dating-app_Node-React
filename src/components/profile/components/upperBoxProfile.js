@@ -14,27 +14,28 @@ const UpperBoxProfile = ({
 }) => {
   return (
     <Box className={classes.boxUpProfile}>
-      <Grid container className={classes.containerUpProfile}>
-        <Grid container bgcolor="secondary.main" xs={5} sm={3} justify="center">
-          <img
-            src={
-              profile.profilePicture ||
-              'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png'
-            }
-            alt="My profile"
-            width="50%"
-          />
-        </Grid>
-        <Grid container bgcolor="secondary.main" xs={7} sm={9}>
-          <Grid
-            container
-            bgcolor="secondary.main"
-            xs={6}
-            sm={9}
-            direction="column"
-            justify="flex-end"
-          >
-            <div>{profile.firstname}</div>
+      <Grid
+        container
+        className={classes.containerUpProfile}
+        xs={12}
+        sm={12}
+        direction="row"
+      >
+        <Grid container xs={12} sm={6} direction="row" justify="flex-start">
+          <Grid container xs={6} sm={5}>
+            <img
+              src={
+                profile.profilePicture ||
+                'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png'
+              }
+              alt="My profile"
+              width="90%"
+            />
+          </Grid>
+          <Grid container xs={6} sm={7} direction="column" justify="flex-end">
+            <div>
+              <span>{profile.firstname}</span>
+            </div>
             <div>
               <span>
                 {profile.birthDate
@@ -56,9 +57,11 @@ const UpperBoxProfile = ({
                   'unknown city'
                 )}
               </span>
-              { type === 'public' ? <LoggedDot loggedState={true} /> : null}
+              {type === 'public' ? <LoggedDot loggedState={true} /> : null}
             </div>
           </Grid>
+        </Grid>
+        <Grid container sm={6} xs={12} direction="row" justify="flex-end">
           <Grid
             container
             bgcolor="secondary.main"
