@@ -18,6 +18,11 @@ async function getLikesFromCurrentUser(request, response) {
 async function likeUnlikeUserId(request, response) {
   const likingUser = request.decoded.userid;
   const likedUser = parseInt(request.params.id, 10);
+  if (likedUser === likingUser) {
+    return response
+      .status(200)
+      .json({ success: false, error: 'You can not block yourself!' });
+  }
   try {
     const alreadyLiked = await likes.exists(likingUser, likedUser);
     let query;
