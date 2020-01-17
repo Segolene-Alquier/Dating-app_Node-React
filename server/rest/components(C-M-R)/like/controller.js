@@ -1,7 +1,9 @@
 const Like = require('./model');
 const Match = require('./../match/model');
+const Block = require('./../block/model');
 
 const likes = new Like();
+const block = new Block();
 const matchs = new Match();
 
 async function getLikesFromCurrentUser(request, response) {
@@ -22,6 +24,13 @@ async function likeUnlikeUserId(request, response) {
     return response
       .status(200)
       .json({ success: false, error: 'You can not block yourself!' });
+  }
+  if (await block.exists(likedUser, likingUser)) {
+    return response.status(200).json({
+      success: false,
+      blocked: true,
+      message: 'You have been blocked by this user!',
+    });
   }
   try {
     const alreadyLiked = await likes.exists(likingUser, likedUser);
