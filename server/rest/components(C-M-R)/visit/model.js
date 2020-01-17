@@ -37,7 +37,19 @@ class Visit {
         `SELECT firstname, username, birthDate, location, popularityRate, profilePicture, date FROM public."Visit" WHERE ${type} = ${value}`,
       );
       const result = await db.any(
-        `SELECT firstname, username, "birthDate", location, "popularityRate", "profilePicture", date, visitor, EXISTS(SELECT * FROM public."Like" WHERE "likingUser" = $2 AND "likedUser" = visitor) AS liking, EXISTS(SELECT * FROM public."Like" WHERE "likedUser" = $2 AND "likingUser" = visitor) AS liked  FROM public."Visit", public."User" WHERE $1:name = $2 AND "Visit".visitor = "User".id ORDER BY date DESC`,
+        `SELECT firstname, username, "birthDate", location, "popularityRate", "profilePicture", date, visitor,
+        EXISTS(SELECT * FROM public."Like" WHERE "likingUser" = $2 AND "likedUser" = visitor) AS liking,
+        EXISTS(SELECT * FROM public."Like" WHERE "likedUser" = $2 AND "likingUser" = visitor) AS liked
+        FROM public."Visit", public."User"
+        WHERE $1:name = $2
+        AND "Visit".visitor = "User".id
+        AND NOT EXISTS (
+        SELECT  *
+        FROM public."Block"
+        WHERE "blockedUser" = $2
+        AND "blockingUser" = visitor
+        )
+        ORDER BY date DESC`,
         [type, value],
       );
       result.forEach(element => {
