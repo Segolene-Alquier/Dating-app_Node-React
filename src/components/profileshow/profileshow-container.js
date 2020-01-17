@@ -32,11 +32,11 @@ const ProfileShowContainer = visitedUsername => {
       } else {
         if (data.success === false) {
           window.location = '/?message=user_not_found';
-        } else {
-          if (data.authorized === false) {
+        } else if (data.authorized === false) {
             window.location = '/profile?message=profile_not_completed';
+          } else if (data.blocked === true) {
+            window.location = '/?message=user_blocked_you';
           }
-        }
       }
     });
   }

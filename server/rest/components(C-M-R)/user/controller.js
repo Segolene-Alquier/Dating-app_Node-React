@@ -7,12 +7,14 @@ const {
 const UserValidation = require('./../userValidation/model');
 const User = require('./model');
 const Like = require('./../like/model');
+const Block = require('./../block/model');
 const { deleteFile } = require('../images/controller');
 
 const user = new User();
 const check = new UserInputTests(user);
 const userValidation = new UserValidation(user);
 const like = new Like();
+const block = new Block();
 
 async function getUsers(request, response) {
   try {
@@ -102,6 +104,12 @@ async function getUserByUsername(request, response) {
       return response.status(200).json({
         authorized: false,
         message: 'You need to complete your profile first!',
+      });
+    }
+    if (await block.exists(userIdVisited, userIdVisitor)) {
+      return response.status(200).json({
+        blocked: true,
+        message: 'You have been blocked by this user!',
       });
     }
     if (userIdVisitor != userIdVisited) {
