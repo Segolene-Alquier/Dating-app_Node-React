@@ -1,10 +1,12 @@
 const Like = require('./model');
 const Match = require('./../match/model');
 const Block = require('./../block/model');
+const User = require('./../user/model');
 
 const likes = new Like();
 const block = new Block();
 const matchs = new Match();
+const user = new User();
 
 async function getLikesFromCurrentUser(request, response) {
   const id = request.decoded.userid;
@@ -47,6 +49,7 @@ async function likeUnlikeUserId(request, response) {
         query.matchId = matchQuery.id;
       }
     }
+    user.updatePopularityRate(likedUser);
     response.status(200).json(query);
   } catch (err) {
     console.log(err);

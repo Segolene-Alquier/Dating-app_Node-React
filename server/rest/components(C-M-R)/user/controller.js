@@ -112,8 +112,9 @@ async function getUserByUsername(request, response) {
         message: 'You have been blocked by this user!',
       });
     }
-    if (userIdVisitor != userIdVisited) {
+    if (userIdVisitor !== userIdVisited) {
       saveVisit(userIdVisitor, userIdVisited);
+      user.updatePopularityRate(userIdVisited);
     }
     const relationship = await like.relationship(userIdVisitor, userIdVisited);
     response.status(200).json({ founded: true, ...call[0], ...relationship });

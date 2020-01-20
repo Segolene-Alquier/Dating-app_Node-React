@@ -74,6 +74,18 @@ class User {
     }
   }
 
+  async updatePopularityRate(id) {
+    try {
+      return await db.any(
+        'UPDATE Public."User" SET "popularityRate" = ( SELECT ROUND( COALESCE(NULLIF(COUNT(*)::decimal, 0), 1)  / ( SELECT COALESCE(NULLIF(COUNT(*)::decimal * 0.7 , 0),1) FROM Public."Visit" WHERE visited = $1) * 100) FROM Public."Like" WHERE "likedUser" = $1 ) WHERE id = $1 RETURNING "popularityRate"',
+        [id],
+      );
+    } catch (err) {
+      console.log(err, 'in model User.updatePopularityRate()');
+      return err;
+    }
+  }
+
   async addElementToArrayById(id, type, value) {
     try {
       if (!this.isValidType(type)) {
