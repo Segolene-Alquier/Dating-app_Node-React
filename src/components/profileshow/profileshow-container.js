@@ -9,6 +9,44 @@ const ProfileShowContainer = visitedUsername => {
   const authContext = useContext(AuthContext);
   const { token } = authContext;
 
+  const handleBlock = blockedId => {
+    console.log('blocked user ', blockedId);
+    axios
+      .get(`http://localhost:3001/block/block-unblock/${blockedId}`, {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'x-access-token': token,
+        },
+      })
+      .then(result => {
+        console.log('result :', result);
+        //   if (result.data.blocked) {
+        //     toast.error(result.data.message);
+        //   } else {
+        //     const indexToModify = _.keys(
+        //       _.pickBy(visitedProfile, { visitor: blockedId }),
+        //     );
+
+        //     let newVisitedProfile = visitedProfile;
+        //     indexToModify.forEach(index => {
+        //       newVisitedProfile[parseInt(index, 10)] = {
+        //         ...newVisitedProfile[parseInt(index, 10)],
+        //         liking: !visitedProfile[parseInt(index, 10)].liking,
+        //       };
+        //     });
+        //     console.log(document.querySelectorAll(`[visitor*="${blockedId}"]`));
+        //     document
+        //       .querySelectorAll(`[visitor*="${blockedId}"]`)
+        //       .forEach(element => {
+        //         if (element.classList.contains('MuiIconButton-colorSecondary'))
+        //           element.classList.remove('MuiIconButton-colorSecondary');
+        //         else element.className += ' MuiIconButton-colorSecondary';
+        //       });
+        //     setVisitedProfile(newVisitedProfile);
+        //   }
+      });
+  };
+
   const fetchVisitedProfile = () =>
     axios
       .get(`http://localhost:3001/users/profile/${visitedUsername}`, {
@@ -33,15 +71,15 @@ const ProfileShowContainer = visitedUsername => {
         if (data.success === false) {
           window.location = '/?message=user_not_found';
         } else if (data.authorized === false) {
-            window.location = '/profile?message=profile_not_completed';
-          } else if (data.blocked === true) {
-            window.location = '/?message=user_blocked_you';
-          }
+          window.location = '/profile?message=profile_not_completed';
+        } else if (data.blocked === true) {
+          window.location = '/?message=user_blocked_you';
+        }
       }
     });
   }
 
-  return { visitedProfile, loaded };
+  return { visitedProfile, loaded, handleBlock };
 };
 
 export default ProfileShowContainer;

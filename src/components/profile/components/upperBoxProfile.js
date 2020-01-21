@@ -22,13 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const UpperBoxProfile = ({
-  classes,
-  profile,
-  getAge,
-  handleChangeCity,
-  type,
-}) => {
+const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, type }) => {
   const upBoxClasses = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -153,7 +147,7 @@ const UpperBoxProfile = ({
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>Bloquer</MenuItem>
+                  <MenuItem onClick={() => handleBlock(profile.id)}>Bloquer</MenuItem>
                   <MenuItem onClick={handleClose}>Signaler</MenuItem>
                 </Menu>
               </div>
