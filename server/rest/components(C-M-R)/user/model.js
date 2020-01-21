@@ -75,11 +75,11 @@ class User {
         popularityRateMaximum = 100;
       }
 
-      // console.log(
-      //   `SELECT ${inputs} FROM public."User" WHERE ${type} = ${value}`,
-      // );
       const result = await db.any(
-        ` SELECT * FROM public."User"
+        ` SELECT id, firstname, username, location,
+          "birthDate", "popularityRate", gender, "sexualOrientation",
+          description, interests, images, "profilePicture"
+          FROM public."User"
           WHERE "birthDate" <= $1
           AND "birthDate" >= $2
           AND "popularityRate" >= $3
@@ -93,9 +93,7 @@ class User {
           interests,
         ],
       );
-      console.log(result);
       return result;
-      // return result;
     } catch (err) {
       console.log(err, 'in model User.searchUser()');
       return null;

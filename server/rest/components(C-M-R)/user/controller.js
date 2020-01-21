@@ -222,11 +222,18 @@ async function deleteUser(request, response) {
 
 async function search(request, response) {
   const id = request.decoded.userid;
+  const {
+    ageMinimum,
+    ageMaximum,
+    popularityRateMinimum,
+    popularityRateMaximum,
+    interests, distance } = request.body;
+
   try {
     const call = await user.searchUser(
-      [18, 85],
-      [0, 100],
-      ['3D printing', 'Acting'],
+      [ageMinimum, ageMaximum],
+      [popularityRateMinimum, popularityRateMaximum],
+      interests,
     );
     response.status(200).json(call);
   } catch (err) {
