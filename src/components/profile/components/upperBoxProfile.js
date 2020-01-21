@@ -2,6 +2,9 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import CityGuess from './location/cityGuess';
 import LoggedDot from '../../profileshow/components/loggedDot';
 
@@ -71,6 +74,11 @@ const UpperBoxProfile = ({
             alignItems="flex-end"
           >
             <Avatar className={classes.avatar}>78 %</Avatar>
+          </Grid>
+          <Grid container xs={6} sm={3} justify="center" alignItems="flex-end">
+            <MailOutlineIcon fontSize="80px" />
+            <FavoriteBorderIcon />
+            <FavoriteIcon />
           </Grid>
         </Grid>
       </Grid>

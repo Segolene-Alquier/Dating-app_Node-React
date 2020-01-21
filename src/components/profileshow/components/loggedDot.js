@@ -3,12 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   loggedDot: {
+    marginTop: '10px',
     width: '10px',
     height: '10px',
     borderRadius: '50%',
     backgroundColor: '#64dd17',
   },
   notLoggedDot: {
+    marginTop: '10px',
     width: '10px',
     height: '10px',
     borderRadius: '50%',
