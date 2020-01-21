@@ -37,9 +37,6 @@ const UpperBoxProfile = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
-  // if (type === 'public') {
-
-  // }
   return (
     <Box className={classes.boxUpProfile}>
       <Grid
