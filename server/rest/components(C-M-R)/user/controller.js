@@ -15,6 +15,8 @@ const check = new UserInputTests(user);
 const userValidation = new UserValidation(user);
 const like = new Like();
 const block = new Block();
+const _ = require('lodash');
+const { getDistance } = require('geolib');
 
 async function getUsers(request, response) {
   try {
@@ -220,6 +222,14 @@ async function deleteUser(request, response) {
   }
 }
 
+const distanceCalculator = (userLocation, otherUserLocation) => {
+  let dist = getDistance(
+    { latitude: userLocation[0], longitude: userLocation[1] },
+    { latitude: otherUserLocation[0], longitude: otherUserLocation[1] },
+  );
+  return Math.round(dist / 1000);
+};
+
 async function search(request, response) {
   const id = request.decoded.userid;
   const {
@@ -227,15 +237,26 @@ async function search(request, response) {
     ageMaximum,
     popularityRateMinimum,
     popularityRateMaximum,
-    interests, distance } = request.body;
+    interests,
+    distanceMax,
+  } = request.body;
 
   try {
-    const call = await user.searchUser(
+    let userSearchResult = await user.searchUser(
       [ageMinimum, ageMaximum],
       [popularityRateMinimum, popularityRateMaximum],
       interests,
     );
-    response.status(200).json(call);
+    let currentUserLocation = await user.getByFiltered('id', id, ['location']);
+    currentUserLocation = currentUserLocation[0].location;
+    console.log(currentUserLocation);
+    userSearchResult = _.filter(userSearchResult, user => {
+      const distance = distanceCalculator(currentUserLocation, user.location);
+      console.log(distance);
+      return distance <= distanceMax;
+    });
+
+    response.status(200).json(userSearchResult);
   } catch (err) {
     console.log(err);
     response.status(206).send(err);
