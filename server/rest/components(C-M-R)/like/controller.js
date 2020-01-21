@@ -25,7 +25,7 @@ async function likeUnlikeUserId(request, response) {
   if (likedUser === likingUser) {
     return response
       .status(200)
-      .json({ success: false, error: 'You can not block yourself!' });
+      .json({ success: false, error: 'You can not like yourself!' });
   }
   if (await block.exists(likedUser, likingUser)) {
     return response.status(200).json({
