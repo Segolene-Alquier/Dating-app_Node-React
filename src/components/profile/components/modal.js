@@ -1,4 +1,4 @@
-import React, { useState, useStyles } from 'react';
+import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import CropperImg from './cropper/cropper';
 import 'bootstrap/dist/css/bootstrap.min.css';

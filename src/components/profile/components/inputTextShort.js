@@ -44,6 +44,27 @@ const InputTextShort = ({
       </div>
     );
   }
+  if (name === 'description') {
+    return (
+      <div className={classes.formControl}>
+        <Typography variant="subtitle1">
+          <Box fontWeight="fontWeightBold">{title}</Box>
+        </Typography>
+        <TextField
+          id="outlined-basic"
+          className={classes.summaryField}
+          margin="normal"
+          variant="outlined"
+          name={name}
+          value={value}
+          onChange={handleProfileChange}
+          type={type}
+          multiline
+          rows="4"
+        />
+      </div>
+    );
+  }
   return (
     <div className={classes.formControl}>
       <Typography variant="subtitle1">
