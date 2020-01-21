@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, useContext } from 'react';
 import _ from 'lodash';
 import { AuthContext } from '../app/AuthContext';
+import { toast } from 'react-toastify';
 
 const VisitContainer = () => {
   const [loaded, setLoaded] = useState(false);
@@ -9,6 +10,43 @@ const VisitContainer = () => {
   const [visitorProfile, setVisitorProfile] = useState({});
   const authContext = useContext(AuthContext);
   const { userData, token } = authContext;
+
+  const handleLike = likedId => {
+    console.log('liked user ', likedId);
+    axios
+      .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'x-access-token': token,
+        },
+      })
+      .then(result => {
+        if (result.data.blocked) {
+          toast.error(result.data.message);
+        } else {
+          const indexToModify = _.keys(
+            _.pickBy(visitedProfile, { visitor: likedId }),
+          );
+
+          let newVisitedProfile = visitedProfile;
+          indexToModify.forEach(index => {
+            newVisitedProfile[parseInt(index, 10)] = {
+              ...newVisitedProfile[parseInt(index, 10)],
+              liking: !visitedProfile[parseInt(index, 10)].liking,
+            };
+          });
+          console.log(document.querySelectorAll(`[visitor*="${likedId}"]`));
+          document
+            .querySelectorAll(`[visitor*="${likedId}"]`)
+            .forEach(element => {
+              if (element.classList.contains('MuiIconButton-colorSecondary'))
+                element.classList.remove('MuiIconButton-colorSecondary');
+              else element.className += ' MuiIconButton-colorSecondary';
+            });
+          setVisitedProfile(newVisitedProfile);
+        }
+      });
+  };
 
   const fetchVisitHistory = () =>
     axios
@@ -34,7 +72,7 @@ const VisitContainer = () => {
     });
   }
 
-  return { visitedProfile, visitorProfile, loaded };
+  return { visitedProfile, visitorProfile, loaded, handleLike };
 };
 
 export default VisitContainer;

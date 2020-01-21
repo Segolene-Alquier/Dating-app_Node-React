@@ -6,11 +6,15 @@ const {
 } = require('./utils');
 const UserValidation = require('./../userValidation/model');
 const User = require('./model');
+const Like = require('./../like/model');
+const Block = require('./../block/model');
 const { deleteFile } = require('../images/controller');
 
 const user = new User();
 const check = new UserInputTests(user);
 const userValidation = new UserValidation(user);
+const like = new Like();
+const block = new Block();
 
 async function getUsers(request, response) {
   try {
@@ -79,8 +83,8 @@ async function getUserByUsername(request, response) {
       'id',
       'firstname',
       'username',
-      'location', // a voir si on traite avant de l'envoyer
-      'birthDate', // a voir si on traite avant de l'envoyer
+      'location',
+      'birthDate',
       'popularityRate',
       'gender',
       'sexualOrientation',
@@ -97,17 +101,23 @@ async function getUserByUsername(request, response) {
     const userIdVisitor = request.decoded.userid;
     const userIdVisited = call[0].id;
     if ((await checkIfProfileCompleted(userIdVisitor)) === false) {
-      return response
-        .status(200)
-        .json({
-          authorized: false,
-          message: 'You need to complete your profile first!',
-        });
+      return response.status(200).json({
+        authorized: false,
+        message: 'You need to complete your profile first!',
+      });
     }
-    if (userIdVisitor != userIdVisited) {
+    if (await block.exists(userIdVisited, userIdVisitor)) {
+      return response.status(200).json({
+        blocked: true,
+        message: 'You have been blocked by this user!',
+      });
+    }
+    if (userIdVisitor !== userIdVisited) {
       saveVisit(userIdVisitor, userIdVisited);
+      user.updatePopularityRate(userIdVisited);
     }
-    response.status(200).json({ founded: true, ...call[0] });
+    const relationship = await like.relationship(userIdVisitor, userIdVisited);
+    response.status(200).json({ founded: true, ...call[0], ...relationship });
   } catch (err) {
     console.log(err);
     response.status(206).send(err);
