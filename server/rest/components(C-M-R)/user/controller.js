@@ -220,6 +220,21 @@ async function deleteUser(request, response) {
   }
 }
 
+async function search(request, response) {
+  const id = request.decoded.userid;
+  try {
+    const call = await user.searchUser(
+      [18, 85],
+      [0, 100],
+      ['3D printing', 'Acting'],
+    );
+    response.status(200).json(call);
+  } catch (err) {
+    console.log(err);
+    response.status(206).send(err);
+  }
+}
+
 module.exports.getUsers = getUsers;
 module.exports.getUserById = getUserById;
 module.exports.getMyUserInfo = getMyUserInfo;
@@ -229,3 +244,4 @@ module.exports.createUser = createUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
 module.exports.getUserByUsername = getUserByUsername;
+module.exports.search = search;

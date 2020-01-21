@@ -94,7 +94,7 @@ class User {
         ],
       );
       console.log(result);
-      return 'done';
+      return result;
       // return result;
     } catch (err) {
       console.log(err, 'in model User.searchUser()');
