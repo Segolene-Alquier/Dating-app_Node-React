@@ -97,45 +97,57 @@ const UpperBoxProfile = ({
           >
             <Avatar className={classes.avatar}>78 %</Avatar>
           </Grid>
-          {type === 'public' ?
-          (<Grid
-            container
-            xs={12}
-            sm={8}
-            justify="flex-end"
-            alignItems="flex-end"
-          >
-            <Fab color="primary" size="small" className={upBoxClasses.fabUpBox}>
-              <MailOutlineIcon />
-            </Fab>
-            <Fab color="primary" size="small" className={upBoxClasses.fabUpBox}>
-              <FavoriteBorderIcon />
-            </Fab>
-            <Fab color="primary" size="small" className={upBoxClasses.fabUpBox}>
-              <FavoriteIcon />
-            </Fab>
-            <div>
+          {type === 'public' ? (
+            <Grid
+              container
+              xs={12}
+              sm={8}
+              justify="flex-end"
+              alignItems="flex-end"
+            >
               <Fab
-                onClick={handleClick}
-                color="secondary"
+                color="primary"
                 size="small"
                 className={upBoxClasses.fabUpBox}
               >
-                <ReportProblemIcon />
+                <MailOutlineIcon />
               </Fab>
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+              <Fab
+                color="primary"
+                size="small"
+                className={upBoxClasses.fabUpBox}
               >
-                <MenuItem onClick={handleClose}>Bloquer</MenuItem>
-                <MenuItem onClick={handleClose}>Signaler</MenuItem>
-              </Menu>
-            </div>
-          </Grid>) : null}
-
+                <FavoriteBorderIcon />
+              </Fab>
+              <Fab
+                color="primary"
+                size="small"
+                className={upBoxClasses.fabUpBox}
+              >
+                <FavoriteIcon />
+              </Fab>
+              <div>
+                <Fab
+                  onClick={handleClick}
+                  color="secondary"
+                  size="small"
+                  className={upBoxClasses.fabUpBox}
+                >
+                  <ReportProblemIcon />
+                </Fab>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>Bloquer</MenuItem>
+                  <MenuItem onClick={handleClose}>Signaler</MenuItem>
+                </Menu>
+              </div>
+            </Grid>
+          ) : null}
         </Grid>
       </Grid>
     </Box>
