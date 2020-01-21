@@ -13,6 +13,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 import CityGuess from './location/cityGuess';
+import { getDistance } from 'geolib';
 import LoggedDot from '../../profileshow/components/loggedDot';
 
 const useStyles = makeStyles(theme => ({
@@ -37,6 +38,17 @@ const UpperBoxProfile = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const distance = () => {
+    const { location: visitorLocation } = profile;
+    let dist = getDistance(
+      { latitude: profile.location[0], longitude: profile.location[1] },
+      { latitude: visitorLocation[0], longitude: visitorLocation[1] },
+    );
+    dist = Math.round(dist / 1000);
+    return ` | ${dist} km`;
+  };
+
   return (
     <Box className={classes.boxUpProfile}>
       <Grid
@@ -69,19 +81,7 @@ const UpperBoxProfile = ({
                     )
                   : 'Age undefined '}
               </span>
-              |{' '}
-              <span>
-                {profile.location ? (
-                  <CityGuess
-                    handleChangeCity={handleChangeCity}
-                    lat={profile.location[0]}
-                    lon={profile.location[1]}
-                    profile={profile}
-                  />
-                ) : (
-                  'unknown city'
-                )}
-              </span>
+              <span>{profile.location ? distance() : ''}</span>
               {type === 'public' ? <LoggedDot loggedState={true} /> : null}
             </div>
           </Grid>
@@ -95,7 +95,13 @@ const UpperBoxProfile = ({
             justify="flex-end"
             alignItems="flex-end"
           >
-            <Avatar className={classes.avatar}>78 %</Avatar>
+            <Fab
+              color="secondary"
+              size="small"
+              className={upBoxClasses.fabUpBox}
+            >
+              {profile.popularityRate}%
+            </Fab>
           </Grid>
           {type === 'public' ? (
             <Grid
@@ -105,27 +111,32 @@ const UpperBoxProfile = ({
               justify="flex-end"
               alignItems="flex-end"
             >
-              <Fab
-                color="primary"
-                size="small"
-                className={upBoxClasses.fabUpBox}
-              >
-                <MailOutlineIcon />
-              </Fab>
-              <Fab
-                color="primary"
-                size="small"
-                className={upBoxClasses.fabUpBox}
-              >
-                <FavoriteBorderIcon />
-              </Fab>
-              <Fab
-                color="primary"
-                size="small"
-                className={upBoxClasses.fabUpBox}
-              >
-                <FavoriteIcon />
-              </Fab>
+              {profile.match ? (
+                <Fab
+                  color="primary"
+                  size="small"
+                  className={upBoxClasses.fabUpBox}
+                >
+                  <MailOutlineIcon />
+                </Fab>
+              ) : null}
+              {profile.visitorlikevisited ? (
+                <Fab
+                  color="primary"
+                  size="small"
+                  className={upBoxClasses.fabUpBox}
+                >
+                  <FavoriteIcon />
+                </Fab>
+              ) : (
+                <Fab
+                  color="primary"
+                  size="small"
+                  className={upBoxClasses.fabUpBox}
+                >
+                  <FavoriteBorderIcon />
+                </Fab>
+              )}
               <div>
                 <Fab
                   onClick={handleClick}
