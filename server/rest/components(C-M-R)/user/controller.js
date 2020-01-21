@@ -232,7 +232,7 @@ const distanceCalculator = (userLocation, otherUserLocation) => {
 
 async function search(request, response) {
   const id = request.decoded.userid;
-  const {
+  let {
     ageMinimum,
     ageMaximum,
     popularityRateMinimum,
@@ -240,6 +240,10 @@ async function search(request, response) {
     interests,
     distanceMax,
   } = request.body;
+
+  if (distanceMax === undefined) {
+    distanceMax = 1000;
+  }
 
   try {
     let userSearchResult = await user.searchUser(

@@ -74,6 +74,9 @@ class User {
       if (!popularityRateMaximum) {
         popularityRateMaximum = 100;
       }
+      if (!interests) {
+        interests = [];
+      }
 
       const result = await db.any(
         ` SELECT id, firstname, username, location,
