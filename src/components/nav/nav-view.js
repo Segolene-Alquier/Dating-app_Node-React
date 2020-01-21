@@ -50,14 +50,22 @@ const Nav = () => {
           Matcha
         </Typography>
         {isLoggedIn ? (
-          <Button
-            color="inherit"
-            onClick={e => {
-              logout(e, setIsLoggedIn);
-            }}
-          >
-            Logout
-          </Button>
+          <>
+            <Button color="inherit" href="/visits">
+              My visits
+            </Button>
+            <Button color="inherit" href="/profile">
+              My profile
+            </Button>
+            <Button
+              color="inherit"
+              onClick={e => {
+                logout(e, setIsLoggedIn);
+              }}
+            >
+              Logout
+            </Button>
+          </>
         ) : (
           <>
             <Button color="inherit" href="/signup">
