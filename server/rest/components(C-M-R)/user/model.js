@@ -46,6 +46,62 @@ class User {
     }
   }
 
+  ageToBirthdate(age) {
+    if (age > 130) {
+      age = 100;
+    } else if (age < 18) {
+      age = 18;
+    }
+    return new Date(new Date().setFullYear(new Date().getFullYear() - age))
+      .toISOString()
+      .split('T')[0];
+  }
+
+  async searchUser(age, popularityRate, interests) {
+    try {
+      let [ageMinimum, ageMaximum] = age;
+      let [popularityRateMinimum, popularityRateMaximum] = popularityRate;
+
+      if (!ageMinimum) {
+        ageMinimum = 18;
+      }
+      if (!ageMaximum) {
+        ageMaximum = 80;
+      }
+      if (!popularityRateMinimum) {
+        popularityRateMinimum = 0;
+      }
+      if (!popularityRateMaximum) {
+        popularityRateMaximum = 100;
+      }
+
+      // console.log(
+      //   `SELECT ${inputs} FROM public."User" WHERE ${type} = ${value}`,
+      // );
+      const result = await db.any(
+        ` SELECT * FROM public."User"
+          WHERE "birthDate" <= $1
+          AND "birthDate" >= $2
+          AND "popularityRate" >= $3
+          AND "popularityRate" <= $4
+          AND interests @> $5::text[]`,
+        [
+          this.ageToBirthdate(ageMinimum),
+          this.ageToBirthdate(ageMaximum),
+          popularityRateMinimum,
+          popularityRateMaximum,
+          interests,
+        ],
+      );
+      console.log(result);
+      return 'done';
+      // return result;
+    } catch (err) {
+      console.log(err, 'in model User.searchUser()');
+      return null;
+    }
+  }
+
   async updateById(id, values) {
     try {
       console.log(values);
@@ -77,7 +133,12 @@ class User {
   async updatePopularityRate(id) {
     try {
       return await db.any(
-        'UPDATE Public."User" SET "popularityRate" = ( SELECT ROUND( COALESCE(NULLIF(COUNT(*)::decimal, 0), 1)  / ( SELECT COALESCE(NULLIF(COUNT(*)::decimal * 0.7 , 0),1) FROM Public."Visit" WHERE visited = $1) * 100) FROM Public."Like" WHERE "likedUser" = $1 ) WHERE id = $1 RETURNING "popularityRate"',
+        `UPDATE Public."User" SET "popularityRate" = (
+          SELECT ROUND( COALESCE(NULLIF(COUNT(*)::decimal, 0), 1)
+         / ( SELECT COALESCE(NULLIF(COUNT(*)::decimal * 0.7 , 0),1) FROM Public."Visit" WHERE visited = $1)
+         * 100)
+         FROM Public."Like" WHERE "likedUser" = $1 )
+         WHERE id = $1 RETURNING "popularityRate"`,
         [id],
       );
     } catch (err) {
