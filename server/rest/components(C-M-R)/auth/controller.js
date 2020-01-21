@@ -74,6 +74,14 @@ async function login(request, response) {
       return;
     }
     const [visitor] = query;
+    if (visitor.suspended) {
+      response.status(200).json({
+        success: false,
+        token: null,
+        err: 'Your account has been suspended',
+      });
+      return;
+    }
     if (visitor.password === password) {
       if (visitor.validated) {
         const token = jwt.sign({ userid: visitor.id }, 'mignon4ever', {

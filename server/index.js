@@ -32,6 +32,10 @@ app.use('/genders', require('./rest/components(C-M-R)/gender/routes'));
 app.use('/interests', require('./rest/components(C-M-R)/interests/routes'));
 app.use('/auth', require('./rest/components(C-M-R)/auth/routes'));
 app.use('/visits', require('./rest/components(C-M-R)/visit/routes'));
+app.use('/matchs', require('./rest/components(C-M-R)/match/routes'));
+app.use('/likes', require('./rest/components(C-M-R)/like/routes'));
+app.use('/block', require('./rest/components(C-M-R)/block/routes'));
+app.use('/report', require('./rest/components(C-M-R)/report/routes'));
 app.use(
   '/validation',
   require('./rest/components(C-M-R)/userValidation/routes'),

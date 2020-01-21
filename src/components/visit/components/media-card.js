@@ -9,6 +9,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
+import red from '@material-ui/core/colors/red';
 import moment from 'moment';
 import { getDistance } from 'geolib';
 
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MediaCard({ field, visitorProfile }) {
+export default function MediaCard({ field, visitorProfile, handleLike }) {
   const classes = useStyles();
 
   const {
@@ -39,6 +40,9 @@ export default function MediaCard({ field, visitorProfile }) {
     popularityRate,
     profilePicture,
     date,
+    liking,
+    liked,
+    visitor,
   } = field;
 
   const getAge = dateString => {
@@ -108,7 +112,12 @@ export default function MediaCard({ field, visitorProfile }) {
       {/* <CardActions> */}
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Avatar className={classes.avatar}>78 %</Avatar>
-        <IconButton aria-label="Like the profile">
+        <IconButton
+          aria-label="Like the profile"
+          color={liking ? 'secondary' : ''}
+          visitor={visitor}
+          onClick={() => handleLike(visitor)}
+        >
           <FavoriteIcon />
         </IconButton>
       </Box>

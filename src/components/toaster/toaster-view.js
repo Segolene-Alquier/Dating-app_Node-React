@@ -12,6 +12,7 @@ import {
   deleteSuccess,
   userNotFound,
   profileNotCompleted,
+  userBlockedYou,
 } from './toaster-container';
 
 const Toaster = ({ getParams }) => {
@@ -49,6 +50,9 @@ const Toaster = ({ getParams }) => {
         break;
       case 'profile_not_completed':
         profileNotCompleted();
+        break;
+      case 'user_blocked_you':
+        userBlockedYou();
         break;
       default:
         break;
