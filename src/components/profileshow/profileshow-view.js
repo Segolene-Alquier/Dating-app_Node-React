@@ -156,6 +156,7 @@ const ProfileShow = ({ computedMatch }) => {
         getAge={getAge}
         handleBlock={handleBlock}
         handleReport={handleReport}
+        handleChangeCity={handleChangeCity}
         type="public"
       />
       <Divider className={classes.divider} />

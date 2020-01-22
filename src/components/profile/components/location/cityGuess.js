@@ -9,7 +9,7 @@ const CityGuess = ({ lat, lon, profile, handleChangeCity }) => {
       .then(data => {
         handleChangeCity(data.data.address.city);
       });
-  return profile.city || 'Location undefined';
+  return ` | ${profile.city}` || 'Location undefined';
 };
 
 export default CityGuess;

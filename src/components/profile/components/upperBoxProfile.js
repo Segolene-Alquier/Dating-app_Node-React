@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 import BlockIcon from '@material-ui/icons/Block';
 import CityGuess from './location/cityGuess';
@@ -26,12 +23,18 @@ const useStyles = makeStyles(theme => ({
   },
   blockedIcon: {
     position: 'absolute',
-    // top: '10px',
-    // right: '10px',
   },
 }));
 
-const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, handleReport, type }) => {
+const UpperBoxProfile = ({
+  classes,
+  profile,
+  getAge,
+  handleBlock,
+  handleReport,
+  handleChangeCity,
+  type,
+}) => {
   const upBoxClasses = useStyles();
   const [blocked, setBlocked] = useState(profile.alreadyBlocked);
   const [reported, setReported] = useState(profile.alreadyReported);
@@ -93,7 +96,20 @@ const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, handleReport, 
                     )
                   : 'Age undefined '}
               </span>
-              <span>{profile.location ? distance() : ''}</span>
+              <span>
+                {profile.location ? (
+                  type === 'public' ? (
+                    distance()
+                  ) : (
+                    <CityGuess
+                      handleChangeCity={handleChangeCity}
+                      lat={profile.location[0]}
+                      lon={profile.location[1]}
+                      profile={profile}
+                    />
+                  )
+                ) : null}
+              </span>
               {type === 'public' ? <LoggedDot loggedState={true} /> : null}
             </div>
           </Grid>
