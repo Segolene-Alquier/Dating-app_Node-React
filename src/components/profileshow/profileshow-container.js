@@ -80,30 +80,9 @@ const ProfileShowContainer = visitedUsername => {
           setLiked(true);
           toast.success('You just liked this user');
         }
-        // if (result.data.blocked) {
-        //   toast.error(result.data.message);
-        // } else {
-        //   // const indexToModify = _.keys(
-        //   //   _.pickBy(visitedProfile, { visitor: likedId }),
-        //   // );
-
-        //   // let newVisitedProfile = visitedProfile;
-        //   // indexToModify.forEach(index => {
-        //   //   newVisitedProfile[parseInt(index, 10)] = {
-        //   //     ...newVisitedProfile[parseInt(index, 10)],
-        //   //     liking: !visitedProfile[parseInt(index, 10)].liking,
-        //   //   };
-        //   // });
-        //   // console.log(document.querySelectorAll(`[visitor*="${likedId}"]`));
-        //   // document
-        //   //   .querySelectorAll(`[visitor*="${likedId}"]`)
-        //   //   .forEach(element => {
-        //   //     if (element.classList.contains('MuiIconButton-colorSecondary'))
-        //   //       element.classList.remove('MuiIconButton-colorSecondary');
-        //   //     else element.className += ' MuiIconButton-colorSecondary';
-        //   //   });
-        //   // setVisitedProfile(newVisitedProfile);
-        // }
+      })
+      .catch(error => {
+        console.log(error);
       });
   };
 

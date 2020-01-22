@@ -10,8 +10,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Fab from '@material-ui/core/Fab';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 import BlockIcon from '@material-ui/icons/Block';
-import CityGuess from './location/cityGuess';
 import { getDistance } from 'geolib';
+import CityGuess from './location/cityGuess';
 import LoggedDot from '../../profileshow/components/loggedDot';
 
 const useStyles = makeStyles(theme => ({
