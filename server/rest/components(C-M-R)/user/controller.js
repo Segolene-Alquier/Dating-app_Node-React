@@ -8,6 +8,7 @@ const UserValidation = require('./../userValidation/model');
 const User = require('./model');
 const Like = require('./../like/model');
 const Block = require('./../block/model');
+const Report = require('./../report/model');
 const { deleteFile } = require('../images/controller');
 
 const user = new User();
@@ -15,6 +16,7 @@ const check = new UserInputTests(user);
 const userValidation = new UserValidation(user);
 const like = new Like();
 const block = new Block();
+const report = new Report();
 
 async function getUsers(request, response) {
   try {
@@ -118,11 +120,13 @@ async function getUserByUsername(request, response) {
     }
     const relationship = await like.relationship(userIdVisitor, userIdVisited);
     const userAlreadyBlocked = await block.exists(userIdVisitor, userIdVisited);
+    const userAlreadyReported = await report.exists(userIdVisitor, userIdVisited);
     response.status(200).json({
       founded: true,
       ...call[0],
       ...relationship,
       alreadyBlocked: userAlreadyBlocked,
+      alreadyReported: userAlreadyReported,
     });
   } catch (err) {
     console.log(err);

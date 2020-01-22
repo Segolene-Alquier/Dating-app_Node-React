@@ -31,9 +31,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, type }) => {
+const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, handleReport, type }) => {
   const upBoxClasses = useStyles();
   const [blocked, setBlocked] = useState(profile.alreadyBlocked);
+  const [reported, setReported] = useState(profile.alreadyReported);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -74,12 +75,11 @@ const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, type }) => {
             />
             {blocked ? (
               <BlockIcon
-              className={upBoxClasses.blockedIcon}
-              color="secondary"
-              fontSize="large"
-            />
+                className={upBoxClasses.blockedIcon}
+                color="secondary"
+                fontSize="large"
+              />
             ) : null}
-
           </Grid>
           <Grid container xs={6} sm={7} direction="column" justify="flex-end">
             <div>
@@ -170,10 +170,19 @@ const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, type }) => {
                   >
                     {blocked ? 'Unblock' : 'Block'}
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>Report</MenuItem>
-                  <MenuItem disabled onClick={handleClose}>
-                    You reported this user
-                  </MenuItem>
+                  {reported ? (
+                    <MenuItem disabled onClick={handleClose}>
+                      You reported this user
+                    </MenuItem>
+                  ) : (
+                    <MenuItem
+                      onClick={() =>
+                        handleReport(profile.id, reported, setReported)
+                      }
+                    >
+                      Report
+                    </MenuItem>
+                  )}
                 </Menu>
               </div>
             </Grid>

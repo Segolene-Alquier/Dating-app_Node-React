@@ -133,9 +133,12 @@ const ProfileShow = ({ computedMatch }) => {
     // isChecked,
     getAge,
   } = UseProfileForm(authContext.userData, authContext.token);
-  const { visitedProfile, loaded, handleBlock } = ProfileShowContainer(
-    visitedUsername,
-  );
+  const {
+    visitedProfile,
+    loaded,
+    handleBlock,
+    handleReport,
+  } = ProfileShowContainer(visitedUsername);
 
   if (loaded === false) {
     return (
@@ -152,6 +155,7 @@ const ProfileShow = ({ computedMatch }) => {
         profile={visitedProfile}
         getAge={getAge}
         handleBlock={handleBlock}
+        handleReport={handleReport}
         type="public"
       />
       <Divider className={classes.divider} />

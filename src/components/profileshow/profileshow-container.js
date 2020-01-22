@@ -11,8 +11,6 @@ const ProfileShowContainer = visitedUsername => {
   const { token } = authContext;
 
   const handleBlock = (blockedId, blocked, setBlocked) => {
-    console.log('token', token);
-    console.log('blocked user ', blockedId);
     axios
       .post(
         `http://localhost:3001/block/block-unblock/${blockedId}`,
@@ -30,36 +28,36 @@ const ProfileShowContainer = visitedUsername => {
         if (result.data.deleted === true) {
           setBlocked(false);
           toast.success('You just unblocked this user');
-
         }
         if (result.data.created === true) {
           setBlocked(true);
           toast.success('You just blocked this user');
         }
-        //   if (result.data.blocked) {
-        //     toast.error(result.data.message);
-        //   } else {
-        //     const indexToModify = _.keys(
-        //       _.pickBy(visitedProfile, { visitor: blockedId }),
-        //     );
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
-        //     let newVisitedProfile = visitedProfile;
-        //     indexToModify.forEach(index => {
-        //       newVisitedProfile[parseInt(index, 10)] = {
-        //         ...newVisitedProfile[parseInt(index, 10)],
-        //         liking: !visitedProfile[parseInt(index, 10)].liking,
-        //       };
-        //     });
-        //     console.log(document.querySelectorAll(`[visitor*="${blockedId}"]`));
-        //     document
-        //       .querySelectorAll(`[visitor*="${blockedId}"]`)
-        //       .forEach(element => {
-        //         if (element.classList.contains('MuiIconButton-colorSecondary'))
-        //           element.classList.remove('MuiIconButton-colorSecondary');
-        //         else element.className += ' MuiIconButton-colorSecondary';
-        //       });
-        //     setVisitedProfile(newVisitedProfile);
-        //   }
+  const handleReport = (reportedId, reported, setReported) => {
+    axios
+      .post(
+        `http://localhost:3001/report/${reportedId}`,
+        {},
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
+        },
+      )
+      .then(result => {
+        if (result.data.success) {
+          setReported(true);
+        }
+      })
+      .catch(error => {
+        console.log(error);
       });
   };
 
@@ -95,7 +93,7 @@ const ProfileShowContainer = visitedUsername => {
     });
   }
 
-  return { visitedProfile, loaded, handleBlock };
+  return { visitedProfile, loaded, handleBlock, handleReport };
 };
 
 export default ProfileShowContainer;
