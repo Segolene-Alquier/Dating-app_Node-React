@@ -20,7 +20,7 @@ class User {
         [type, value],
       );
       return result;
-    } catch (err) {
+    } catch (err) {5
       console.log(err, 'in model User.getBy()');
       return null;
     }
