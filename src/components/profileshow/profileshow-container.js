@@ -61,6 +61,52 @@ const ProfileShowContainer = visitedUsername => {
       });
   };
 
+  const handleLike = (likedId, setLiked) => {
+    console.log('liked user ', likedId);
+    axios
+      .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'x-access-token': token,
+        },
+      })
+      .then(result => {
+        console.log(result);
+        if (result.data.deleted === true) {
+          setLiked(false);
+          toast.success('You just unliked this user');
+        }
+        if (result.data.created === true) {
+          setLiked(true);
+          toast.success('You just liked this user');
+        }
+        // if (result.data.blocked) {
+        //   toast.error(result.data.message);
+        // } else {
+        //   // const indexToModify = _.keys(
+        //   //   _.pickBy(visitedProfile, { visitor: likedId }),
+        //   // );
+
+        //   // let newVisitedProfile = visitedProfile;
+        //   // indexToModify.forEach(index => {
+        //   //   newVisitedProfile[parseInt(index, 10)] = {
+        //   //     ...newVisitedProfile[parseInt(index, 10)],
+        //   //     liking: !visitedProfile[parseInt(index, 10)].liking,
+        //   //   };
+        //   // });
+        //   // console.log(document.querySelectorAll(`[visitor*="${likedId}"]`));
+        //   // document
+        //   //   .querySelectorAll(`[visitor*="${likedId}"]`)
+        //   //   .forEach(element => {
+        //   //     if (element.classList.contains('MuiIconButton-colorSecondary'))
+        //   //       element.classList.remove('MuiIconButton-colorSecondary');
+        //   //     else element.className += ' MuiIconButton-colorSecondary';
+        //   //   });
+        //   // setVisitedProfile(newVisitedProfile);
+        // }
+      });
+  };
+
   const fetchVisitedProfile = () =>
     axios
       .get(`http://localhost:3001/users/profile/${visitedUsername}`, {
@@ -93,7 +139,7 @@ const ProfileShowContainer = visitedUsername => {
     });
   }
 
-  return { visitedProfile, loaded, handleBlock, handleReport };
+  return { visitedProfile, loaded, handleBlock, handleReport, handleLike };
 };
 
 export default ProfileShowContainer;

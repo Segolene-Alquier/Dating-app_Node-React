@@ -33,11 +33,13 @@ const UpperBoxProfile = ({
   handleBlock,
   handleReport,
   handleChangeCity,
+  handleLike,
   type,
 }) => {
   const upBoxClasses = useStyles();
   const [blocked, setBlocked] = useState(profile.alreadyBlocked);
   const [reported, setReported] = useState(profile.alreadyReported);
+  const [liked, setLiked] = useState(profile.visitorlikevisited);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -148,8 +150,9 @@ const UpperBoxProfile = ({
                   <MailOutlineIcon />
                 </Fab>
               ) : null}
-              {profile.visitorlikevisited ? (
+              {liked ? (
                 <Fab
+                  onClick={() => handleLike(profile.id, setLiked)}
                   color="primary"
                   size="small"
                   className={upBoxClasses.fabUpBox}
@@ -158,6 +161,7 @@ const UpperBoxProfile = ({
                 </Fab>
               ) : (
                 <Fab
+                  onClick={() => handleLike(profile.id, setLiked)}
                   color="primary"
                   size="small"
                   className={upBoxClasses.fabUpBox}
