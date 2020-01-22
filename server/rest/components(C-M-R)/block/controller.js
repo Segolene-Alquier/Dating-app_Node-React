@@ -14,7 +14,6 @@ const blocks = new Block();
 // }
 
 async function blockUnblockUserId(request, response) {
-  console.log('call block function');
   const blockingUser = request.decoded.userid;
   const blockedUser = parseInt(request.params.id, 10);
   if (blockedUser === blockingUser) {

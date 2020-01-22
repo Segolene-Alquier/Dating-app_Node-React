@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
 import { AuthContext } from '../app/AuthContext';
 
 const ProfileShowContainer = visitedUsername => {
@@ -9,17 +10,32 @@ const ProfileShowContainer = visitedUsername => {
   const authContext = useContext(AuthContext);
   const { token } = authContext;
 
-  const handleBlock = blockedId => {
+  const handleBlock = (blockedId, blocked, setBlocked) => {
+    console.log('token', token);
     console.log('blocked user ', blockedId);
     axios
-      .get(`http://localhost:3001/block/block-unblock/${blockedId}`, {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          'x-access-token': token,
+      .post(
+        `http://localhost:3001/block/block-unblock/${blockedId}`,
+        {},
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
         },
-      })
+      )
       .then(result => {
-        console.log('result :', result);
+        console.log('result deleted:', result.data.deleted);
+        console.log('result created:', result.data.created);
+        if (result.data.deleted === true) {
+          setBlocked(false);
+          toast.success('You just unblocked this user');
+
+        }
+        if (result.data.created === true) {
+          setBlocked(true);
+          toast.success('You just blocked this user');
+        }
         //   if (result.data.blocked) {
         //     toast.error(result.data.message);
         //   } else {

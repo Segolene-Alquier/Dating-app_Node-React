@@ -117,7 +117,13 @@ async function getUserByUsername(request, response) {
       user.updatePopularityRate(userIdVisited);
     }
     const relationship = await like.relationship(userIdVisitor, userIdVisited);
-    response.status(200).json({ founded: true, ...call[0], ...relationship });
+    const userAlreadyBlocked = await block.exists(userIdVisitor, userIdVisited);
+    response.status(200).json({
+      founded: true,
+      ...call[0],
+      ...relationship,
+      alreadyBlocked: userAlreadyBlocked,
+    });
   } catch (err) {
     console.log(err);
     response.status(206).send(err);

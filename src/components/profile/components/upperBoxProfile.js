@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
+import BlockIcon from '@material-ui/icons/Block';
 import CityGuess from './location/cityGuess';
 import { getDistance } from 'geolib';
 import LoggedDot from '../../profileshow/components/loggedDot';
@@ -20,11 +21,19 @@ const useStyles = makeStyles(theme => ({
   fabUpBox: {
     margin: '0px 5px',
   },
+  profileImg: {
+    position: 'relative',
+  },
+  blockedIcon: {
+    position: 'absolute',
+    // top: '10px',
+    // right: '10px',
+  },
 }));
 
 const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, type }) => {
   const upBoxClasses = useStyles();
-
+  const [blocked, setBlocked] = useState(profile.alreadyBlocked);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -55,6 +64,7 @@ const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, type }) => {
         <Grid container xs={12} sm={6} direction="row" justify="flex-start">
           <Grid container xs={6} sm={5}>
             <img
+              className={upBoxClasses.profileImg}
               src={
                 profile.profilePicture ||
                 'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png'
@@ -62,6 +72,14 @@ const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, type }) => {
               alt="My profile"
               width="90%"
             />
+            {blocked ? (
+              <BlockIcon
+              className={upBoxClasses.blockedIcon}
+              color="secondary"
+              fontSize="large"
+            />
+            ) : null}
+
           </Grid>
           <Grid container xs={6} sm={7} direction="column" justify="flex-end">
             <div>
@@ -147,8 +165,15 @@ const UpperBoxProfile = ({ classes, profile, getAge, handleBlock, type }) => {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={() => handleBlock(profile.id)}>Bloquer</MenuItem>
-                  <MenuItem onClick={handleClose}>Signaler</MenuItem>
+                  <MenuItem
+                    onClick={() => handleBlock(profile.id, blocked, setBlocked)}
+                  >
+                    {blocked ? 'Unblock' : 'Block'}
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>Report</MenuItem>
+                  <MenuItem disabled onClick={handleClose}>
+                    You reported this user
+                  </MenuItem>
                 </Menu>
               </div>
             </Grid>
