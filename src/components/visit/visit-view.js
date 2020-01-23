@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Grid from '@material-ui/core/Grid';
 import MediaCard from './components/media-card';
 import VisitContainer from './visit-container';
-import Title from './components/title';
+import Title from '../shared/title';
 import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(() => ({

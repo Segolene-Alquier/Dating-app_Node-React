@@ -5,12 +5,18 @@ import Slider from '@material-ui/core/Slider';
 import _ from 'lodash';
 import Grid from '@material-ui/core/Grid';
 // import MediaCard from './components/media-card';
-// import Title from './components/title';
 import Container from '@material-ui/core/Container';
 import SearchContainer from './search-container';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import Title from '../shared/title';
+// import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+
+// import Menu from '@material-ui/core/Menu';
+// import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -35,8 +41,31 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  filtersContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: '10px',
+  },
+  filtersButtonContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    position: 'relative',
+  },
+  sliderContainer: {
+    position: 'absolute',
+    backgroundColor: 'red',
+  },
   slider: {
-    width: '30%',
+    width: '100%',
+  },
+  menuItem: {
+    width: '600px',
+    height: '300px',
+    textDecoration: 'none',
   },
 }));
 
@@ -50,7 +79,15 @@ const Search = () => {
     setSearchOptions,
   } = SearchContainer();
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const [debouncedFunction] = useDebouncedCallback(
     (event, newValue, type, setSearchOptions) => {
       const newSearchOptions = { ...searchOptions, [type]: newValue };
@@ -69,93 +106,97 @@ const Search = () => {
 
   return (
     <>
-      <h1>Search page</h1>
-      <div className={classes.slider}>
-        <Slider
-          defaultValue={searchOptions.distanceMax}
-          getAriaValueText={value => `${value} kms`}
-          aria-labelledby="discrete-slider"
-          valueLabelDisplay="auto"
-          onChange={(event, newValue) =>
-            handleChangeSlider('distanceMax', newValue)
-          }
-          step={10}
-          marks
-          min={0}
-          max={500}
-        />
-        <Slider
-          value={searchOptions.age}
-          onChange={(event, newValue) => handleChangeSlider('age', newValue)}
-          valueLabelDisplay="auto"
-          aria-labelledby="range-slider"
-          getAriaValueText={value => `${value} kms`}
-          min={18}
-          max={100}
-        />
-        <Slider
-          value={searchOptions.popularityRate}
-          onChange={(event, newValue) =>
-            handleChangeSlider('popularityRate', newValue)
-          }
-          valueLabelDisplay="auto"
-          aria-labelledby="range-slider"
-          getAriaValueText={value => `${value} kms`}
-          min={18}
-          max={100}
-        />
-        {/* <Typography variant="subtitle1">
-          <Box fontWeight="fontWeightBold">Interests</Box>
-        </Typography> */}
-        <div className={classes.interestChips}>
-          <div>
-            <Autocomplete
-              multiple
-              options={currentUserProfile.interests.map(interest => {
-                return { name: interest };
-              })}
-              getOptionLabel={option => option.name}
-              style={{ width: 300 }}
-              onChange={(event, value) =>
-                handleChangeSlider('interests', value)
+      <Title textTitle="Search" />
+      <div className={classes.filtersContainer}>
+        <Grid container spacing={5}>
+          <Grid item sm={3} xs={6}>
+            <Typography id="discrete-slider" gutterBottom align="center">
+              Distance
+            </Typography>
+            <Slider
+              className={classes.slider}
+              defaultValue={searchOptions.distanceMax}
+              getAriaValueText={value => `${value} kms`}
+              aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+              onChange={(event, newValue) =>
+                handleChangeSlider('distanceMax', newValue)
               }
-              name="interest"
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  placeholder="Add interest"
-                  fullWidth
-                />
-              )}
+              step={10}
+              marks
+              min={0}
+              max={500}
+            gutterBottom
+
             />
-          </div>
-        </div>
-      </div>
-      {/* <Title textTitle="History of visit" />
-      <div className={classes.wrapper}>
-        <Container>
-          <Grid container spacing={3}>
-            {_.map(visitedProfile, field => (
-              <Grid
-                item
-                xs={12}
-                sm={4}
-                md={3}
-                lg={2}
-                className={classes.center}
-              >
-                <MediaCard
-                  field={field}
-                  visitorProfile={visitorProfile}
-                  className={classes.fullsize}
-                  handleLike={handleLike}
-                />
-              </Grid>
-            ))}
           </Grid>
-        </Container>
-      </div> */}
+          <Grid item sm={3} xs={6}>
+            <Typography id="discrete-slider" gutterBottom align="center">
+              Age
+            </Typography>
+            <Slider
+              className={classes.slider}
+              value={searchOptions.age}
+              onChange={(event, newValue) =>
+                handleChangeSlider('age', newValue)
+              }
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              getAriaValueText={value => `${value} kms`}
+              min={18}
+              max={100}
+            />
+          </Grid>
+          <Grid item sm={3} xs={6}>
+            <Typography id="discrete-slider" gutterBottom align="center">
+              Popularity
+            </Typography>
+            <Slider
+              className={classes.slider}
+              value={searchOptions.popularityRate}
+              onChange={(event, newValue) =>
+                handleChangeSlider('popularityRate', newValue)
+              }
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              getAriaValueText={value => `${value} kms`}
+              min={0}
+              max={100}
+            />
+          </Grid>
+          <Grid item sm={3} xs={6}>
+            <Typography id="discrete-slider" gutterBottom align="center">
+              Interests
+            </Typography>
+            <div className={classes.interestChips}>
+              <div>
+                <Autocomplete
+                  className={classes.slider}
+                  multiple
+                  options={currentUserProfile.interests.map(interest => {
+                    return { name: interest };
+                  })}
+                  getOptionLabel={option => option.name}
+                  style={{ width: 300 }}
+                  onChange={(event, value) =>
+                    handleChangeSlider('interests', value)
+                  }
+                  name="interest"
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      placeholder="Add interest"
+                      fullWidth
+                    />
+                  )}
+                />
+              </div>
+            </div>
+          </Grid>
+        </Grid>
+      </div>
+      <Divider light />
     </>
   );
 };
