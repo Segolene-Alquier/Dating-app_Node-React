@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MediaCard({ field, visitorProfile, handleLike }) {
+export default function MediaCard({ field, profile, handleLike }) {
   const classes = useStyles();
 
   const {
@@ -57,7 +57,7 @@ export default function MediaCard({ field, visitorProfile, handleLike }) {
   };
 
   const distance = () => {
-    const { location: visitorLocation } = visitorProfile;
+    const { location: visitorLocation } = profile;
     let dist = getDistance(
       { latitude: location[0], longitude: location[1] },
       { latitude: visitorLocation[0], longitude: visitorLocation[1] },
