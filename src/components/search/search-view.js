@@ -71,6 +71,7 @@ const Search = () => {
     handleChangeSlider,
     setSearchOptions,
     fetchSearch,
+    handleLike,
   } = SearchContainer();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -113,7 +114,7 @@ const Search = () => {
         classes={classes}
         profiles={searchResult}
         currentUserProfile={currentUserProfile}
-        handleLike={id => console.log('liked id ', id)}
+        handleLike={handleLike}
         type="search"
       />
     </>

@@ -17,6 +17,43 @@ const SearchContainer = () => {
   const authContext = useContext(AuthContext);
   const { userData, token } = authContext;
 
+  const handleLike = likedId => {
+    console.log('liked user ', likedId);
+    axios
+      .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'x-access-token': token,
+        },
+      })
+      .then(result => {
+        if (result.data.blocked) {
+          toast.error(result.data.message);
+        } else {
+          const indexToModify = _.keys(
+            _.pickBy(searchResult, { visitor: likedId }),
+          );
+
+          let newSearchResult = searchResult;
+          indexToModify.forEach(index => {
+            newSearchResult[parseInt(index, 10)] = {
+              ...newSearchResult[parseInt(index, 10)],
+              liking: !searchResult[parseInt(index, 10)].liking,
+            };
+          });
+          console.log(document.querySelectorAll(`[visitor*="${likedId}"]`));
+          document
+            .querySelectorAll(`[visitor*="${likedId}"]`)
+            .forEach(element => {
+              if (element.classList.contains('MuiIconButton-colorSecondary'))
+                element.classList.remove('MuiIconButton-colorSecondary');
+              else element.className += ' MuiIconButton-colorSecondary';
+            });
+          setSearchResult(newSearchResult);
+        }
+      });
+  };
+
   const handleChangeSlider = (type, newValue) => {
     if (type === 'interests') {
       newValue = newValue.map(interest => {
@@ -58,6 +95,7 @@ const SearchContainer = () => {
     handleChangeSlider,
     setSearchOptions,
     fetchSearch,
+    handleLike,
   };
 };
 

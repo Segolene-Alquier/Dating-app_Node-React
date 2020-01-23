@@ -20,7 +20,8 @@ class User {
         [type, value],
       );
       return result;
-    } catch (err) {5
+    } catch (err) {
+      5;
       console.log(err, 'in model User.getBy()');
       return null;
     }
@@ -79,9 +80,11 @@ class User {
       }
 
       const result = await db.any(
-        ` SELECT id, firstname, username, location,
+        ` SELECT id AS visitor, firstname, username, location,
           "birthDate", "popularityRate", gender, "sexualOrientation",
-          description, interests, images, "profilePicture", suspended
+          description, interests, images, "profilePicture", suspended,
+          EXISTS(SELECT * FROM public."Like" WHERE "likingUser" = $6 AND "likedUser" = "User".id) AS liking,
+          EXISTS(SELECT * FROM public."Like" WHERE "likedUser" = $6 AND "likingUser" = "User".id) AS liked
           FROM public."User"
           WHERE "birthDate" <= $1
           AND "birthDate" >= $2
