@@ -249,7 +249,7 @@ async function search(request, response) {
     let userSearchResult = await user.searchUser(
       [ageMinimum, ageMaximum],
       [popularityRateMinimum, popularityRateMaximum],
-      interests,
+      interests, id,
     );
     let currentUserLocation = await user.getByFiltered('id', id, ['location']);
     currentUserLocation = currentUserLocation[0].location;

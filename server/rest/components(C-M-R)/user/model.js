@@ -57,7 +57,7 @@ class User {
       .split('T')[0];
   }
 
-  async searchUser(age, popularityRate, interests) {
+  async searchUser(age, popularityRate, interests, currentUserId) {
     try {
       let [ageMinimum, ageMaximum] = age;
       let [popularityRateMinimum, popularityRateMaximum] = popularityRate;
@@ -81,19 +81,28 @@ class User {
       const result = await db.any(
         ` SELECT id, firstname, username, location,
           "birthDate", "popularityRate", gender, "sexualOrientation",
-          description, interests, images, "profilePicture"
+          description, interests, images, "profilePicture", suspended
           FROM public."User"
           WHERE "birthDate" <= $1
           AND "birthDate" >= $2
           AND "popularityRate" >= $3
           AND "popularityRate" <= $4
-          AND interests @> $5::text[]`,
+          AND interests @> $5::text[]
+          AND suspended = false
+          AND id != $6
+          AND NOT EXISTS (
+          SELECT  *
+          FROM public."Block"
+          WHERE "blockedUser" = $6
+          AND "blockingUser" = "User".id
+          )`,
         [
           this.ageToBirthdate(ageMinimum),
           this.ageToBirthdate(ageMaximum),
           popularityRateMinimum,
           popularityRateMaximum,
           interests,
+          currentUserId,
         ],
       );
       return result;

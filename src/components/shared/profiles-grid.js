@@ -9,9 +9,10 @@ const ProfilesGrid = ({
   profiles,
   currentUserProfile,
   handleLike,
+  type,
 }) => {
   console.log('currentUser', currentUserProfile);
-  console.log("profiles", profiles)
+  console.log('profiles', profiles);
   return (
     <div className={classes.wrapper}>
       <Container>
@@ -22,6 +23,7 @@ const ProfilesGrid = ({
                 field={profile}
                 profile={currentUserProfile}
                 handleLike={handleLike}
+                type={type}
               />
             </Grid>
           ))}

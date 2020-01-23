@@ -24,12 +24,12 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
-    fontSize: '1em',
+    fontSize: '0.8em',
     padding: theme.spacing(1),
   },
 }));
 
-export default function MediaCard({ field, profile, handleLike }) {
+export default function MediaCard({ field, profile, handleLike, type }) {
   const classes = useStyles();
 
   const {
@@ -98,20 +98,21 @@ export default function MediaCard({ field, profile, handleLike }) {
               : 'age not defined '}
             {location ? distance() : ''}
           </Typography>
-
-          <Typography
-            gutterBottom
-            variant="body2"
-            component="h6"
-            align="center"
-          >
-            {lastVisit}
-          </Typography>
+          {type === 'search' ? null : (
+            <Typography
+              gutterBottom
+              variant="body2"
+              component="h6"
+              align="center"
+            >
+              {lastVisit}
+            </Typography>
+          )}
         </CardContent>
       </CardActionArea>
       {/* <CardActions> */}
       <Box display="flex" flexDirection="row" justifyContent="center">
-        <Avatar className={classes.avatar}>78 %</Avatar>
+        <Avatar className={classes.avatar}>{popularityRate}%</Avatar>
         <IconButton
           aria-label="Like the profile"
           color={liking ? 'secondary' : ''}
