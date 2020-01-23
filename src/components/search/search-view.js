@@ -9,6 +9,7 @@ import Title from '../shared/title';
 // import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import SearchFilters from './components/search-filters';
+import ProfilesGrid from './../shared/profiles-grid'
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -69,6 +70,7 @@ const Search = () => {
     searchOptions,
     handleChangeSlider,
     setSearchOptions,
+    fetchSearch,
   } = SearchContainer();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -104,8 +106,15 @@ const Search = () => {
         searchOptions={searchOptions}
         handleChangeSlider={handleChangeSlider}
         currentUserProfile={currentUserProfile}
+        fetchSearch={fetchSearch}
       />
       <Divider light />
+      <ProfilesGrid
+        classes={classes}
+        profiles={searchResult}
+        currentUserProfile={currentUserProfile}
+        handleLike={id => console.log('liked id ', id)}
+      />
     </>
   );
 };

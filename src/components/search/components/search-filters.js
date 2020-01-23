@@ -6,7 +6,13 @@ import Container from '@material-ui/core/Container';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
 
-const SearchFilters = ({classes, searchOptions, handleChangeSlider, currentUserProfile}) => {
+const SearchFilters = ({
+  classes,
+  searchOptions,
+  handleChangeSlider,
+  currentUserProfile,
+  fetchSearch,
+}) => {
   return (
     <div className={classes.filtersContainer}>
       <Grid container spacing={5}>
@@ -23,6 +29,7 @@ const SearchFilters = ({classes, searchOptions, handleChangeSlider, currentUserP
             onChange={(event, newValue) =>
               handleChangeSlider('distanceMax', newValue)
             }
+            onChangeCommitted={() => fetchSearch()}
             step={10}
             marks
             min={0}
@@ -36,8 +43,11 @@ const SearchFilters = ({classes, searchOptions, handleChangeSlider, currentUserP
           </Typography>
           <Slider
             className={classes.slider}
-            value={searchOptions.age}
-            onChange={(event, newValue) => handleChangeSlider('age', newValue)}
+            value={searchOptions.ageRange}
+            onChange={(event, newValue) =>
+              handleChangeSlider('ageRange', newValue)
+            }
+            onChangeCommitted={() => fetchSearch()}
             valueLabelDisplay="auto"
             aria-labelledby="range-slider"
             getAriaValueText={value => `${value} kms`}
@@ -51,10 +61,11 @@ const SearchFilters = ({classes, searchOptions, handleChangeSlider, currentUserP
           </Typography>
           <Slider
             className={classes.slider}
-            value={searchOptions.popularityRate}
+            value={searchOptions.popularityRange}
             onChange={(event, newValue) =>
-              handleChangeSlider('popularityRate', newValue)
+              handleChangeSlider('popularityRange', newValue)
             }
+            onChangeCommitted={() => fetchSearch()}
             valueLabelDisplay="auto"
             aria-labelledby="range-slider"
             getAriaValueText={value => `${value} kms`}
@@ -76,9 +87,9 @@ const SearchFilters = ({classes, searchOptions, handleChangeSlider, currentUserP
                 })}
                 getOptionLabel={option => option.name}
                 style={{ width: 300 }}
-                onChange={(event, value) =>
-                  handleChangeSlider('interests', value)
-                }
+                onChange={(event, value) => {
+                  handleChangeSlider('interests', value);
+                }}
                 name="interest"
                 renderInput={params => (
                   <TextField

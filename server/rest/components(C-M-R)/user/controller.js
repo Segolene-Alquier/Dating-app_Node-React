@@ -233,10 +233,8 @@ const distanceCalculator = (userLocation, otherUserLocation) => {
 async function search(request, response) {
   const id = request.decoded.userid;
   let {
-    ageMinimum,
-    ageMaximum,
-    popularityRateMinimum,
-    popularityRateMaximum,
+    ageRange,
+    popularityRange,
     interests,
     distanceMax,
   } = request.body;
@@ -246,6 +244,8 @@ async function search(request, response) {
   }
 
   try {
+    const [ageMinimum, ageMaximum] = ageRange;
+    const [popularityRateMinimum, popularityRateMaximum] = popularityRange;
     let userSearchResult = await user.searchUser(
       [ageMinimum, ageMaximum],
       [popularityRateMinimum, popularityRateMaximum],

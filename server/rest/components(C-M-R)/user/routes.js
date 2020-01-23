@@ -18,7 +18,7 @@ const {
 // list of all users - user
 router.get('/', checkToken, getUsers);
 // search for a user
-router.get('/search', checkToken, search);
+router.post('/search', checkToken, search);
 // username already exists ? - user
 router.get('/verification/username', usernameExists);
 // email already exists ? - user
