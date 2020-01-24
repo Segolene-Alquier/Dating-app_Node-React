@@ -89,7 +89,7 @@ class UserInputTests {
       const result = await modelInstance.exists(inputName, intInput);
       if (result === true) resolve({ boolean: true });
       else
-        resolve({ boolean: false, error: `This ${modelName} doesn't exist` });
+        resolve({ boolean: false, error: `Please select at least one gender and one sexual orientation` });
     });
   }
 
@@ -197,7 +197,9 @@ class UserInputTests {
       username,
       email,
       gender,
+      sexualOrientation,
       notificationMail,
+
     } = data;
 
     // Sexual orientation : pas de model encore
@@ -248,11 +250,26 @@ class UserInputTests {
       [this.doesntExist],
       errors,
     );
+     await this.inputTester(
+       {
+         input: sexualOrientation,
+         inputName: 'id',
+         modelInstance: genderInstance,
+         modelName: 'gender',
+       },
+       [this.doesntExist],
+       errors,
+     );
     await this.inputTester(
       { input: notificationMail, inputName: 'notification email' },
       [this.isBoolean],
       errors,
     );
+        await this.inputTester(
+          { input: notificationMail, inputName: 'notification email' },
+          [this.isBoolean],
+          errors,
+        );
 
     return errors;
   }
