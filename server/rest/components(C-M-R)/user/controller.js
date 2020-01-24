@@ -186,6 +186,17 @@ async function createUser(request, response) {
   }
 }
 
+const getAge = dateString => {
+  const today = new Date();
+  const birthDate = new Date(dateString);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+};
+
 async function updateUser(request, response) {
   const id = request.decoded.userid;
   const filteredValues = check.filterInputValues('API', request.body);
@@ -232,12 +243,7 @@ const distanceCalculator = (userLocation, otherUserLocation) => {
 
 async function search(request, response) {
   const id = request.decoded.userid;
-  let {
-    ageRange,
-    popularityRange,
-    interests,
-    distanceMax,
-  } = request.body;
+  let { ageRange, popularityRange, interests, distanceMax } = request.body;
 
   if (distanceMax === undefined) {
     distanceMax = 1000;
@@ -249,13 +255,18 @@ async function search(request, response) {
     let userSearchResult = await user.searchUser(
       [ageMinimum, ageMaximum],
       [popularityRateMinimum, popularityRateMaximum],
-      interests, id,
+      interests,
+      id,
     );
     let currentUserLocation = await user.getByFiltered('id', id, ['location']);
     currentUserLocation = currentUserLocation[0].location;
     console.log(currentUserLocation);
+    userSearchResult.forEach(profile => {
+      profile.age = getAge(profile.birthDate);
+    });
     userSearchResult = _.filter(userSearchResult, user => {
       const distance = distanceCalculator(currentUserLocation, user.location);
+      user.distance = distance
       console.log(distance);
       return distance <= distanceMax;
     });

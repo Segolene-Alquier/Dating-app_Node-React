@@ -55,9 +55,60 @@ const SearchContainer = () => {
       });
   };
 
-  const handleSort = event => {
-    const newSearchOptions = { ...searchOptions, ['sort']: event.target.value };
+  const handleSort = (event, profiles = searchResult) => {
+    let sortChoice = '';
+    if (event) {
+      sortChoice = event.target.value;
+    } else {
+      sortChoice = searchOptions.sort;
+    }
+    let order = '';
+    switch (sortChoice) {
+      case 'distance':
+        order = 'asc';
+        break;
+      case 'ageAsc':
+        order = 'asc';
+        break;
+      case 'ageDesc':
+        order = 'desc';
+        break;
+      case 'popularity':
+        order = 'desc';
+        break;
+      case 'interests':
+        order = 'asc';
+        break;
+    }
+    const newSearchOptions = { ...searchOptions, ['sort']: sortChoice };
     setSearchOptions(newSearchOptions);
+    setSearchResult(
+      _.orderBy(
+        profiles,
+        [
+          profile => {
+            switch (sortChoice) {
+              case 'distance':
+                return profile.distance;
+                break;
+              case 'ageAsc':
+                return profile.age;
+                break;
+              case 'ageDesc':
+                return profile.age;
+                break;
+              case 'popularity':
+                return profile.popularityRate;
+                break;
+              case 'interests':
+                return profile.interests[0] ? profile.interests[0] : 'ZZZZ';
+                break;
+            }
+          },
+        ],
+        [order],
+      ),
+    );
   };
 
   const handleChangeSlider = (type, newValue) => {
@@ -83,7 +134,9 @@ const SearchContainer = () => {
           'x-access-token': token,
         },
       })
-      .then(result => setSearchResult(result.data));
+      .then(
+        result => handleSort(null, result.data),
+      );
   };
 
   if (_.isEmpty(currentUserProfile) && loaded === false) {

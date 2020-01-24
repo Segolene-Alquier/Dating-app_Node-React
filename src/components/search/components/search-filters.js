@@ -13,6 +13,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const sortOptions = [
   {
+    value: '',
+    label: '',
+  },
+  {
     value: 'distance',
     label: 'Distance',
   },
@@ -29,12 +33,8 @@ const sortOptions = [
     label: 'Popularity',
   },
   {
-    value: 'interestsAsc',
-    label: 'Interests: A to Z',
-  },
-  {
-    value: 'interestsDesc',
-    label: 'Interests: Z to A',
+    value: 'interests',
+    label: 'Interests',
   },
 ];
 
@@ -46,7 +46,6 @@ const SearchFilters = ({
   fetchSearch,
   handleSort,
 }) => {
-
   return (
     <div className={classes.filtersContainer}>
       <Grid container spacing={5} direction="row" justify="center">
@@ -146,7 +145,7 @@ const SearchFilters = ({
               select
               className={classes.textField}
               value={searchOptions.sort}
-              onChange={(event) => handleSort(event)}
+              onChange={event => handleSort(event)}
               fullWidth
               SelectProps={{
                 native: true,

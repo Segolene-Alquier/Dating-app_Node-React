@@ -113,7 +113,6 @@ export default function MediaCard({ field, profile, handleLike, type }) {
       {/* <CardActions> */}
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Avatar className={classes.avatar}>{popularityRate}%</Avatar>
-        {console.log("visitor", visitor)}
         <IconButton
           aria-label="Like the profile"
           color={liking ? 'secondary' : ''}
