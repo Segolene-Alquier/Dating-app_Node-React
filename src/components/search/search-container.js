@@ -13,6 +13,7 @@ const SearchContainer = () => {
     popularityRange: [0, 100],
     interests: [],
     distanceMax: 100,
+    sort: '',
   });
   const authContext = useContext(AuthContext);
   const { userData, token } = authContext;
@@ -52,6 +53,11 @@ const SearchContainer = () => {
           setSearchResult(newSearchResult);
         }
       });
+  };
+
+  const handleSort = event => {
+    const newSearchOptions = { ...searchOptions, ['sort']: event.target.value };
+    setSearchOptions(newSearchOptions);
   };
 
   const handleChangeSlider = (type, newValue) => {
@@ -96,6 +102,7 @@ const SearchContainer = () => {
     setSearchOptions,
     fetchSearch,
     handleLike,
+    handleSort,
   };
 };
 

@@ -5,6 +5,38 @@ import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import MenuItem from '@material-ui/core/MenuItem';
+
+const sortOptions = [
+  {
+    value: 'distance',
+    label: 'Distance',
+  },
+  {
+    value: 'ageAsc',
+    label: 'Age: Low to high',
+  },
+  {
+    value: 'ageDesc',
+    label: 'Age: High to low',
+  },
+  {
+    value: 'popularity',
+    label: 'Popularity',
+  },
+  {
+    value: 'interestsAsc',
+    label: 'Interests: A to Z',
+  },
+  {
+    value: 'interestsDesc',
+    label: 'Interests: Z to A',
+  },
+];
 
 const SearchFilters = ({
   classes,
@@ -12,11 +44,13 @@ const SearchFilters = ({
   handleChangeSlider,
   currentUserProfile,
   fetchSearch,
+  handleSort,
 }) => {
+
   return (
     <div className={classes.filtersContainer}>
-      <Grid container spacing={5}>
-        <Grid item sm={3} xs={6}>
+      <Grid container spacing={5} direction="row" justify="center">
+        <Grid item sm={2} xs={6}>
           <Typography id="discrete-slider" gutterBottom align="center">
             Distance
           </Typography>
@@ -37,7 +71,7 @@ const SearchFilters = ({
             gutterBottom
           />
         </Grid>
-        <Grid item sm={3} xs={6}>
+        <Grid item sm={2} xs={6}>
           <Typography id="discrete-slider" gutterBottom align="center">
             Age
           </Typography>
@@ -55,7 +89,7 @@ const SearchFilters = ({
             max={100}
           />
         </Grid>
-        <Grid item sm={3} xs={6}>
+        <Grid item sm={2} xs={6}>
           <Typography id="discrete-slider" gutterBottom align="center">
             Popularity
           </Typography>
@@ -73,7 +107,7 @@ const SearchFilters = ({
             max={100}
           />
         </Grid>
-        <Grid item sm={3} xs={6}>
+        <Grid item sm={2} xs={6}>
           <Typography id="discrete-slider" gutterBottom align="center">
             Interests
           </Typography>
@@ -86,7 +120,6 @@ const SearchFilters = ({
                   return { name: interest };
                 })}
                 getOptionLabel={option => option.name}
-                style={{ width: 300 }}
                 onChange={(event, value) => {
                   handleChangeSlider('interests', value);
                 }}
@@ -102,6 +135,34 @@ const SearchFilters = ({
               />
             </div>
           </div>
+        </Grid>
+        <Grid item sm={2} xs={6}>
+          <form className={classes.container} noValidate autoComplete="off">
+            <Typography id="discrete-slider" gutterBottom align="center">
+              Sort by
+            </Typography>
+            <TextField
+              id="outlined-select-currency-native"
+              select
+              className={classes.textField}
+              value={searchOptions.sort}
+              onChange={(event) => handleSort(event)}
+              fullWidth
+              SelectProps={{
+                native: true,
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              variant="outlined"
+            >
+              {sortOptions.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </TextField>
+          </form>
         </Grid>
       </Grid>
     </div>

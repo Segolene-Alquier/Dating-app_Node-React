@@ -72,6 +72,7 @@ const Search = () => {
     setSearchOptions,
     fetchSearch,
     handleLike,
+    handleSort,
   } = SearchContainer();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -108,6 +109,7 @@ const Search = () => {
         handleChangeSlider={handleChangeSlider}
         currentUserProfile={currentUserProfile}
         fetchSearch={fetchSearch}
+        handleSort={handleSort}
       />
       <Divider light />
       <ProfilesGrid
