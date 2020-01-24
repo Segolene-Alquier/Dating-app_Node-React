@@ -7,6 +7,7 @@ import Login from '../login';
 import Profile from '../profile';
 import ProfileShow from '../profileshow';
 import Search from '../search';
+import Suggestions from '../suggestions';
 import Visit from '../visit';
 import Secret from '../secretpage';
 import Home from '../home';
@@ -41,6 +42,7 @@ function App() {
           />
           <SecureRoute path="/secret" component={Secret} />
           <SecureRoute path="/search" component={Search} />
+          <SecureRoute path="/suggestions" component={Suggestions} />
           <SecureRoute path="/profile/:username" component={ProfileShow} />
           <SecureRoute path="/profile" component={Profile} />
           <SecureRoute path="/visits" component={Visit} />
