@@ -13,10 +13,13 @@ const {
   deleteUser,
   getMyUserInfo,
   search,
+  suggestions,
 } = require('./controller');
 
 // list of all users - user
 router.get('/', checkToken, getUsers);
+// suggestions from the user
+router.post('/suggestions', checkToken, suggestions);
 // search for a user
 router.post('/search', checkToken, search);
 // username already exists ? - user

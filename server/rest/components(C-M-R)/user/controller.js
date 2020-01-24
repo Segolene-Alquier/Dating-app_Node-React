@@ -266,7 +266,44 @@ async function search(request, response) {
     });
     userSearchResult = _.filter(userSearchResult, user => {
       const distance = distanceCalculator(currentUserLocation, user.location);
-      user.distance = distance
+      user.distance = distance;
+      console.log(distance);
+      return distance <= distanceMax;
+    });
+
+    response.status(200).json(userSearchResult);
+  } catch (err) {
+    console.log(err);
+    response.status(206).send(err);
+  }
+}
+
+async function suggestions(request, response) {
+  const id = request.decoded.userid;
+  let { ageRange, popularityRange, interests, distanceMax } = request.body;
+
+  if (distanceMax === undefined) {
+    distanceMax = 1000;
+  }
+
+  try {
+    const [ageMinimum, ageMaximum] = ageRange;
+    const [popularityRateMinimum, popularityRateMaximum] = popularityRange;
+    let userSearchResult = await user.compatibleUser(
+      [ageMinimum, ageMaximum],
+      [popularityRateMinimum, popularityRateMaximum],
+      interests,
+      id,
+    );
+    let currentUserLocation = await user.getByFiltered('id', id, ['location']);
+    currentUserLocation = currentUserLocation[0].location;
+    console.log(currentUserLocation);
+    userSearchResult.forEach(profile => {
+      profile.age = getAge(profile.birthDate);
+    });
+    userSearchResult = _.filter(userSearchResult, user => {
+      const distance = distanceCalculator(currentUserLocation, user.location);
+      user.distance = distance;
       console.log(distance);
       return distance <= distanceMax;
     });
@@ -288,3 +325,4 @@ module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
 module.exports.getUserByUsername = getUserByUsername;
 module.exports.search = search;
+module.exports.suggestions = suggestions;
