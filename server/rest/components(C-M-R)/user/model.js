@@ -164,6 +164,7 @@ class User {
           WHERE "blockedUser" = $6
           AND "blockingUser" = "User".id
           )
+          AND NOT EXISTS (SELECT * FROM public."Like" WHERE "likingUser" = $6 AND "likedUser" = "User".id)
           `,
         [
           this.ageToBirthdate(ageMinimum),
