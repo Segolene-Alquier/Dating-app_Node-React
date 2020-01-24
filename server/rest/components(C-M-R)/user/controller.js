@@ -278,6 +278,24 @@ async function search(request, response) {
   }
 }
 
+const interestScore = (currentUserInterests, otherUserInterests) => {
+  const nbOfCommonInterests = _.intersection(currentUserInterests, otherUserInterests).length
+  if (nbOfCommonInterests <= 3) {
+    return nbOfCommonInterests * (1 / 3) * 100
+  }
+  return 100 + (nbOfCommonInterests - 3) * 10
+}
+
+const distanceScore = (distance) => {
+  const score = 100 - (distance * 5)
+  return score < 0 ? 0 : score
+};
+
+const popularityScore = (currentUserPopularity, otherUserPopularity) => {
+    const score = 100 - (Math.abs(currentUserPopularity - otherUserPopularity) * 2);
+    return score < 0 ? 0 : score;
+}
+
 async function suggestions(request, response) {
   const id = request.decoded.userid;
   let { ageRange, popularityRange, interests, distanceMax } = request.body;
@@ -295,17 +313,24 @@ async function suggestions(request, response) {
       interests,
       id,
     );
-    let currentUserLocation = await user.getByFiltered('id', id, ['location']);
-    currentUserLocation = currentUserLocation[0].location;
-    console.log(currentUserLocation);
+    let currentUser = await user.getByFiltered('id', id, ['location', 'interests', 'popularityRate']);
+    currentUser = currentUser[0];
+    userSearchResult = _.filter(userSearchResult, user => {
+      const distance = distanceCalculator(currentUser.location, user.location);
+      user.distance = distance;
+      return distance <= distanceMax;
+    });
+
     userSearchResult.forEach(profile => {
       profile.age = getAge(profile.birthDate);
-    });
-    userSearchResult = _.filter(userSearchResult, user => {
-      const distance = distanceCalculator(currentUserLocation, user.location);
-      user.distance = distance;
-      console.log(distance);
-      return distance <= distanceMax;
+      profile.score =
+        interestScore(currentUser.interests, profile.interests) * 0.6 +
+        distanceScore(profile.distance) * 0.25 +
+        popularityScore(currentUser.popularityRate, profile.popularityRate) * 0.15;
+      console.log(
+        interestScore(currentUser.interests, profile.interests),
+        distanceScore(profile.distance),
+        popularityScore(currentUser.popularityRate, profile.popularityRate));
     });
 
     response.status(200).json(userSearchResult);
