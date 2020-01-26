@@ -234,6 +234,9 @@ async function deleteUser(request, response) {
 }
 
 const distanceCalculator = (userLocation, otherUserLocation) => {
+  if (otherUserLocation === null) {
+    return 10000;
+  }
   let dist = getDistance(
     { latitude: userLocation[0], longitude: userLocation[1] },
     { latitude: otherUserLocation[0], longitude: otherUserLocation[1] },
@@ -279,22 +282,25 @@ async function search(request, response) {
 }
 
 const interestScore = (currentUserInterests, otherUserInterests) => {
-  const nbOfCommonInterests = _.intersection(currentUserInterests, otherUserInterests).length
+  const nbOfCommonInterests = _.intersection(
+    currentUserInterests,
+    otherUserInterests,
+  ).length;
   if (nbOfCommonInterests <= 3) {
-    return nbOfCommonInterests * (1 / 3) * 100
+    return nbOfCommonInterests * (1 / 3) * 100;
   }
-  return 100 + (nbOfCommonInterests - 3) * 10
-}
+  return 100 + (nbOfCommonInterests - 3) * 10;
+};
 
-const distanceScore = (distance) => {
-  const score = 100 - (distance * 5)
-  return score < 0 ? 0 : score
+const distanceScore = distance => {
+  const score = 100 - distance * 5;
+  return score < 0 ? 0 : score;
 };
 
 const popularityScore = (currentUserPopularity, otherUserPopularity) => {
-    const score = 100 - (Math.abs(currentUserPopularity - otherUserPopularity) * 2);
-    return score < 0 ? 0 : score;
-}
+  const score = 100 - Math.abs(currentUserPopularity - otherUserPopularity) * 2;
+  return score < 0 ? 0 : score;
+};
 
 async function suggestions(request, response) {
   const id = request.decoded.userid;
@@ -313,11 +319,16 @@ async function suggestions(request, response) {
       interests,
       id,
     );
-    let currentUser = await user.getByFiltered('id', id, ['location', 'interests', 'popularityRate']);
+    let currentUser = await user.getByFiltered('id', id, [
+      'location',
+      'interests',
+      'popularityRate',
+    ]);
     currentUser = currentUser[0];
     userSearchResult = _.filter(userSearchResult, user => {
       const distance = distanceCalculator(currentUser.location, user.location);
       user.distance = distance;
+      console.log(user);
       return distance <= distanceMax;
     });
 
@@ -326,11 +337,13 @@ async function suggestions(request, response) {
       profile.score =
         interestScore(currentUser.interests, profile.interests) * 0.6 +
         distanceScore(profile.distance) * 0.25 +
-        popularityScore(currentUser.popularityRate, profile.popularityRate) * 0.15;
+        popularityScore(currentUser.popularityRate, profile.popularityRate) *
+          0.15;
       console.log(
         interestScore(currentUser.interests, profile.interests),
         distanceScore(profile.distance),
-        popularityScore(currentUser.popularityRate, profile.popularityRate));
+        popularityScore(currentUser.popularityRate, profile.popularityRate),
+      );
     });
 
     response.status(200).json(userSearchResult);
