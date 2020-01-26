@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import red from '@material-ui/core/colors/red';
+import Tooltip from '@material-ui/core/Tooltip';
 import moment from 'moment';
 import { getDistance } from 'geolib';
 
@@ -85,7 +86,15 @@ export default function MediaCard({ field, profile, handleLike, type }) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2" align="center">
-            {firstname}
+            {firstname}{' '}
+            {liked ? (
+              <Tooltip
+                title="This user likes you"
+                aria-label="This user likes you"
+              >
+                <span>💗</span>
+              </Tooltip>
+            ) : null}
           </Typography>
           <Typography
             gutterBottom
