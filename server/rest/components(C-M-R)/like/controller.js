@@ -2,6 +2,7 @@ const Like = require('./model');
 const Match = require('./../match/model');
 const Block = require('./../block/model');
 const User = require('./../user/model');
+const { sendLikeEmail } = require('../../../mailer/sendLikeEmail');
 
 const likes = new Like();
 const block = new Block();
@@ -47,6 +48,9 @@ async function likeUnlikeUserId(request, response) {
       if (query.match) {
         const matchQuery = await matchs.create(likingUser, likedUser);
         query.matchId = matchQuery.id;
+      } else {
+        console.log('ICI');
+        sendLikeEmail(likedUser, likingUser);
       }
     }
     user.updatePopularityRate(likedUser);
