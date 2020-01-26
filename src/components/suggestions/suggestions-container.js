@@ -19,7 +19,6 @@ const SuggestionsContainer = () => {
   const { userData, token } = authContext;
 
   const handleLike = likedId => {
-    console.log('liked user ', likedId);
     axios
       .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
         headers: {
@@ -42,7 +41,6 @@ const SuggestionsContainer = () => {
               liking: !suggestionsResult[parseInt(index, 10)].liking,
             };
           });
-          console.log(document.querySelectorAll(`[visitor*="${likedId}"]`));
           document
             .querySelectorAll(`[visitor*="${likedId}"]`)
             .forEach(element => {
@@ -143,7 +141,13 @@ const SuggestionsContainer = () => {
           'x-access-token': token,
         },
       })
-      .then(result => handleSort(null, result.data));
+      .then(result => {
+        if (result.data.authorized === false) {
+          window.location = '/profile?message=profile_not_completed';
+          return;
+        }
+        handleSort(null, result.data);
+      });
   };
 
   if (_.isEmpty(currentUserProfile) && loaded === false) {

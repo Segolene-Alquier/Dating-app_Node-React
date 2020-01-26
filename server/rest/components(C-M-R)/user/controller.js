@@ -248,6 +248,13 @@ async function search(request, response) {
   const id = request.decoded.userid;
   let { ageRange, popularityRange, interests, distanceMax } = request.body;
 
+  if ((await checkIfProfileCompleted(id)) === false) {
+    return response.status(200).json({
+      authorized: false,
+      message: 'You need to complete your profile first!',
+    });
+  }
+
   if (distanceMax === undefined) {
     distanceMax = 1000;
   }
@@ -306,6 +313,13 @@ async function suggestions(request, response) {
   const id = request.decoded.userid;
   let { ageRange, popularityRange, interests, distanceMax } = request.body;
 
+  if ((await checkIfProfileCompleted(id)) === false) {
+    return response.status(200).json({
+      authorized: false,
+      message: 'You need to complete your profile first!',
+    });
+  }
+
   if (distanceMax === undefined) {
     distanceMax = 1000;
   }
@@ -328,7 +342,6 @@ async function suggestions(request, response) {
     userSearchResult = _.filter(userSearchResult, user => {
       const distance = distanceCalculator(currentUser.location, user.location);
       user.distance = distance;
-      console.log(user);
       return distance <= distanceMax;
     });
 

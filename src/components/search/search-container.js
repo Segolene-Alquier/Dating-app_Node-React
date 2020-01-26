@@ -134,9 +134,13 @@ const SearchContainer = () => {
           'x-access-token': token,
         },
       })
-      .then(
-        result => handleSort(null, result.data),
-      );
+      .then(result => {
+        if (result.data.authorized === false) {
+          window.location = '/profile?message=profile_not_completed';
+          return;
+        }
+        handleSort(null, result.data);
+      });
   };
 
   if (_.isEmpty(currentUserProfile) && loaded === false) {
