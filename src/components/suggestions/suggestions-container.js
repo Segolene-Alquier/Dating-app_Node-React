@@ -13,7 +13,7 @@ const SuggestionsContainer = () => {
     popularityRange: [0, 100],
     interests: [],
     distanceMax: 100,
-    sort: '',
+    sort: 'score',
   });
   const authContext = useContext(AuthContext);
   const { userData, token } = authContext;
@@ -64,6 +64,9 @@ const SuggestionsContainer = () => {
     }
     let order = '';
     switch (sortChoice) {
+      case 'score':
+        order = 'desc';
+        break;
       case 'distance':
         order = 'asc';
         break;
@@ -80,7 +83,10 @@ const SuggestionsContainer = () => {
         order = 'asc';
         break;
     }
-    const newSuggestionsOptions = { ...suggestionsOptions, ['sort']: sortChoice };
+    const newSuggestionsOptions = {
+      ...suggestionsOptions,
+      ['sort']: sortChoice,
+    };
     setSuggestionsOptions(newSuggestionsOptions);
     setSuggestionsResult(
       _.orderBy(
@@ -88,6 +94,9 @@ const SuggestionsContainer = () => {
         [
           profile => {
             switch (sortChoice) {
+              case 'score':
+                return profile.score;
+                break;
               case 'distance':
                 return profile.distance;
                 break;
@@ -134,9 +143,7 @@ const SuggestionsContainer = () => {
           'x-access-token': token,
         },
       })
-      .then(
-        result => handleSort(null, result.data),
-      );
+      .then(result => handleSort(null, result.data));
   };
 
   if (_.isEmpty(currentUserProfile) && loaded === false) {

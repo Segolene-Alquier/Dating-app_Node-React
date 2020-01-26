@@ -13,8 +13,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const sortOptions = [
   {
-    value: '',
-    label: '',
+    value: 'score',
+    label: 'Matching score',
   },
   {
     value: 'distance',
