@@ -1,4 +1,5 @@
 const Visit = require('./model');
+const _ = require('lodash');
 
 const visits = new Visit();
 
@@ -15,7 +16,8 @@ async function getVisits(request, response) {
 async function getVisitsFromCurrentUser(request, response) {
   const id = request.decoded.userid;
   try {
-    const call = await visits.getBy('visited', id);
+    let call = await visits.getBy('visited', id);
+    call = _.uniqBy(call, 'visitor');
     response.status(200).json(call);
   } catch (err) {
     console.log(err);
