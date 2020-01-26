@@ -277,7 +277,6 @@ async function search(request, response) {
     userSearchResult = _.filter(userSearchResult, user => {
       const distance = distanceCalculator(currentUserLocation, user.location);
       user.distance = distance;
-      console.log(distance);
       return distance <= distanceMax;
     });
 
@@ -352,11 +351,6 @@ async function suggestions(request, response) {
         distanceScore(profile.distance) * 0.25 +
         popularityScore(currentUser.popularityRate, profile.popularityRate) *
           0.15;
-      console.log(
-        interestScore(currentUser.interests, profile.interests),
-        distanceScore(profile.distance),
-        popularityScore(currentUser.popularityRate, profile.popularityRate),
-      );
     });
 
     response.status(200).json(userSearchResult);
