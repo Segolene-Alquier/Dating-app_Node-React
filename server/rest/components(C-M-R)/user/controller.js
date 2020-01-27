@@ -9,6 +9,7 @@ const User = require('./model');
 const Like = require('./../like/model');
 const Block = require('./../block/model');
 const { deleteFile } = require('../images/controller');
+const axios = require('axios');
 
 const user = new User();
 const check = new UserInputTests(user);
@@ -119,7 +120,16 @@ async function getUserByUsername(request, response) {
       user.updatePopularityRate(userIdVisited);
     }
     const relationship = await like.relationship(userIdVisitor, userIdVisited);
-    response.status(200).json({ founded: true, ...call[0], ...relationship });
+    const city = await axios
+      .get(
+        `https://eu1.locationiq.com/v1/reverse.php?key=9ade280ec73aeb&lat=${call[0].location[0]}&lon=${call[0].location[1]}&format=json`,
+      )
+      .then(data => {
+        return data.data.address.city;
+      });
+    response
+      .status(200)
+      .json({ founded: true, ...call[0], ...relationship, city });
   } catch (err) {
     console.log(err);
     response.status(206).send(err);

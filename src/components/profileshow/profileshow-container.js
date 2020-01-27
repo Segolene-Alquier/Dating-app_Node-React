@@ -6,6 +6,7 @@ import { AuthContext } from '../app/AuthContext';
 const ProfileShowContainer = visitedUsername => {
   const [visitedProfile, setVisitedProfile] = useState({});
   const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
   const authContext = useContext(AuthContext);
   const { token } = authContext;
 
@@ -24,11 +25,13 @@ const ProfileShowContainer = visitedUsername => {
         console.log(error);
       });
 
-  if (_.isEmpty(visitedProfile)) {
+  if (_.isEmpty(visitedProfile) && loading === false) {
+    setLoading(true)
     fetchVisitedProfile().then(data => {
       if (data.founded === true) {
         setVisitedProfile(data);
         setLoaded(true);
+        setLoading(false);
       } else {
         if (data.success === false) {
           window.location = '/?message=user_not_found';
