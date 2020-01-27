@@ -23,6 +23,10 @@ import UserValidation from '../uservalidation';
 import ResetForgotPassword from '../ResetforgotPassword';
 import ForgotPassword from '../forgotpassword';
 import Swipe from '../swipe';
+import Chat from '../chat';
+
+import io from 'socket.io-client';
+let socket = io(`http://localhost:3002`);
 
 function App() {
   return (
@@ -48,6 +52,8 @@ function App() {
           <SecureRoute path="/profile" component={Profile} />
           <SecureRoute path="/visits" component={Visit} />
           <SecureRoute path="/swipe" component={Swipe} />
+          <SecureRoute path="/chat" component={Chat} />
+
           <Route path="/" component={Home} />
         </Switch>
       </Router>

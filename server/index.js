@@ -3,9 +3,23 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
+var http = require('http').createServer(app);
 
 const port = 3001;
+var io = require('socket.io')(http);
 
+io.on('connection', function(socket) {
+  console.log('a user connected');
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+  socket.on('chat message', function(msg) {
+    console.log('message: ' + msg);
+  });
+});
+http.listen(3002, function() {
+  console.log('listening on *:3002');
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
