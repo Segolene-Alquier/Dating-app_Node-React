@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import red from '@material-ui/core/colors/red';
+import Tooltip from '@material-ui/core/Tooltip';
 import moment from 'moment';
 import { getDistance } from 'geolib';
 
@@ -24,12 +25,12 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
-    fontSize: '1em',
+    fontSize: '0.8em',
     padding: theme.spacing(1),
   },
 }));
 
-export default function MediaCard({ field, visitorProfile, handleLike }) {
+export default function MediaCard({ field, profile, handleLike, type }) {
   const classes = useStyles();
 
   const {
@@ -57,7 +58,7 @@ export default function MediaCard({ field, visitorProfile, handleLike }) {
   };
 
   const distance = () => {
-    const { location: visitorLocation } = visitorProfile;
+    const { location: visitorLocation } = profile;
     let dist = getDistance(
       { latitude: location[0], longitude: location[1] },
       { latitude: visitorLocation[0], longitude: visitorLocation[1] },
@@ -85,7 +86,15 @@ export default function MediaCard({ field, visitorProfile, handleLike }) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2" align="center">
-            {firstname}
+            {firstname}{' '}
+            {liked ? (
+              <Tooltip
+                title="This user likes you"
+                aria-label="This user likes you"
+              >
+                <span>💗</span>
+              </Tooltip>
+            ) : null}
           </Typography>
           <Typography
             gutterBottom
@@ -98,20 +107,21 @@ export default function MediaCard({ field, visitorProfile, handleLike }) {
               : 'age not defined '}
             {location ? distance() : ''}
           </Typography>
-
-          <Typography
-            gutterBottom
-            variant="body2"
-            component="h6"
-            align="center"
-          >
-            {lastVisit}
-          </Typography>
+          {type === 'search' ? null : (
+            <Typography
+              gutterBottom
+              variant="body2"
+              component="h6"
+              align="center"
+            >
+              {lastVisit}
+            </Typography>
+          )}
         </CardContent>
       </CardActionArea>
       {/* <CardActions> */}
       <Box display="flex" flexDirection="row" justifyContent="center">
-        <Avatar className={classes.avatar}>78 %</Avatar>
+        <Avatar className={classes.avatar}>{popularityRate}%</Avatar>
         <IconButton
           aria-label="Like the profile"
           color={liking ? 'secondary' : ''}

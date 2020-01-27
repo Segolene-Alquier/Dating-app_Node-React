@@ -2,11 +2,10 @@ import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
-import Grid from '@material-ui/core/Grid';
-import MediaCard from './components/media-card';
+
 import VisitContainer from './visit-container';
-import Title from './components/title';
-import Container from '@material-ui/core/Container';
+import Title from '../shared/title';
+import ProfilesGrid from '../shared/profiles-grid'
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -52,29 +51,7 @@ const Visit = ({ computedMatch }) => {
   return (
     <>
       <Title textTitle="History of visit" />
-      <div className={classes.wrapper}>
-        <Container>
-          <Grid container spacing={3}>
-            {_.map(visitedProfile, field => (
-              <Grid
-                item
-                xs={12}
-                sm={4}
-                md={3}
-                lg={2}
-                className={classes.center}
-              >
-                <MediaCard
-                  field={field}
-                  visitorProfile={visitorProfile}
-                  className={classes.fullsize}
-                  handleLike={handleLike}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </div>
+      <ProfilesGrid classes={classes} profiles={visitedProfile} currentUserProfile={visitorProfile} handleLike={handleLike}/>
     </>
   );
 };

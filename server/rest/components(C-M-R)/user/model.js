@@ -21,6 +21,7 @@ class User {
       );
       return result;
     } catch (err) {
+      5;
       console.log(err, 'in model User.getBy()');
       return null;
     }
@@ -42,6 +43,143 @@ class User {
       return result;
     } catch (err) {
       console.log(err, 'in model User.getBy()');
+      return null;
+    }
+  }
+
+  ageToBirthdate(age) {
+    if (age > 130) {
+      age = 100;
+    } else if (age < 18) {
+      age = 18;
+    }
+    return new Date(new Date().setFullYear(new Date().getFullYear() - age))
+      .toISOString()
+      .split('T')[0];
+  }
+
+  async searchUser(age, popularityRate, interests, currentUserId) {
+    try {
+      let [ageMinimum, ageMaximum] = age;
+      let [popularityRateMinimum, popularityRateMaximum] = popularityRate;
+
+      if (!ageMinimum) {
+        ageMinimum = 18;
+      }
+      if (!ageMaximum) {
+        ageMaximum = 80;
+      }
+      if (!popularityRateMinimum) {
+        popularityRateMinimum = 0;
+      }
+      if (!popularityRateMaximum) {
+        popularityRateMaximum = 100;
+      }
+      if (!interests) {
+        interests = [];
+      }
+
+      const result = await db.any(
+        ` SELECT id AS visitor, firstname, username, location,
+          "birthDate", "popularityRate", gender, "sexualOrientation",
+          description, interests, images, "profilePicture", suspended,
+          EXISTS(SELECT * FROM public."Like" WHERE "likingUser" = $6 AND "likedUser" = "User".id) AS liking,
+          EXISTS(SELECT * FROM public."Like" WHERE "likedUser" = $6 AND "likingUser" = "User".id) AS liked
+          FROM public."User"
+          WHERE "birthDate" <= $1
+          AND "birthDate" >= $2
+          AND "popularityRate" >= $3
+          AND "popularityRate" <= $4
+          AND interests @> $5::text[]
+          AND suspended = false
+          AND id != $6
+          AND NOT EXISTS (
+          SELECT  *
+          FROM public."Block"
+          WHERE "blockedUser" = $6
+          AND "blockingUser" = "User".id
+          )`,
+        [
+          this.ageToBirthdate(ageMinimum),
+          this.ageToBirthdate(ageMaximum),
+          popularityRateMinimum,
+          popularityRateMaximum,
+          interests,
+          currentUserId,
+        ],
+      );
+      return result;
+    } catch (err) {
+      console.log(err, 'in model User.searchUser()');
+      return null;
+    }
+  }
+
+  async compatibleUser(age, popularityRate, interests, currentUserId) {
+    try {
+      let [ageMinimum, ageMaximum] = age;
+      let [popularityRateMinimum, popularityRateMaximum] = popularityRate;
+
+      if (!ageMinimum) {
+        ageMinimum = 18;
+      }
+      if (!ageMaximum) {
+        ageMaximum = 80;
+      }
+      if (!popularityRateMinimum) {
+        popularityRateMinimum = 0;
+      }
+      if (!popularityRateMaximum) {
+        popularityRateMaximum = 100;
+      }
+      if (!interests) {
+        interests = [];
+      }
+
+      const currentUserPreferences = await this.getByFiltered(
+        'id',
+        currentUserId,
+        ['gender', 'sexualOrientation'],
+      );
+
+      const result = await db.any(
+        ` SELECT id AS visitor, firstname, username, location,
+          "birthDate", "popularityRate", gender, "sexualOrientation",
+          description, interests, images, "profilePicture", suspended,
+          EXISTS(SELECT * FROM public."Like" WHERE "likingUser" = $6 AND "likedUser" = "User".id) AS liking,
+          EXISTS(SELECT * FROM public."Like" WHERE "likedUser" = $6 AND "likingUser" = "User".id) AS liked
+          FROM public."User"
+          WHERE "birthDate" <= $1
+          AND "birthDate" >= $2
+          AND "popularityRate" >= $3
+          AND "popularityRate" <= $4
+          AND interests @> $5::text[]
+          AND suspended = false
+          AND id != $6
+          AND gender && $8::smallint[]
+          AND "sexualOrientation" && $7::smallint[]
+          AND NOT EXISTS (
+          SELECT  *
+          FROM public."Block"
+          WHERE "blockedUser" = $6
+          AND "blockingUser" = "User".id
+          )
+          AND NOT EXISTS (SELECT * FROM public."Like" WHERE "likingUser" = $6 AND "likedUser" = "User".id)
+          `,
+        [
+          this.ageToBirthdate(ageMinimum),
+          this.ageToBirthdate(ageMaximum),
+          popularityRateMinimum,
+          popularityRateMaximum,
+          interests,
+          currentUserId,
+          currentUserPreferences[0].gender,
+          currentUserPreferences[0].sexualOrientation,
+        ],
+      );
+      return result;
+    } catch (err) {
+      console.log(err, 'in model User.searchUser()');
       return null;
     }
   }
@@ -77,7 +215,12 @@ class User {
   async updatePopularityRate(id) {
     try {
       return await db.any(
-        'UPDATE Public."User" SET "popularityRate" = ( SELECT ROUND( COALESCE(NULLIF(COUNT(*)::decimal, 0), 1)  / ( SELECT COALESCE(NULLIF(COUNT(*)::decimal * 0.7 , 0),1) FROM Public."Visit" WHERE visited = $1) * 100) FROM Public."Like" WHERE "likedUser" = $1 ) WHERE id = $1 RETURNING "popularityRate"',
+        `UPDATE Public."User" SET "popularityRate" = (
+          SELECT ROUND( COALESCE(NULLIF(COUNT(*)::decimal, 0), 1)
+         / ( SELECT COALESCE(NULLIF(COUNT(*)::decimal * 0.7 , 0),1) FROM Public."Visit" WHERE visited = $1)
+         * 100)
+         FROM Public."Like" WHERE "likedUser" = $1 )
+         WHERE id = $1 RETURNING "popularityRate"`,
         [id],
       );
     } catch (err) {

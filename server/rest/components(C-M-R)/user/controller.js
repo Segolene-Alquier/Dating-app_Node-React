@@ -17,6 +17,8 @@ const userValidation = new UserValidation(user);
 const like = new Like();
 const block = new Block();
 const report = new Report();
+const _ = require('lodash');
+const { getDistance } = require('geolib');
 
 async function getUsers(request, response) {
   try {
@@ -194,6 +196,17 @@ async function createUser(request, response) {
   }
 }
 
+const getAge = dateString => {
+  const today = new Date();
+  const birthDate = new Date(dateString);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+};
+
 async function updateUser(request, response) {
   const id = request.decoded.userid;
   const filteredValues = check.filterInputValues('API', request.body);
@@ -230,6 +243,133 @@ async function deleteUser(request, response) {
   }
 }
 
+const distanceCalculator = (userLocation, otherUserLocation) => {
+  if (otherUserLocation === null) {
+    return 10000;
+  }
+  let dist = getDistance(
+    { latitude: userLocation[0], longitude: userLocation[1] },
+    { latitude: otherUserLocation[0], longitude: otherUserLocation[1] },
+  );
+  return Math.round(dist / 1000);
+};
+
+async function search(request, response) {
+  const id = request.decoded.userid;
+  let { ageRange, popularityRange, interests, distanceMax } = request.body;
+
+  if ((await checkIfProfileCompleted(id)) === false) {
+    return response.status(200).json({
+      authorized: false,
+      message: 'You need to complete your profile first!',
+    });
+  }
+
+  if (distanceMax === undefined) {
+    distanceMax = 1000;
+  }
+
+  try {
+    const [ageMinimum, ageMaximum] = ageRange;
+    const [popularityRateMinimum, popularityRateMaximum] = popularityRange;
+    let userSearchResult = await user.searchUser(
+      [ageMinimum, ageMaximum],
+      [popularityRateMinimum, popularityRateMaximum],
+      interests,
+      id,
+    );
+    let currentUserLocation = await user.getByFiltered('id', id, ['location']);
+    currentUserLocation = currentUserLocation[0].location;
+    console.log(currentUserLocation);
+    userSearchResult.forEach(profile => {
+      profile.age = getAge(profile.birthDate);
+    });
+    userSearchResult = _.filter(userSearchResult, user => {
+      const distance = distanceCalculator(currentUserLocation, user.location);
+      user.distance = distance;
+      return distance <= distanceMax;
+    });
+
+    response.status(200).json(userSearchResult);
+  } catch (err) {
+    console.log(err);
+    response.status(206).send(err);
+  }
+}
+
+const interestScore = (currentUserInterests, otherUserInterests) => {
+  const nbOfCommonInterests = _.intersection(
+    currentUserInterests,
+    otherUserInterests,
+  ).length;
+  if (nbOfCommonInterests <= 3) {
+    return nbOfCommonInterests * (1 / 3) * 100;
+  }
+  return 100 + (nbOfCommonInterests - 3) * 10;
+};
+
+const distanceScore = distance => {
+  const score = 100 - distance * 5;
+  return score < 0 ? 0 : score;
+};
+
+const popularityScore = (currentUserPopularity, otherUserPopularity) => {
+  const score = 100 - Math.abs(currentUserPopularity - otherUserPopularity) * 2;
+  return score < 0 ? 0 : score;
+};
+
+async function suggestions(request, response) {
+  const id = request.decoded.userid;
+  let { ageRange, popularityRange, interests, distanceMax } = request.body;
+
+  if ((await checkIfProfileCompleted(id)) === false) {
+    return response.status(200).json({
+      authorized: false,
+      message: 'You need to complete your profile first!',
+    });
+  }
+
+  if (distanceMax === undefined) {
+    distanceMax = 1000;
+  }
+
+  try {
+    const [ageMinimum, ageMaximum] = ageRange;
+    const [popularityRateMinimum, popularityRateMaximum] = popularityRange;
+    let userSearchResult = await user.compatibleUser(
+      [ageMinimum, ageMaximum],
+      [popularityRateMinimum, popularityRateMaximum],
+      interests,
+      id,
+    );
+    let currentUser = await user.getByFiltered('id', id, [
+      'location',
+      'interests',
+      'popularityRate',
+    ]);
+    currentUser = currentUser[0];
+    userSearchResult = _.filter(userSearchResult, user => {
+      const distance = distanceCalculator(currentUser.location, user.location);
+      user.distance = distance;
+      return distance <= distanceMax;
+    });
+
+    userSearchResult.forEach(profile => {
+      profile.age = getAge(profile.birthDate);
+      profile.score =
+        interestScore(currentUser.interests, profile.interests) * 0.6 +
+        distanceScore(profile.distance) * 0.25 +
+        popularityScore(currentUser.popularityRate, profile.popularityRate) *
+          0.15;
+    });
+
+    response.status(200).json(userSearchResult);
+  } catch (err) {
+    console.log(err);
+    response.status(206).send(err);
+  }
+}
+
 module.exports.getUsers = getUsers;
 module.exports.getUserById = getUserById;
 module.exports.getMyUserInfo = getMyUserInfo;
@@ -239,3 +379,5 @@ module.exports.createUser = createUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
 module.exports.getUserByUsername = getUserByUsername;
+module.exports.search = search;
+module.exports.suggestions = suggestions;
