@@ -26,7 +26,7 @@ import Swipe from '../swipe';
 import Chat from '../chat';
 
 import io from 'socket.io-client';
-let socket = io(`http://localhost:3002`);
+// let socket = io(`http://localhost:3002`);
 
 function App() {
   return (

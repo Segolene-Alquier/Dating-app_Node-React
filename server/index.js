@@ -9,13 +9,17 @@ const port = 3001;
 var io = require('socket.io')(http);
 
 io.on('connection', function(socket) {
+  // socket.removeAllListeners();
   console.log('a user connected');
+  console.log(socket.id);
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
   socket.on('chat message', function(msg) {
     console.log('message: ' + msg);
+    socket.broadcast.emit('chat message', msg);
   });
+  // socket.broadcast.emit('hi');
 });
 http.listen(3002, function() {
   console.log('listening on *:3002');

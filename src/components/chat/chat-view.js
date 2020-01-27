@@ -6,14 +6,22 @@ let socket = io(`http://localhost:3002`);
 
 const Chat = () => {
   const [message, setMessage] = useState('');
+  const [messageList, setMessageList] = useState([]);
+  socket.on('chat message', msg => {
+    console.log(msg);
+    setMessageList(messageList.concat({ sendername: 'yann', msg: msg }));
+    console.log(messageList);
+  });
 
   const handleMessage = event => {
-    setMessage(event.target.value);
+		setMessage(event.target.value);
+
   };
 
   const sendMessage = () => {
     socket.emit('chat message', message);
-    setMessage('');
+		setMessage('');
+		setMessageList(messageList.concat({ sendername: 'yann', msg: message }));
   };
 
   return (
