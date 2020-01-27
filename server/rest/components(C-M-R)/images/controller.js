@@ -65,7 +65,9 @@ async function deleteImage(request, response) {
   try {
     await user.deleteElementToArrayById(id, 'images', url);
     await user.updateProfilePictureIfNotExist(id);
-    await deleteFile(url);
+    if (!url.includes('generated.photos')) {
+      await deleteFile(url);
+    }
     return response.status(200).send({ success: true });
   } catch (error) {
     console.log(error);
