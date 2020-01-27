@@ -27,6 +27,7 @@ const createFakeUser = async () => {
       email,
     })),
     userName,
+    password,
   };
 };
 
@@ -38,7 +39,6 @@ function randomArrayInt(min, max) {
   array[0] = randomInteger(min, max);
   array[1] = randomInteger(min, max);
   array[2] = randomInteger(min, max);
-  array[3] = randomInteger(min, max);
   return _.sortBy(_.uniq(array));
 }
 
@@ -80,20 +80,26 @@ const updateFakeUser = async userId => {
   infos.interests = randomArrayOfInterests(10);
   infos.images = await generateFakeImages();
   infos.profilePicture = infos.images[0];
-  user.updateById(userId, infos);
+  await user.updateById(userId, infos);
 };
 
-const main = async () => {
-  let userId = 0;
+const generateProfiles = async nbOfProfiles => {
   interestsList = await interest.getAll().then(list => {
     return list.map(element => element.name);
   });
-  const newUser = await createFakeUser();
-  if (newUser.created) {
-    userId = newUser.id;
-    await updateFakeUser(userId);
-    console.log(`new user created with id: ${userId}, ${newUser.userName}`);
+  let profiles = [];
+  for (let i = 0; i < nbOfProfiles; i++) {
+    let userId = 0;
+    const newUser = await createFakeUser();
+    if (newUser.created) {
+      userId = newUser.id;
+      await updateFakeUser(userId);
+      profiles.push(
+        `new user created with id: ${userId} , username: ${newUser.userName} , password:  ${newUser.password}`,
+      );
+    }
   }
+  profiles.forEach(profile => console.log(profile));
 };
 
-main();
+generateProfiles(2);
