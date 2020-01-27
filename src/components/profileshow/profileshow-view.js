@@ -128,12 +128,17 @@ const ProfileShow = ({ computedMatch }) => {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
   const visitedUsername = computedMatch.params.username;
+  const { handleChangeCity, getAge } = UseProfileForm(
+    authContext.userData,
+    authContext.token,
+  );
   const {
-    handleChangeCity,
-    // isChecked,
-    getAge,
-  } = UseProfileForm(authContext.userData, authContext.token);
-  const { visitedProfile, loaded } = ProfileShowContainer(visitedUsername);
+    visitedProfile,
+    loaded,
+    handleBlock,
+    handleReport,
+    handleLike,
+  } = ProfileShowContainer(visitedUsername);
 
   if (loaded === false) {
     return (
@@ -149,7 +154,10 @@ const ProfileShow = ({ computedMatch }) => {
         classes={classes}
         profile={visitedProfile}
         getAge={getAge}
+        handleBlock={handleBlock}
+        handleReport={handleReport}
         handleChangeCity={handleChangeCity}
+        handleLike={handleLike}
         type="public"
       />
       <Divider className={classes.divider} />

@@ -2,14 +2,18 @@ import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
-// import MediaCard from './components/media-card';
-import SuggestionsContainer from './suggestions-container';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
-import Title from '../shared/title';
-// import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import { Tabs, Tab } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 import SuggestionsFilters from './components/suggestions-filters';
-import ProfilesGrid from './../shared/profiles-grid';
+import ProfilesGrid from '../shared/profiles-grid';
+import Title from '../shared/title';
+import SuggestionsContainer from './suggestions-container';
+import MediaCard from '../shared/components/media-card';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -62,6 +66,29 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+function TabPanel(props) {
+  const { children, valueTab, index } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={valueTab !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+    >
+      <Box p={3}>{children}</Box>
+    </Typography>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
 const Suggestions = () => {
   const {
     currentUserProfile,
@@ -75,18 +102,26 @@ const Suggestions = () => {
     handleSort,
   } = SuggestionsContainer();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
+  // change tabs
+  const [valueTab, setValueTab] = React.useState(0);
+  const handleChange = (event, newValueTab) => {
+    setValueTab(newValueTab);
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
   const [debouncedFunction] = useDebouncedCallback(
     (event, newValue, type, setSuggestionsOptions) => {
-      const newSuggestionsOptions = { ...suggestionsOptions, [type]: newValue };
+      const newSuggestionsOptions = {
+        ...suggestionsOptions,
+        [type]: newValue,
+      };
       setSuggestionsOptions(newSuggestionsOptions);
     },
     1000,
@@ -112,13 +147,42 @@ const Suggestions = () => {
         handleSort={handleSort}
       />
       <Divider light />
-      <ProfilesGrid
-        classes={classes}
-        profiles={suggestionsResult}
-        currentUserProfile={currentUserProfile}
-        handleLike={handleLike}
-        type="search"
-      />
+      <Paper square>
+        <Tabs
+          width="100%"
+          valueTab={valueTab}
+          onChange={handleChange}
+          aria-label="simple tabs example"
+          className={classes.tabs}
+          centered
+        >
+          <Tab label="Swipe view" {...a11yProps(0)} />
+          <Tab label="List view" {...a11yProps(1)} />
+        </Tabs>
+      </Paper>
+
+      <TabPanel valueTab={valueTab} index={0}>
+        <Container>
+          <Box>
+            {console.log('suggestions', suggestionsResult)}
+            <MediaCard
+              field={suggestionsResult}
+              profile={currentUserProfile}
+              handleLike={handleLike}
+              type="swipe"
+            />
+          </Box>
+        </Container>
+      </TabPanel>
+      <TabPanel valueTab={valueTab} index={1}>
+        <ProfilesGrid
+          classes={classes}
+          profiles={suggestionsResult}
+          currentUserProfile={currentUserProfile}
+          handleLike={handleLike}
+          type="search"
+        />
+      </TabPanel>
     </>
   );
 };

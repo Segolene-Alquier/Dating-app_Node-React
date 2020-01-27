@@ -22,6 +22,7 @@ import Toaster from '../toaster';
 import UserValidation from '../uservalidation';
 import ResetForgotPassword from '../ResetforgotPassword';
 import ForgotPassword from '../forgotpassword';
+import Swipe from '../swipe';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <SecureRoute path="/profile/:username" component={ProfileShow} />
           <SecureRoute path="/profile" component={Profile} />
           <SecureRoute path="/visits" component={Visit} />
+          <SecureRoute path="/swipe" component={Swipe} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>

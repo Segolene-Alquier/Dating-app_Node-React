@@ -8,6 +8,7 @@ const UserValidation = require('./../userValidation/model');
 const User = require('./model');
 const Like = require('./../like/model');
 const Block = require('./../block/model');
+const Report = require('./../report/model');
 const { deleteFile } = require('../images/controller');
 const axios = require('axios');
 
@@ -16,6 +17,7 @@ const check = new UserInputTests(user);
 const userValidation = new UserValidation(user);
 const like = new Like();
 const block = new Block();
+const report = new Report();
 const _ = require('lodash');
 const { getDistance } = require('geolib');
 
@@ -127,9 +129,20 @@ async function getUserByUsername(request, response) {
       .then(data => {
         return data.data.address.city;
       });
-    response
-      .status(200)
-      .json({ founded: true, ...call[0], ...relationship, city });
+
+    const userAlreadyBlocked = await block.exists(userIdVisitor, userIdVisited);
+    const userAlreadyReported = await report.exists(
+      userIdVisitor,
+      userIdVisited,
+    );
+    response.status(200).json({
+      founded: true,
+      ...call[0],
+      ...relationship,
+      alreadyBlocked: userAlreadyBlocked,
+      alreadyReported: userAlreadyReported,
+      city,
+    });
   } catch (err) {
     console.log(err);
     response.status(206).send(err);
