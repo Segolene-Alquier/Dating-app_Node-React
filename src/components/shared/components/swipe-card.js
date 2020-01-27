@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MediaCard({ field, profile, handleLike, type }) {
+export default function SwipeCard({ field, profile, handleLike, type }) {
   const classes = useStyles();
 
   const {
