@@ -13,11 +13,14 @@ export const AuthProvider = ({ children }) => {
     token,
     userData,
   };
+
   const socket = io(`http://localhost:3001`);
-  const socketContext = {socket}
+  const socketContext = { socket };
 
   return (
-    <AuthContext.Provider value={{authContext, socketContext}}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ authContext, socketContext }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 AuthProvider.propTypes = {

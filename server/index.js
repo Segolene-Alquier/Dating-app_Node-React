@@ -43,12 +43,24 @@ app.use('/images', require('./rest/components(C-M-R)/images/routes'));
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+// io.set('transports', ['xhr-polling']);
+server.listen(3001,
+//   {
+//   // options can go here
+//   transports: ['xhr-polling']
+// },
+() => {
+  console.log('Matcha is listening on port 3001!');
+});
 
 const connectedUsers = {};
-io.on('connection', function(socket) {
+io.on('connection', async socket => {
   console.log('hey babe');
   newConnection(io, connectedUsers, socket);
-
+  socket.on('error', function(err) {
+    console.log('Socket.IO Error');
+    console.log(err.stack); // this is changed from your code in last comment
+  });
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
@@ -56,7 +68,4 @@ io.on('connection', function(socket) {
     console.log('message: ' + msg);
     socket.broadcast.emit('chat message', msg);
   });
-});
-server.listen(3001, () => {
-  console.log('Matcha is listening on port 3001!');
 });

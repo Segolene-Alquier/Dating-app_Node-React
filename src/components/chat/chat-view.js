@@ -3,14 +3,15 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { AuthContext } from '../app/AuthContext';
 
-import io from 'socket.io-client';
-let socket = io(`http://localhost:3001`);
+// import io from 'socket.io-client';
+// let socket = io(`http://localhost:3001`);
 
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const { authContext, socketContext } = useContext(AuthContext);
 
+  console.log(socketContext.userId);
   socketContext.socket.on('chat message', msg => {
     console.log(msg);
     setMessageList(messageList.concat({ sendername: 'yann', msg: msg }));
@@ -22,7 +23,7 @@ const Chat = () => {
   };
 
   const sendMessage = () => {
-    socket.emit('chat message', message);
+    socketContext.socket.emit('chat message', message);
     setMessage('');
     setMessageList(messageList.concat({ sendername: 'yann', msg: message }));
   };
