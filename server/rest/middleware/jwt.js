@@ -5,6 +5,7 @@ const secret = 'mignon4ever';
 async function checkToken(request, response, next) {
   let token =
     request.headers['x-access-token'] || request.headers.authorization;
+    console.log("token ",token)
   if (token) {
     if (token.startsWith('Bearer ')) {
       token = token.slice(7, token.length);
@@ -29,4 +30,20 @@ async function checkToken(request, response, next) {
   return null;
 }
 
+async function checkTokenSocket(token) {
+  console.log("JE SUIS ICI")
+  if (token) {
+    if (token.startsWith('Bearer ')) {
+      token = token.slice(7, token.length);
+    }
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) {
+        return false;
+      }
+      return decoded;
+    });
+  }
+}
+
 module.exports.checkToken = checkToken;
+module.exports.checkTokenSocket = checkTokenSocket;

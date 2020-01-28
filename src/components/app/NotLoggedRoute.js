@@ -5,7 +5,7 @@ import { AuthContext } from './AuthContext';
 import { isTokenExpired } from '../auth/AuthContainer';
 
 const NotLoggedRoute = ({ component: Component, ...rest }) => {
-  const authContext = useContext(AuthContext);
+  const { authContext } = useContext(AuthContext);
   const defaultValue =
     authContext.token !== null && !isTokenExpired(authContext.token);
   const [secureAuth, setSecureAuth] = useState(defaultValue);

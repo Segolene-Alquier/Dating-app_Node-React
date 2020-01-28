@@ -165,7 +165,7 @@ function a11yProps(index) {
 
 const Profile = params => {
   const classes = useStyles();
-  const authContext = useContext(AuthContext);
+  const {authContext} = useContext(AuthContext);
   const locationParams = params.location;
   const getParams = queryString.parse(locationParams.search);
 

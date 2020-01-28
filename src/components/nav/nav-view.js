@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 
 const Nav = () => {
   const classes = useStyles();
-  const authContext = useContext(AuthContext);
+  const { authContext, socketContext } = useContext(AuthContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   authContext.userData.then(data => {

@@ -8,7 +8,7 @@ const ProfileShowContainer = visitedUsername => {
   const [visitedProfile, setVisitedProfile] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
-  const authContext = useContext(AuthContext);
+  const { authContext } = useContext(AuthContext);
   const { token } = authContext;
 
   const handleBlock = (blockedId, blocked, setBlocked) => {

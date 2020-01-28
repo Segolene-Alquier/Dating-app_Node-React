@@ -3,27 +3,9 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
-var http = require('http').createServer(app);
 
-const port = 3001;
-var io = require('socket.io')(http);
+const newConnection = require('./socket/newConnection');
 
-io.on('connection', function(socket) {
-  // socket.removeAllListeners();
-  console.log('a user connected');
-  console.log(socket.id);
-  socket.on('disconnect', function() {
-    console.log('user disconnected');
-  });
-  socket.on('chat message', function(msg) {
-    console.log('message: ' + msg);
-    socket.broadcast.emit('chat message', msg);
-  });
-  // socket.broadcast.emit('hi');
-});
-http.listen(3002, function() {
-  console.log('listening on *:3002');
-});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
@@ -33,6 +15,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', origin);
     res.header(
       'Access-Control-Allow-Methods',
+      'Access-Control-Allow-Credentials',
       'PUT, POST, GET, DELETE, OPTIONS',
     );
   }
@@ -45,8 +28,6 @@ app.use((req, res, next) => {
 
 app.use('/users', require('./rest/components(C-M-R)/user/routes'));
 app.use('/genders', require('./rest/components(C-M-R)/gender/routes'));
-// eslint-disable-next-line max-len
-// app.use("/sexualOrientations", require("./rest/components(C-M-R)/sexualOrientation/routes"))
 app.use('/interests', require('./rest/components(C-M-R)/interests/routes'));
 app.use('/auth', require('./rest/components(C-M-R)/auth/routes'));
 app.use('/visits', require('./rest/components(C-M-R)/visit/routes'));
@@ -60,6 +41,22 @@ app.use(
 );
 app.use('/images', require('./rest/components(C-M-R)/images/routes'));
 
-app.listen(port, () => {
-  console.log('Example app listening on port 3001!');
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+const connectedUsers = {};
+io.on('connection', function(socket) {
+  console.log('hey babe');
+  newConnection(io, connectedUsers, socket);
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+  socket.on('chat message', function(msg) {
+    console.log('message: ' + msg);
+    socket.broadcast.emit('chat message', msg);
+  });
+});
+server.listen(3001, () => {
+  console.log('Matcha is listening on port 3001!');
 });

@@ -15,7 +15,7 @@ const SearchContainer = () => {
     distanceMax: 100,
     sort: '',
   });
-  const authContext = useContext(AuthContext);
+  const { authContext } = useContext(AuthContext);
   const { userData, token } = authContext;
 
   const handleLike = likedId => {

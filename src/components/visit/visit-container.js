@@ -8,7 +8,7 @@ const VisitContainer = () => {
   const [loaded, setLoaded] = useState(false);
   const [visitedProfile, setVisitedProfile] = useState([]);
   const [visitorProfile, setVisitorProfile] = useState({});
-  const authContext = useContext(AuthContext);
+  const { authContext } = useContext(AuthContext);
   const { userData, token } = authContext;
 
   const handleLike = likedId => {

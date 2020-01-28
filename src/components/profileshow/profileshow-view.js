@@ -126,7 +126,7 @@ const useStyles = makeStyles(theme => ({
 
 const ProfileShow = ({ computedMatch }) => {
   const classes = useStyles();
-  const authContext = useContext(AuthContext);
+  const { authContext } = useContext(AuthContext);
   const visitedUsername = computedMatch.params.username;
   const { handleChangeCity, getAge } = UseProfileForm(
     authContext.userData,

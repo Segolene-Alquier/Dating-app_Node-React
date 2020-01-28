@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getToken, getUserData } from '../auth/AuthContainer';
-
+import io from 'socket.io-client';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -12,11 +12,12 @@ export const AuthProvider = ({ children }) => {
   const authContext = {
     token,
     userData,
-    // location,
   };
+  const socket = io(`http://localhost:3001`);
+  const socketContext = {socket}
 
   return (
-    <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{authContext, socketContext}}>{children}</AuthContext.Provider>
   );
 };
 AuthProvider.propTypes = {

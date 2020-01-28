@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { AuthContext } from '../app/AuthContext';
+
 import io from 'socket.io-client';
-let socket = io(`http://localhost:3002`);
+let socket = io(`http://localhost:3001`);
 
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  socket.on('chat message', msg => {
+  const { authContext, socketContext } = useContext(AuthContext);
+
+  socketContext.socket.on('chat message', msg => {
     console.log(msg);
     setMessageList(messageList.concat({ sendername: 'yann', msg: msg }));
     console.log(messageList);
   });
 
   const handleMessage = event => {
-		setMessage(event.target.value);
-
+    setMessage(event.target.value);
   };
 
   const sendMessage = () => {
     socket.emit('chat message', message);
-		setMessage('');
-		setMessageList(messageList.concat({ sendername: 'yann', msg: message }));
+    setMessage('');
+    setMessageList(messageList.concat({ sendername: 'yann', msg: message }));
   };
 
   return (

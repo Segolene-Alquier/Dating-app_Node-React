@@ -15,7 +15,7 @@ const SuggestionsContainer = () => {
     distanceMax: 100,
     sort: 'score',
   });
-  const authContext = useContext(AuthContext);
+  const { authContext } = useContext(AuthContext);
   const { userData, token } = authContext;
 
   const handleLike = likedId => {

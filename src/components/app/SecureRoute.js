@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { AuthContext } from './AuthContext';
 
 const SecureRoute = ({ component: Component, ...rest }) => {
-  const authContext = useContext(AuthContext);
+  const { authContext, socketContext } = useContext(AuthContext);
   const defaultValue = authContext.token !== null;
   const [secureAuth, setSecureAuth] = useState(defaultValue);
   if (secureAuth === true) {
