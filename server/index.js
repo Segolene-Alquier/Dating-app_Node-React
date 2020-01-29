@@ -5,6 +5,7 @@ require('dotenv').config();
 const app = express();
 
 const newConnection = require('./socket/newConnection');
+const disconnection = require('./socket/disconnection');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,14 +51,12 @@ server.listen(3001, () => {
 
 const connectedUsers = {};
 io.on('connection', async socket => {
-  console.log('hey babe');
   newConnection(io, connectedUsers, socket);
   socket.on('error', function(err) {
-    console.log('Socket.IO Error');
-    console.log(err.stack); // this is changed from your code in last comment
+    console.log(err.stack);
   });
   socket.on('disconnect', function() {
-    console.log('user disconnected');
+    disconnection(io, connectedUsers, socket);
   });
   socket.on('chat message', function(msg) {
     console.log('message: ' + msg);
