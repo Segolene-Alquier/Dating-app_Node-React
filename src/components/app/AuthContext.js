@@ -14,7 +14,9 @@ export const AuthProvider = ({ children }) => {
     userData,
   };
 
-  const socket = io(`http://localhost:3001`);
+  const socket = io(`http://localhost:3001`, {
+    query: { token },
+  });
   const socketContext = { socket };
 
   return (

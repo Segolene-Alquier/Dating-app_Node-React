@@ -44,12 +44,7 @@ app.use('/images', require('./rest/components(C-M-R)/images/routes'));
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 // io.set('transports', ['xhr-polling']);
-server.listen(3001,
-//   {
-//   // options can go here
-//   transports: ['xhr-polling']
-// },
-() => {
+server.listen(3001, () => {
   console.log('Matcha is listening on port 3001!');
 });
 
