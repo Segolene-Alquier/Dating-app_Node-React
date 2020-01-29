@@ -60,6 +60,15 @@ io.on('connection', async socket => {
   });
   socket.on('chat message', function(msg) {
     console.log('message: ' + msg);
+    console.log('message socketid: ' + msg, connectedUsers[socket.id]);
+    // ajouter colonne en db pourn room id
+    // creer une room lorsqu'il y a un match => qu'on va lier avec room id et match id
+    // checker s'il y a deja des messages enregistres en db avec ce match id :
+    //// on fetch l'API :
+    //// s'il y a des messages :  on affiche les messages
+    // on enregistre les messages en front via socket.io seulement
+    // a chaque submit, on cree un message en db (creer controler et model pour message)
+    // fonction qui enregistre en db le message via l'id utilisateur
     socket.broadcast.emit('chat message', msg);
   });
 });

@@ -50,7 +50,6 @@ function App() {
           <SecureRoute path="/visits" component={Visit} />
           <SecureRoute path="/swipe" component={Swipe} />
           <SecureRoute path="/chat" component={Chat} />
-
           <Route path="/" component={Home} />
         </Switch>
       </Router>
