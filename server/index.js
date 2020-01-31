@@ -61,7 +61,7 @@ io.on('connection', async socket => {
   socket.on('chat message', function(msg) {
     console.log('message: ' + msg);
     console.log('message socketid: ' + msg, connectedUsers[socket.id]);
-    // ajouter colonne en db pourn room id
+    // ajouter colonne en db pour room id
     // creer une room lorsqu'il y a un match => qu'on va lier avec room id et match id
     // checker s'il y a deja des messages enregistres en db avec ce match id :
     //// on fetch l'API :

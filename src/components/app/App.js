@@ -24,6 +24,7 @@ import ResetForgotPassword from '../ResetforgotPassword';
 import ForgotPassword from '../forgotpassword';
 import Swipe from '../swipe';
 import Chat from '../chat';
+import ChatRoom from '../chatroom';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <SecureRoute path="/visits" component={Visit} />
           <SecureRoute path="/swipe" component={Swipe} />
           <SecureRoute path="/chat" component={Chat} />
+          <SecureRoute path="/chatroom/:id" component={ChatRoom} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
