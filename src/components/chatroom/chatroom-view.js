@@ -9,7 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
-  chatWrapper: {
+  chatWrapper: { position: 'relative' },
+  chatContent: {
     // backgroundColor: '#5F9EA0',
     width: '100%',
     maxWidth: '1140px',
@@ -17,7 +18,8 @@ const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(2),
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    height: '90vh',
+    height: '80vh',
+    overflowY: 'scroll',
   },
   boxMessageOther: {
     display: 'flex',
@@ -42,15 +44,25 @@ const useStyles = makeStyles(theme => ({
     padding: '10px 20px',
     maxWidth: '600px',
     color: 'white',
+    marginBottom: theme.spacing(1),
   },
   messageInput: {
-    height: '10vh',
     width: '100%',
     maxWidth: '1140px',
     display: 'flex',
-	flexDirection: 'row',
-	position: "fixed",
-    bottom: "0",
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'fixed',
+    bottom: '0',
+    backgroundColor: 'white',
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    backgroundColor: '#f4f4f4',
+  },
+  textField: {
+    backgroundColor: '#ffffff',
   },
 }));
 
@@ -61,37 +73,184 @@ const ChatRoom = ({}) => {
   return (
     <>
       <Box className={classes.chatWrapper}>
-        <Box className={classes.boxMessageOther}>
-          <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-          <div className={classes.textBubbleOther}>
-            <span>Lorem ipsum dolor sit amet.</span>
-          </div>
-        </Box>
-        <Box className={classes.boxMessageOther}>
-          <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-          <div className={classes.textBubbleOther}>
-            <span>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              fermentum leo eget leo iaculis, elementum.
-            </span>
-          </div>
-        </Box>
-        <Box className={classes.boxMessageMe}>
-          <div className={classes.textBubbleMe}>
-            <span>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              fermentum leo eget leo iaculis, elementum.
-            </span>
-          </div>
+        <Box className={classes.chatContent}>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>Lorem ipsum dolor sit amet.</span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageMe}>
+            <div className={classes.textBubbleMe}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>Lorem ipsum dolor sit amet.</span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageMe}>
+            <div className={classes.textBubbleMe}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>Lorem ipsum dolor sit amet.</span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageMe}>
+            <div className={classes.textBubbleMe}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>Lorem ipsum dolor sit amet.</span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageMe}>
+            <div className={classes.textBubbleMe}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>Lorem ipsum dolor sit amet.</span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageMe}>
+            <div className={classes.textBubbleMe}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>Lorem ipsum dolor sit amet.</span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageMe}>
+            <div className={classes.textBubbleMe}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>Lorem ipsum dolor sit amet.</span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageOther}>
+            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
+            <div className={classes.textBubbleOther}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
+          <Box className={classes.boxMessageMe}>
+            <div className={classes.textBubbleMe}>
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                fermentum leo eget leo iaculis, elementum.
+              </span>
+            </div>
+          </Box>
         </Box>
       </Box>
       <Box className={classes.messageInput}>
-        <Grid container>
-          <Grid item sm={10}>
-            <TextField fullWidth variant="outlined"/>
+        <Grid container spacing={2}>
+          <Grid item sm={10} xs={12}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              className={classes.textField}
+            />
           </Grid>
-          <Grid item sm={2}>
-            <Button variant="contained" color="secondary">
+          <Grid item sm={2} xs={12}>
+            <Button
+              variant="contained"
+              color="secondary"
+            >
               Send message
             </Button>
           </Grid>
