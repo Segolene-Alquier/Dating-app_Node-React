@@ -36,6 +36,8 @@ app.use('/matchs', require('./rest/components(C-M-R)/match/routes'));
 app.use('/likes', require('./rest/components(C-M-R)/like/routes'));
 app.use('/block', require('./rest/components(C-M-R)/block/routes'));
 app.use('/report', require('./rest/components(C-M-R)/report/routes'));
+app.use('/report', require('./rest/components(C-M-R)/chatroom/routes'));
+
 app.use(
   '/validation',
   require('./rest/components(C-M-R)/userValidation/routes'),
@@ -53,14 +55,14 @@ const connectedUsers = {};
 io.on('connection', async socket => {
   newConnection(io, connectedUsers, socket);
   socket.on('error', function(err) {
-    console.log(err.stack);
+    // console.log(err.stack);
   });
   socket.on('disconnect', function() {
     disconnection(io, connectedUsers, socket);
   });
   socket.on('chat message', function(msg) {
-    console.log('message: ' + msg);
-    console.log('message socketid: ' + msg, connectedUsers[socket.id]);
+    // console.log('message: ' + msg);
+    // console.log('message socketid: ' + msg, connectedUsers[socket.id]);
     // ajouter colonne en db pour room id
     // creer une room lorsqu'il y a un match => qu'on va lier avec room id et match id
     // checker s'il y a deja des messages enregistres en db avec ce match id :

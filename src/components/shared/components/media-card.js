@@ -9,7 +9,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import red from '@material-ui/core/colors/red';
 import Tooltip from '@material-ui/core/Tooltip';
 import moment from 'moment';
 import { getDistance } from 'geolib';

@@ -72,7 +72,6 @@ const ProfileShowContainer = visitedUsername => {
         },
       })
       .then(result => {
-        console.log(result);
         if (result.data.deleted === true) {
           setLiked(false);
           toast.success('You just unliked this user');

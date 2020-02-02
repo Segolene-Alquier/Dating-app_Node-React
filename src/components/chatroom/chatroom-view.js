@@ -67,151 +67,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ChatRoom = ({}) => {
+  // message = string
+  // sender = current user or other
+  // other picture
   const classes = useStyles();
-
   let { id } = useParams();
+
   return (
     <>
       <Box className={classes.chatWrapper}>
         <Box className={classes.chatContent}>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>Lorem ipsum dolor sit amet.</span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageMe}>
-            <div className={classes.textBubbleMe}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>Lorem ipsum dolor sit amet.</span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageMe}>
-            <div className={classes.textBubbleMe}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>Lorem ipsum dolor sit amet.</span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageMe}>
-            <div className={classes.textBubbleMe}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>Lorem ipsum dolor sit amet.</span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageMe}>
-            <div className={classes.textBubbleMe}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>Lorem ipsum dolor sit amet.</span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageMe}>
-            <div className={classes.textBubbleMe}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>Lorem ipsum dolor sit amet.</span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageMe}>
-            <div className={classes.textBubbleMe}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
           <Box className={classes.boxMessageOther}>
             <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
             <div className={classes.textBubbleOther}>
@@ -247,10 +112,7 @@ const ChatRoom = ({}) => {
             />
           </Grid>
           <Grid item sm={2} xs={12}>
-            <Button
-              variant="contained"
-              color="secondary"
-            >
+            <Button variant="contained" color="secondary">
               Send message
             </Button>
           </Grid>
