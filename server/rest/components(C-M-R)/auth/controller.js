@@ -29,6 +29,7 @@ async function booleanToken(request, response) {
       user.updateById(userId, { location });
     }
     const userData = await user.getByFiltered('id', userId, [
+      'id',
       'firstname',
       'surname',
       'username',

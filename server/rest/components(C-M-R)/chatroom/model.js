@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const { db } = require('../../../config/database');
 
-class Match {
+class Chat {
   isValidType(type) {
     const authorizedTypes = ['id', 'user1', 'user2', ['user1', 'user2']];
     return authorizedTypes.some(authorizedType => {
@@ -104,4 +104,4 @@ class Match {
   }
 }
 
-module.exports = Match;
+module.exports = Chat;

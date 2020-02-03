@@ -11,6 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from '@material-ui/core/Typography';
 import ChatContainer from './chat-container';
+import _ from 'lodash';
 
 // import io from 'socket.io-client';
 // let socket = io(`http://localhost:3001`);
@@ -19,9 +20,11 @@ const useStyles = makeStyles(theme => ({}));
 const Chat = () => {
   const classes = useStyles();
 
-  const { matchList } = ChatContainer();
+  const { matchList, matchList2 } = ChatContainer();
 
   console.log('list matchs', matchList);
+    console.log('list matchs 2', matchList2);
+
   // const [message, setMessage] = useState('');
   // const [messageList, setMessageList] = useState([]);
   // const { authContext, socketContext } = useContext(AuthContext);
