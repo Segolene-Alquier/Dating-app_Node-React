@@ -19,11 +19,7 @@ const useStyles = makeStyles(theme => ({}));
 
 const Chat = () => {
   const classes = useStyles();
-
-  const { matchList, matchList2 } = ChatContainer();
-
-  console.log('list matchs', matchList);
-    console.log('list matchs 2', matchList2);
+  const { matchList } = ChatContainer();
 
   // const [message, setMessage] = useState('');
   // const [messageList, setMessageList] = useState([]);
@@ -58,13 +54,19 @@ const Chat = () => {
         Send
       </Button> */}
       <List className={classes.root}>
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="avatar" src="https://placekitten.com/g/200/300" />
-          </ListItemAvatar>
-          <ListItemText primary="Michel" />
-        </ListItem>
-        <Divider variant="inset" component="li" />
+        {_.map(matchList, matchedProfile => {
+          return (
+            <>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar alt="avatar" src={matchedProfile.profilePicture} />
+                </ListItemAvatar>
+                <ListItemText primary={matchedProfile.firstname} />
+              </ListItem>
+              <Divider variant="inset" component="li" />
+            </>
+          );
+        })}
       </List>
     </>
   );
