@@ -16,7 +16,12 @@ import { Redirect } from 'react-router-dom';
 
 // import io from 'socket.io-client';
 // let socket = io(`http://localhost:3001`);
-const useStyles = makeStyles(theme => ({}));
+const useStyles = makeStyles(theme => ({
+  buttonChatroom: {
+    width: '100%',
+    height: '100%',
+  },
+}));
 
 const Chat = () => {
   const classes = useStyles();
@@ -56,10 +61,14 @@ const Chat = () => {
       </Button> */}
       <List className={classes.root}>
         {_.map(matchList, matchedProfile => {
-          let redirectLink = '/chatroom/' + matchedProfile.matchid;
+          let redirectLink = `/chatroom/${matchedProfile.matchid}`;
           return (
             <>
-              <Button href={redirectLink}>
+              <Button
+                className={classes.buttonChatroom}
+                variant="text"
+                href={redirectLink}
+              >
                 <ListItem alignItems="flex-start">
                   <ListItemAvatar>
                     <Avatar alt="avatar" src={matchedProfile.profilePicture} />
