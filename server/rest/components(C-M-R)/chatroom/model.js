@@ -3,7 +3,13 @@ const { db } = require('../../../config/database');
 
 class Chat {
   isValidType(type) {
-    const authorizedTypes = ['id', 'user1', 'user2', ['user1', 'user2']];
+    const authorizedTypes = [
+      'currentUser',
+      'id',
+      'user1',
+      'user2',
+      ['user1', 'user2'],
+    ];
     return authorizedTypes.some(authorizedType => {
       return _.isEqual(type, authorizedType);
     });
@@ -50,27 +56,25 @@ class Chat {
   async getBy(type, value) {
     try {
       if (!this.isValidType(type)) {
-        console.log(`Match.getBy(): ${type} is not an authorized type`);
+        console.log(`Chat.getBy(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(`SELECT * FROM public."Match" WHERE ${type} = ${value}`);
-      if (type instanceof Array && type.length === 2) {
-        return db.any(
-          `SELECT * FROM public."Match" WHERE $1:name = $3 OR $2:name = $3`,
-          [type[0], type[1], value],
-        );
-      }
+      console.log(
+        `SELECT id, firstname, profilePicture FROM public."User" INNER JOIN public."Match" ON ("User".id = "Match".${type[0]} OR "User".id = "Match".${type[1]}) AND "User".id != ${value} WHERE "Match".${type[0]} = ${value} OR "Match".${type[1]} = ${value}`,
+      );
       const result = await db.any(
-        `SELECT * FROM public."Match" WHERE $1:name = $2`,
+        `SELECT "User".id, "User".firstname, "User"."profilePicture"
+          FROM public."User" INNER JOIN public."Match"
+          ON ("User".id = "Match".user1 OR "User".id = "Match".user2) AND "User".id != $2
+          WHERE "Match".user1 = $2 OR "Match".user2 = $2`,
         [type, value],
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model Match.getBy()');
+      console.log(err, 'in model Chat.getBy()');
       return null;
     }
   }
-
   async getAll() {
     try {
       console.log('SELECT * FROM public."Match"');

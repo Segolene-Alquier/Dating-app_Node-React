@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import VisitContainer from './visit-container';
 import Title from '../shared/title';
-import ProfilesGrid from '../shared/profiles-grid'
+import ProfilesGrid from '../shared/profiles-grid';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -50,8 +50,13 @@ const Visit = ({ computedMatch }) => {
 
   return (
     <>
-      <Title textTitle="History of visit" />
-      <ProfilesGrid classes={classes} profiles={visitedProfile} currentUserProfile={visitorProfile} handleLike={handleLike}/>
+      <Title textTitle="History of visits" />
+      <ProfilesGrid
+        classes={classes}
+        profiles={visitedProfile}
+        currentUserProfile={visitorProfile}
+        handleLike={handleLike}
+      />
     </>
   );
 };
