@@ -12,6 +12,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from '@material-ui/core/Typography';
 import ChatContainer from './chat-container';
 import _ from 'lodash';
+import { Redirect } from 'react-router-dom';
 
 // import io from 'socket.io-client';
 // let socket = io(`http://localhost:3001`);
@@ -55,14 +56,17 @@ const Chat = () => {
       </Button> */}
       <List className={classes.root}>
         {_.map(matchList, matchedProfile => {
+          let redirectLink = '/chatroom/' + matchedProfile.matchid;
           return (
             <>
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt="avatar" src={matchedProfile.profilePicture} />
-                </ListItemAvatar>
-                <ListItemText primary={matchedProfile.firstname} />
-              </ListItem>
+              <Button href={redirectLink}>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="avatar" src={matchedProfile.profilePicture} />
+                  </ListItemAvatar>
+                  <ListItemText primary={matchedProfile.firstname} />
+                </ListItem>
+              </Button>
               <Divider variant="inset" component="li" />
             </>
           );
