@@ -79,7 +79,11 @@ class Chat {
     try {
       console.log(`SELECT * FROM public."Message" WHERE match = ${value}`);
       const result = await db.any(
-        'SELECT * FROM public."Message" WHERE match = $1 ORDER BY "creationDate" ASC',
+        `SELECT "Message".id, "Message".match, "Message".author, "Message".content, "Message"."creationDate", "Message".read, "User"."profilePicture"
+        FROM public."Message" INNER JOIN public."User"
+        ON("Message".author = "User".id)
+        WHERE match = $1
+        ORDER BY "creationDate" ASC`,
         [value],
       );
       return result;

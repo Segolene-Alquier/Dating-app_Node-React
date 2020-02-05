@@ -5,11 +5,20 @@ import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { useParams } from 'react-router-dom';
 import ChatroomContainer from './chatroom-container';
+import _ from 'lodash';
 
 const useStyles = makeStyles(theme => ({
   chatWrapper: { position: 'relative' },
+  progress: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   chatContent: {
     width: '100%',
     maxWidth: '1140px',
@@ -66,41 +75,42 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ChatRoom = ({}) => {
-  // message = string
-  // sender = current user or other
-  // other picture
   const classes = useStyles();
   let { matchId } = useParams();
   matchId = parseInt(matchId);
-  const { chatroomInfo } = ChatroomContainer(matchId);
+  const { chatroomInfo, loaded, currentUser } = ChatroomContainer(matchId);
 
+  if (loaded === false) {
+    return (
+      <div className={classes.progress}>
+        <CircularProgress color="secondary" />
+      </div>
+    );
+  }
   return (
     <>
       <Box className={classes.chatWrapper}>
         <Box className={classes.chatContent}>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>Lorem ipsum dolor sit amet.</span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageOther}>
-            <Avatar alt="Remy Sharp" src="https://placekitten.com/g/200/300" />
-            <div className={classes.textBubbleOther}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
-          <Box className={classes.boxMessageMe}>
-            <div className={classes.textBubbleMe}>
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                fermentum leo eget leo iaculis, elementum.
-              </span>
-            </div>
-          </Box>
+          {_.map(chatroomInfo, message => {
+            if (currentUser !== message.author) {
+              return (
+                <Box className={classes.boxMessageOther}>
+                  <Avatar alt="Avatar" src={message.profilePicture} />
+                  <div className={classes.textBubbleOther}>
+                    <span>{message.content}</span>
+                  </div>
+                </Box>
+              );
+            } else {
+              return (
+                <Box className={classes.boxMessageMe}>
+                  <div className={classes.textBubbleMe}>
+                    <span>{message.content}</span>
+                  </div>
+                </Box>
+              );
+            }
+          })}
         </Box>
       </Box>
       <Box className={classes.messageInput}>

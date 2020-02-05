@@ -1,16 +1,16 @@
 import axios from 'axios';
 import { AuthContext } from '../app/AuthContext';
 import { useState, useContext } from 'react';
+import _ from 'lodash';
 
 const ChatroomContainer = matchId => {
   const [loaded, setLoaded] = useState(false);
   const { authContext } = useContext(AuthContext);
   const { userData, token } = authContext;
-  const { chatroomInfo, setChatroomInfo } = useState({});
+  const [chatroomInfo, setChatroomInfo] = useState({});
+  const [currentUser, setCurrentUser] = useState(null);
 
   const fetchMessagesFromConversation = () => {
-    console.log('axios id', matchId);
-    console.log(typeof matchId);
     axios
       .get(`http://localhost:3001/chat/${matchId}`, {
         headers: {
@@ -19,9 +19,11 @@ const ChatroomContainer = matchId => {
         },
       })
       .then(response => {
-        console.log('response', response.data);
-
-        // setChatroomInfo(response.data);
+        setChatroomInfo(response.data);
+        userData.then(data => {
+          setCurrentUser(data.data.id);
+        });
+        setLoaded(true);
         return response.data;
       })
       .catch(error => {
@@ -29,11 +31,10 @@ const ChatroomContainer = matchId => {
       });
   };
 
-  if (loaded === false) {
+  if (_.isEmpty(chatroomInfo) && loaded === false) {
     fetchMessagesFromConversation();
-    setLoaded(true);
   }
-  return { chatroomInfo };
+  return { chatroomInfo, loaded, currentUser };
 };
 
 export default ChatroomContainer;
