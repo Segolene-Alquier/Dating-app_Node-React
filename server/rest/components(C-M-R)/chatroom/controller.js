@@ -15,8 +15,9 @@ async function getMatchsFromCurrentUser(request, response) {
 
 async function getMessagesFromMatchId(request, response) {
   try {
-    const id = request.decoded.userid;
-    const call = await matchs.getBy(['user1', 'user2'], id);
+    const id = request.params.id;
+    console.log('yo', request.params.id);
+    const call = await matchs.getAll(id);
     response.status(200).json(call);
   } catch (err) {
     console.log(err);
@@ -36,4 +37,6 @@ async function getMessagesFromMatchId(request, response) {
 // }
 
 module.exports.getMatchsFromCurrentUser = getMatchsFromCurrentUser;
+module.exports.getMessagesFromMatchId = getMessagesFromMatchId;
+
 // module.exports.getMatchById = getMatchById;

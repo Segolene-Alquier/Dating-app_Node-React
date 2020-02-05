@@ -5,13 +5,12 @@ import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { useParams } from 'react-router-dom';
+import ChatroomContainer from './chatroom-container';
 
 const useStyles = makeStyles(theme => ({
   chatWrapper: { position: 'relative' },
   chatContent: {
-    // backgroundColor: '#5F9EA0',
     width: '100%',
     maxWidth: '1140px',
     paddingLeft: theme.spacing(2),
@@ -71,7 +70,10 @@ const ChatRoom = ({}) => {
   // sender = current user or other
   // other picture
   const classes = useStyles();
-  let { id } = useParams();
+  const { matchId } = useParams();
+  const { chatroomInfo } = ChatroomContainer(matchId);
+
+  console.log('matchId', matchId);
 
   return (
     <>

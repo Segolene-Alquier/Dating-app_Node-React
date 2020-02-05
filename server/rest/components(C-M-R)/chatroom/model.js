@@ -75,13 +75,16 @@ class Chat {
       return null;
     }
   }
-  async getAll() {
+  async getAll(value) {
     try {
-      console.log('SELECT * FROM public."Match"');
-      const result = await db.any('SELECT * FROM public."Match"');
+      console.log(`SELECT * FROM public."Message" WHERE match = ${value}`);
+      const result = await db.any(
+        'SELECT * FROM public."Message" WHERE match = $1 ORDER BY "creationDate" ASC',
+        [value],
+      );
       return result;
     } catch (err) {
-      console.log(err, 'in model Match.getAll()');
+      console.log(err, 'in model Chat.getAll()');
       return null;
     }
   }

@@ -51,7 +51,7 @@ function App() {
           <SecureRoute path="/visits" component={Visit} />
           <SecureRoute path="/swipe" component={Swipe} />
           <SecureRoute path="/chat" component={Chat} />
-          <SecureRoute path="/chatroom/:id" component={ChatRoom} />
+          <SecureRoute path="/chatroom/:matchId" component={ChatRoom} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
