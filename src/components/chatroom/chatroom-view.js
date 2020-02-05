@@ -70,10 +70,9 @@ const ChatRoom = ({}) => {
   // sender = current user or other
   // other picture
   const classes = useStyles();
-  const { matchId } = useParams();
+  let { matchId } = useParams();
+  matchId = parseInt(matchId);
   const { chatroomInfo } = ChatroomContainer(matchId);
-
-  console.log('matchId', matchId);
 
   return (
     <>

@@ -13,6 +13,7 @@ async function getMatchsFromCurrentUser(request, response) {
   }
 }
 
+// not called, why ?
 async function getMessagesFromMatchId(request, response) {
   try {
     const id = request.params.id;
@@ -24,17 +25,6 @@ async function getMessagesFromMatchId(request, response) {
     response.status(206).send(err);
   }
 }
-
-// async function getMatchById(request, response) {
-//   const id = parseInt(request.params.id, 10);
-//   try {
-//     const call = await matchs.getBy('id', id);
-//     response.status(200).json(call);
-//   } catch (err) {
-//     console.log(err);
-//     response.status(206).send(err);
-//   }
-// }
 
 module.exports.getMatchsFromCurrentUser = getMatchsFromCurrentUser;
 module.exports.getMessagesFromMatchId = getMessagesFromMatchId;

@@ -9,7 +9,8 @@ const ChatroomContainer = matchId => {
   const { chatroomInfo, setChatroomInfo } = useState({});
 
   const fetchMessagesFromConversation = () => {
-	  console.log("axios id", matchId);
+    console.log('axios id', matchId);
+    console.log(typeof matchId);
     axios
       .get(`http://localhost:3001/chat/${matchId}`, {
         headers: {
@@ -18,8 +19,6 @@ const ChatroomContainer = matchId => {
         },
       })
       .then(response => {
-        console.log('ici');
-
         console.log('response', response.data);
 
         // setChatroomInfo(response.data);
