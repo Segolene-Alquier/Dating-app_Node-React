@@ -5,7 +5,6 @@ const secret = 'mignon4ever';
 async function checkToken(request, response, next) {
   let token =
     request.headers['x-access-token'] || request.headers.authorization;
-  console.log('token ', token);
   if (token) {
     if (token.startsWith('Bearer ')) {
       token = token.slice(7, token.length);

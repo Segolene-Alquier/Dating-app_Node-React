@@ -5,9 +5,10 @@ import _ from 'lodash';
 
 const ChatroomContainer = matchId => {
   const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { authContext } = useContext(AuthContext);
   const { userData, token } = authContext;
-  const [chatroomInfo, setChatroomInfo] = useState({});
+  const [chatroomInfo, setChatroomInfo] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
   const fetchMessagesFromConversation = () => {
@@ -24,6 +25,7 @@ const ChatroomContainer = matchId => {
           setCurrentUser(data.data.id);
         });
         setLoaded(true);
+        setLoading(false);
         return response.data;
       })
       .catch(error => {
@@ -31,10 +33,11 @@ const ChatroomContainer = matchId => {
       });
   };
 
-  if (_.isEmpty(chatroomInfo) && loaded === false) {
+  if (_.isEmpty(chatroomInfo) && loaded === false && loading === false) {
+    setLoading(true);
     fetchMessagesFromConversation();
   }
-  return { chatroomInfo, loaded, currentUser };
+  return { chatroomInfo, setChatroomInfo, loaded, currentUser };
 };
 
 export default ChatroomContainer;

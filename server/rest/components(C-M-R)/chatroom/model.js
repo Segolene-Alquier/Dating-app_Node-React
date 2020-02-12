@@ -15,24 +15,29 @@ class Chat {
     });
   }
 
-  async create(user1, user2) {
+  async create(match, author, content) {
     try {
       console.log(
-        `INSERT INTO public."Match" (user1, user2, date) VALUES (${user1}, ${user2}, Now() RETURNING id`,
+        `INSERT INTO public."Message" ("match", "author", "content", "creationDate", "read") VALUES (${match}, ${author}, ${content}, Now(), false RETURNING id`,
       );
       return await db
         .any(
-          'INSERT INTO public."Match" ("user1", "user2", date) VALUES ($1, $2, NOW()) RETURNING id',
-          [user1, user2],
+          'INSERT INTO public."Message" ("match", "author", "content", "creationDate", "read") VALUES ($1, $2, $3, NOW(), false) RETURNING id, match, author, content, "creationDate", read',
+          [match, author, content],
         )
         .then(data => {
           return {
             created: true,
             id: data[0].id,
+            match: data[0].match,
+            author: data[0].author,
+            content: data[0].content,
+            creationDate: data[0].creationDate,
+            read: data[0].read,
           };
         });
     } catch (err) {
-      console.log(err, 'in model Like.create()');
+      console.log(err, 'in model Chatroom.create()');
       return { created: false, error: err };
     }
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
@@ -7,8 +7,12 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useParams } from 'react-router-dom';
-import ChatroomContainer from './chatroom-container';
 import _ from 'lodash';
+// import io from 'socket.io-client';
+import { AuthContext } from '../app/AuthContext';
+import ChatroomContainer from './chatroom-container';
+
+// let socket = io(`http://localhost:3001`);
 
 const useStyles = makeStyles(theme => ({
   chatWrapper: { position: 'relative' },
@@ -78,7 +82,32 @@ const ChatRoom = ({}) => {
   const classes = useStyles();
   let { matchId } = useParams();
   matchId = parseInt(matchId);
-  const { chatroomInfo, loaded, currentUser } = ChatroomContainer(matchId);
+  const {
+    chatroomInfo,
+    setChatroomInfo,
+    loaded,
+    currentUser,
+  } = ChatroomContainer(matchId);
+  const [message, setMessage] = useState('');
+  const [messageList, setMessageList] = useState([]);
+  const { authContext, socketContext } = useContext(AuthContext);
+
+  socketContext.socket.on('chat message', msg => {
+    console.log(msg);
+    // setMessageList(messageList.concat(msg));
+    setChatroomInfo(chatroomInfo.concat(msg));
+    console.log(chatroomInfo);
+  });
+
+  const handleMessage = event => {
+    setMessage(event.target.value);
+  };
+
+  const sendMessage = () => {
+    socketContext.socket.emit('chat message', message, matchId);
+    setMessage(''); // dans le callback d'emit : add new messages to the MessageList state
+    // setMessageList(messageList.concat({ author: currentUser, msg: message }));
+  };
 
   if (loaded === false) {
     return (
@@ -87,6 +116,7 @@ const ChatRoom = ({}) => {
       </div>
     );
   }
+  socketContext.socket.emit('joinchatroom', matchId);
   return (
     <>
       <Box className={classes.chatWrapper}>
@@ -117,13 +147,17 @@ const ChatRoom = ({}) => {
         <Grid container spacing={2}>
           <Grid item sm={10} xs={12}>
             <TextField
+              onChange={handleMessage}
+              value={message}
               fullWidth
+              type="text"
+              name="message"
               variant="outlined"
               className={classes.textField}
             />
           </Grid>
           <Grid item sm={2} xs={12}>
-            <Button variant="contained" color="secondary">
+            <Button onClick={sendMessage} variant="contained" color="secondary">
               Send message
             </Button>
           </Grid>

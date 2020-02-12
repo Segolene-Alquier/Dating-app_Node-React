@@ -6,6 +6,7 @@ const app = express();
 
 const newConnection = require('./socket/newConnection');
 const disconnection = require('./socket/disconnection');
+const newMessage = require('./socket/newMessage');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,23 +55,19 @@ server.listen(3001, () => {
 const connectedUsers = {};
 io.on('connection', async socket => {
   newConnection(io, connectedUsers, socket);
+  socket.on('joinchatroom', function(match) {
+    // verifier que curentUser correspond au match
+    // si oui seulement, on joint la room
+    socket.join(match);
+  });
   socket.on('error', function(err) {
     // console.log(err.stack);
   });
   socket.on('disconnect', function() {
     disconnection(io, connectedUsers, socket);
   });
-  socket.on('chat message', function(msg) {
-    // console.log('message: ' + msg);
-    // console.log('message socketid: ' + msg, connectedUsers[socket.id]);
 
-    // ajouter colonne en db pour room id OK
-    // creer une room lorsqu'il y a un match => qu'on va lier avec room id et match id
-    //// on fetch l'API : OK
-    //// s'il y a des messages :  on affiche les messages OK
-    // on enregistre les messages en front via socket.io seulement
-    // a chaque submit, on cree un message en db (creer controler et model pour message)
-    // fonction qui enregistre en db le message via l'id utilisateur
-    socket.broadcast.emit('chat message', msg);
+  socket.on('chat message', function(msg, match) {
+    newMessage(msg, match, connectedUsers[socket.id], socket, io);
   });
 });
