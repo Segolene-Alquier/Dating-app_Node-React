@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,11 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useParams } from 'react-router-dom';
 import _ from 'lodash';
-// import io from 'socket.io-client';
-import { AuthContext } from '../app/AuthContext';
 import ChatroomContainer from './chatroom-container';
-
-// let socket = io(`http://localhost:3001`);
 
 const useStyles = makeStyles(theme => ({
   chatWrapper: { position: 'relative' },
@@ -87,22 +83,10 @@ const ChatRoom = ({}) => {
     setChatroomInfo,
     loaded,
     currentUser,
+    handleMessage,
+    sendMessage,
+    message,
   } = ChatroomContainer(matchId);
-  const [message, setMessage] = useState('');
-  const { authContext, socketContext } = useContext(AuthContext);
-
-  socketContext.socket.on('chat message', msg => {
-    setChatroomInfo(chatroomInfo.concat(msg));
-  });
-
-  const handleMessage = event => {
-    setMessage(event.target.value);
-  };
-
-  const sendMessage = () => {
-    socketContext.socket.emit('chat message', message, matchId);
-    setMessage('');
-  };
 
   if (loaded === false) {
     return (
@@ -111,7 +95,6 @@ const ChatRoom = ({}) => {
       </div>
     );
   }
-  socketContext.socket.emit('joinchatroom', matchId);
   return (
     <>
       <Box className={classes.chatWrapper}>

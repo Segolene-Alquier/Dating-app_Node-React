@@ -6,10 +6,24 @@ import _ from 'lodash';
 const ChatroomContainer = matchId => {
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { authContext } = useContext(AuthContext);
+  const { authContext, socketContext } = useContext(AuthContext);
   const { userData, token } = authContext;
   const [chatroomInfo, setChatroomInfo] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+  const [message, setMessage] = useState('');
+
+  socketContext.socket.on('chat message', msg => {
+    setChatroomInfo(chatroomInfo.concat(msg));
+  });
+
+  const handleMessage = event => {
+    setMessage(event.target.value);
+  };
+
+  const sendMessage = () => {
+    socketContext.socket.emit('chat message', message, matchId);
+    setMessage('');
+  };
 
   const fetchMessagesFromConversation = () => {
     axios
@@ -27,6 +41,7 @@ const ChatroomContainer = matchId => {
         setChatroomInfo(response.data);
         userData.then(data => {
           setCurrentUser(data.data.id);
+          socketContext.socket.emit('joinchatroom', matchId);
         });
         setLoaded(true);
         setLoading(false);
@@ -41,7 +56,15 @@ const ChatroomContainer = matchId => {
     setLoading(true);
     fetchMessagesFromConversation();
   }
-  return { chatroomInfo, setChatroomInfo, loaded, currentUser };
+  return {
+    chatroomInfo,
+    setChatroomInfo,
+    loaded,
+    currentUser,
+    handleMessage,
+    sendMessage,
+    message,
+  };
 };
 
 export default ChatroomContainer;

@@ -7,6 +7,7 @@ const app = express();
 const newConnection = require('./socket/newConnection');
 const disconnection = require('./socket/disconnection');
 const newMessage = require('./socket/newMessage');
+const joinChatroom = require('./socket/joinChatroom');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -56,9 +57,7 @@ const connectedUsers = {};
 io.on('connection', async socket => {
   newConnection(io, connectedUsers, socket);
   socket.on('joinchatroom', function(match) {
-    // verifier que curentUser correspond au match
-    // si oui seulement, on joint la room
-    socket.join(match);
+    joinChatroom(match, connectedUsers[socket.id], socket);
   });
   socket.on('error', function(err) {
     // console.log(err.stack);
