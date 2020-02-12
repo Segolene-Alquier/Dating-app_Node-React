@@ -16,8 +16,16 @@ async function getMatchsFromCurrentUser(request, response) {
 async function getMessagesFromMatchId(request, response) {
   try {
     const { id } = request.params;
-    const call = await matchs.getAll(id);
-    response.status(200).json(call);
+    const userId = request.decoded.userid;
+    if (await matchs.userCanAccessMatch(id, userId)) {
+      const call = await matchs.getAll(id);
+      response.status(200).json(call);
+    } else {
+      response.status(200).json({
+        success: false,
+        message: "You don't have access to that chatroom, nice try!",
+      });
+    }
   } catch (err) {
     console.log(err);
     response.status(206).send(err);

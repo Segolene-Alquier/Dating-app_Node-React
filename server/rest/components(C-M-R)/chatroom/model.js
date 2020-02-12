@@ -91,6 +91,22 @@ class Chat {
       return null;
     }
   }
+
+  async userCanAccessMatch(matchId, userId) {
+    try {
+      console.log(
+        `EXISTS(SELECT * FROM public."Match" WHERE id = ${matchId} AND (user1 = ${userId} OR user2 = ${userId}))`,
+      );
+      const result = await db.any(
+        `SELECT EXISTS(SELECT * FROM public."Match" WHERE id = $1 AND (user1 = $2 OR user2 = $2))`,
+        [matchId, userId],
+      );
+      return result[0].exists;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async getAll(value) {
     try {
       console.log(`SELECT * FROM public."Message" WHERE match = ${value}`);

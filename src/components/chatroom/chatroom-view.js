@@ -89,14 +89,10 @@ const ChatRoom = ({}) => {
     currentUser,
   } = ChatroomContainer(matchId);
   const [message, setMessage] = useState('');
-  const [messageList, setMessageList] = useState([]);
   const { authContext, socketContext } = useContext(AuthContext);
 
   socketContext.socket.on('chat message', msg => {
-    console.log(msg);
-    // setMessageList(messageList.concat(msg));
     setChatroomInfo(chatroomInfo.concat(msg));
-    console.log(chatroomInfo);
   });
 
   const handleMessage = event => {
@@ -105,8 +101,7 @@ const ChatRoom = ({}) => {
 
   const sendMessage = () => {
     socketContext.socket.emit('chat message', message, matchId);
-    setMessage(''); // dans le callback d'emit : add new messages to the MessageList state
-    // setMessageList(messageList.concat({ author: currentUser, msg: message }));
+    setMessage('');
   };
 
   if (loaded === false) {

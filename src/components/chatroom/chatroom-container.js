@@ -20,6 +20,10 @@ const ChatroomContainer = matchId => {
         },
       })
       .then(response => {
+        if (response.data.success === false) {
+          window.location = '/?message=access_denied';
+          return;
+        }
         setChatroomInfo(response.data);
         userData.then(data => {
           setCurrentUser(data.data.id);

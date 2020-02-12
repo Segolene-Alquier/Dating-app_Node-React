@@ -13,6 +13,7 @@ import {
   userNotFound,
   profileNotCompleted,
   userBlockedYou,
+  accessDenied,
 } from './toaster-container';
 
 const Toaster = ({ getParams }) => {
@@ -53,6 +54,9 @@ const Toaster = ({ getParams }) => {
         break;
       case 'user_blocked_you':
         userBlockedYou();
+        break;
+      case 'access_denied':
+        accessDenied();
         break;
       default:
         break;
