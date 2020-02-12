@@ -1,5 +1,8 @@
 const _ = require('lodash');
 const { db } = require('../../../config/database');
+const User = require('../user/model');
+
+const user = new User();
 
 class Chat {
   isValidType(type) {
@@ -20,12 +23,19 @@ class Chat {
       console.log(
         `INSERT INTO public."Message" ("match", "author", "content", "creationDate", "read") VALUES (${match}, ${author}, ${content}, Now(), false RETURNING id`,
       );
+      const picture = await user.getByFiltered('id', author, [
+        'profilePicture',
+      ]);
+      console.log('pic', picture);
+
       return await db
         .any(
           'INSERT INTO public."Message" ("match", "author", "content", "creationDate", "read") VALUES ($1, $2, $3, NOW(), false) RETURNING id, match, author, content, "creationDate", read',
           [match, author, content],
         )
         .then(data => {
+          console.log('pic 2', picture);
+
           return {
             created: true,
             id: data[0].id,
@@ -34,6 +44,7 @@ class Chat {
             content: data[0].content,
             creationDate: data[0].creationDate,
             read: data[0].read,
+            profilePicture: picture[0].profilePicture,
           };
         });
     } catch (err) {
