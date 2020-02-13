@@ -31,6 +31,25 @@ class Match {
     }
   }
 
+  async updateLastMessage(matchId, messageId) {
+    try {
+      console.log(
+        `UPDATE public."Match" SET "lastMessage" = ${messageId} WHERE id = ${matchId}`,
+      );
+      await db.any(
+        'UPDATE public."Match" SET "lastMessage" = $2 WHERE id = $1',
+        [matchId, messageId],
+      );
+      return {
+        success: true,
+        updated: true,
+      };
+    } catch (err) {
+      console.log(err, 'in model Like.create()');
+      return { created: false, error: err };
+    }
+  }
+
   async delete(user1, user2) {
     try {
       console.log(

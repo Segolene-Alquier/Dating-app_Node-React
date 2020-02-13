@@ -11,11 +11,13 @@ import Typography from '@material-ui/core/Typography';
 import ChatContainer from './chat-container';
 import _ from 'lodash';
 import { Redirect } from 'react-router-dom';
+import Iframe from 'react-iframe';
 
 const useStyles = makeStyles(theme => ({
   buttonChatroom: {
     width: '100%',
     height: '100%',
+    textTransform: 'none',
   },
 }));
 
@@ -38,7 +40,10 @@ const Chat = () => {
                 <ListItemAvatar>
                   <Avatar alt="avatar" src={matchedProfile.profilePicture} />
                 </ListItemAvatar>
-                <ListItemText primary={matchedProfile.firstname} />
+                <ListItemText
+                  primary={matchedProfile.firstname}
+                  secondary={matchedProfile.content}
+                />
               </ListItem>
             </Button>
             <Divider variant="inset" component="li" />
