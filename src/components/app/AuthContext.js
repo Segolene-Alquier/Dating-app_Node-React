@@ -20,7 +20,12 @@ export const AuthProvider = ({ children }) => {
   const socketContext = { socket };
 
   return (
-    <AuthContext.Provider value={{ authContext, socketContext }}>
+    <AuthContext.Provider
+      value={{
+        authContext,
+        socketContext,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

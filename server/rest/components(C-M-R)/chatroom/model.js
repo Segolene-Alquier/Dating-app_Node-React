@@ -1,8 +1,12 @@
 const _ = require('lodash');
 const { db } = require('../../../config/database');
 const User = require('../user/model');
+const Block = require('./../block/model');
+const Match = require('./../match/model');
 
+const block = new Block();
 const user = new User();
+const match = new Match();
 
 class Chat {
   isValidType(type) {
@@ -58,6 +62,26 @@ class Chat {
       console.log(err, 'in model User.delete()');
       return { deleted: false, error: err };
     }
+  }
+
+  async canAccessChat(matchId) {
+    const matchedUsers = await match.getUsersFromMatchId(matchId);
+    if (matchedUsers) {
+      const blocked1 = await block.exists(matchedUsers[0], matchedUsers[1]);
+      const blocked2 = await block.exists(matchedUsers[1], matchedUsers[0]);
+      const banned1 = await user.getByFiltered('id', matchedUsers[0], [
+        'suspended',
+      ]);
+      const banned2 = await user.getByFiltered('id', matchedUsers[1], [
+        'suspended',
+      ]);
+      console.log('can access chat', blocked1, blocked2, banned1, banned2);
+      return (
+        !blocked1 && !blocked2 && !banned1[0].suspended && !banned2[0].suspended
+      );
+    }
+    console.log('Match?', matchedUsers);
+    return false;
   }
 
   async getBy(type, value) {
@@ -117,26 +141,26 @@ class Chat {
     }
   }
 
-  async exists(type, value) {
-    try {
-      if (!value) return false;
-      if (!this.isValidType(type)) {
-        console.log(`Match.exists(): ${type} is not an authorized type`);
-        return null;
-      }
-      console.log(
-        `SELECT exists(SELECT from public."Match" WHERE ${type} = ${value})`,
-      );
-      const result = await db.none(
-        `SELECT exists(SELECT from public."Match" WHERE id = ALL($2));`,
-        [value],
-      );
-      return result[0].exists;
-    } catch (err) {
-      console.log(err, 'in model Match.exists()');
-      return null;
-    }
-  }
+  // async exists(type, value) {
+  //   try {
+  //     if (!value) return false;
+  //     if (!this.isValidType(type)) {
+  //       console.log(`Match.exists(): ${type} is not an authorized type`);
+  //       return null;
+  //     }
+  //     console.log(
+  //       `SELECT exists(SELECT from public."Match" WHERE ${type} = ${value})`,
+  //     );
+  //     const result = await db.none(
+  //       `SELECT exists(SELECT from public."Match" WHERE id = ALL($2));`,
+  //       [value],
+  //     );
+  //     return result[0].exists;
+  //   } catch (err) {
+  //     console.log(err, 'in model Match.exists()');
+  //     return null;
+  //   }
+  // }
 }
 
 module.exports = Chat;

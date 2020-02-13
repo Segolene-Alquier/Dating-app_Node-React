@@ -16,6 +16,10 @@ const ChatroomContainer = matchId => {
     setChatroomInfo(chatroomInfo.concat(msg));
   });
 
+  socketContext.socket.on('redirect', msg => {
+    window.location = `/?message=${msg}`;
+  });
+
   const handleMessage = event => {
     setMessage(event.target.value);
   };

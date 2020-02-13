@@ -83,6 +83,6 @@ export const userBlockedYou = () => {
 
 export const accessDenied = () => {
   const toasterType = 'error';
-  const toasterMessage = "You can't access this chatroom. Nice try!";
+  const toasterMessage = "You can't access this chatroom. Sorry!";
   toast(toasterMessage, { type: toasterType });
 };

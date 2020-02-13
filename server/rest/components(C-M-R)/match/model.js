@@ -106,6 +106,25 @@ class Match {
     }
   }
 
+  async getUsersFromMatchId(matchId) {
+    try {
+      console.log(
+        `SELECT user1, user2 FROM public."Match" WHERE id = ${matchId})`,
+      );
+      const result = await db.any(
+        'SELECT user1, user2 FROM public."Match" WHERE id = $1',
+        [matchId],
+      );
+      if (result[0]) {
+        return [result[0].user1, result[0].user2];
+      }
+      return false;
+    } catch (err) {
+      console.log(err, 'in model Match.getAll()');
+      return null;
+    }
+  }
+
   async getAll() {
     try {
       console.log('SELECT * FROM public."Match"');
@@ -127,8 +146,8 @@ class Match {
       console.log(
         `SELECT exists(SELECT from public."Match" WHERE ${type} = ${value})`,
       );
-      const result = await db.none(
-        `SELECT exists(SELECT from public."Match" WHERE id = ALL($2));`,
+      const result = await db.any(
+        `SELECT exists(SELECT from public."Match" WHERE id = $1);`,
         [value],
       );
       return result[0].exists;

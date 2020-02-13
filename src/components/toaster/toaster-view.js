@@ -58,6 +58,9 @@ const Toaster = ({ getParams }) => {
       case 'access_denied':
         accessDenied();
         break;
+      case 'cant_access_chat':
+        accessDenied();
+        break;
       default:
         break;
     }
