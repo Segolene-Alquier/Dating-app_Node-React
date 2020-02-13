@@ -2,12 +2,14 @@ const Like = require('./model');
 const Match = require('./../match/model');
 const Block = require('./../block/model');
 const User = require('./../user/model');
+const Chat = require('./../chatroom/model');
 const { sendLikeEmail } = require('../../../mailer/sendLikeEmail');
 
 const likes = new Like();
 const block = new Block();
 const matchs = new Match();
 const user = new User();
+const chat = new Chat();
 
 async function getLikesFromCurrentUser(request, response) {
   const id = request.decoded.userid;
@@ -41,6 +43,8 @@ async function likeUnlikeUserId(request, response) {
     if (alreadyLiked) {
       query = await likes.delete(likingUser, likedUser);
       if (query.unmatch) {
+        const matchId = await matchs.getMatchId(likingUser, likedUser);
+        await chat.delete(matchId);
         matchs.delete(likingUser, likedUser);
       }
     } else {

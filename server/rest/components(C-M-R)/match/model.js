@@ -90,6 +90,22 @@ class Match {
     }
   }
 
+  async getMatchId(user1, user2) {
+    try {
+      console.log(
+        `SELECT id FROM public."Match" WHERE (user1 = ${user1} AND user2 = ${user2}) OR (user2 = ${user1} AND user1 = ${user2})`,
+      );
+      const result = await db.any(
+        'SELECT id FROM public."Match" WHERE (user1 = $1 AND user2 = $2) OR (user2 = $1 AND user1 = $2)',
+        [user1, user2],
+      );
+      return result[0].id;
+    } catch (err) {
+      console.log(err, 'in model Match.getAll()');
+      return null;
+    }
+  }
+
   async getAll() {
     try {
       console.log('SELECT * FROM public."Match"');
