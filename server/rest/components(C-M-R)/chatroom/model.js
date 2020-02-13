@@ -116,7 +116,9 @@ class Chat {
         `SELECT EXISTS(SELECT * FROM public."Match" WHERE id = $1 AND (user1 = $2 OR user2 = $2))`,
         [matchId, userId],
       );
-      return result[0].exists;
+      const accessOk = await this.canAccessChat(matchId)
+
+      return result[0].exists && accessOk;
     } catch (err) {
       console.log(err);
       return null;
