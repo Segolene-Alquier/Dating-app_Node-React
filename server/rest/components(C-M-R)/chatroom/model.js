@@ -99,7 +99,8 @@ class Chat {
           ON ("User".id = "Match".user1 OR "User".id = "Match".user2) AND "User".id != $2
           FULL OUTER JOIN public."Message"
           ON "lastMessage" = "Message".id
-          WHERE ("Match".user1 = $2 OR "Match".user2 = $2)
+          WHERE ("Match".user1 = $2 OR "Match".user2 = $2) AND "User".suspended = false
+          AND NOT EXISTS(SELECT * FROM public."Block" WHERE "blockedUser" = $2)
           ORDER BY "Message".id DESC NULLS LAST`,
         [type, value],
       );
@@ -116,7 +117,7 @@ class Chat {
         `SELECT EXISTS(SELECT * FROM public."Match" WHERE id = $1 AND (user1 = $2 OR user2 = $2))`,
         [matchId, userId],
       );
-      const accessOk = await this.canAccessChat(matchId)
+      const accessOk = await this.canAccessChat(matchId);
 
       return result[0].exists && accessOk;
     } catch (err) {
