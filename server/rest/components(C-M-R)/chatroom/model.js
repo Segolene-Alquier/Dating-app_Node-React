@@ -75,12 +75,10 @@ class Chat {
       const banned2 = await user.getByFiltered('id', matchedUsers[1], [
         'suspended',
       ]);
-      console.log('can access chat', blocked1, blocked2, banned1, banned2);
       return (
         !blocked1 && !blocked2 && !banned1[0].suspended && !banned2[0].suspended
       );
     }
-    console.log('Match?', matchedUsers);
     return false;
   }
 

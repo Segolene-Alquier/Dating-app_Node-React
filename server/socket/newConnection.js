@@ -1,6 +1,17 @@
 const { checkTokenSocket } = require('./../rest/middleware/jwt');
+const _ = require('lodash');
+const { getConnectedUsers, setConnectedUsers } = require('./connectedUsers');
 
-const newConnection = async (io, connectedUsers, socket) => {
+const connectedUsersId = () => {
+  const connectedUsers = getConnectedUsers();
+  return _.uniq(_.values(connectedUsers));
+};
+
+const isConnected = id => {
+  return _.includes(connectedUsersId(), id);
+};
+
+const newConnection = async (io, socket) => {
   console.log(
     `a user connected with socket.id ${socket.id}, handshake query`,
     socket.handshake.query,
@@ -8,12 +19,14 @@ const newConnection = async (io, connectedUsers, socket) => {
   console.log(checkTokenSocket);
   const userConnected = await checkTokenSocket(socket.handshake.query.token);
   if (userConnected) {
-    console.log('userConnected.userid', userConnected);
+    const connectedUsers = getConnectedUsers();
     connectedUsers[socket.id] = userConnected.userid;
-    console.log('connectedUsers', connectedUsers);
+    setConnectedUsers(connectedUsers);
   } else {
     socket.disconnect();
   }
 };
 
-module.exports = newConnection;
+module.exports.newConnection = newConnection;
+module.exports.connectedUsersId = connectedUsersId;
+module.exports.isConnected = isConnected;

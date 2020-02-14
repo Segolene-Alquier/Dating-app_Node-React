@@ -122,17 +122,16 @@ export default function SwipeCard({ field, profile, handleLike, type }) {
       {/* <CardActions> */}
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Avatar className={classes.avatar}>{popularityRate}%</Avatar>
-        { type === "swipe" ? null : (
-        <IconButton
-          aria-label="Like the profile"
-          color={liking ? 'secondary' : ''}
-          visitor={visitor}
-          onClick={() => handleLike(visitor)}
-        >
-          <FavoriteIcon />
-        </IconButton>)
-      }
-
+        {type === 'swipe' ? null : (
+          <IconButton
+            aria-label="Like the profile"
+            color={liking ? 'secondary' : ''}
+            visitor={visitor}
+            onClick={() => handleLike(visitor)}
+          >
+            <FavoriteIcon />
+          </IconButton>
+        )}
       </Box>
       {/* </CardActions> */}
     </Card>

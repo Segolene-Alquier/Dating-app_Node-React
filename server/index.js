@@ -1,10 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const _ = require('lodash');
 require('dotenv').config();
 
 const app = express();
 
-const newConnection = require('./socket/newConnection');
+const { newConnection } = require('./socket/newConnection');
+const {
+  getConnectedUsers,
+  setConnectedUsers,
+} = require('./socket/connectedUsers');
 const disconnection = require('./socket/disconnection');
 const newMessage = require('./socket/newMessage');
 const joinChatroom = require('./socket/joinChatroom');
@@ -53,20 +58,20 @@ server.listen(3001, () => {
   console.log('Matcha is listening on port 3001!');
 });
 
-const connectedUsers = {};
 io.on('connection', async socket => {
-  newConnection(io, connectedUsers, socket);
+  newConnection(io, socket, getConnectedUsers());
   socket.on('joinchatroom', function(match) {
-    joinChatroom(match, connectedUsers[socket.id], socket);
+    joinChatroom(match, getConnectedUsers()[socket.id], socket);
   });
   socket.on('error', function(err) {
     // console.log(err.stack);
   });
   socket.on('disconnect', function() {
-    disconnection(io, connectedUsers, socket);
+    disconnection(io, getConnectedUsers(), socket);
   });
 
   socket.on('chat message', function(msg, match) {
-    newMessage(msg, match, connectedUsers[socket.id], socket, io);
+    console.log('new msg', msg, match, getConnectedUsers()[socket.id]);
+    newMessage(msg, match, getConnectedUsers()[socket.id], socket, io);
   });
 });

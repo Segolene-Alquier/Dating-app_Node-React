@@ -1,6 +1,6 @@
 const Visit = require('./model');
 const _ = require('lodash');
-
+const { isConnected } = require('./../../../socket/newConnection');
 const visits = new Visit();
 
 async function getVisits(request, response) {
@@ -18,6 +18,9 @@ async function getVisitsFromCurrentUser(request, response) {
   try {
     let call = await visits.getBy('visited', id);
     call = _.uniqBy(call, 'visitor');
+    call = _.map(call, visit => {
+      return { ...visit, connected: isConnected(visit.visitor) };
+    });
     response.status(200).json(call);
   } catch (err) {
     console.log(err);

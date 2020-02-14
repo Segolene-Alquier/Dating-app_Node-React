@@ -91,12 +91,12 @@ async function login(request, response) {
         if (lon && lat) {
           const location = [parseFloat(lon), parseFloat(lat)];
           console.log(
-            user.updateById(visitor.id, { location, lastVisit: 'now()' }),
+            user.updateById(visitor.id, { location, lastConnection: 'now()' }),
           );
         } else {
           console.log(
             await user.updateById(visitor.id, {
-              lastVisit: 'now()',
+              lastConnection: 'now()',
             }),
           );
         }

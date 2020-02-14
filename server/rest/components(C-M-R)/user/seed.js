@@ -72,7 +72,7 @@ const updateFakeUser = async userId => {
   // longitude : entre 2.30 et 2.60
   infos.location[1] = parseFloat(`2.${randomInteger(30, 60)}`);
   const now = new Date();
-  infos.lastVisit = now.toISOString();
+  infos.lastConnection = now.toISOString();
   infos.popularityRate = randomInteger(20, 90);
   infos.birthDate = faker.date.between('1940-01-01', '2001-12-31');
   infos.gender = randomArrayInt(1, 7);

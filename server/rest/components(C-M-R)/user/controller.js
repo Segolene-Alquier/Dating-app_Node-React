@@ -20,6 +20,7 @@ const block = new Block();
 const report = new Report();
 const _ = require('lodash');
 const { getDistance } = require('geolib');
+const { isConnected } = require('./../../../socket/newConnection');
 
 async function getUsers(request, response) {
   try {
@@ -97,6 +98,7 @@ async function getUserByUsername(request, response) {
       'interests',
       'images',
       'profilePicture',
+      'lastConnection',
     ]);
     if (call[0] === undefined) {
       return response
@@ -135,6 +137,7 @@ async function getUserByUsername(request, response) {
       userIdVisitor,
       userIdVisited,
     );
+    const connected = isConnected(userIdVisited);
     response.status(200).json({
       founded: true,
       ...call[0],
@@ -142,6 +145,7 @@ async function getUserByUsername(request, response) {
       alreadyBlocked: userAlreadyBlocked,
       alreadyReported: userAlreadyReported,
       city,
+      connected,
     });
   } catch (err) {
     console.log(err);
@@ -296,13 +300,13 @@ async function search(request, response) {
     console.log(currentUserLocation);
     userSearchResult.forEach(profile => {
       profile.age = getAge(profile.birthDate);
+      profile.connected = isConnected(profile.visitor);
     });
     userSearchResult = _.filter(userSearchResult, user => {
       const distance = distanceCalculator(currentUserLocation, user.location);
       user.distance = distance;
       return distance <= distanceMax;
     });
-
     response.status(200).json(userSearchResult);
   } catch (err) {
     console.log(err);
@@ -374,6 +378,7 @@ async function suggestions(request, response) {
         distanceScore(profile.distance) * 0.25 +
         popularityScore(currentUser.popularityRate, profile.popularityRate) *
           0.15;
+      profile.connected = isConnected(profile.visitor);
     });
 
     response.status(200).json(userSearchResult);

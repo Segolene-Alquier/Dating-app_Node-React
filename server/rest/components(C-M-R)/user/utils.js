@@ -325,7 +325,7 @@ class UserInputTests {
         'location',
         'notificationMail',
         'notificationPush',
-        'lastVisit',
+        'lastConnection',
         'popularityRate',
         'birthDate',
       ];

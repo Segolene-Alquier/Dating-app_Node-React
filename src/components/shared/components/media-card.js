@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box';
 import Tooltip from '@material-ui/core/Tooltip';
 import moment from 'moment';
 import { getDistance } from 'geolib';
+import LoggedDot from '../../profileshow/components/loggedDot';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -43,6 +44,8 @@ export default function MediaCard({ field, profile, handleLike, type }) {
     liking,
     liked,
     visitor,
+    lastConnection,
+    connected,
   } = field;
 
   const getAge = dateString => {
@@ -85,6 +88,10 @@ export default function MediaCard({ field, profile, handleLike, type }) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2" align="center">
+            <LoggedDot
+              loggedState={connected}
+              lastConnection={lastConnection}
+            />
             {firstname}{' '}
             {liked ? (
               <Tooltip
@@ -121,17 +128,16 @@ export default function MediaCard({ field, profile, handleLike, type }) {
       {/* <CardActions> */}
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Avatar className={classes.avatar}>{popularityRate}%</Avatar>
-        { type === "swipe" ? null : (
-        <IconButton
-          aria-label="Like the profile"
-          color={liking ? 'secondary' : ''}
-          visitor={visitor}
-          onClick={() => handleLike(visitor)}
-        >
-          <FavoriteIcon />
-        </IconButton>)
-      }
-
+        {type === 'swipe' ? null : (
+          <IconButton
+            aria-label="Like the profile"
+            color={liking ? 'secondary' : ''}
+            visitor={visitor}
+            onClick={() => handleLike(visitor)}
+          >
+            <FavoriteIcon />
+          </IconButton>
+        )}
       </Box>
       {/* </CardActions> */}
     </Card>

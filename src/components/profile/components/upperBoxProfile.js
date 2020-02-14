@@ -112,7 +112,13 @@ const UpperBoxProfile = ({
                   )
                 ) : null}
               </span>
-              {type === 'public' ? <LoggedDot loggedState={true} /> : null}
+              {type === 'public' ? (
+                <LoggedDot
+                  loggedState={profile.connected}
+                  lastConnection={profile.lastConnection}
+                  displayLast
+                />
+              ) : null}
             </div>
           </Grid>
         </Grid>
