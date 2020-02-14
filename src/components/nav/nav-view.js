@@ -5,8 +5,16 @@ import {
   Typography,
   Button,
   makeStyles,
+  Avatar,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import SearchIcon from '@material-ui/icons/Search';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../app/AuthContext';
 import { logout } from '../auth';
@@ -51,20 +59,40 @@ const Nav = () => {
         </Typography>
         {isLoggedIn ? (
           <>
-            <Button color="inherit" href="/visits">
-              My visits
-            </Button>
-            <Button color="inherit" href="/profile">
-              My profile
+            <Button
+              color="inherit"
+              href="/suggestions"
+              startIcon={<FavoriteIcon />}
+            >
+              Suggestions
             </Button>
             <Button
+              color="inherit"
+              href="/visits"
+              startIcon={<VisibilityIcon />}
+            >
+              My visits
+            </Button>
+            <Button color="inherit" href="/search" startIcon={<SearchIcon />}>
+              Find users
+            </Button>
+            <IconButton color="inherit" href="/chat">
+              <ChatBubbleIcon />
+            </IconButton>
+            <IconButton color="inherit" href="">
+              <NotificationsIcon />
+            </IconButton>
+            <IconButton color="inherit" href="profile">
+              <AccountCircleIcon />
+            </IconButton>
+            <IconButton
               color="inherit"
               onClick={e => {
                 logout(e, setIsLoggedIn);
               }}
             >
-              Logout
-            </Button>
+              <ExitToAppIcon />
+            </IconButton>
           </>
         ) : (
           <>
