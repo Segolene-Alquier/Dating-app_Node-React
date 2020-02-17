@@ -47,6 +47,22 @@ class Notification {
     }
   }
 
+  async numberUnread(recipient) {
+    try {
+      console.log(
+        `SELECT COUNT(*) FROM public."Notification" WHERE recipient = ${recipient} AND read = false`,
+      );
+      const result = await db.any(
+        `SELECT COUNT(*) FROM public."Notification" WHERE recipient = $1 AND read = false`,
+        [recipient],
+      );
+      return result[0].count;
+    } catch (err) {
+      console.log(err, 'in model Notification.numberUnread()');
+      return null;
+    }
+  }
+
   async getBy(type, value) {
     try {
       if (!this.isValidType(type)) {

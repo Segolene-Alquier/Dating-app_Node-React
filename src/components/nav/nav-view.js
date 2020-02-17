@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -8,6 +8,7 @@ import {
   makeStyles,
   Avatar,
   SwipeableDrawer,
+  Badge,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
@@ -40,9 +41,30 @@ const Nav = () => {
   const { token } = authContext;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [totalNotifications, setTotalNotifications] = useState(0);
   const [notifMenu, setNotifMenu] = React.useState({
     right: false,
   });
+
+  const fetchTotalNotifications = async () => {
+    await axios
+      .get(`http://localhost:3001/notification/total`, {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'x-access-token': token,
+        },
+      })
+      .then(result => {
+        setTotalNotifications(parseInt(result.data, 10));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchTotalNotifications();
+  }, []);
 
   const fetchNotifications = async () => {
     await axios
@@ -53,7 +75,6 @@ const Nav = () => {
         },
       })
       .then(result => {
-        console.log(result.data);
         setNotifications(result.data);
       })
       .catch(error => {
@@ -71,6 +92,7 @@ const Nav = () => {
     }
     if (open) {
       await fetchNotifications();
+      setTotalNotifications(0);
     }
     setNotifMenu({ ...notifMenu, right: open });
   };
@@ -119,9 +141,16 @@ const Nav = () => {
             <IconButton color="inherit" href="/chat">
               <ChatBubbleIcon />
             </IconButton>
-            <IconButton onClick={toggleDrawer(true)} color="inherit" href="">
-              <NotificationsIcon />
+            <IconButton onClick={toggleDrawer(true)} color="inherit">
+              <Badge
+                color="secondary"
+                badgeContent={totalNotifications}
+                showZero
+              >
+                <NotificationsIcon />
+              </Badge>
             </IconButton>
+
             <IconButton color="inherit" href="profile">
               <AccountCircleIcon />
             </IconButton>
