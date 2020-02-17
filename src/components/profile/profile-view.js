@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Tabs, Tab } from '@material-ui/core';
@@ -32,11 +32,19 @@ const useStyles = makeStyles(theme => ({
     marginRight: 'auto',
     maxWidth: '1500px',
   },
+  // paper: {
+  //   marginTop: theme.spacing(8),
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   alignItems: 'center',
+  // },
   paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   },
   avatar: {
     margin: theme.spacing(1),
@@ -127,14 +135,6 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(0.5),
     },
   },
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
   paperAccount: {
     marginTop: theme.spacing(3),
     padding: theme.spacing(5, 2),
@@ -165,7 +165,7 @@ function a11yProps(index) {
 
 const Profile = params => {
   const classes = useStyles();
-  const {authContext} = useContext(AuthContext);
+  const { authContext } = useContext(AuthContext);
   const locationParams = params.location;
   const getParams = queryString.parse(locationParams.search);
 
@@ -174,21 +174,21 @@ const Profile = params => {
     handleDeleteImage,
     profile,
     loaded,
-    submitFile,
+    // submitFile,
     handleFileUpload,
     handleChangeProfileImage,
-    handleInterestChange,
+    // handleInterestChange,
     handleChangeLocation,
     handleChangeCity,
     handleSubmitParameters,
     isChecked,
     getAge,
-    fetchInterests,
+    // fetchInterests,
     deleteUser,
     showModal,
     setShowModal,
     imageToSave,
-    setImageToSave,
+    // setImageToSave,
     croppedImage,
     setCroppedImage,
     upload,
@@ -196,21 +196,21 @@ const Profile = params => {
     sendCroppedImageServer,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
-    birthDate,
-    description,
-    email,
-    firstname,
-    gender,
-    images,
+    // birthDate,
+    // description,
+    // email,
+    // firstname,
+    // gender,
+    // images,
     interests,
-    location,
+    // location,
     notificationMail,
     notificationPush,
-    popularityRate,
-    profilePicture,
-    sexualOrientation,
-    surname,
-    username,
+    // popularityRate,
+    // profilePicture,
+    // sexualOrientation,
+    // surname,
+    // username,
     interestNames,
   } = profile;
 
@@ -235,7 +235,7 @@ const Profile = params => {
         profile={profile}
         getAge={getAge}
         handleChangeCity={handleChangeCity}
-        type='private'
+        type="private"
       />
       <Divider className={classes.divider} />
       <div className={classes.wrapperProfile}>

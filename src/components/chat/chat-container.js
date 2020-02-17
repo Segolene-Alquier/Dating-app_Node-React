@@ -6,7 +6,7 @@ import { AuthContext } from '../app/AuthContext';
 const ChatContainer = () => {
   const [loaded, setLoaded] = useState(false);
   const { authContext } = useContext(AuthContext);
-  const { userData, token } = authContext;
+  const { token } = authContext;
   const [matchList, setMatchList] = useState({});
 
   const fetchCurrentUserMatches = () => {
@@ -18,7 +18,6 @@ const ChatContainer = () => {
         },
       })
       .then(response => {
-        console.log('response', response.data);
         setMatchList(response.data);
         return response.data;
       })

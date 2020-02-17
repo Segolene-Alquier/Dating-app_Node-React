@@ -1,7 +1,6 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-import _ from 'lodash';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import Divider from '@material-ui/core/Divider';
 import { Tabs, Tab } from '@material-ui/core';
@@ -109,13 +108,6 @@ const Suggestions = () => {
     setValueTab(newValueTab);
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const [debouncedFunction] = useDebouncedCallback(
     (event, newValue, type, setSuggestionsOptions) => {
       const newSuggestionsOptions = {

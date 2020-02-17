@@ -62,7 +62,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     position: 'fixed',
     bottom: '0',
-    backgroundColor: 'white',
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
     paddingTop: theme.spacing(2),
@@ -74,13 +73,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ChatRoom = ({}) => {
+const ChatRoom = () => {
   const classes = useStyles();
   let { matchId } = useParams();
-  matchId = parseInt(matchId);
+  matchId = parseInt(matchId, 10);
   const {
     chatroomInfo,
-    setChatroomInfo,
     loaded,
     currentUser,
     handleMessage,

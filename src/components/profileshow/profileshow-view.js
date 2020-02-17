@@ -4,7 +4,6 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,11 +34,19 @@ const useStyles = makeStyles(theme => ({
     marginRight: 'auto',
     maxWidth: '1500px',
   },
+  // paper: {
+  //   marginTop: theme.spacing(8),
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   alignItems: 'center',
+  // },
   paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   },
   avatar: {
     margin: theme.spacing(1),
@@ -89,14 +96,6 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       margin: theme.spacing(0.5),
     },
-  },
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
   },
   carousel: {
     width: '100%',
@@ -244,6 +243,7 @@ const ProfileShow = ({ computedMatch }) => {
                     <img
                       className={classes.imageSlider}
                       src={visitedProfile.images[index]}
+                      alt="profile"
                     />
                   </div>
                 ))

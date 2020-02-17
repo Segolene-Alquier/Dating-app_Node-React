@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
@@ -7,11 +7,9 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Typography from '@material-ui/core/Typography';
-import ChatContainer from './chat-container';
 import _ from 'lodash';
-import { Redirect } from 'react-router-dom';
-import Iframe from 'react-iframe';
+// import Iframe from 'react-iframe';
+import ChatContainer from './chat-container';
 
 const useStyles = makeStyles(theme => ({
   buttonChatroom: {

@@ -79,8 +79,9 @@ const SearchContainer = () => {
       case 'interests':
         order = 'asc';
         break;
+      default:
     }
-    const newSearchOptions = { ...searchOptions, ['sort']: sortChoice };
+    const newSearchOptions = { ...searchOptions, sort: sortChoice };
     setSearchOptions(newSearchOptions);
     setSearchResult(
       _.orderBy(
@@ -103,6 +104,7 @@ const SearchContainer = () => {
               case 'interests':
                 return profile.interests[0] ? profile.interests[0] : 'ZZZZ';
                 break;
+              default:
             }
           },
         ],

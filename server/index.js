@@ -5,15 +5,6 @@ require('dotenv').config();
 
 const app = express();
 
-const { newConnection } = require('./socket/newConnection');
-const {
-  getConnectedUsers,
-  setConnectedUsers,
-} = require('./socket/connectedUsers');
-const disconnection = require('./socket/disconnection');
-const newMessage = require('./socket/newMessage');
-const joinChatroom = require('./socket/joinChatroom');
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
@@ -56,26 +47,8 @@ app.use(
 app.use('/images', require('./rest/components(C-M-R)/images/routes'));
 
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
-// io.set('transports', ['xhr-polling']);
+global.io = require('socket.io')(server);
+require('./socket/socket')();
 server.listen(3001, () => {
   console.log('Matcha is listening on port 3001!');
-});
-
-io.on('connection', async socket => {
-  newConnection(io, socket, getConnectedUsers());
-  socket.on('joinchatroom', function(match) {
-    joinChatroom(match, getConnectedUsers()[socket.id], socket);
-  });
-  socket.on('error', function(err) {
-    // console.log(err.stack);
-  });
-  socket.on('disconnect', function() {
-    disconnection(io, getConnectedUsers(), socket);
-  });
-
-  socket.on('chat message', function(msg, match) {
-    console.log('new msg', msg, match, getConnectedUsers()[socket.id]);
-    newMessage(msg, match, getConnectedUsers()[socket.id], socket, io);
-  });
 });

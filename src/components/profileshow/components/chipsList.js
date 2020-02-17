@@ -27,6 +27,7 @@ const findEquivalence = number => {
     case 7:
       label = 'Non-binary';
       break;
+    default:
   }
   return label;
 };

@@ -80,10 +80,11 @@ const SuggestionsContainer = () => {
       case 'interests':
         order = 'asc';
         break;
+      default:
     }
     const newSuggestionsOptions = {
       ...suggestionsOptions,
-      ['sort']: sortChoice,
+      sort: sortChoice,
     };
     setSuggestionsOptions(newSuggestionsOptions);
     setSuggestionsResult(
@@ -110,6 +111,7 @@ const SuggestionsContainer = () => {
               case 'interests':
                 return profile.interests[0] ? profile.interests[0] : 'ZZZZ';
                 break;
+              default:
             }
           },
         ],

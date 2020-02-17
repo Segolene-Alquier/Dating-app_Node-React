@@ -6,7 +6,6 @@ import {
   Typography,
   Button,
   makeStyles,
-  Avatar,
   SwipeableDrawer,
   Badge,
 } from '@material-ui/core';
@@ -18,10 +17,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import axios from 'axios';
 import { AuthContext } from '../app/AuthContext';
 import { logout } from '../auth';
 import NotificationDrawer from './components/notificationDrawer';
-import axios from 'axios';
+// import { toast } from 'react-toastify';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,6 +46,8 @@ const Nav = () => {
     right: false,
   });
 
+  // const debounced = (sender, type) =>
+  //   _.throttle(toast.info(sender + type), 250);
   const fetchTotalNotifications = async () => {
     await axios
       .get(`http://localhost:3001/notification/total`, {
@@ -96,6 +98,11 @@ const Nav = () => {
     }
     setNotifMenu({ ...notifMenu, right: open });
   };
+
+  socketContext.socket.on('new notification', (sender, type) => {
+    console.log(sender, type);
+    // debounced(sender, type);
+  });
 
   authContext.userData.then(data => {
     if (data) {

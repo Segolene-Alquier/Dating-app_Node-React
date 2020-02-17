@@ -98,7 +98,9 @@ export default function MediaCard({ field, profile, handleLike, type }) {
                 title="This user likes you"
                 aria-label="This user likes you"
               >
-                <span>💗</span>
+                <span role="img" aria-label="heart emoji">
+                  💗
+                </span>
               </Tooltip>
             ) : null}
           </Typography>

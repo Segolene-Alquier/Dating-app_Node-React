@@ -21,6 +21,7 @@ const newConnection = async (io, socket) => {
   if (userConnected) {
     const connectedUsers = getConnectedUsers();
     connectedUsers[socket.id] = userConnected.userid;
+    console.log(getConnectedUsers());
     setConnectedUsers(connectedUsers);
   } else {
     socket.disconnect();

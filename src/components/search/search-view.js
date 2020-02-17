@@ -1,15 +1,12 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-import _ from 'lodash';
-// import MediaCard from './components/media-card';
-import SearchContainer from './search-container';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
-import Title from '../shared/title';
-// import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import SearchFilters from './components/search-filters';
-import ProfilesGrid from './../shared/profiles-grid';
+import ProfilesGrid from '../shared/profiles-grid';
+import Title from '../shared/title';
+import SearchContainer from './search-container';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -75,15 +72,7 @@ const Search = () => {
     handleSort,
   } = SearchContainer();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const [debouncedFunction] = useDebouncedCallback(
     (event, newValue, type, setSearchOptions) => {
       const newSearchOptions = { ...searchOptions, [type]: newValue };
