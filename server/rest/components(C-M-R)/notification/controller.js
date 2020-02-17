@@ -14,7 +14,8 @@ const chat = new Chat();
 async function getNotificationsFromCurrentUser(request, response) {
   const id = request.decoded.userid;
   try {
-    const call = await notifications.getBy('likingUser', id);
+    const call = await notifications.getBy('recipient', id);
+    notifications.updateRead(id);
     response.status(200).json(call);
   } catch (err) {
     console.log(err);

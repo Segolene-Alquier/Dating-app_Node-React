@@ -31,6 +31,22 @@ class Notification {
     }
   }
 
+  async updateRead(recipient) {
+    try {
+      console.log(
+        `UPDATE public."Notification" SET read = true WHERE recipient = ${recipient}`,
+      );
+      const result = await db.any(
+        `UPDATE public."Notification" SET read = true WHERE recipient = $1`,
+        [recipient],
+      );
+      return result;
+    } catch (err) {
+      console.log(err, 'in model Notification.updateRead()');
+      return null;
+    }
+  }
+
   async getBy(type, value) {
     try {
       if (!this.isValidType(type)) {
@@ -38,10 +54,10 @@ class Notification {
         return null;
       }
       console.log(
-        `SELECT firstname, username, birthDate, location, popularityRate, profilePicture, date FROM public."Notification" WHERE ${type} = ${value}`,
+        `SELECT * FROM public."Notification" WHERE ${type} = ${value} ORDER BY id DESC`,
       );
       const result = await db.any(
-        `SELECT firstname, username, "birthDate", location, "popularityRate", "profilePicture", date FROM public."Notification", public."User"  WHERE $1:name = $2 AND "Notification"."likingUser" = "User".id ORDER BY date DESC`,
+        `SELECT * FROM public."Notification" WHERE $1:name = $2 ORDER BY id DESC`,
         [type, value],
       );
       return result;
@@ -72,25 +88,6 @@ class Notification {
         [likingUser, notificationdUser],
       );
       return result[0].exists;
-    } catch (err) {
-      console.log(err, 'in model Notification.exists()');
-      return null;
-    }
-  }
-
-  async relationship(visitorUser, visitedUser) {
-    try {
-      console.log(
-        `SELECT exists(SELECT from public."Notification" WHERE "likingUser" = $1 AND "notificationdUser" = $2) AS visitornotificationvisited, exists(SELECT from public."Notification" WHERE "notificationdUser" = $1 AND "likingUser" = $2) AS visitednotificationvisitor`,
-      );
-      const result = await db.any(
-        `SELECT exists(SELECT from public."Notification" WHERE "likingUser" = $1 AND "notificationdUser" = $2) AS visitornotificationvisited, exists(SELECT from public."Notification" WHERE "notificationdUser" = $1 AND "likingUser" = $2) AS visitednotificationvisitor`,
-        [visitorUser, visitedUser],
-      );
-      result[0].match =
-        result[0].visitornotificationvisited &&
-        result[0].visitednotificationvisitor;
-      return result[0];
     } catch (err) {
       console.log(err, 'in model Notification.exists()');
       return null;
