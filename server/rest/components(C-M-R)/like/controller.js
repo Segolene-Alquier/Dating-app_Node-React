@@ -3,6 +3,8 @@ const Match = require('./../match/model');
 const Block = require('./../block/model');
 const User = require('./../user/model');
 const Chat = require('./../chatroom/model');
+const Notification = require('./../notification/model');
+
 const { sendLikeEmail } = require('../../../mailer/sendLikeEmail');
 
 const likes = new Like();
@@ -10,6 +12,7 @@ const block = new Block();
 const matchs = new Match();
 const user = new User();
 const chat = new Chat();
+const notification = new Notification();
 
 async function getLikesFromCurrentUser(request, response) {
   const id = request.decoded.userid;
@@ -44,6 +47,7 @@ async function likeUnlikeUserId(request, response) {
       query = await likes.delete(likingUser, likedUser);
       if (query.unmatch) {
         const matchId = await matchs.getMatchId(likingUser, likedUser);
+        notification.create(likedUser, likingUser, 'unmatch');
         await chat.delete(matchId);
         matchs.delete(likingUser, likedUser);
       }
@@ -51,9 +55,10 @@ async function likeUnlikeUserId(request, response) {
       query = await likes.create(likingUser, likedUser);
       if (query.match) {
         const matchQuery = await matchs.create(likingUser, likedUser);
+        notification.create(likedUser, likingUser, 'match');
         query.matchId = matchQuery.id;
       } else {
-        console.log('ICI');
+        notification.create(likedUser, likingUser, 'like');
         sendLikeEmail(likedUser, likingUser);
       }
     }

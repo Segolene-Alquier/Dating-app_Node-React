@@ -141,27 +141,6 @@ class Chat {
       return null;
     }
   }
-
-  // async exists(type, value) {
-  //   try {
-  //     if (!value) return false;
-  //     if (!this.isValidType(type)) {
-  //       console.log(`Match.exists(): ${type} is not an authorized type`);
-  //       return null;
-  //     }
-  //     console.log(
-  //       `SELECT exists(SELECT from public."Match" WHERE ${type} = ${value})`,
-  //     );
-  //     const result = await db.none(
-  //       `SELECT exists(SELECT from public."Match" WHERE id = ALL($2));`,
-  //       [value],
-  //     );
-  //     return result[0].exists;
-  //   } catch (err) {
-  //     console.log(err, 'in model Match.exists()');
-  //     return null;
-  //   }
-  // }
 }
 
 module.exports = Chat;

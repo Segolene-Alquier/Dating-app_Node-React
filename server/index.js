@@ -44,6 +44,10 @@ app.use('/likes', require('./rest/components(C-M-R)/like/routes'));
 app.use('/block', require('./rest/components(C-M-R)/block/routes'));
 app.use('/report', require('./rest/components(C-M-R)/report/routes'));
 app.use('/chat', require('./rest/components(C-M-R)/chatroom/routes'));
+app.use(
+  '/notification',
+  require('./rest/components(C-M-R)/notification/routes'),
+);
 
 app.use(
   '/validation',
