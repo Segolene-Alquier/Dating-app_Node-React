@@ -70,10 +70,12 @@ class Notification {
         return null;
       }
       console.log(
-        `SELECT * FROM public."Notification" WHERE ${type} = ${value} ORDER BY id DESC`,
+        `SELECT "Notification".id, "Notification".recipient, "Notification".sender, "Notification".event, "Notification".date, "Notification".read, "User".firstname, "User".profilePicture  FROM public."Notification" INNER JOIN public."User" WHERE ${type} = ${value} ORDER BY id DESC`,
       );
       const result = await db.any(
-        `SELECT * FROM public."Notification" WHERE $1:name = $2 ORDER BY id DESC`,
+        `SELECT "Notification".id, "Notification".recipient, "Notification".sender, "Notification".event, "Notification".date, "Notification".read, "User".firstname, "User".username, "User"."profilePicture"
+        FROM public."Notification" INNER JOIN public."User" ON("Notification".sender = "User".id)
+        WHERE $1:name = $2 ORDER BY id DESC`,
         [type, value],
       );
       return result;
