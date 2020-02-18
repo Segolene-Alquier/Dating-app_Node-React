@@ -3,6 +3,8 @@ import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Tabs, Tab } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import SettingsIcon from '@material-ui/icons/Settings';
+import InfoIcon from '@material-ui/icons/Info';
 import queryString from 'query-string';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
@@ -72,7 +74,6 @@ const useStyles = makeStyles(theme => ({
   },
   pictureButtonContainer: {
     overflow: 'hidden',
-    backgroundColor: 'green',
     position: 'relative',
     height: 'fit-content',
     width: '100%',
@@ -94,6 +95,21 @@ const useStyles = makeStyles(theme => ({
   },
   tabs: {
     margin: theme.spacing(1),
+  },
+  tab: {
+    opacity: '1',
+    '&:focus': {
+      outline: 'none',
+    },
+  },
+  activeTab: {
+    opacity: '1',
+    borderBottom: '3px solid',
+    // color: theme.palette.secondary.main,
+    borderBottomColor: theme.palette.secondary.main,
+    '&:focus': {
+      outline: 'none',
+    },
   },
   divider: {
     margin: theme.spacing(1),
@@ -247,8 +263,30 @@ const Profile = params => {
             aria-label="simple tabs example"
             className={classes.tabs}
           >
-            <Tab label="About me" {...a11yProps(0)} />
-            <Tab label="Parameters" {...a11yProps(1)} />
+            <Tab
+              icon={
+                valueTab === 0 ? (
+                  <InfoIcon color="secondary" />
+                ) : (
+                  <InfoIcon color="primary" />
+                )
+              }
+              className={valueTab === 0 ? classes.activeTab : classes.tab}
+              label="About me"
+              {...a11yProps(0)}
+            />
+            <Tab
+              icon={
+                valueTab === 1 ? (
+                  <SettingsIcon color="secondary" />
+                ) : (
+                  <SettingsIcon color="primary" />
+                )
+              }
+              className={valueTab === 1 ? classes.activeTab : classes.tab}
+              label="Parameters"
+              {...a11yProps(1)}
+            />
           </Tabs>
           <TabPanelProfileAbout
             valueTab={valueTab}
