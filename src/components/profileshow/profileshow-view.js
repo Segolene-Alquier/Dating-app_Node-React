@@ -13,8 +13,9 @@ import UpperBoxProfile from '../profile/components/upperBoxProfile';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from '../profile/profile-container';
 import ChipsList from './components/chipsList';
-import Background from '../../assets/images/pink-bg-2.jpg';
-
+// import Background from '../../assets/images/heart-confetti-background-1.png';
+// import Background from 'https://media.giphy.com/media/ugEWbEMH0gm2c/giphy.gif';
+//
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
@@ -66,8 +67,11 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundImage: `url(${Background})`,
-    backgroundSize: 'cover',
+    // backgroundImage: `url(${Background})`,
+    // backgroundImage: `url("https://media.giphy.com/media/ugEWbEMH0gm2c/giphy.gif")`,
+    // backgroundImage: `url("https://media.giphy.com/media/xTcnT2ZYSaCTdkTSmI/giphy.gif")`,
+    backgroundImage: `url("https://media.giphy.com/media/26ufcYAkp8e66vanu/giphy.gif")`,
+    // backgroundSize: 'cover',
   },
   containerUpProfile: {
     maxWidth: '1500px',

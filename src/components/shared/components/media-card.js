@@ -22,6 +22,9 @@ const useStyles = makeStyles(theme => ({
   media: {
     height: 345,
   },
+  cardContent: {
+    backgroundImage: `url("https://media.giphy.com/media/26ufcYAkp8e66vanu/giphy.gif")`,
+  },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
@@ -46,6 +49,7 @@ export default function MediaCard({ field, profile, handleLike, type }) {
     visitor,
     lastConnection,
     connected,
+    match,
   } = field;
 
   const getAge = dateString => {
@@ -86,7 +90,7 @@ export default function MediaCard({ field, profile, handleLike, type }) {
           }
           title={firstname}
         />
-        <CardContent>
+        <CardContent className={match === true ? classes.cardContent : null}>
           <Typography gutterBottom variant="h5" component="h2" align="center">
             <LoggedDot
               loggedState={connected}
@@ -127,7 +131,6 @@ export default function MediaCard({ field, profile, handleLike, type }) {
           )}
         </CardContent>
       </CardActionArea>
-      {/* <CardActions> */}
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Avatar className={classes.avatar}>{popularityRate}%</Avatar>
         {type === 'swipe' ? null : (
@@ -141,7 +144,6 @@ export default function MediaCard({ field, profile, handleLike, type }) {
           </IconButton>
         )}
       </Box>
-      {/* </CardActions> */}
     </Card>
   );
 }

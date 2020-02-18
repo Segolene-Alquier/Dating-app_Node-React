@@ -6,13 +6,12 @@ import { toast } from 'react-toastify';
 
 const VisitContainer = () => {
   const [loaded, setLoaded] = useState(false);
-  const [visitedProfile, setVisitedProfile] = useState([]);
+  const [visitedProfile, setVisitedProfile] = useState({});
   const [visitorProfile, setVisitorProfile] = useState({});
   const { authContext } = useContext(AuthContext);
   const { userData, token } = authContext;
 
   const handleLike = likedId => {
-    console.log('liked user ', likedId);
     axios
       .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
         headers: {
@@ -35,7 +34,7 @@ const VisitContainer = () => {
               liking: !visitedProfile[parseInt(index, 10)].liking,
             };
           });
-          console.log(document.querySelectorAll(`[visitor*="${likedId}"]`));
+          console.log('newVisitedProfile', newVisitedProfile);
           document
             .querySelectorAll(`[visitor*="${likedId}"]`)
             .forEach(element => {
@@ -44,6 +43,7 @@ const VisitContainer = () => {
               else element.className += ' MuiIconButton-colorSecondary';
             });
           setVisitedProfile(newVisitedProfile);
+          console.log('visitedProfile', visitedProfile);
         }
       });
   };
