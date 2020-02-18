@@ -59,7 +59,13 @@ const UpperBoxProfile = ({
   };
 
   return (
-    <Box className={classes.boxUpProfile}>
+    <Box
+      className={
+        profile.match === true
+          ? classes.boxUpProfileMatch
+          : classes.boxUpProfile
+      }
+    >
       <Grid
         container
         className={classes.containerUpProfile}

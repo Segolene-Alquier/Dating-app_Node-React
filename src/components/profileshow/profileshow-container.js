@@ -7,6 +7,7 @@ import { AuthContext } from '../app/AuthContext';
 const ProfileShowContainer = visitedUsername => {
   const [visitedProfile, setVisitedProfile] = useState({});
   const [loaded, setLoaded] = useState(false);
+  // const [match, setMatch] = useState()
   const [loading, setLoading] = useState(false);
   const { authContext } = useContext(AuthContext);
   const { token } = authContext;
@@ -63,7 +64,6 @@ const ProfileShowContainer = visitedUsername => {
   };
 
   const handleLike = (likedId, setLiked) => {
-    console.log('liked user ', likedId);
     axios
       .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
         headers: {
@@ -75,10 +75,20 @@ const ProfileShowContainer = visitedUsername => {
         if (result.data.deleted === true) {
           setLiked(false);
           toast.success('You just unliked this user');
+          if (visitedProfile.match === true) {
+            setVisitedProfile({ ...visitedProfile, match: false });
+          }
         }
         if (result.data.created === true) {
           setLiked(true);
           toast.success('You just liked this user');
+          if (
+            visitedProfile.match === false &&
+            visitedProfile.visitedlikevisitor === true
+          ) {
+            toast.info("It's a match!");
+            setVisitedProfile({ ...visitedProfile, match: true });
+          }
         }
       })
       .catch(error => {
@@ -102,7 +112,7 @@ const ProfileShowContainer = visitedUsername => {
       });
 
   if (_.isEmpty(visitedProfile) && loading === false) {
-    setLoading(true)
+    setLoading(true);
     fetchVisitedProfile().then(data => {
       if (data.founded === true) {
         setVisitedProfile(data);

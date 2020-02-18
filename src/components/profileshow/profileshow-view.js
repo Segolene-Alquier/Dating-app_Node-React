@@ -13,6 +13,7 @@ import UpperBoxProfile from '../profile/components/upperBoxProfile';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from '../profile/profile-container';
 import ChipsList from './components/chipsList';
+import Background from '../../assets/images/pink-bg-2.jpg';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -55,10 +56,18 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
   },
   boxUpProfile: {
-    margin: theme.spacing(1),
+    padding: theme.spacing(1),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  boxUpProfileMatch: {
+    padding: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundImage: `url(${Background})`,
+    backgroundSize: 'cover',
   },
   containerUpProfile: {
     maxWidth: '1500px',
@@ -76,9 +85,6 @@ const useStyles = makeStyles(theme => ({
     objectFit: 'cover',
   },
   tabs: {
-    margin: theme.spacing(1),
-  },
-  divider: {
     margin: theme.spacing(1),
   },
   item: {
