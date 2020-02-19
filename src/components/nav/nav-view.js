@@ -128,23 +128,9 @@ const Nav = () => {
         </Typography>
         {isLoggedIn ? (
           <>
-            <Button
-              color="inherit"
-              href="/suggestions"
-              startIcon={<FavoriteIcon />}
-            >
-              Suggestions
-            </Button>
-            <Button
-              color="inherit"
-              href="/visits"
-              startIcon={<VisibilityIcon />}
-            >
-              My visits
-            </Button>
-            <Button color="inherit" href="/search" startIcon={<SearchIcon />}>
+            {/* <Button color="inherit" href="/search" startIcon={<SearchIcon />}>
               Find users
-            </Button>
+            </Button> */}
             <IconButton color="inherit" href="/chat">
               <ChatBubbleIcon />
             </IconButton>
