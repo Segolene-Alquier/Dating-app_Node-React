@@ -25,8 +25,6 @@ const ProfileShowContainer = visitedUsername => {
         },
       )
       .then(result => {
-        console.log('result deleted:', result.data.deleted);
-        console.log('result created:', result.data.created);
         if (result.data.deleted === true) {
           setBlocked(false);
           toast.success('You just unblocked this user');

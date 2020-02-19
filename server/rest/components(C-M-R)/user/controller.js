@@ -12,6 +12,7 @@ const Report = require('./../report/model');
 const { deleteFile } = require('../images/controller');
 const axios = require('axios');
 const Notification = require('./../notification/model');
+const Match = require('./../match/model');
 
 const user = new User();
 const check = new UserInputTests(user);
@@ -19,6 +20,7 @@ const userValidation = new UserValidation(user);
 const like = new Like();
 const block = new Block();
 const report = new Report();
+const match = new Match();
 const notification = new Notification();
 const _ = require('lodash');
 const { getDistance } = require('geolib');
@@ -136,6 +138,7 @@ async function getUserByUsername(request, response) {
       });
 
     const userAlreadyBlocked = await block.exists(userIdVisitor, userIdVisited);
+    const matchId = await match.getMatchId(userIdVisitor, userIdVisited);
     const userAlreadyReported = await report.exists(
       userIdVisitor,
       userIdVisited,
@@ -147,6 +150,7 @@ async function getUserByUsername(request, response) {
       ...relationship,
       alreadyBlocked: userAlreadyBlocked,
       alreadyReported: userAlreadyReported,
+      matchId,
       city,
       connected,
     });

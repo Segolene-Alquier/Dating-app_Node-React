@@ -3,7 +3,6 @@ import moment from 'moment';
 import {
   List,
   ListItem,
-  ListItemIcon,
   Divider,
   ListItemText,
   ListItemAvatar,

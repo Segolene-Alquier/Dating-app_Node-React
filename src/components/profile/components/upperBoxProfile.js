@@ -58,6 +58,8 @@ const UpperBoxProfile = ({
     return ` | ${dist} km`;
   };
 
+  const chatroomLink = `/chatroom/${profile.matchId}`;
+
   return (
     <Box
       className={
@@ -158,6 +160,7 @@ const UpperBoxProfile = ({
                   color="primary"
                   size="small"
                   className={upBoxClasses.fabUpBox}
+                  href={chatroomLink}
                 >
                   <MailOutlineIcon />
                 </Fab>
