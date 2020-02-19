@@ -17,7 +17,7 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ChatIcon from '@material-ui/icons/Chat';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AddIcon from '@material-ui/icons/Add';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import SearchIcon from '@material-ui/icons/Search';
 import Toaster from '../toaster/index';
@@ -81,10 +81,25 @@ const useStyles = makeStyles(theme => ({
   gridWrapper: {
     height: '100%',
   },
+  leftColumn: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  leftColumnIcon: {
+    color: theme.palette.secondary.main,
+  },
+  leftColumnText: {
+    color: 'white',
+  },
   columnCTAS: {
     backgroundColor: '#f4f4f4',
     height: '100%',
     padding: theme.spacing(3),
+  },
+  columnPaper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    // alignItems: 'center',
   },
   paperCTA: {
     display: 'flex',
@@ -92,6 +107,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     padding: theme.spacing(3),
+    maxWidth: '450px',
+  },
+  paperText: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
   },
   findMatchTitle: {
     marginBottom: theme.spacing(6),
@@ -129,32 +149,41 @@ const Home = ({ location }) => {
           </Typography>
         </Box>
         <Grid container className={classes.gridWrapper}>
-          <Grid item xs="12" sm="3" lg="2">
+          <Grid item xs="12" sm="3" lg="2" className={classes.leftColumn}>
             <List>
               <ListItem button component="a" href="/profile">
                 <ListItemIcon>
-                  <AccountCircleIcon color="primary" />
+                  <AccountCircleIcon className={classes.leftColumnIcon} />
                 </ListItemIcon>
-                <ListItemText primary="My profile" />
+                <ListItemText
+                  primary="My profile"
+                  className={classes.leftColumnText}
+                />
               </ListItem>
               <ListItem button component="a" href="/chat">
                 <ListItemIcon>
-                  <ChatIcon color="primary" />
+                  <ChatIcon className={classes.leftColumnIcon} />
                 </ListItemIcon>
-                <ListItemText primary="Messages" />
+                <ListItemText
+                  primary="Messages"
+                  className={classes.leftColumnText}
+                />
               </ListItem>
               <ListItem button component="a" href="/visits">
                 <ListItemIcon>
-                  <VisibilityIcon color="primary" />
+                  <VisibilityIcon className={classes.leftColumnIcon} />
                 </ListItemIcon>
-                <ListItemText primary="Visits" />
+                <ListItemText
+                  primary="Visits"
+                  className={classes.leftColumnText}
+                />
               </ListItem>
             </List>
           </Grid>
           <Grid item xs="12" sm="9" lg="10" className={classes.columnCTAS}>
             <Typography
               variant="h3"
-              color=""
+              color="primary"
               gutterBottom
               align="center"
               className={classes.findMatchTitle}
@@ -162,28 +191,44 @@ const Home = ({ location }) => {
               Find your perfect Match
             </Typography>
             <Grid container spacing={5}>
-              <Grid item xs="12" sm="6">
+              <Grid item xs="12" sm="6" className={classes.columnPaper}>
                 <Paper elevation={3} className={classes.paperCTA}>
                   <FavoriteIcon fontSize="large" color="secondary" />
-                  <Typography variant="h4" color="secondary" gutterBottom>
+                  <Typography variant="h4" color="primary">
                     Suggestions
                   </Typography>
-                  <Typography>
+                  <Typography className={classes.paperText}>
                     We gathered profiles that could be a good fit for you!
                     Here's a bunch
                   </Typography>
+                  <Fab
+                    size="large"
+                    color="secondary"
+                    aria-label="add"
+                    href="/suggestions"
+                  >
+                    <AddIcon />
+                  </Fab>
                 </Paper>
               </Grid>
-              <Grid item xs="12" sm="6">
+              <Grid item xs="12" sm="6" className={classes.columnPaper}>
                 <Paper elevation={3} className={classes.paperCTA}>
                   <SearchIcon fontSize="large" color="secondary" />
-                  <Typography variant="h4" color="secondary" gutterBottom>
+                  <Typography variant="h4" color="primary">
                     Search
                   </Typography>
-                  <Typography>
+                  <Typography className={classes.paperText}>
                     You can filter users according to your interests, age,
                     distance... Have fun!
                   </Typography>
+                  <Fab
+                    size="large"
+                    color="secondary"
+                    aria-label="add"
+                    href="/search"
+                  >
+                    <AddIcon />
+                  </Fab>
                 </Paper>
               </Grid>
             </Grid>
