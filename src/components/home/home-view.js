@@ -13,6 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
   Paper,
+  CircularProgress,
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -23,8 +24,16 @@ import SearchIcon from '@material-ui/icons/Search';
 import Toaster from '../toaster/index';
 import Background from '../../assets/images/home-bg-1.jpg';
 import { AuthContext } from '../app/AuthContext';
+import HomeContainer from './home-container';
 
 const useStyles = makeStyles(theme => ({
+  progress: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   homeWrapper: {
     height: 'calc(100vh - 64px)',
     width: '100vw',
@@ -71,6 +80,7 @@ const useStyles = makeStyles(theme => ({
   upDivWrapper: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'flex-end',
     padding: theme.spacing(3),
   },
   avatar: {
@@ -99,7 +109,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    // alignItems: 'center',
   },
   paperCTA: {
     display: 'flex',
@@ -126,6 +135,11 @@ const Home = ({ location }) => {
 
   const getParams = queryString.parse(location.search);
 
+  const { userInfo, loaded } = HomeContainer(
+    authContext.userData,
+    authContext.token,
+  );
+
   if (secureAuth === true) {
     authContext.userData.then(data => {
       if (data === null) {
@@ -136,16 +150,24 @@ const Home = ({ location }) => {
   }
 
   if (secureAuth) {
+    if (loaded === false) {
+      return (
+        <div className={classes.progress}>
+          <CircularProgress color="secondary" />
+        </div>
+      );
+    }
+
     return (
       <Box className={classes.dashboard}>
         <Box className={classes.upDivWrapper}>
           <Avatar
             alt="Remy Sharp"
-            src="http://placekitten.com/200/300"
+            src={userInfo[0].profilePicture}
             className={classes.avatar}
           />
-          <Typography variant="h3" color="primary" gutterBottom>
-            Welcome Sego!
+          <Typography variant="h4" color="primary">
+            Welcome {userInfo[0].firstname}
           </Typography>
         </Box>
         <Grid container className={classes.gridWrapper}>
