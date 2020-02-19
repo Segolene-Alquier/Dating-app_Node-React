@@ -102,7 +102,7 @@ const useStyles = makeStyles(theme => ({
   },
   columnCTAS: {
     backgroundColor: '#f4f4f4',
-    height: '100%',
+    minHeight: '100%',
     padding: theme.spacing(3),
   },
   columnPaper: {

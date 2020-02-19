@@ -8,6 +8,7 @@ import {
   makeStyles,
   SwipeableDrawer,
   Badge,
+  Link,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
@@ -30,8 +31,27 @@ const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
+  matchaLogo: {
     flexGrow: 1,
+  },
+  navIcon: {
+    color: 'white',
+    '&:focus': {
+      textDecoration: 'none',
+    },
+    '&:hover': {
+      textDecoration: 'none',
+      color: theme.palette.secondary.main,
+    },
+    '&:visited': {
+      textDecoration: 'none',
+    },
+    '&:link': {
+      textDecoration: 'none',
+    },
+    '&:active': {
+      textDecoration: 'none',
+    },
   },
 }));
 
@@ -115,24 +135,19 @@ const Nav = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="menu"
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" className={classes.title}>
-          Matcha
+        <Typography variant="h6" className={classes.matchaLogo}>
+          <Link
+            href="/"
+            style={{ textDecoration: 'none' }}
+            className={classes.navIcon}
+          >
+            Matcha
+          </Link>
         </Typography>
         {isLoggedIn ? (
           <>
-            {/* <Button color="inherit" href="/search" startIcon={<SearchIcon />}>
-              Find users
-            </Button> */}
             <IconButton color="inherit" href="/chat">
-              <ChatBubbleIcon />
+              <ChatBubbleIcon className={classes.navIcon} />
             </IconButton>
             <IconButton onClick={toggleDrawer(true)} color="inherit">
               <Badge
@@ -140,12 +155,12 @@ const Nav = () => {
                 badgeContent={totalNotifications}
                 showZero
               >
-                <NotificationsIcon />
+                <NotificationsIcon className={classes.navIcon} />
               </Badge>
             </IconButton>
 
             <IconButton color="inherit" href="profile">
-              <AccountCircleIcon />
+              <AccountCircleIcon className={classes.navIcon} />
             </IconButton>
             <IconButton
               color="inherit"
@@ -153,7 +168,7 @@ const Nav = () => {
                 logout(e, setIsLoggedIn);
               }}
             >
-              <ExitToAppIcon />
+              <ExitToAppIcon className={classes.navIcon} />
             </IconButton>
             <SwipeableDrawer
               anchor="right"
