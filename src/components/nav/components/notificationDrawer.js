@@ -49,8 +49,12 @@ const NotificationDrawer = ({ classes, toggleDrawer, notifications }) => {
           let notifLink = `/profile/${notification.username.toLowerCase()}`;
           return (
             <>
-              <ListItem button key={notification.id} href={notifLink}>
-                {/* lien vers : chatroom/ profileshow/  */}
+              <ListItem
+                button
+                component="a"
+                key={notification.id}
+                href={notifLink}
+              >
                 <ListItemAvatar>
                   <Avatar alt="avatar" src={notification.profilePicture} />
                 </ListItemAvatar>
