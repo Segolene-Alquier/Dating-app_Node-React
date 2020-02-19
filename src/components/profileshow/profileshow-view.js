@@ -262,9 +262,6 @@ const ProfileShow = ({ computedMatch }) => {
           </Grid>
         </Grid>
       </div>
-      {/* {_.map(visitedProfile, temporaryField => (
-        <p>{temporaryField}</p>
-      ))} */}
     </>
   );
 };
