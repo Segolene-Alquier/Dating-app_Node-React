@@ -65,29 +65,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function TabPanel(props) {
-  const { children, valueTab, index } = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={valueTab !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-    >
-      <Box p={3}>{children}</Box>
-    </Typography>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 const Suggestions = () => {
   const {
     currentUserProfile,
@@ -101,12 +78,6 @@ const Suggestions = () => {
     handleSort,
   } = SuggestionsContainer();
   const classes = useStyles();
-
-  // change tabs
-  const [valueTab, setValueTab] = React.useState(0);
-  const handleChange = (event, newValueTab) => {
-    setValueTab(newValueTab);
-  };
 
   const [debouncedFunction] = useDebouncedCallback(
     (event, newValue, type, setSuggestionsOptions) => {
@@ -139,42 +110,13 @@ const Suggestions = () => {
         handleSort={handleSort}
       />
       <Divider light />
-      <Paper square>
-        <Tabs
-          width="100%"
-          valueTab={valueTab}
-          onChange={handleChange}
-          aria-label="simple tabs example"
-          className={classes.tabs}
-          centered
-        >
-          <Tab label="Swipe view" {...a11yProps(0)} />
-          <Tab label="List view" {...a11yProps(1)} />
-        </Tabs>
-      </Paper>
-
-      <TabPanel valueTab={valueTab} index={0}>
-        <Container>
-          <Box>
-            {console.log('suggestions', suggestionsResult)}
-            <MediaCard
-              field={suggestionsResult}
-              profile={currentUserProfile}
-              handleLike={handleLike}
-              type="swipe"
-            />
-          </Box>
-        </Container>
-      </TabPanel>
-      <TabPanel valueTab={valueTab} index={1}>
-        <ProfilesGrid
-          classes={classes}
-          profiles={suggestionsResult}
-          currentUserProfile={currentUserProfile}
-          handleLike={handleLike}
-          type="search"
-        />
-      </TabPanel>
+      <ProfilesGrid
+        classes={classes}
+        profiles={suggestionsResult}
+        currentUserProfile={currentUserProfile}
+        handleLike={handleLike}
+        type="search"
+      />
     </>
   );
 };

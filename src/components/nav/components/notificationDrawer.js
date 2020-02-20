@@ -53,6 +53,7 @@ const NotificationDrawer = ({ classes, toggleDrawer, notifications }) => {
                 component="a"
                 key={notification.id}
                 href={notifLink}
+                className={notification.read ? null : classes.notReadNotif}
               >
                 <ListItemAvatar>
                   <Avatar alt="avatar" src={notification.profilePicture} />

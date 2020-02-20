@@ -53,6 +53,9 @@ const useStyles = makeStyles(theme => ({
       textDecoration: 'none',
     },
   },
+  notReadNotif: {
+    backgroundColor: '#edf2fa',
+  },
 }));
 
 const Nav = () => {

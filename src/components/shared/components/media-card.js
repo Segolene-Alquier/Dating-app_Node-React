@@ -133,16 +133,14 @@ export default function MediaCard({ field, profile, handleLike, type }) {
       </CardActionArea>
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Avatar className={classes.avatar}>{popularityRate}%</Avatar>
-        {type === 'swipe' ? null : (
-          <IconButton
-            aria-label="Like the profile"
-            color={liking ? 'secondary' : ''}
-            visitor={visitor}
-            onClick={() => handleLike(visitor)}
-          >
-            <FavoriteIcon />
-          </IconButton>
-        )}
+        <IconButton
+          aria-label="Like the profile"
+          color={liking ? 'secondary' : ''}
+          visitor={visitor}
+          onClick={() => handleLike(visitor)}
+        >
+          <FavoriteIcon />
+        </IconButton>
       </Box>
     </Card>
   );
