@@ -216,9 +216,9 @@ class User {
     try {
       return await db.any(
         `UPDATE Public."User" SET "popularityRate" = (
-          SELECT ROUND( COALESCE(NULLIF(COUNT(*)::decimal, 0), 1)
+          SELECT LEAST( ROUND( COALESCE(NULLIF(COUNT(*)::decimal, 0), 1)
          / ( SELECT COALESCE(NULLIF(COUNT(*)::decimal * 0.7 , 0),1) FROM Public."Visit" WHERE visited = $1)
-         * 100)
+         * 100), 100)
          FROM Public."Like" WHERE "likedUser" = $1 )
          WHERE id = $1 RETURNING "popularityRate"`,
         [id],
