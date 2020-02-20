@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 345,
+    position: 'relative',
   },
   cardContent: {
     backgroundImage: `url("https://media.giphy.com/media/26ufcYAkp8e66vanu/giphy.gif")`,
@@ -30,6 +31,21 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
     fontSize: '0.8em',
     padding: theme.spacing(1),
+  },
+  matchingRate: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: '50px',
+    color: 'white',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    position: 'absolute',
+    top: '20px',
+    right: '20px',
   },
 }));
 
@@ -50,6 +66,7 @@ export default function MediaCard({ field, profile, handleLike, type }) {
     lastConnection,
     connected,
     match,
+    score,
   } = field;
 
   const getAge = dateString => {
@@ -90,6 +107,12 @@ export default function MediaCard({ field, profile, handleLike, type }) {
           }
           title={firstname}
         />
+        {type === 'suggestion' ? (
+          <Box className={classes.matchingRate}>
+            <Typography>Match rate</Typography>
+            <Typography>{score}%</Typography>
+          </Box>
+        ) : null}
         <CardContent className={match === true ? classes.cardContent : null}>
           <Typography gutterBottom variant="h5" component="h2" align="center">
             <LoggedDot

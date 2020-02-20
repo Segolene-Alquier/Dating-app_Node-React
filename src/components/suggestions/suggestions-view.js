@@ -115,7 +115,7 @@ const Suggestions = () => {
         profiles={suggestionsResult}
         currentUserProfile={currentUserProfile}
         handleLike={handleLike}
-        type="search"
+        type="suggestion"
       />
     </>
   );
