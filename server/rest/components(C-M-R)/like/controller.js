@@ -4,8 +4,10 @@ const Block = require('./../block/model');
 const User = require('./../user/model');
 const Chat = require('./../chatroom/model');
 const Notification = require('./../notification/model');
+const _ = require('lodash');
 
 const { sendLikeEmail } = require('../../../mailer/sendLikeEmail');
+const { isConnected } = require('./../../../socket/newConnection');
 
 const likes = new Like();
 const block = new Block();
@@ -17,7 +19,10 @@ const notification = new Notification();
 async function getLikesFromCurrentUser(request, response) {
   const id = request.decoded.userid;
   try {
-    const call = await likes.getBy('likingUser', id);
+    let call = await likes.getBy('likedUser', id);
+    call = _.map(call, like => {
+      return { ...like, connected: isConnected(like.likingUser) };
+    });
     response.status(200).json(call);
   } catch (err) {
     console.log(err);

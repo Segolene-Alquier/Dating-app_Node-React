@@ -39,12 +39,27 @@ class Like {
         return null;
       }
       console.log(
-        `SELECT firstname, username, birthDate, location, popularityRate, profilePicture, date FROM public."Like" WHERE ${type} = ${value}`,
+        `SELECT firstname, username, birthDate, location, popularityRate, profilePicture, date
+        FROM public."Like"
+        WHERE ${type} = ${value}`,
       );
       const result = await db.any(
-        `SELECT firstname, username, "birthDate", location, "popularityRate", "profilePicture", date FROM public."Like", public."User"  WHERE $1:name = $2 AND "Like"."likingUser" = "User".id ORDER BY date DESC`,
+        `SELECT firstname, username, "birthDate", location, "popularityRate", "profilePicture", "likingUser" AS visitor, "likedUser" AS visited, date,
+        EXISTS(SELECT * FROM public."Like" AS secondlike WHERE secondlike."likingUser" = $2 AND secondlike."likedUser" = "Like"."likingUser") AS liking
+        FROM public."Like" , public."User"
+        WHERE $1:name = $2 AND "Like"."likingUser" = "User".id
+        AND NOT EXISTS (
+        SELECT  *
+        FROM public."Block"
+        WHERE "blockedUser" = $2
+        AND "blockingUser" = "likingUser"
+        )
+        ORDER BY date DESC`,
         [type, value],
       );
+      result.forEach(element => {
+        element.match = element.liking;
+      });
       return result;
     } catch (err) {
       console.log(err, 'in model Like.getBy()');

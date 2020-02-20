@@ -9,6 +9,7 @@ import ProfileShow from '../profileshow';
 import Search from '../search';
 import Suggestions from '../suggestions';
 import Visit from '../visit';
+import Like from '../like';
 import Secret from '../secretpage';
 import Home from '../home';
 import { AuthProvider } from './AuthContext';
@@ -49,6 +50,7 @@ function App() {
           <SecureRoute path="/profile/:username" component={ProfileShow} />
           <SecureRoute path="/profile" component={Profile} />
           <SecureRoute path="/visits" component={Visit} />
+          <SecureRoute path="/likes" component={Like} />
           <SecureRoute path="/swipe" component={Swipe} />
           <SecureRoute path="/chat" component={Chat} />
           <SecureRoute path="/chatroom/:matchId" component={ChatRoom} />
