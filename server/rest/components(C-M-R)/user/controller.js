@@ -25,6 +25,8 @@ const notification = new Notification();
 const _ = require('lodash');
 const { getDistance } = require('geolib');
 const { isConnected } = require('./../../../socket/newConnection');
+const newNotification = require('../../../socket/newNotification');
+
 
 async function getUsers(request, response) {
   try {
@@ -125,7 +127,7 @@ async function getUserByUsername(request, response) {
     }
     if (userIdVisitor !== userIdVisited) {
       saveVisit(userIdVisitor, userIdVisited);
-      notification.create(userIdVisited, userIdVisitor, 'visit');
+      newNotification(userIdVisited, userIdVisitor, 'visit');
       user.updatePopularityRate(userIdVisited);
     }
     const relationship = await like.relationship(userIdVisitor, userIdVisited);

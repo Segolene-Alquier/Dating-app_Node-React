@@ -1,13 +1,11 @@
 const Chat = require('./../rest/components(C-M-R)/chatroom/model');
 const Match = require('./../rest/components(C-M-R)/match/model');
 const Block = require('./../rest/components(C-M-R)/block/model');
-const Notification = require('./../rest/components(C-M-R)/notification/model');
 const newNotification = require('./newNotification');
 
 const chat = new Chat();
 const match = new Match();
 const block = new Block();
-const notification = new Notification();
 
 const newMessage = async (msg, matchId, userId, socket, io) => {
   if (await chat.canAccessChat(matchId)) {
@@ -21,7 +19,6 @@ const newMessage = async (msg, matchId, userId, socket, io) => {
       } else {
         [recipient] = matchUsers;
       }
-      notification.create(recipient, userId, 'message');
       newNotification(recipient, userId, 'message');
     });
   } else {

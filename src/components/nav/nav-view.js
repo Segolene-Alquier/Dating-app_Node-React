@@ -22,7 +22,8 @@ import axios from 'axios';
 import { AuthContext } from '../app/AuthContext';
 import { logout } from '../auth';
 import NotificationDrawer from './components/notificationDrawer';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -67,8 +68,6 @@ const Nav = () => {
     right: false,
   });
 
-  // const debounced = (sender, type) =>
-  //   _.throttle(toast.info(sender + type), 250);
   const fetchTotalNotifications = async () => {
     await axios
       .get(`http://localhost:3001/notification/total`, {
@@ -137,12 +136,33 @@ const Nav = () => {
     setNotifMenu({ ...notifMenu, right: open });
   };
 
+  const [toastDebounced] = useDebouncedCallback((sender, type) => {
+    switch (type) {
+      case 'message':
+        toast('✉️ You have a new message!');
+        break;
+      case 'match':
+        toast('💞 You have a new match!');
+        break;
+      case 'unmatch':
+        toast('💔 Sorry, you got unmatched...');
+        break;
+      case 'like':
+        toast('💗 Someone liked you!');
+        break;
+      case 'visit':
+        toast('👀 Someone visited your profile!');
+        break;
+      default:
+    }
+  }, 500);
+
   socketContext.socket.on('new notification', (sender, type) => {
     console.log(sender, type);
     if (type === 'message') {
       setTotalMessages(totalMessages + 1);
     }
-    // debounced(sender, type);
+    toastDebounced(sender, type);
   });
 
   authContext.userData.then(data => {
