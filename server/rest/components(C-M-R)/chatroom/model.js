@@ -111,7 +111,7 @@ class Chat {
         `SELECT id, firstname, profilePicture FROM public."User" INNER JOIN public."Match" ON ("User".id = "Match".${type[0]} OR "User".id = "Match".${type[1]}) AND "User".id != ${value} WHERE "Match".${type[0]} = ${value} OR "Match".${type[1]} = ${value}`,
       );
       const result = await db.any(
-        `SELECT "User".id, "User".firstname, "User"."profilePicture", "Match"."lastMessage" AS "lastMessage", "Match".id AS matchId, "Message".content
+        `SELECT "User".id, "User".firstname, "User"."profilePicture", "Match"."lastMessage" AS "lastMessage", "Match".id AS matchId, "Message".content, "Message".read
           FROM public."User" INNER JOIN public."Match"
           ON ("User".id = "Match".user1 OR "User".id = "Match".user2) AND "User".id != $2
           FULL OUTER JOIN public."Message"

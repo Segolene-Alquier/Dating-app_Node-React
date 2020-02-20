@@ -27,7 +27,9 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
     height: '80vh',
-    overflowY: 'scroll',
+    overflowY: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
   },
   boxMessageOther: {
     display: 'flex',
@@ -85,6 +87,22 @@ const ChatRoom = () => {
     sendMessage,
     message,
   } = ChatroomContainer(matchId);
+  let scrolled = false;
+  const element = document.getElementById('chat');
+
+  // make sure the chat scrolls down to last message
+  const updateScroll = () => {
+    if (!scrolled && element) {
+      element.scrollTop = element.scrollHeight;
+    }
+  };
+  // doesn't prevent to scroll up when the user started to scroll
+  if (element) {
+    element.addEventListener('scroll', () => {
+      scrolled = true;
+    });
+  }
+  updateScroll();
 
   if (loaded === false) {
     return (
@@ -96,7 +114,7 @@ const ChatRoom = () => {
   return (
     <>
       <Box className={classes.chatWrapper}>
-        <Box className={classes.chatContent}>
+        <Box className={classes.chatContent} id="chat">
           {_.map(chatroomInfo, message => {
             if (currentUser !== message.author) {
               return (

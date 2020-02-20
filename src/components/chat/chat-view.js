@@ -16,6 +16,10 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%',
     textTransform: 'none',
+    padding: '0',
+  },
+  notReadMessage: {
+    backgroundColor: '#edf2fa',
   },
 }));
 
@@ -34,7 +38,12 @@ const Chat = () => {
               variant="text"
               href={redirectLink}
             >
-              <ListItem alignItems="flex-start">
+              <ListItem
+                alignItems="flex-start"
+                className={
+                  matchedProfile.read === false ? classes.notReadMessage : null
+                }
+              >
                 <ListItemAvatar>
                   <Avatar alt="avatar" src={matchedProfile.profilePicture} />
                 </ListItemAvatar>
