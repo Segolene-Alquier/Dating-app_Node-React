@@ -62,6 +62,7 @@ const Nav = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [totalNotifications, setTotalNotifications] = useState(0);
+  const [totalMessages, setTotalMessages] = useState(0);
   const [notifMenu, setNotifMenu] = React.useState({
     right: false,
   });
@@ -84,8 +85,25 @@ const Nav = () => {
       });
   };
 
+  const fetchTotalMessages = async () => {
+    await axios
+      .get(`http://localhost:3001/chat/total`, {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'x-access-token': token,
+        },
+      })
+      .then(result => {
+        setTotalMessages(parseInt(result.data, 10));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     fetchTotalNotifications();
+    fetchTotalMessages();
   }, []);
 
   const fetchNotifications = async () => {
@@ -147,7 +165,9 @@ const Nav = () => {
         {isLoggedIn ? (
           <>
             <IconButton color="inherit" href="/chat">
-              <ChatBubbleIcon className={classes.navIcon} />
+              <Badge color="secondary" badgeContent={totalMessages} showZero>
+                <ChatBubbleIcon className={classes.navIcon} />
+              </Badge>
             </IconButton>
             <IconButton onClick={toggleDrawer(true)} color="inherit">
               <Badge

@@ -64,6 +64,25 @@ class Chat {
     }
   }
 
+  async numberUnread(recipient) {
+    try {
+      console.log(
+        `SELECT COUNT(*) FROM public."Message" WHERE recipient = ${recipient} AND read = false`,
+      );
+      const result = await db.any(
+        `SELECT COUNT(*) FROM public."Message"
+        INNER JOIN public."Match"
+        ON("Message".match = "Match".id)
+        WHERE ("Match".user1 = $1 OR "Match".user2 = $1) AND "Message".author != $1 AND read = false`,
+        [recipient],
+      );
+      return result[0].count;
+    } catch (err) {
+      console.log(err, 'in model Notification.numberUnread()');
+      return null;
+    }
+  }
+
   async canAccessChat(matchId) {
     const matchedUsers = await match.getUsersFromMatchId(matchId);
     if (matchedUsers) {
@@ -124,16 +143,32 @@ class Chat {
     }
   }
 
-  async getAll(value) {
+  async updateRead(matchId, userId) {
     try {
-      console.log(`SELECT * FROM public."Message" WHERE match = ${value}`);
+      console.log(
+        `UPDATE public."Message" SET read = true WHERE match = ${matchId} AND author != ${userId} AND read = false`,
+      );
+      const result = await db.any(
+        `UPDATE public."Message" SET read = true WHERE match = $1 AND author != $2 AND read = false`,
+        [matchId, userId],
+      );
+      return result;
+    } catch (err) {
+      console.log(err, 'in model Chat.getAll()');
+      return null;
+    }
+  }
+
+  async getAll(matchId) {
+    try {
+      console.log(`SELECT * FROM public."Message" WHERE match = ${matchId}`);
       const result = await db.any(
         `SELECT "Message".id, "Message".match, "Message".author, "Message".content, "Message"."creationDate", "Message".read, "User"."profilePicture"
         FROM public."Message" INNER JOIN public."User"
         ON("Message".author = "User".id)
         WHERE match = $1
         ORDER BY "creationDate" ASC`,
-        [value],
+        [matchId],
       );
       return result;
     } catch (err) {
