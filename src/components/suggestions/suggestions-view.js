@@ -3,16 +3,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import Divider from '@material-ui/core/Divider';
-import { Tabs, Tab } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import SuggestionsFilters from './components/suggestions-filters';
 import ProfilesGrid from '../shared/profiles-grid';
 import Title from '../shared/title';
 import SuggestionsContainer from './suggestions-container';
-import MediaCard from '../shared/components/media-card';
 
 const useStyles = makeStyles(() => ({
   wrapper: {

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import _ from 'lodash';
-import { AuthContext } from '../app/AuthContext';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../app/AuthContext';
 
 const VisitContainer = () => {
   const [loaded, setLoaded] = useState(false);
@@ -34,7 +34,6 @@ const VisitContainer = () => {
               liking: !visitedProfile[parseInt(index, 10)].liking,
             };
           });
-          console.log('newVisitedProfile', newVisitedProfile);
           document
             .querySelectorAll(`[visitor*="${likedId}"]`)
             .forEach(element => {
@@ -43,7 +42,6 @@ const VisitContainer = () => {
               else element.className += ' MuiIconButton-colorSecondary';
             });
           setVisitedProfile(newVisitedProfile);
-          console.log('visitedProfile', visitedProfile);
         }
       });
   };
@@ -65,7 +63,6 @@ const VisitContainer = () => {
 
   if (_.isEmpty(visitedProfile) && loaded === false) {
     Promise.all([userData, fetchVisitHistory()]).then(values => {
-      console.log(values);
       setVisitedProfile(values[1]);
       setVisitorProfile(values[0].data);
       setLoaded(true);

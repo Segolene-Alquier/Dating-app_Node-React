@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     height: 345,
     position: 'relative',
   },
-  cardContent: {
+  cardContentMatch: {
     backgroundImage: `url("https://media.giphy.com/media/26ufcYAkp8e66vanu/giphy.gif")`,
   },
   avatar: {
@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: '20px',
     right: '20px',
+    boxShadow: '2px 2px 6px 0px black',
   },
 }));
 
@@ -113,7 +114,9 @@ export default function MediaCard({ field, profile, handleLike, type }) {
             <Typography>{score}%</Typography>
           </Box>
         ) : null}
-        <CardContent className={match === true ? classes.cardContent : null}>
+        <CardContent
+          className={match === true ? classes.cardContentMatch : null}
+        >
           <Typography gutterBottom variant="h5" component="h2" align="center">
             <LoggedDot
               loggedState={connected}

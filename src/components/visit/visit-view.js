@@ -38,7 +38,6 @@ const Visit = ({ computedMatch }) => {
     visitedUsername,
   );
   const classes = useStyles();
-  console.log('visitedProfile view', visitedProfile);
 
   if (loaded === false) {
     return (

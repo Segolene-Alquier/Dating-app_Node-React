@@ -7,7 +7,6 @@ import { AuthContext } from '../app/AuthContext';
 const ProfileShowContainer = visitedUsername => {
   const [visitedProfile, setVisitedProfile] = useState({});
   const [loaded, setLoaded] = useState(false);
-  // const [match, setMatch] = useState()
   const [loading, setLoading] = useState(false);
   const { authContext } = useContext(AuthContext);
   const { token } = authContext;
