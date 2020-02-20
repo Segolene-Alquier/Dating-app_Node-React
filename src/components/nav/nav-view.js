@@ -103,7 +103,7 @@ const Nav = () => {
 
   useEffect(() => {
     fetchTotalNotifications();
-    fetchTotalMessages();
+    setTimeout(() => fetchTotalMessages(), 500);
   }, []);
 
   const fetchNotifications = async () => {
@@ -139,6 +139,9 @@ const Nav = () => {
 
   socketContext.socket.on('new notification', (sender, type) => {
     console.log(sender, type);
+    if (type === 'message') {
+      setTotalMessages(totalMessages + 1);
+    }
     // debounced(sender, type);
   });
 
