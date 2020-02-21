@@ -1,5 +1,4 @@
-// import { toast } from 'react-toastify';
-// import _ from 'lodash';
+import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import {
   loginSuccess,
   logoutSuccess,
@@ -17,7 +16,7 @@ import {
 } from './toaster-container';
 
 const Toaster = ({ getParams }) => {
-  if (getParams !== undefined && getParams.message !== undefined) {
+  const [toastDebounced] = useDebouncedCallback(getParams => {
     switch (getParams.message) {
       case 'login_success':
         loginSuccess();
@@ -64,6 +63,9 @@ const Toaster = ({ getParams }) => {
       default:
         break;
     }
+  }, 500);
+  if (getParams !== undefined && getParams.message !== undefined) {
+    toastDebounced(getParams);
   }
   return null;
 };
