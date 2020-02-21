@@ -113,6 +113,7 @@ const ChatRoom = () => {
   matchId = parseInt(matchId, 10);
   const {
     chatroomInfo,
+    chatroomMessages,
     loaded,
     currentUser,
     handleMessage,
@@ -169,10 +170,10 @@ const ChatRoom = () => {
           <Box></Box>
         </Box>
         <Box className={classes.chatContent} id="chat">
-          {_.map(chatroomInfo.messages, message => {
+          {_.map(chatroomMessages, message => {
             if (currentUser !== message.author) {
               return (
-                <Box className={classes.boxMessageOther}>
+                <Box key={message.id} className={classes.boxMessageOther}>
                   <Avatar alt="Avatar" src={message.profilePicture} />
                   <div className={classes.textBubbleOther}>
                     <span>{message.content}</span>
@@ -181,7 +182,7 @@ const ChatRoom = () => {
               );
             }
             return (
-              <Box className={classes.boxMessageMe}>
+              <Box key={message.id} className={classes.boxMessageMe}>
                 <div className={classes.textBubbleMe}>
                   <span>{message.content}</span>
                 </div>

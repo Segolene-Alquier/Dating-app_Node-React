@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
@@ -30,9 +30,9 @@ const Chat = () => {
   return (
     <List className={classes.root}>
       {_.map(matchList, matchedProfile => {
-        let redirectLink = `/chatroom/${matchedProfile.matchid}`;
+        const redirectLink = `/chatroom/${matchedProfile.matchid}`;
         return (
-          <>
+          <Fragment key={matchedProfile.matchid}>
             <Button
               className={classes.buttonChatroom}
               variant="text"
@@ -54,7 +54,7 @@ const Chat = () => {
               </ListItem>
             </Button>
             <Divider variant="inset" component="li" />
-          </>
+          </Fragment>
         );
       })}
     </List>

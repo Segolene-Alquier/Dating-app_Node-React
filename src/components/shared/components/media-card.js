@@ -48,6 +48,9 @@ const useStyles = makeStyles(theme => ({
     right: '20px',
     boxShadow: '2px 2px 6px 0px black',
   },
+  titleGutterbottom: {
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 export default function MediaCard({ field, profile, handleLike, type }) {
@@ -117,11 +120,13 @@ export default function MediaCard({ field, profile, handleLike, type }) {
         <CardContent
           className={match === true ? classes.cardContentMatch : null}
         >
-          <Typography gutterBottom variant="h5" component="h2" align="center">
-            <LoggedDot
-              loggedState={connected}
-              lastConnection={lastConnection}
-            />
+          <LoggedDot loggedState={connected} lastConnection={lastConnection} />
+          <Typography
+            variant="h5"
+            component="h2"
+            align="center"
+            className={classes.titleGutterbottom}
+          >
             {firstname}{' '}
             {liked ? (
               <Tooltip
@@ -134,24 +139,14 @@ export default function MediaCard({ field, profile, handleLike, type }) {
               </Tooltip>
             ) : null}
           </Typography>
-          <Typography
-            gutterBottom
-            variant="body2"
-            component="h6"
-            align="center"
-          >
+          <Typography variant="body2" component="h6" align="center">
             {birthDate
               ? getAge(new Date(birthDate).toISOString().split('T')[0])
               : 'age not defined '}
             {location ? distance() : ''}
           </Typography>
           {type === 'search' ? null : (
-            <Typography
-              gutterBottom
-              variant="body2"
-              component="h6"
-              align="center"
-            >
+            <Typography variant="body2" component="h6" align="center">
               {lastVisit}
             </Typography>
           )}
@@ -161,7 +156,7 @@ export default function MediaCard({ field, profile, handleLike, type }) {
         <Avatar className={classes.avatar}>{popularityRate}%</Avatar>
         <IconButton
           aria-label="Like the profile"
-          color={liking ? 'secondary' : ''}
+          color={liking ? 'secondary' : 'default'}
           visitor={visitor}
           onClick={() => handleLike(visitor)}
         >

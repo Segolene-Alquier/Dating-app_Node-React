@@ -13,7 +13,14 @@ const CurrentPictures = ({
 }) => {
   if (pictures) {
     return pictures.map(pictureUrl => (
-      <Grid item xs={6} sm={4} xl={4} className={classes.pictureContainer}>
+      <Grid
+        key={pictureUrl}
+        item
+        xs={6}
+        sm={4}
+        xl={4}
+        className={classes.pictureContainer}
+      >
         <img
           src={pictureUrl}
           alt="My profile"
@@ -26,7 +33,6 @@ const CurrentPictures = ({
           onClick={() => handleChangeProfileImage(pictureUrl)}
         />
         <Fab
-          variant="contained"
           color="secondary"
           size="small"
           className={classes.deleteButtonPicture}

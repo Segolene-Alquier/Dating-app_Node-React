@@ -24,6 +24,7 @@ const formCheckBox = ({
           <FormGroup row>
             {label.map((checkbox, index) => (
               <FormControlLabel
+                key={index}
                 control={
                   <Checkbox
                     checked={isChecked(index + 1, name)}

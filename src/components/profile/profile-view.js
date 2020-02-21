@@ -63,8 +63,34 @@ const useStyles = makeStyles(theme => ({
   containerUpProfile: {
     maxWidth: '1500px',
   },
+  containerUpProfileLeft: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  containerUpProfileLeftInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  containerUpProfileRight: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  containerUpProfileRightFabs: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
   gridColumnProfile: {
     padding: theme.spacing(1),
+  },
+  gridPicturesWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   pictureContainer: {
     padding: theme.spacing(1),
@@ -258,7 +284,7 @@ const Profile = params => {
         <form>
           <Tabs
             width="100%"
-            valueTab={valueTab}
+            value={valueTab}
             onChange={handleChange}
             aria-label="simple tabs example"
             className={classes.tabs}
@@ -289,7 +315,7 @@ const Profile = params => {
             />
           </Tabs>
           <TabPanelProfileAbout
-            valueTab={valueTab}
+            value={valueTab}
             index={0}
             classes={classes}
             profile={profile}
@@ -301,7 +327,7 @@ const Profile = params => {
             handleDeleteImage={handleDeleteImage}
           />
           <TabPanelProfileParameters
-            valueTab={valueTab}
+            value={valueTab}
             index={1}
             classes={classes}
             profile={profile}

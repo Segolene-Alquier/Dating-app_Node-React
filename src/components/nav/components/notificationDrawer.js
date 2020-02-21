@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import moment from 'moment';
 import {
   List,
@@ -45,13 +45,12 @@ const NotificationDrawer = ({ classes, toggleDrawer, notifications }) => {
     >
       <List>
         {notifications.map(notification => {
-          let notifLink = `/profile/${notification.username.toLowerCase()}`;
+          const notifLink = `/profile/${notification.username.toLowerCase()}`;
           return (
-            <>
+            <Fragment key={notification.id}>
               <ListItem
                 button
                 component="a"
-                key={notification.id}
                 href={notifLink}
                 className={notification.read ? null : classes.notReadNotif}
               >
@@ -67,7 +66,7 @@ const NotificationDrawer = ({ classes, toggleDrawer, notifications }) => {
                 />
               </ListItem>
               <Divider />
-            </>
+            </Fragment>
           );
         })}
       </List>

@@ -19,6 +19,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ChatIcon from '@material-ui/icons/Chat';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import AddIcon from '@material-ui/icons/Add';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import SearchIcon from '@material-ui/icons/Search';
 import Toaster from '../toaster/index';
@@ -171,7 +172,7 @@ const Home = ({ location }) => {
           </Typography>
         </Box>
         <Grid container className={classes.gridWrapper}>
-          <Grid item xs="12" sm="3" lg="2" className={classes.leftColumn}>
+          <Grid item xs={12} sm={3} lg={2} className={classes.leftColumn}>
             <List>
               <ListItem button component="a" href="/profile">
                 <ListItemIcon>
@@ -200,9 +201,18 @@ const Home = ({ location }) => {
                   className={classes.leftColumnText}
                 />
               </ListItem>
+              <ListItem button component="a" href="/">
+                <ListItemIcon>
+                  <ThumbUpAltIcon className={classes.leftColumnIcon} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="They liked me"
+                  className={classes.leftColumnText}
+                />
+              </ListItem>
             </List>
           </Grid>
-          <Grid item xs="12" sm="9" lg="10" className={classes.columnCTAS}>
+          <Grid item xs={12} sm={9} lg={10} className={classes.columnCTAS}>
             <Typography
               variant="h3"
               color="primary"
@@ -213,7 +223,7 @@ const Home = ({ location }) => {
               Find your perfect Match
             </Typography>
             <Grid container spacing={5}>
-              <Grid item xs="12" sm="6" className={classes.columnPaper}>
+              <Grid item xs={12} sm={6} className={classes.columnPaper}>
                 <Paper elevation={3} className={classes.paperCTA}>
                   <FavoriteIcon fontSize="large" color="secondary" />
                   <Typography variant="h4" color="primary">
@@ -233,7 +243,7 @@ const Home = ({ location }) => {
                   </Fab>
                 </Paper>
               </Grid>
-              <Grid item xs="12" sm="6" className={classes.columnPaper}>
+              <Grid item xs={12} sm={6} className={classes.columnPaper}>
                 <Paper elevation={3} className={classes.paperCTA}>
                   <SearchIcon fontSize="large" color="secondary" />
                   <Typography variant="h4" color="primary">

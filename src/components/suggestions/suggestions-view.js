@@ -8,7 +8,7 @@ import ProfilesGrid from '../shared/profiles-grid';
 import Title from '../shared/title';
 import SuggestionsContainer from './suggestions-container';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
@@ -56,6 +56,9 @@ const useStyles = makeStyles(() => ({
     width: '600px',
     height: '300px',
     textDecoration: 'none',
+  },
+  titleGutterbottom: {
+    marginBottom: theme.spacing(2),
   },
 }));
 

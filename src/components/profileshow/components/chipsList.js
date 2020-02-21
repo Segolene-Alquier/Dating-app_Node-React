@@ -38,7 +38,7 @@ const ChipsList = ({ classes, list, type }) => {
       return (
         <Box className={classes.genderChips}>
           {list.map(item => (
-            <Chip label={findEquivalence(item)} />
+            <Chip key={item} label={findEquivalence(item)} />
           ))}
         </Box>
       );
@@ -46,7 +46,7 @@ const ChipsList = ({ classes, list, type }) => {
     return (
       <Box className={classes.genderChips}>
         {list.map(item => (
-          <Chip label={item} />
+          <Chip key={item} label={item} />
         ))}
       </Box>
     );

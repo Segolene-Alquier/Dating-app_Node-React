@@ -9,13 +9,13 @@ import FormCheckBox from './formCheckBox';
 import InputTextShort from './inputTextShort';
 
 function TabPanel(props) {
-  const { children, valueTab, index } = props;
+  const { children, value, index } = props;
 
   return (
     <Typography
       component="div"
       role="tabpanel"
-      hidden={valueTab !== index}
+      hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
     >
@@ -25,7 +25,7 @@ function TabPanel(props) {
 }
 
 const TabPanelProfileAbout = ({
-  valueTab,
+  value,
   index,
   classes,
   profile,
@@ -37,15 +37,9 @@ const TabPanelProfileAbout = ({
   handleDeleteImage,
 }) => {
   return (
-    <TabPanel valueTab={valueTab} index={index}>
+    <TabPanel value={value} index={index}>
       <Grid container>
-        <Grid
-          container
-          sm={8}
-          bgcolor="primary.main"
-          direction="column"
-          className={classes.gridColumnProfile}
-        >
+        <Grid item sm={8} className={classes.gridColumnProfile}>
           <FormCheckBox
             title="Gender"
             classes={classes}
@@ -101,12 +95,12 @@ const TabPanelProfileAbout = ({
             </Button>
           </Box>
         </Grid>
-        <Grid container sm={4} className={classes.gridColumnProfile}>
+        <Grid item sm={4} className={classes.gridColumnProfile}>
           <Typography variant="subtitle1">
             <Box fontWeight="fontWeightBold">My pictures</Box>
           </Typography>
           <Grid container>
-            <Grid container xsm={12}>
+            <Grid item xsm={12} className={classes.gridPicturesWrapper}>
               <CurrentPictures
                 classes={classes}
                 Grid={Grid}
