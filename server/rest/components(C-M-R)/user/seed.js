@@ -7,6 +7,7 @@ const Interest = require('./../interests/model');
 const user = new User();
 const interest = new Interest();
 const axios = require('axios');
+const ObjectsToCsv = require('objects-to-csv');
 
 let interestsList = [];
 
@@ -18,7 +19,7 @@ const createFakeUser = async () => {
   const email = `${userName}@growth-tools.tk`;
 
   console.log(firstName, surname, userName, password, email);
-  return {
+  const newUser = {
     ...(await user.create({
       firstname: firstName,
       surname,
@@ -28,7 +29,11 @@ const createFakeUser = async () => {
     })),
     userName,
     password,
+    email,
   };
+  const csv = new ObjectsToCsv([newUser]);
+  await csv.toDisk('./users.csv', { append: true });
+  return newUser;
 };
 
 function randomInteger(min, max) {
@@ -102,4 +107,4 @@ const generateProfiles = async nbOfProfiles => {
   profiles.forEach(profile => console.log(profile));
 };
 
-generateProfiles(2);
+generateProfiles(1);
