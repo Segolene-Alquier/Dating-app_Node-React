@@ -29,6 +29,33 @@ const ChatroomContainer = matchId => {
     setMessage('');
   };
 
+  // const fetchInfoFromOther = () => {
+  //   axios
+  //     .get(`http://localhost:3001/chat/${matchId}`, {
+  //       headers: {
+  //         'Content-type': 'application/json; charset=UTF-8',
+  //         'x-access-token': token,
+  //       },
+  //     })
+  //     .then(response => {
+  //       if (response.data.success === false) {
+  //         window.location = '/?message=access_denied';
+  //         return;
+  //       }
+  //       setChatroomInfo(response.data);
+  //       userData.then(data => {
+  //         setCurrentUser(data.data.id);
+  //         socketContext.socket.emit('joinchatroom', matchId);
+  //       });
+  //       setLoaded(true);
+  //       setLoading(false);
+  //       return response.data;
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
+
   const fetchMessagesFromConversation = () => {
     axios
       .get(`http://localhost:3001/chat/${matchId}`, {
