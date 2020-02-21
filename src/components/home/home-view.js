@@ -201,7 +201,7 @@ const Home = ({ location }) => {
                   className={classes.leftColumnText}
                 />
               </ListItem>
-              <ListItem button component="a" href="/">
+              <ListItem button component="a" href="/likes">
                 <ListItemIcon>
                   <ThumbUpAltIcon className={classes.leftColumnIcon} />
                 </ListItemIcon>
