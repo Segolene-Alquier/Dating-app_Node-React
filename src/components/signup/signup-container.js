@@ -11,12 +11,10 @@ const useSignUpForm = callback => {
     password1: '',
     password2: '',
   });
-  console.log('je reutilise');
   const { firstname, surname, username, email, password1 } = inputs;
   const handleSubmit = event => {
     if (event) {
       event.preventDefault();
-      console.log(inputs);
       axios
         .post(
           'http://localhost:3001/users',
@@ -34,7 +32,6 @@ const useSignUpForm = callback => {
           },
         )
         .then(({ data }) => {
-          console.log('DATA', data);
           if (data.created === true) {
             callback(true);
           } else {

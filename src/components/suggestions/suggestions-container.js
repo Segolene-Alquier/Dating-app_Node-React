@@ -95,22 +95,16 @@ const SuggestionsContainer = () => {
             switch (sortChoice) {
               case 'score':
                 return profile.score;
-                break;
               case 'distance':
                 return profile.distance;
-                break;
               case 'ageAsc':
                 return profile.age;
-                break;
               case 'ageDesc':
                 return profile.age;
-                break;
               case 'popularity':
                 return profile.popularityRate;
-                break;
               case 'interests':
                 return profile.interests[0] ? profile.interests[0] : 'ZZZZ';
-                break;
               default:
             }
           },
@@ -135,7 +129,6 @@ const SuggestionsContainer = () => {
   };
 
   const fetchSuggestions = (suggestionsQuery = suggestionsOptions) => {
-    console.log(suggestionsQuery);
     axios
       .post(`http://localhost:3001/users/suggestions`, suggestionsQuery, {
         headers: {

@@ -21,8 +21,9 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 345,
+    position: 'relative',
   },
-  cardContent: {
+  cardContentMatch: {
     backgroundImage: `url("https://media.giphy.com/media/26ufcYAkp8e66vanu/giphy.gif")`,
   },
   avatar: {
@@ -30,6 +31,25 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
     fontSize: '0.8em',
     padding: theme.spacing(1),
+  },
+  matchingRate: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: '50px',
+    color: 'white',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    position: 'absolute',
+    top: '20px',
+    right: '20px',
+    boxShadow: '2px 2px 6px 0px black',
+  },
+  titleGutterbottom: {
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -50,6 +70,7 @@ export default function MediaCard({ field, profile, handleLike, type }) {
     lastConnection,
     connected,
     match,
+    score,
   } = field;
 
   const getAge = dateString => {
@@ -90,12 +111,22 @@ export default function MediaCard({ field, profile, handleLike, type }) {
           }
           title={firstname}
         />
-        <CardContent className={match === true ? classes.cardContent : null}>
-          <Typography gutterBottom variant="h5" component="h2" align="center">
-            <LoggedDot
-              loggedState={connected}
-              lastConnection={lastConnection}
-            />
+        {type === 'suggestion' ? (
+          <Box className={classes.matchingRate}>
+            <Typography>Match rate</Typography>
+            <Typography>{score}%</Typography>
+          </Box>
+        ) : null}
+        <CardContent
+          className={match === true ? classes.cardContentMatch : null}
+        >
+          <LoggedDot loggedState={connected} lastConnection={lastConnection} />
+          <Typography
+            variant="h5"
+            component="h2"
+            align="center"
+            className={classes.titleGutterbottom}
+          >
             {firstname}{' '}
             {liked ? (
               <Tooltip
@@ -108,24 +139,14 @@ export default function MediaCard({ field, profile, handleLike, type }) {
               </Tooltip>
             ) : null}
           </Typography>
-          <Typography
-            gutterBottom
-            variant="body2"
-            component="h6"
-            align="center"
-          >
+          <Typography variant="body2" component="h6" align="center">
             {birthDate
               ? getAge(new Date(birthDate).toISOString().split('T')[0])
               : 'age not defined '}
             {location ? distance() : ''}
           </Typography>
           {type === 'search' ? null : (
-            <Typography
-              gutterBottom
-              variant="body2"
-              component="h6"
-              align="center"
-            >
+            <Typography variant="body2" component="h6" align="center">
               {lastVisit}
             </Typography>
           )}
@@ -133,16 +154,14 @@ export default function MediaCard({ field, profile, handleLike, type }) {
       </CardActionArea>
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Avatar className={classes.avatar}>{popularityRate}%</Avatar>
-        {type === 'swipe' ? null : (
-          <IconButton
-            aria-label="Like the profile"
-            color={liking ? 'secondary' : ''}
-            visitor={visitor}
-            onClick={() => handleLike(visitor)}
-          >
-            <FavoriteIcon />
-          </IconButton>
-        )}
+        <IconButton
+          aria-label="Like the profile"
+          color={liking ? 'secondary' : 'default'}
+          visitor={visitor}
+          onClick={() => handleLike(visitor)}
+        >
+          <FavoriteIcon />
+        </IconButton>
       </Box>
     </Card>
   );

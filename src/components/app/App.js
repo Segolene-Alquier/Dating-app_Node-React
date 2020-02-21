@@ -16,14 +16,11 @@ import { AuthProvider } from './AuthContext';
 import SecureRoute from './SecureRoute';
 import NotLoggedRoute from './NotLoggedRoute';
 import 'react-toastify/dist/ReactToastify.css';
-// import withAuth from '../auth/AuthContainer'
-// import auth from '../auth';
 import Nav from '../nav';
 import Toaster from '../toaster';
 import UserValidation from '../uservalidation';
 import ResetForgotPassword from '../ResetforgotPassword';
 import ForgotPassword from '../forgotpassword';
-import Swipe from '../swipe';
 import Chat from '../chat';
 import ChatRoom from '../chatroom';
 
@@ -51,7 +48,6 @@ function App() {
           <SecureRoute path="/profile" component={Profile} />
           <SecureRoute path="/visits" component={Visit} />
           <SecureRoute path="/likes" component={Like} />
-          <SecureRoute path="/swipe" component={Swipe} />
           <SecureRoute path="/chat" component={Chat} />
           <SecureRoute path="/chatroom/:matchId" component={ChatRoom} />
           <Route path="/" component={Home} />

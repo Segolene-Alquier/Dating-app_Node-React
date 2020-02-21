@@ -20,7 +20,6 @@ const InputTextShort = ({
           <Box fontWeight="fontWeightBold">{title}</Box>
         </Typography>
         <TextField
-          id="outlined-basic"
           className={classes.textField}
           margin="normal"
           variant="outlined"
@@ -51,7 +50,6 @@ const InputTextShort = ({
           <Box fontWeight="fontWeightBold">{title}</Box>
         </Typography>
         <TextField
-          id="outlined-basic"
           className={classes.summaryField}
           margin="normal"
           variant="outlined"
@@ -71,7 +69,6 @@ const InputTextShort = ({
         <Box fontWeight="fontWeightBold">{title}</Box>
       </Typography>
       <TextField
-        id="outlined-basic"
         className={classes.textField}
         margin="normal"
         variant="outlined"

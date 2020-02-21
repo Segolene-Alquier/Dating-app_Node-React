@@ -13,9 +13,7 @@ import UpperBoxProfile from '../profile/components/upperBoxProfile';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from '../profile/profile-container';
 import ChipsList from './components/chipsList';
-// import Background from '../../assets/images/heart-confetti-background-1.png';
-// import Background from 'https://media.giphy.com/media/ugEWbEMH0gm2c/giphy.gif';
-//
+
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
@@ -62,19 +60,37 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+
   boxUpProfileMatch: {
     padding: theme.spacing(1),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    // backgroundImage: `url(${Background})`,
-    // backgroundImage: `url("https://media.giphy.com/media/ugEWbEMH0gm2c/giphy.gif")`,
-    // backgroundImage: `url("https://media.giphy.com/media/xTcnT2ZYSaCTdkTSmI/giphy.gif")`,
     backgroundImage: `url("https://media.giphy.com/media/26ufcYAkp8e66vanu/giphy.gif")`,
-    // backgroundSize: 'cover',
   },
   containerUpProfile: {
     maxWidth: '1500px',
+  },
+  containerUpProfileLeft: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  containerUpProfileLeftInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  containerUpProfileRight: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  containerUpProfileRightFabs: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
   columnPublicProfile: {
     padding: theme.spacing(0, 2),
@@ -97,7 +113,6 @@ const useStyles = makeStyles(theme => ({
   },
   summary: {
     padding: theme.spacing(3),
-    // width: '90%',
   },
   genderChips: {
     display: 'flex',
@@ -172,12 +187,7 @@ const ProfileShow = ({ computedMatch }) => {
       <Divider className={classes.divider} />
       <div className={classes.wrapperProfile}>
         <Grid container>
-          <Grid
-            container
-            sm={6}
-            direction="column"
-            className={classes.columnPublicProfile}
-          >
+          <Grid item sm={6} className={classes.columnPublicProfile}>
             <Typography variant="subtitle1" className={classes.item}>
               <Box fontWeight="fontWeightBold">
                 {visitedProfile.firstname} identifies as
@@ -219,12 +229,7 @@ const ProfileShow = ({ computedMatch }) => {
               )}
             </Paper>
           </Grid>
-          <Grid
-            container
-            sm={6}
-            direction="column"
-            className={classes.columnPublicProfile}
-          >
+          <Grid item sm={6} className={classes.columnPublicProfile}>
             <Typography variant="subtitle1" className={classes.item}>
               <Box fontWeight="fontWeightBold">
                 {visitedProfile.firstname}'s interests
@@ -249,7 +254,7 @@ const ProfileShow = ({ computedMatch }) => {
                 <p>No pictures uploaded so far</p>
               ) : (
                 visitedProfile.images.map((image, index) => (
-                  <div className={classes.slide}>
+                  <div key={index} className={classes.slide}>
                     <img
                       className={classes.imageSlider}
                       src={visitedProfile.images[index]}

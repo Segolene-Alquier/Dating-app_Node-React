@@ -25,7 +25,6 @@ const UseProfileForm = (userData, token) => {
         },
       })
       .then(response => {
-        console.log('fetchInterests');
         return response.data;
       })
       .catch(error => {
@@ -33,7 +32,6 @@ const UseProfileForm = (userData, token) => {
       });
 
   if (_.isEmpty(profile)) {
-    console.log('is empty');
     Promise.all([userData, fetchInterests()]).then(values => {
       const tempUserData = values[0].data;
       tempUserData.interestNames = values[1];

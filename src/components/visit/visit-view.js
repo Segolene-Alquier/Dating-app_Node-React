@@ -1,7 +1,6 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-
 import VisitContainer from './visit-container';
 import Title from '../shared/title';
 import ProfilesGrid from '../shared/profiles-grid';
@@ -38,7 +37,6 @@ const Visit = ({ computedMatch }) => {
     visitedUsername,
   );
   const classes = useStyles();
-  console.log('visitedProfile view', visitedProfile);
 
   if (loaded === false) {
     return (

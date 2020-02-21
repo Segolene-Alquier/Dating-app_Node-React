@@ -22,7 +22,6 @@ class User {
       );
       return result;
     } catch (err) {
-      5;
       console.log(err, 'in model User.getBy()');
       return null;
     }

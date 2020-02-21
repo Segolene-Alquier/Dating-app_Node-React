@@ -44,11 +44,14 @@ const SearchFilters = ({
     <div className={classes.filtersContainer}>
       <Grid container spacing={5} direction="row" justify="center">
         <Grid item sm={2} xs={6}>
-          <Typography id="discrete-slider" gutterBottom align="center">
+          <Typography
+            id="discrete-slider"
+            className={classes.titleGutterbottom}
+            align="center"
+          >
             Distance
           </Typography>
           <Slider
-            className={classes.slider}
             defaultValue={searchOptions.distanceMax}
             getAriaValueText={value => `${value} kms`}
             aria-labelledby="discrete-slider"
@@ -61,11 +64,15 @@ const SearchFilters = ({
             marks
             min={0}
             max={500}
-            gutterBottom
+            className={classes.titleGutterbottom + ' ' + classes.slider}
           />
         </Grid>
         <Grid item sm={2} xs={6}>
-          <Typography id="discrete-slider" gutterBottom align="center">
+          <Typography
+            id="discrete-slider"
+            className={classes.titleGutterbottom}
+            align="center"
+          >
             Age
           </Typography>
           <Slider
@@ -83,7 +90,11 @@ const SearchFilters = ({
           />
         </Grid>
         <Grid item sm={2} xs={6}>
-          <Typography id="discrete-slider" gutterBottom align="center">
+          <Typography
+            id="discrete-slider"
+            className={classes.titleGutterbottom}
+            align="center"
+          >
             Popularity
           </Typography>
           <Slider
@@ -101,7 +112,11 @@ const SearchFilters = ({
           />
         </Grid>
         <Grid item sm={2} xs={6}>
-          <Typography id="discrete-slider" gutterBottom align="center">
+          <Typography
+            id="discrete-slider"
+            className={classes.titleGutterbottom}
+            align="center"
+          >
             Interests
           </Typography>
           <div className={classes.interestChips}>
@@ -131,7 +146,11 @@ const SearchFilters = ({
         </Grid>
         <Grid item sm={2} xs={6}>
           <form className={classes.container} noValidate autoComplete="off">
-            <Typography id="discrete-slider" gutterBottom align="center">
+            <Typography
+              id="discrete-slider"
+              className={classes.titleGutterbottom}
+              align="center"
+            >
               Sort by
             </Typography>
             <TextField

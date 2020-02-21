@@ -1,6 +1,10 @@
 const Chat = require('./model');
+const Match = require('../match/model');
+const User = require('../user/model');
 
 const messages = new Chat();
+const match = new Match();
+const user = new User();
 
 async function getMatchsFromCurrentUser(request, response) {
   try {
@@ -17,8 +21,28 @@ async function getMessagesFromMatchId(request, response) {
   try {
     const { id: matchId } = request.params;
     const userId = request.decoded.userid;
+    let otherUserId;
     if (await messages.userCanAccessMatch(matchId, userId)) {
-      const call = await messages.getAll(matchId);
+      let call = await messages.getAll(matchId);
+      const usersIds = await match.getUsersFromMatchId(matchId);
+      if (usersIds[0] === userId) {
+        [, otherUserId] = usersIds;
+      }
+      if (usersIds[1] === userId) {
+        [otherUserId] = usersIds;
+      }
+      const otherUserInfo = await user.getByFiltered('id', otherUserId, [
+        'profilePicture',
+        'firstname',
+        'username',
+      ]);
+      call = {
+        messages: call,
+        profilePicture: otherUserInfo[0].profilePicture,
+        firstname: otherUserInfo[0].firstname,
+        username: otherUserInfo[0].username,
+      };
+      console.log('call', call);
       messages.updateRead(matchId, userId);
       response.status(200).json(call);
     } else {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,6 +16,10 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%',
     textTransform: 'none',
+    padding: '0',
+  },
+  notReadMessage: {
+    backgroundColor: '#edf2fa',
   },
 }));
 
@@ -26,15 +30,20 @@ const Chat = () => {
   return (
     <List className={classes.root}>
       {_.map(matchList, matchedProfile => {
-        let redirectLink = `/chatroom/${matchedProfile.matchid}`;
+        const redirectLink = `/chatroom/${matchedProfile.matchid}`;
         return (
-          <>
+          <Fragment key={matchedProfile.matchid}>
             <Button
               className={classes.buttonChatroom}
               variant="text"
               href={redirectLink}
             >
-              <ListItem alignItems="flex-start">
+              <ListItem
+                alignItems="flex-start"
+                className={
+                  matchedProfile.read === false ? classes.notReadMessage : null
+                }
+              >
                 <ListItemAvatar>
                   <Avatar alt="avatar" src={matchedProfile.profilePicture} />
                 </ListItemAvatar>
@@ -45,7 +54,7 @@ const Chat = () => {
               </ListItem>
             </Button>
             <Divider variant="inset" component="li" />
-          </>
+          </Fragment>
         );
       })}
     </List>

@@ -10,20 +10,16 @@ import {
   Badge,
   Link,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import SearchIcon from '@material-ui/icons/Search';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AuthContext } from '../app/AuthContext';
 import { logout } from '../auth';
 import NotificationDrawer from './components/notificationDrawer';
-import { toast } from 'react-toastify';
-import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,6 +49,9 @@ const useStyles = makeStyles(theme => ({
     '&:active': {
       textDecoration: 'none',
     },
+  },
+  notReadNotif: {
+    backgroundColor: '#edf2fa',
   },
 }));
 

@@ -1,13 +1,17 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   hero: {
-    backgroundColor: 'hsla(230,84%,63%,1)',
+    backgroundColor: '#f4f4f4',
     width: '100%',
     color: 'white',
     display: 'flex',
     justifyContent: 'center',
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -16,7 +20,9 @@ const Title = ({ textTitle }) => {
 
   return (
     <div className={classes.hero}>
-      <h1>{textTitle}</h1>
+      <Typography variant="h4" color="primary">
+        {textTitle}
+      </Typography>
     </div>
   );
 };

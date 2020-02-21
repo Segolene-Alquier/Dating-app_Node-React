@@ -17,13 +17,13 @@ import Map from './location/map';
 import useForgotPasswordForm from '../../forgotpassword/forgotpassword-container';
 
 function TabPanel(props) {
-  const { children, valueTab, index } = props;
+  const { children, value, index } = props;
 
   return (
     <Typography
       component="div"
       role="tabpanel"
-      hidden={valueTab !== index}
+      hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
     >
@@ -33,7 +33,7 @@ function TabPanel(props) {
 }
 
 const TabPanelProfileParameters = ({
-  valueTab,
+  value,
   index,
   classes,
   profile,
@@ -52,16 +52,10 @@ const TabPanelProfileParameters = ({
   );
 
   return (
-    <TabPanel valueTab={valueTab} index={index}>
+    <TabPanel value={value} index={index}>
       <Box noValidate autoComplete="off">
         <Grid container>
-          <Grid
-            container
-            sm={6}
-            bgcolor="primary.main"
-            direction="column"
-            className={classes.gridColumnProfile}
-          >
+          <Grid item sm={6} className={classes.gridColumnProfile}>
             <InputTextShort
               classes={classes}
               Typography={Typography}
@@ -138,12 +132,7 @@ const TabPanelProfileParameters = ({
               type="date"
             />
           </Grid>
-          <Grid
-            container
-            sm={6}
-            direction="column"
-            className={classes.gridColumnProfile}
-          >
+          <Grid item sm={6} className={classes.gridColumnProfile}>
             <div className={classes.formControl}>
               <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">Interests</Box>
@@ -212,7 +201,7 @@ const TabPanelProfileParameters = ({
               </Button>
             </Box>
             <Paper className={classes.paperAccount}>
-              <Typography variant="h5" component="h5" paragraph="true">
+              <Typography variant="h5" component="h5">
                 <Box fontWeight="fontWeightBold">Account security</Box>
               </Typography>
               <div>

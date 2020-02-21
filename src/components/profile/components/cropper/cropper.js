@@ -58,7 +58,6 @@ const CropperImg = ({
   const showCroppedImage = useCallback(async () => {
     try {
       temp = await getCroppedImg(imageToSave, croppedAreaPixels, upload);
-      console.log('donee', { temp });
       setCroppedImage(temp);
     } catch (e) {
       console.error(e);
@@ -108,7 +107,7 @@ const CropperImg = ({
   return (
     <div className={classes.cropWrapper}>
       <div className={classes.cropContainer}>
-        <img src={croppedImage} width="100%"></img>
+        <img src={croppedImage} width="100%" alt="croppedImg"></img>
       </div>
       <Button
         onClick={closeCroppedImg}
