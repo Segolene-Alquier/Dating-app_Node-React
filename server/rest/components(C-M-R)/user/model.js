@@ -1,4 +1,5 @@
 const { db, pgp } = require('../../../config/database');
+const bcrypt = require('bcrypt');
 
 class User {
   isValidType(type) {
@@ -191,9 +192,9 @@ class User {
         values,
         values,
         `User`,
-      )} WHERE id = $1`;
-      console.log(query);
-      console.log(await db.any(query, [id]));
+      )} WHERE id = $/id/`;
+      console.log(query, id);
+      console.log(await db.any(query, {id}));
     } catch (err) {
       console.log(err, 'in model User.updateById()');
     }
@@ -305,13 +306,14 @@ class User {
 
   async create({ firstname, surname, username, password, email }) {
     try {
+      const hashedPassword = bcrypt.hashSync(password, 10);
       console.log(
-        `INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${password}, ${email}) RETURNING id`,
+        `INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${hashedPassword}, ${email}) RETURNING id`,
       );
       return await db
         .any(
           'INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-          [firstname, surname, username, password, email],
+          [firstname, surname, username, hashedPassword, email],
         )
         .then(data => {
           return { created: true, id: data[0].id };
@@ -325,6 +327,30 @@ class User {
   async delete(id) {
     try {
       console.log(`DELETE FROM public."User" WHERE id = ${id}`);
+      await db.any(
+        'DELETE FROM public."Block" WHERE "blockedUser" = $1 OR "blockingUser" = $1 ',
+        [id],
+      );
+      await db.any(
+        'DELETE FROM public."Like" WHERE "likedUser" = $1 OR "likingUser" = $1 ',
+        [id],
+      );
+      await db.any(
+        'DELETE FROM public."Match" WHERE "user1" = $1 OR "user2" = $1 ',
+        [id],
+      );
+      await db.any('DELETE FROM public."Message" WHERE "author" = $1', [id]);
+      await db.any(
+        'DELETE FROM public."Notification" WHERE "recipient" = $1 OR "sender" = $1',
+        [id],
+      );
+      await db.any(
+        'DELETE FROM public."Report" WHERE "reportedUser" = $1 OR "reportingUser" = $1',
+        [id],
+      );
+      await db.any('DELETE FROM public."UserValidation" WHERE "userId" = $1', [
+        id,
+      ]);
       await db.any(
         'DELETE FROM public."Visit" WHERE visitor = $1 OR visited = $1 ',
         [id],

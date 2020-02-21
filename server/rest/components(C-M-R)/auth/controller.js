@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../user/model');
+const bcrypt = require('bcrypt');
 
 const user = new User();
 
@@ -83,7 +84,8 @@ async function login(request, response) {
       });
       return;
     }
-    if (visitor.password === password) {
+    console.log('compare : ', visitor.password, password);
+    if (bcrypt.compareSync(password, visitor.password)) {
       if (visitor.validated) {
         const token = jwt.sign({ userid: visitor.id }, 'mignon4ever', {
           expiresIn: '1d',

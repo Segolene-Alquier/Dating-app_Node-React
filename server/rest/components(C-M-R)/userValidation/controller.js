@@ -3,6 +3,7 @@ const {
   sendForgotPasswordEmail,
 } = require('../../../mailer/sendForgotPasswordEmail');
 const User = require('../user/model');
+const bcrypt = require('bcrypt');
 
 const user = new User();
 const uv = new UserValidation();
@@ -66,8 +67,8 @@ async function forgotPasswordUpdate(request, response) {
     console.log(call);
     const { success, userId } = call;
     if (success) {
-      // update password
-      await user.updateById(userId, { password });
+      const hashedPassword = bcrypt.hashSync(password, 10);
+      await user.updateById(userId, { password: hashedPassword });
       uv.delete({ userId });
       response.status(206).send({ success: true });
     } else {
