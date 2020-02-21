@@ -1,7 +1,6 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import Divider from '@material-ui/core/Divider';
 import SuggestionsFilters from './components/suggestions-filters';
 import ProfilesGrid from '../shared/profiles-grid';
@@ -69,23 +68,11 @@ const Suggestions = () => {
     suggestionsResult,
     suggestionsOptions,
     handleChangeSlider,
-    setSuggestionsOptions,
     fetchSuggestions,
     handleLike,
     handleSort,
   } = SuggestionsContainer();
   const classes = useStyles();
-
-  const [debouncedFunction] = useDebouncedCallback(
-    (event, newValue, type, setSuggestionsOptions) => {
-      const newSuggestionsOptions = {
-        ...suggestionsOptions,
-        [type]: newValue,
-      };
-      setSuggestionsOptions(newSuggestionsOptions);
-    },
-    1000,
-  );
 
   if (loaded === false) {
     return (
