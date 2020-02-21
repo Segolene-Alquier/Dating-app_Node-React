@@ -89,7 +89,10 @@ class UserInputTests {
       const result = await modelInstance.exists(inputName, intInput);
       if (result === true) resolve({ boolean: true });
       else
-        resolve({ boolean: false, error: `Please select at least one gender and one sexual orientation` });
+        resolve({
+          boolean: false,
+          error: `Please select at least one gender and one sexual orientation`,
+        });
     });
   }
 
@@ -108,7 +111,10 @@ class UserInputTests {
       const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&.]).{8,10}$/;
       if (!input) resolve({ boolean: false, error: 'This password is empty!' });
       if (input.match(regex)) resolve({ boolean: true });
-      resolve({ boolean: false, error: "This password is not enough secured!" });
+      resolve({
+        boolean: false,
+        error: 'This password is not enough secured!',
+      });
     });
   }
 
@@ -203,15 +209,8 @@ class UserInputTests {
       gender,
       sexualOrientation,
       notificationMail,
-
     } = data;
 
-    // Sexual orientation : pas de model encore
-    // Interests : pas de model encore
-    // Image: ne sait pas encore comment on va faire
-    // ProfilePicture: ne sait pas encore comment on va faire
-    // birthDate : ne sais pas encore le format de date
-    // Password : on sait pas comment va etre le systeme des mots de passe
     const errors = [];
     await this.inputTester(
       {
@@ -254,26 +253,26 @@ class UserInputTests {
       [this.doesntExist],
       errors,
     );
-     await this.inputTester(
-       {
-         input: sexualOrientation,
-         inputName: 'id',
-         modelInstance: genderInstance,
-         modelName: 'gender',
-       },
-       [this.doesntExist],
-       errors,
-     );
+    await this.inputTester(
+      {
+        input: sexualOrientation,
+        inputName: 'id',
+        modelInstance: genderInstance,
+        modelName: 'gender',
+      },
+      [this.doesntExist],
+      errors,
+    );
     await this.inputTester(
       { input: notificationMail, inputName: 'notification email' },
       [this.isBoolean],
       errors,
     );
-        await this.inputTester(
-          { input: notificationMail, inputName: 'notification email' },
-          [this.isBoolean],
-          errors,
-        );
+    await this.inputTester(
+      { input: notificationMail, inputName: 'notification email' },
+      [this.isBoolean],
+      errors,
+    );
 
     return errors;
   }
@@ -372,7 +371,7 @@ const checkIfProfileCompleted = userid => {
       const { birthDate } = data[0];
       delete data[0].birthDate;
       if (birthDate === null) {
-        return false
+        return false;
       }
       return !_.some(data[0], _.isEmpty);
     });
