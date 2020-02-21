@@ -108,7 +108,7 @@ class UserInputTests {
       const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&.]).{8,10}$/;
       if (!input) resolve({ boolean: false, error: 'This password is empty!' });
       if (input.match(regex)) resolve({ boolean: true });
-      resolve({ boolean: false, error: "This password doesn't match!" });
+      resolve({ boolean: false, error: "This password is not enough secured!" });
     });
   }
 
@@ -131,7 +131,7 @@ class UserInputTests {
   async createUserErrors(data) {
     const errors = [];
     // eslint-disable-next-line no-unused-vars
-    const { firstname, surname, username, email } = data;
+    const { firstname, surname, username, email, password } = data;
 
     if (!this.mandatoryFields(data)) {
       errors.push('Some fields were left blank!');
@@ -168,7 +168,11 @@ class UserInputTests {
       [this.isEmail, this.exists],
       errors,
     );
-    // Password : on sait pas comment va etre le systeme des mots de passe
+    await this.inputTester(
+      { input: password, inputName: 'password', modelInstance: this.user },
+      [this.passwordFormat],
+      errors,
+    );
     return errors;
   }
 
