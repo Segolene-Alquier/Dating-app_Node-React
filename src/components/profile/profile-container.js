@@ -201,8 +201,6 @@ const UseProfileForm = (userData, token) => {
 
     setProfile(newInput);
     setChangedFields(newChangedFields);
-    console.log('newInput :', newInput);
-    console.log('changed :', newChangedFields);
   };
 
   const handleSubmitParameters = event => {
@@ -255,7 +253,6 @@ const UseProfileForm = (userData, token) => {
         },
       })
       .then(response => {
-        console.log(response);
         if (profile.profilePicture === null) {
           const newInput = {
             ...profile,

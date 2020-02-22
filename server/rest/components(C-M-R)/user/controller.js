@@ -27,7 +27,6 @@ const { getDistance } = require('geolib');
 const { isConnected } = require('./../../../socket/newConnection');
 const newNotification = require('../../../socket/newNotification');
 
-
 async function getUsers(request, response) {
   try {
     const call = await user.getAll();
@@ -347,7 +346,6 @@ const popularityScore = (currentUserPopularity, otherUserPopularity) => {
 async function suggestions(request, response) {
   const id = request.decoded.userid;
   let { ageRange, popularityRange, interests, distanceMax } = request.body;
-
   if ((await checkIfProfileCompleted(id)) === false) {
     return response.status(200).json({
       authorized: false,

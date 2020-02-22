@@ -201,7 +201,6 @@ class User {
 
   async updateProfilePictureIfNotExist(id) {
     try {
-      console.log('ICI');
       return await db.any(
         'UPDATE public."User" SET "profilePicture" = (SELECT images[1] FROM Public."User" WHERE id = $1) WHERE (id = $1 AND "profilePicture" IS NULL)',
         [id],

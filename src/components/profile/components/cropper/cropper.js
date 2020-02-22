@@ -53,20 +53,20 @@ const CropperImg = ({
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
-  let temp;
 
   const showCroppedImage = useCallback(async () => {
     try {
-      temp = await getCroppedImg(imageToSave, croppedAreaPixels, upload);
-      setCroppedImage(temp);
+      getCroppedImg(imageToSave, croppedAreaPixels, upload).then(image =>
+        setCroppedImage(image),
+      );
     } catch (e) {
       console.error(e);
     }
-  }, [croppedAreaPixels]);
+  }, [setCroppedImage, imageToSave, croppedAreaPixels, upload]);
 
   const closeCroppedImg = useCallback(() => {
     setCroppedImage(null);
-  }, []);
+  }, [setCroppedImage]);
 
   if (!croppedImage) {
     return (
@@ -90,7 +90,6 @@ const CropperImg = ({
             step={0.1}
             aria-labelledby="Zoom"
             onChange={(e, zoom) => setZoom(zoom)}
-            classes={{ container: classes.slider }}
           />
         </div>
         <Button
@@ -115,7 +114,7 @@ const CropperImg = ({
         color="primary"
         classes={{ root: classes.cropButton }}
       >
-        <ArrowBackIcon color="white" />
+        <ArrowBackIcon />
       </Button>
       <Button
         onClick={() => {
