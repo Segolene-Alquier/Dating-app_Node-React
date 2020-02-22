@@ -34,6 +34,9 @@ const UseProfileForm = (userData, token) => {
   if (_.isEmpty(profile)) {
     Promise.all([userData, fetchInterests()]).then(values => {
       const tempUserData = values[0].data;
+      tempUserData.birthDate = new Date(tempUserData.birthDate)
+        .toISOString()
+        .split('T')[0];
       tempUserData.interestNames = values[1];
       setProfile(tempUserData);
       setLoaded(true);
@@ -221,7 +224,6 @@ const UseProfileForm = (userData, token) => {
             toast.success(response.data.message);
             setChangedFields({});
           } else {
-            console.log(response);
             response.data.errors.forEach(error => {
               toast.error(error);
             });

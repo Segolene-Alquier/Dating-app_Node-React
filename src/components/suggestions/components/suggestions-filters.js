@@ -52,7 +52,7 @@ const SuggestionsFilters = ({
             Distance
           </Typography>
           <Slider
-            defaultValue={suggestionsOptions.distanceMax}
+            defaultValue={100}
             getAriaValueText={value => `${value} kms`}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"

@@ -127,7 +127,8 @@ const TabPanelProfileParameters = ({
               profile={profile}
               handleProfileChange={handleProfileChange}
               name="birthDate"
-              value={new Date(profile.birthDate).toISOString().split('T')[0]}
+              value={profile.birthDate}
+              // value={new Date(profile.birthDate).toISOString().split('T')[0]}
               title="Birthdate"
               type="date"
             />

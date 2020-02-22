@@ -32,8 +32,6 @@ const useLoginForm = callback => {
   const userLocation = async () => {
     const ip = ipLocation();
     const geo = await geoLocation();
-    console.log(ip);
-    console.log(geo);
     return geo || ip;
   };
 
@@ -59,10 +57,8 @@ const useLoginForm = callback => {
         .then(({ data }) => {
           if (data.success === true) {
             localStorage.setItem('token', data.token);
-            console.log('Bravo, tu es connecté.e !');
             callback(true);
           } else {
-            console.log('Nope, try again');
             toast.error(data.err);
           }
         });

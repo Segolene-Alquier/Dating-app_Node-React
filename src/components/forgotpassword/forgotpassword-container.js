@@ -22,7 +22,6 @@ const useForgotPasswordForm = callback => {
         },
       )
       .then(({ data }) => {
-        console.log('DATA', data);
         if (data.success === true) {
           callback(true);
         } else {
@@ -34,7 +33,6 @@ const useForgotPasswordForm = callback => {
   const handleSubmit = async event => {
     if (event) {
       event.preventDefault();
-      console.log(inputs);
       await sendForgotPassword(email);
     }
   };

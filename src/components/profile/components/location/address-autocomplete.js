@@ -10,7 +10,6 @@ const AddressAutocomplete = ({ handleChangeLocation, classes }) => {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(({ lat, lng }) => {
-        console.log(lat, lng);
         const newLocation = [lat, lng];
         handleChangeLocation(newLocation);
       });

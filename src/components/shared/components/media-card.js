@@ -114,7 +114,7 @@ export default function MediaCard({ field, profile, handleLike, type }) {
         {type === 'suggestion' ? (
           <Box className={classes.matchingRate}>
             <Typography>Match rate</Typography>
-            <Typography>{score}%</Typography>
+            <Typography>{Math.round(score * 100) / 100}%</Typography>
           </Box>
         ) : null}
         <CardContent

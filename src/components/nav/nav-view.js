@@ -158,7 +158,6 @@ const Nav = () => {
   }, 500);
   if (isLoggedIn) {
     socketContext.socket.on('new notification', (sender, type) => {
-      console.log(sender, type);
       if (type === 'message') {
         setTotalMessages(totalMessages + 1);
       }

@@ -6,8 +6,8 @@ import { toast } from 'react-toastify';
 
 const LikeContainer = () => {
   const [loaded, setLoaded] = useState(false);
-  const [likeedProfile, setLikeedProfile] = useState({});
-  const [likeorProfile, setLikeorProfile] = useState({});
+  const [likedProfile, setLikedProfile] = useState(null);
+  const [likerProfile, setLikerProfile] = useState({});
   const { authContext } = useContext(AuthContext);
   const { userData, token } = authContext;
 
@@ -24,17 +24,16 @@ const LikeContainer = () => {
           toast.error(result.data.message);
         } else {
           const indexToModify = _.keys(
-            _.pickBy(likeedProfile, { visitor: likedId }),
+            _.pickBy(likedProfile, { visitor: likedId }),
           );
 
-          let newLikeedProfile = likeedProfile;
+          let newLikeedProfile = likedProfile;
           indexToModify.forEach(index => {
             newLikeedProfile[parseInt(index, 10)] = {
               ...newLikeedProfile[parseInt(index, 10)],
-              liking: !likeedProfile[parseInt(index, 10)].liking,
+              liking: !likedProfile[parseInt(index, 10)].liking,
             };
           });
-          console.log('newLikeedProfile', newLikeedProfile);
           document
             .querySelectorAll(`[visitor*="${likedId}"]`)
             .forEach(element => {
@@ -42,8 +41,7 @@ const LikeContainer = () => {
                 element.classList.remove('MuiIconButton-colorSecondary');
               else element.className += ' MuiIconButton-colorSecondary';
             });
-          setLikeedProfile(newLikeedProfile);
-          console.log('likeedProfile', likeedProfile);
+          setLikedProfile(newLikeedProfile);
         }
       });
   };
@@ -63,16 +61,15 @@ const LikeContainer = () => {
         console.log(error);
       });
 
-  if (_.isEmpty(likeedProfile) && loaded === false) {
+  if (likedProfile === null && loaded === false) {
     Promise.all([userData, fetchLikeHistory()]).then(values => {
-      console.log(values);
-      setLikeedProfile(values[1]);
-      setLikeorProfile(values[0].data);
+      setLikedProfile(values[1]);
+      setLikerProfile(values[0].data);
       setLoaded(true);
     });
   }
 
-  return { likeedProfile, likeorProfile, loaded, handleLike };
+  return { likedProfile, likerProfile, loaded, handleLike };
 };
 
 export default LikeContainer;

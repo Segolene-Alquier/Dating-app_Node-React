@@ -23,7 +23,6 @@ const ResetForgotPassword = ({ computedMatch }) => {
         },
       })
       .then(data => {
-        console.log(data.data.success);
         if (data.data.success) {
           setValidToken(true);
         } else {

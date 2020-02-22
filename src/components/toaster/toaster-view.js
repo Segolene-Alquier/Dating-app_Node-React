@@ -64,9 +64,10 @@ const Toaster = ({ getParams }) => {
         break;
     }
   }, 500);
-  if (getParams !== undefined && getParams.message !== undefined) {
-    toastDebounced(getParams);
-  }
+
+    if (getParams !== undefined && getParams.message !== undefined) {
+      toastDebounced(getParams);
+    }
   return null;
 };
 

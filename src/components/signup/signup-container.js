@@ -35,7 +35,6 @@ const useSignUpForm = callback => {
           if (data.created === true) {
             callback(true);
           } else {
-            console.log(data);
             data.errors.forEach(error => {
               toast.error(error);
             });

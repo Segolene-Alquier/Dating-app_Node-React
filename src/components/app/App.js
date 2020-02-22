@@ -10,7 +10,6 @@ import Search from '../search';
 import Suggestions from '../suggestions';
 import Visit from '../visit';
 import Like from '../like';
-import Secret from '../secretpage';
 import Home from '../home';
 import { AuthProvider } from './AuthContext';
 import SecureRoute from './SecureRoute';
@@ -41,7 +40,6 @@ function App() {
             path="/validation/forgotpassword/:token"
             component={ResetForgotPassword}
           />
-          <SecureRoute path="/secret" component={Secret} />
           <SecureRoute path="/search" component={Search} />
           <SecureRoute path="/suggestions" component={Suggestions} />
           <SecureRoute path="/profile/:username" component={ProfileShow} />

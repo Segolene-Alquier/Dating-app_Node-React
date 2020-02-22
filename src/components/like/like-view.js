@@ -32,13 +32,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Like = ({ computedMatch }) => {
-  const likeedUsername = computedMatch.params.username;
+  const likedUsername = computedMatch.params.username;
 
-  const { likeedProfile, likeorProfile, loaded, handleLike } = LikeContainer(
-    likeedUsername,
+  const { likedProfile, likerProfile, loaded, handleLike } = LikeContainer(
+    likedUsername,
   );
   const classes = useStyles();
-  console.log('likeedProfile view', likeedProfile);
 
   if (loaded === false) {
     return (
@@ -53,8 +52,8 @@ const Like = ({ computedMatch }) => {
       <Title textTitle="History of likes" />
       <ProfilesGrid
         classes={classes}
-        profiles={likeedProfile}
-        currentUserProfile={likeorProfile}
+        profiles={likedProfile}
+        currentUserProfile={likerProfile}
         handleLike={handleLike}
       />
     </>

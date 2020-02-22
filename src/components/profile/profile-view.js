@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Tabs, Tab } from '@material-ui/core';
@@ -11,7 +11,8 @@ import UseProfileForm from './profile-container';
 import UpperBoxProfile from './components/upperBoxProfile';
 import TabPanelProfileAbout from './components/tabPanelProfileAbout';
 import TabPanelProfileParameters from './components/tabPanelProfileParameters';
-import Toaster from '../toaster';
+import { toast } from 'react-toastify';
+import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import ModalCrop from './components/modal';
 
 const useStyles = makeStyles(theme => ({
@@ -34,12 +35,6 @@ const useStyles = makeStyles(theme => ({
     marginRight: 'auto',
     maxWidth: '1500px',
   },
-  // paper: {
-  //   marginTop: theme.spacing(8),
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   alignItems: 'center',
-  // },
   paper: {
     position: 'absolute',
     width: 400,
@@ -131,7 +126,6 @@ const useStyles = makeStyles(theme => ({
   activeTab: {
     opacity: '1',
     borderBottom: '3px solid',
-    // color: theme.palette.secondary.main,
     borderBottomColor: theme.palette.secondary.main,
     '&:focus': {
       outline: 'none',
@@ -216,21 +210,17 @@ const Profile = params => {
     handleDeleteImage,
     profile,
     loaded,
-    // submitFile,
     handleFileUpload,
     handleChangeProfileImage,
-    // handleInterestChange,
     handleChangeLocation,
     handleChangeCity,
     handleSubmitParameters,
     isChecked,
     getAge,
-    // fetchInterests,
     deleteUser,
     showModal,
     setShowModal,
     imageToSave,
-    // setImageToSave,
     croppedImage,
     setCroppedImage,
     upload,
@@ -238,21 +228,9 @@ const Profile = params => {
     sendCroppedImageServer,
   } = UseProfileForm(authContext.userData, authContext.token);
   const {
-    // birthDate,
-    // description,
-    // email,
-    // firstname,
-    // gender,
-    // images,
     interests,
-    // location,
     notificationMail,
     notificationPush,
-    // popularityRate,
-    // profilePicture,
-    // sexualOrientation,
-    // surname,
-    // username,
     interestNames,
   } = profile;
 
@@ -262,14 +240,26 @@ const Profile = params => {
     setValueTab(newValueTab);
   };
 
+  const [toastDebounced] = useDebouncedCallback(() => {
+    if (getParams.message === 'profile_not_completed') {
+      const toasterType = 'warning';
+      const toasterMessage =
+        'You need to complete your profile in order to access to other profiles';
+      toast(toasterMessage, { type: toasterType });
+    }
+  });
+  useEffect(() => {
+    toastDebounced();
+  }, [toastDebounced]);
+
   if (loaded === false) {
     return (
       <div className={classes.progress}>
         <CircularProgress color="secondary" />
-        {profile.username ? null : <Toaster getParams={getParams} />}
       </div>
     );
   }
+
   return (
     <>
       <UpperBoxProfile

@@ -12,7 +12,6 @@ const usePasswordForm = (callback, token) => {
   const handleSubmit = event => {
     if (event) {
       event.preventDefault();
-      console.log(inputs);
       if (password1 !== password2) {
         toast.error("The passwords doesn't match");
         return;
@@ -33,7 +32,6 @@ const usePasswordForm = (callback, token) => {
           if (data.success === true) {
             callback(true);
           } else {
-            console.log('Nope, try again');
             toast.error(data.err);
           }
         });
