@@ -53,6 +53,9 @@ const useStyles = makeStyles(theme => ({
   notReadNotif: {
     backgroundColor: '#edf2fa',
   },
+  noNotificationsDrawer: {
+    margin: theme.spacing(1),
+  }
 }));
 
 const Nav = () => {

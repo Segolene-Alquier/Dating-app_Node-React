@@ -145,7 +145,7 @@ class User {
       const result = await db.any(
         ` SELECT id AS visitor, firstname, username, location,
           "birthDate", "popularityRate", gender, "sexualOrientation",
-          description, interests, images, "profilePicture", suspended,
+          description, interests, images, "profilePicture", suspended, "lastConnection" AS date,
           EXISTS(SELECT * FROM public."Like" WHERE "likingUser" = $6 AND "likedUser" = "User".id) AS liking,
           EXISTS(SELECT * FROM public."Like" WHERE "likedUser" = $6 AND "likingUser" = "User".id) AS liked
           FROM public."User"

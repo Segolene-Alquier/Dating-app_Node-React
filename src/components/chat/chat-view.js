@@ -5,10 +5,10 @@ import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
+import Box from '@material-ui/core/Box';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import _ from 'lodash';
-// import Iframe from 'react-iframe';
 import ChatContainer from './chat-container';
 
 const useStyles = makeStyles(theme => ({
@@ -21,12 +21,30 @@ const useStyles = makeStyles(theme => ({
   notReadMessage: {
     backgroundColor: '#edf2fa',
   },
+  emptyChat: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyChatTitle: {
+    margin: theme.spacing(2),
+  },
 }));
 
 const Chat = () => {
   const classes = useStyles();
   const { matchList } = ChatContainer();
-
+  if (_.isEmpty(matchList)) {
+    return (
+      <Box className={classes.emptyChat}>
+        <span role="img" aria-label="emoji" className={classes.emptyChatTitle}>
+          You don't have matches yet. But don't worry, it's coming😌
+        </span>{' '}
+        <img src="https://media.giphy.com/media/Az1CJ2MEjmsp2/giphy.gif" alt="lonely ghost town gif"/>
+      </Box>
+    );
+  }
   return (
     <List className={classes.root}>
       {_.map(matchList, matchedProfile => {

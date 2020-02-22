@@ -8,6 +8,8 @@ import {
   ListItemAvatar,
   Avatar,
 } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import _ from 'lodash';
 
 const NotificationDrawer = ({ classes, toggleDrawer, notifications }) => {
   const messageToDisplay = (sender, event) => {
@@ -43,33 +45,41 @@ const NotificationDrawer = ({ classes, toggleDrawer, notifications }) => {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
-        {notifications.map(notification => {
-          const notifLink = `/profile/${notification.username.toLowerCase()}`;
-          return (
-            <Fragment key={notification.id}>
-              <ListItem
-                button
-                component="a"
-                href={notifLink}
-                className={notification.read ? null : classes.notReadNotif}
-              >
-                <ListItemAvatar>
-                  <Avatar alt="avatar" src={notification.profilePicture} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={messageToDisplay(
-                    notification.firstname,
-                    notification.event,
-                  )}
-                  secondary={moment(notification.date).fromNow()}
-                />
-              </ListItem>
-              <Divider />
-            </Fragment>
-          );
-        })}
-      </List>
+      {_.isEmpty(notifications) ? (
+        <Typography className={classes.noNotificationsDrawer}>
+          <span role="img" aria-label="emoji">
+            You don't have any notifications yet! Be patient, it's coming 😌
+          </span>
+        </Typography>
+      ) : (
+        <List>
+          {notifications.map(notification => {
+            const notifLink = `/profile/${notification.username.toLowerCase()}`;
+            return (
+              <Fragment key={notification.id}>
+                <ListItem
+                  button
+                  component="a"
+                  href={notifLink}
+                  className={notification.read ? null : classes.notReadNotif}
+                >
+                  <ListItemAvatar>
+                    <Avatar alt="avatar" src={notification.profilePicture} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={messageToDisplay(
+                      notification.firstname,
+                      notification.event,
+                    )}
+                    secondary={moment(notification.date).fromNow()}
+                  />
+                </ListItem>
+                <Divider />
+              </Fragment>
+            );
+          })}
+        </List>
+      )}
     </div>
   );
 };

@@ -11,7 +11,6 @@ const UserValidation = ({ computedMatch }) => {
       },
     })
     .then(data => {
-      console.log(data.data.success);
       if (data.data.success) {
         window.location = '/?message=user_validated';
       } else {

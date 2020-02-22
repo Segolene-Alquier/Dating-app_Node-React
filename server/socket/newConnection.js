@@ -12,19 +12,11 @@ const isConnected = id => {
 };
 
 const newConnection = async (io, socket) => {
-  console.log(
-    `a user connected with socket.id ${socket.id}, handshake query`,
-    socket.handshake.query,
-  );
-  console.log(checkTokenSocket);
   const userConnected = await checkTokenSocket(socket.handshake.query.token);
   if (userConnected) {
     const connectedUsers = getConnectedUsers();
     connectedUsers[socket.id] = userConnected.userid;
-    console.log(getConnectedUsers());
     setConnectedUsers(connectedUsers);
-  } else {
-    socket.disconnect();
   }
 };
 
