@@ -108,7 +108,7 @@ class UserInputTests {
 
   passwordFormat({ input }) {
     return new Promise(function(resolve) {
-      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&.]).{8,10}$/;
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
       if (!input) resolve({ boolean: false, error: 'This password is empty!' });
       if (input.match(regex)) resolve({ boolean: true });
       resolve({
