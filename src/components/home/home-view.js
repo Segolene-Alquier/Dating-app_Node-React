@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   homeWrapper: {
     height: 'calc(100vh - 64px)',
     width: '100vw',
-    padding: theme.spacing(6),
+    padding: theme.spacing(2),
   },
   bgImage: {
     height: '100%',
