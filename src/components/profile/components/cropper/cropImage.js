@@ -18,24 +18,17 @@ export default async function getCroppedImg(imageSrc, pixelCrop, upload) {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
-  const safeArea = Math.max(image.width, image.height) * 2;
+  const safeArea = Math.max(image.width, image.height);
 
   // set each dimensions to double largest dimension to allow for a safe area for the
   // image to rotate in without being clipped by canvas context
-  canvas.width = safeArea;
-  canvas.height = safeArea;
-
-  // translate canvas context to a central location on image to allow rotating around the center.
-  ctx.translate(safeArea / 2, safeArea / 2);
-  // ctx.rotate(getRadianAngle(rotation));
-  ctx.translate(-safeArea / 2, -safeArea / 2);
+  const ios =
+    !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+  canvas.width = ios ? 4096 : safeArea;
+  canvas.height = ios ? 4096 : safeArea;
 
   // draw rotated image and store data.
-  ctx.drawImage(
-    image,
-    safeArea / 2 - image.width * 0.5,
-    safeArea / 2 - image.height * 0.5,
-  );
+  ctx.drawImage(image, safeArea - image.width, safeArea - image.height);
   const data = ctx.getImageData(0, 0, safeArea, safeArea);
 
   // set canvas width to final desired crop size - this will clear existing context
@@ -45,8 +38,8 @@ export default async function getCroppedImg(imageSrc, pixelCrop, upload) {
   // paste generated rotate image with correct offsets for x,y crop values.
   ctx.putImageData(
     data,
-    0 - safeArea / 2 + image.width * 0.5 - pixelCrop.x,
-    0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y,
+    0 - safeArea + image.width - pixelCrop.x,
+    0 - safeArea + image.height - pixelCrop.y,
   );
 
   // As Base64 string
