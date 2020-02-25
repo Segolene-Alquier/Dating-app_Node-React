@@ -54,7 +54,7 @@ const NotificationDrawer = ({ classes, toggleDrawer, notifications }) => {
       ) : (
         <List>
           {notifications.map(notification => {
-            const notifLink = `/profile/${notification.username.toLowerCase()}`;
+            const notifLink = `/profile/${notification.username}`;
             return (
               <Fragment key={notification.id}>
                 <ListItem
