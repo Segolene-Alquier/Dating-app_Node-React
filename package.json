@@ -43,6 +43,7 @@
     "react-dom": "^16.12.0",
     "react-easy-crop": "^1.17.1",
     "react-google-places-autocomplete": "^1.6.2",
+    "react-infinite-scroll-component": "^5.0.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
     "react-swipeable-views": "^0.13.9",
