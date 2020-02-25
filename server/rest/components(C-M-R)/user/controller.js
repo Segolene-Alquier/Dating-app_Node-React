@@ -305,7 +305,6 @@ async function search(request, response) {
     );
     let currentUserLocation = await user.getByFiltered('id', id, ['location']);
     currentUserLocation = currentUserLocation[0].location;
-    console.log(currentUserLocation);
     userSearchResult.forEach(profile => {
       profile.age = getAge(profile.birthDate);
       profile.connected = isConnected(profile.visitor);

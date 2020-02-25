@@ -18,7 +18,7 @@ const UseProfileForm = (userData, token) => {
 
   const fetchInterests = () =>
     axios
-      .get('http://localhost:3001/interests', {
+      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/interests`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,
@@ -75,7 +75,7 @@ const UseProfileForm = (userData, token) => {
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-    return age + ' ans ';
+    return `${age} ans `;
   };
 
   const handleNotifChange = event => {
@@ -132,7 +132,7 @@ const UseProfileForm = (userData, token) => {
   const handleInterestChange = event => {
     if (event.target.textContent === '') {
       const interestToDelete = event.currentTarget.closest('div').textContent;
-      let newInterests = profile.interests;
+      const newInterests = profile.interests;
       newInterests.splice(profile.interests.indexOf(interestToDelete), 1);
       newInput = {
         ...profile,
@@ -213,12 +213,16 @@ const UseProfileForm = (userData, token) => {
     } else if (event) {
       event.preventDefault();
       axios
-        .put('http://localhost:3001/users', changedFields, {
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-            'x-access-token': token,
+        .put(
+          `http://${process.env.REACT_APP_PUBLIC_API_URL}/users`,
+          changedFields,
+          {
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+              'x-access-token': token,
+            },
           },
-        })
+        )
         .then(response => {
           if (response.data.success === true) {
             toast.success(response.data.message);
@@ -248,12 +252,16 @@ const UseProfileForm = (userData, token) => {
 
   const sendCroppedImageServer = formData => {
     axios
-      .post(`http://localhost:3001/images/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'x-access-token': token,
+      .post(
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/images/upload`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'x-access-token': token,
+          },
         },
-      })
+      )
       .then(response => {
         if (profile.profilePicture === null) {
           const newInput = {
@@ -277,7 +285,7 @@ const UseProfileForm = (userData, token) => {
   };
 
   const upload = imageBlob => {
-    let image = blobToFile(imageBlob, 'coucou.png');
+    const image = blobToFile(imageBlob, 'coucou.png');
     const formData = new FormData();
     formData.append('file', image);
     setFinalImage(formData);
@@ -294,7 +302,7 @@ const UseProfileForm = (userData, token) => {
   const handleDeleteImage = url => {
     axios
       .post(
-        `http://localhost:3001/images/delete`,
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/images/delete`,
         { url },
         {
           headers: {
@@ -360,7 +368,7 @@ const UseProfileForm = (userData, token) => {
     );
     if (confirmation) {
       axios
-        .delete(`http://localhost:3001/users/`, {
+        .delete(`http://${process.env.REACT_APP_PUBLIC_API_URL}/users/`, {
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
             'x-access-token': token,

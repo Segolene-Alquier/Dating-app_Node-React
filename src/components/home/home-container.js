@@ -8,7 +8,7 @@ const HomeContainer = (userData, token) => {
 
   const fetchProfile = () => {
     axios
-      .get(`http://localhost:3001/users/profile`, {
+      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/users/profile`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,

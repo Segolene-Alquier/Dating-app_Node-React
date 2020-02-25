@@ -1,7 +1,8 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getToken, getUserData } from '../auth/AuthContainer';
 import io from 'socket.io-client';
+import { getToken, getUserData } from '../auth/AuthContainer';
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -14,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     userData,
   };
 
-  const socket = io(`http://localhost:3001`, {
+  const socket = io(`http://${process.env.REACT_APP_PUBLIC_API_URL}`, {
     query: { token },
   });
   const socketContext = { socket };

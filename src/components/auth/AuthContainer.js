@@ -25,12 +25,15 @@ export const getUserData = async token => {
   if (!token || isTokenExpired(token)) {
     return null;
   }
-  const userData = await axios.get('http://localhost:3001/auth/checkToken', {
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-      'x-access-token': token,
+  const userData = await axios.get(
+    `http://${process.env.REACT_APP_PUBLIC_API_URL}/auth/checkToken`,
+    {
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'x-access-token': token,
+      },
     },
-  });
+  );
   return userData.data;
 };
 

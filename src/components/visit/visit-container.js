@@ -13,12 +13,15 @@ const VisitContainer = () => {
 
   const handleLike = likedId => {
     axios
-      .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          'x-access-token': token,
+      .get(
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
         },
-      })
+      )
       .then(result => {
         if (result.data.blocked) {
           toast.error(result.data.message);
@@ -27,7 +30,7 @@ const VisitContainer = () => {
             _.pickBy(visitedProfile, { visitor: likedId }),
           );
 
-          let newVisitedProfile = visitedProfile;
+          const newVisitedProfile = visitedProfile;
           indexToModify.forEach(index => {
             newVisitedProfile[parseInt(index, 10)] = {
               ...newVisitedProfile[parseInt(index, 10)],
@@ -48,7 +51,7 @@ const VisitContainer = () => {
 
   const fetchVisitHistory = () =>
     axios
-      .get('http://localhost:3001/visits/', {
+      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/visits/`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,

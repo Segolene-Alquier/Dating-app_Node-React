@@ -18,7 +18,7 @@ const usePasswordForm = (callback, token) => {
       }
       axios
         .post(
-          `http://localhost:3001/validation/forgotpasswordupdate/${token}`,
+          `http://${process.env.REACT_APP_PUBLIC_API_URL}/validation/forgotpasswordupdate/${token}`,
           {
             password: password1,
           },

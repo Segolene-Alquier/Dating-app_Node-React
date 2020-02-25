@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useState, useContext } from 'react';
-import { AuthContext } from '../app/AuthContext';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
+import { AuthContext } from '../app/AuthContext';
 
 const SearchContainer = () => {
   const [loaded, setLoaded] = useState(false);
@@ -20,12 +20,15 @@ const SearchContainer = () => {
 
   const handleLike = likedId => {
     axios
-      .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          'x-access-token': token,
+      .get(
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
         },
-      })
+      )
       .then(result => {
         if (result.data.blocked) {
           toast.error(result.data.message);
@@ -34,7 +37,7 @@ const SearchContainer = () => {
             _.pickBy(searchResult, { visitor: likedId }),
           );
 
-          let newSearchResult = searchResult;
+          const newSearchResult = searchResult;
           indexToModify.forEach(index => {
             newSearchResult[parseInt(index, 10)] = {
               ...newSearchResult[parseInt(index, 10)],
@@ -122,12 +125,16 @@ const SearchContainer = () => {
 
   const fetchSearch = (searchQuery = searchOptions) => {
     axios
-      .post(`http://localhost:3001/users/search`, searchQuery, {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          'x-access-token': token,
+      .post(
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/users/search`,
+        searchQuery,
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
         },
-      })
+      )
       .then(result => {
         if (result.data.authorized === false) {
           window.location = '/profile?message=profile_not_completed';

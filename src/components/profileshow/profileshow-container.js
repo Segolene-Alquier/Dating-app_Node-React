@@ -14,7 +14,7 @@ const ProfileShowContainer = visitedUsername => {
   const handleBlock = (blockedId, blocked, setBlocked) => {
     axios
       .post(
-        `http://localhost:3001/block/block-unblock/${blockedId}`,
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/block/block-unblock/${blockedId}`,
         {},
         {
           headers: {
@@ -41,7 +41,7 @@ const ProfileShowContainer = visitedUsername => {
   const handleReport = (reportedId, reported, setReported) => {
     axios
       .post(
-        `http://localhost:3001/report/${reportedId}`,
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/report/${reportedId}`,
         {},
         {
           headers: {
@@ -62,12 +62,15 @@ const ProfileShowContainer = visitedUsername => {
 
   const handleLike = (likedId, setLiked) => {
     axios
-      .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          'x-access-token': token,
+      .get(
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
         },
-      })
+      )
       .then(result => {
         if (result.data.deleted === true) {
           setLiked(false);
@@ -95,12 +98,15 @@ const ProfileShowContainer = visitedUsername => {
 
   const fetchVisitedProfile = () =>
     axios
-      .get(`http://localhost:3001/users/profile/${visitedUsername}`, {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          'x-access-token': token,
+      .get(
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/users/profile/${visitedUsername}`,
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
         },
-      })
+      )
       .then(response => {
         return response.data;
       })
@@ -115,14 +121,12 @@ const ProfileShowContainer = visitedUsername => {
         setVisitedProfile(data);
         setLoaded(true);
         setLoading(false);
-      } else {
-        if (data.success === false) {
-          window.location = '/?message=user_not_found';
-        } else if (data.authorized === false) {
-          window.location = '/profile?message=profile_not_completed';
-        } else if (data.blocked === true) {
-          window.location = '/?message=user_blocked_you';
-        }
+      } else if (data.success === false) {
+        window.location = '/?message=user_not_found';
+      } else if (data.authorized === false) {
+        window.location = '/profile?message=profile_not_completed';
+      } else if (data.blocked === true) {
+        window.location = '/?message=user_blocked_you';
       }
     });
   }

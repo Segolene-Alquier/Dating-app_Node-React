@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import _ from 'lodash';
-import { AuthContext } from '../app/AuthContext';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../app/AuthContext';
 
 const LikeContainer = () => {
   const [loaded, setLoaded] = useState(false);
@@ -13,12 +13,15 @@ const LikeContainer = () => {
 
   const handleLike = likedId => {
     axios
-      .get(`http://localhost:3001/likes/like-unlike/${likedId}`, {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          'x-access-token': token,
+      .get(
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
         },
-      })
+      )
       .then(result => {
         if (result.data.blocked) {
           toast.error(result.data.message);
@@ -27,7 +30,7 @@ const LikeContainer = () => {
             _.pickBy(likedProfile, { visitor: likedId }),
           );
 
-          let newLikeedProfile = likedProfile;
+          const newLikeedProfile = likedProfile;
           indexToModify.forEach(index => {
             newLikeedProfile[parseInt(index, 10)] = {
               ...newLikeedProfile[parseInt(index, 10)],
@@ -48,7 +51,7 @@ const LikeContainer = () => {
 
   const fetchLikeHistory = () =>
     axios
-      .get('http://localhost:3001/likes/', {
+      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,

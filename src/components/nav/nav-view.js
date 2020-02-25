@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
   },
   noNotificationsDrawer: {
     margin: theme.spacing(1),
-  }
+  },
 }));
 
 const Nav = () => {
@@ -70,47 +70,48 @@ const Nav = () => {
     right: false,
   });
 
-
-
   useEffect(() => {
-     const fetchTotalNotifications = async () => {
-       await axios
-         .get(`http://localhost:3001/notification/total`, {
-           headers: {
-             'Content-type': 'application/json; charset=UTF-8',
-             'x-access-token': token,
-           },
-         })
-         .then(result => {
-           setTotalNotifications(parseInt(result.data, 10));
-         })
-         .catch(error => {
-           console.log(error);
-         });
-     };
+    const fetchTotalNotifications = async () => {
+      await axios
+        .get(
+          `http://${process.env.REACT_APP_PUBLIC_API_URL}/notification/total`,
+          {
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+              'x-access-token': token,
+            },
+          },
+        )
+        .then(result => {
+          setTotalNotifications(parseInt(result.data, 10));
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    };
 
-     const fetchTotalMessages = async () => {
-       await axios
-         .get(`http://localhost:3001/chat/total`, {
-           headers: {
-             'Content-type': 'application/json; charset=UTF-8',
-             'x-access-token': token,
-           },
-         })
-         .then(result => {
-           setTotalMessages(parseInt(result.data, 10));
-         })
-         .catch(error => {
-           console.log(error);
-         });
-     };
+    const fetchTotalMessages = async () => {
+      await axios
+        .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/chat/total`, {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'x-access-token': token,
+          },
+        })
+        .then(result => {
+          setTotalMessages(parseInt(result.data, 10));
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    };
     fetchTotalNotifications();
     setTimeout(() => fetchTotalMessages(), 500);
   }, [token]);
 
   const fetchNotifications = async () => {
     await axios
-      .get(`http://localhost:3001/notification`, {
+      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/notification`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,

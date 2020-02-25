@@ -5,11 +5,14 @@ import PropTypes from 'prop-types';
 const UserValidation = ({ computedMatch }) => {
   const { token } = computedMatch.params;
   axios
-    .get(`http://localhost:3001/validation/newaccount/${token}`, {
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
+    .get(
+      `http://${process.env.REACT_APP_PUBLIC_API_URL}/validation/newaccount/${token}`,
+      {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
       },
-    })
+    )
     .then(data => {
       if (data.data.success) {
         window.location = '/?message=user_validated';

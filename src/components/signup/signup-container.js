@@ -17,7 +17,7 @@ const useSignUpForm = callback => {
       event.preventDefault();
       axios
         .post(
-          'http://localhost:3001/users',
+          `http://${process.env.REACT_APP_PUBLIC_API_URL}/users`,
           {
             firstname,
             surname,

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import usePasswordForm from './resetforgotpassword-container';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import TextField from '@material-ui/core/TextField';
@@ -9,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import usePasswordForm from './resetforgotpassword-container';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -50,11 +50,14 @@ const ResetForgotPassword = ({ computedMatch }) => {
   const [validToken, setValidToken] = useState(false);
   if (!validToken) {
     axios
-      .get(`http://localhost:3001/validation/forgotpassword/${token}`, {
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+      .get(
+        `http://${process.env.REACT_APP_PUBLIC_API_URL}/validation/forgotpassword/${token}`,
+        {
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
         },
-      })
+      )
       .then(data => {
         if (data.data.success) {
           setValidToken(true);
