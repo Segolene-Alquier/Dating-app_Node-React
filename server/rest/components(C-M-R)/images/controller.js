@@ -36,7 +36,7 @@ async function uploadImage(request, response) {
       return response.status(400).send('A user can only upload 5 pictures');
     }
   } catch (error) {
-    console.log(error);
+    if (process.env.VERBOSE === 'true') console.log(error);
     return response.status(400).send(error);
   }
   const form = new multiparty.Form();
@@ -53,7 +53,7 @@ async function uploadImage(request, response) {
       await user.updateProfilePictureIfNotExist(id);
       return response.status(200).send(data);
     } catch (error) {
-      console.log(error);
+      if (process.env.VERBOSE === 'true') console.log(error);
       return response.status(400).send(error);
     }
   });
@@ -70,7 +70,7 @@ async function deleteImage(request, response) {
     }
     return response.status(200).send({ success: true });
   } catch (error) {
-    console.log(error);
+      if (process.env.VERBOSE === 'true') console.log(error);
     return response.status(400).send({ success: false, error });
   }
 }

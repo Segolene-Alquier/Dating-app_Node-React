@@ -18,7 +18,7 @@ async function getNotificationsFromCurrentUser(request, response) {
     notifications.updateRead(id);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -29,7 +29,7 @@ async function numberOfUnreadNotifications(request, response) {
     const call = await notifications.numberUnread(id);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }

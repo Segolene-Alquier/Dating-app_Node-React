@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const User = require('../user/model');
 const bcrypt = require('bcrypt');
+const User = require('../user/model');
 
 const user = new User();
 
@@ -63,11 +63,13 @@ async function booleanToken(request, response) {
 async function login(request, response) {
   const { username, password, lon, lat } = request.body;
 
-  console.log('User submitted: ', username, password);
+  if (process.env.VERBOSE === 'true')
+    console.log('User submitted: ', username, password);
   try {
     const query = await user.getBy('username', username);
     if (query.length <= 0) {
-      console.log(username, " doesn't exist");
+      if (process.env.VERBOSE === 'true')
+        console.log(username, " doesn't exist");
       response.status(200).json({
         success: false,
         token: null,
@@ -84,7 +86,8 @@ async function login(request, response) {
       });
       return;
     }
-    console.log('compare : ', visitor.password, password);
+    if (process.env.VERBOSE === 'true')
+      console.log('compare : ', visitor.password, password);
     if (bcrypt.compareSync(password, visitor.password)) {
       if (visitor.validated) {
         const token = jwt.sign({ userid: visitor.id }, 'mignon4ever', {
@@ -92,18 +95,12 @@ async function login(request, response) {
         });
         if (lon && lat) {
           const location = [parseFloat(lon), parseFloat(lat)];
-          console.log(
-            user.updateById(visitor.id, { location, lastConnection: 'now()' }),
-          );
+          user.updateById(visitor.id, { location, lastConnection: 'now()' });
         } else {
-          console.log(
-            await user.updateById(visitor.id, {
-              lastConnection: 'now()',
-            }),
-          );
+          await user.updateById(visitor.id, {
+            lastConnection: 'now()',
+          });
         }
-
-        console.log(token);
         response.json({
           success: true,
           token,
@@ -117,7 +114,8 @@ async function login(request, response) {
         });
       }
     } else {
-      console.log('The login and password do not match!');
+      if (process.env.VERBOSE === 'true')
+        console.log('The login and password do not match!');
       response.status(200).json({
         success: false,
         token: null,
@@ -125,7 +123,7 @@ async function login(request, response) {
       });
     }
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -135,7 +133,7 @@ async function logout(request, response) {
     // let call = await gender.getAll()
     // response.status(200).json(call)
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }

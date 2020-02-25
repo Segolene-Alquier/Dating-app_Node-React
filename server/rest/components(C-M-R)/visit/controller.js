@@ -8,7 +8,7 @@ async function getVisits(request, response) {
     const call = await visits.getAll();
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -23,7 +23,7 @@ async function getVisitsFromCurrentUser(request, response) {
     });
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }

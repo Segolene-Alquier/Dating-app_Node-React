@@ -1,7 +1,8 @@
 const { setConnectedUsers } = require('./connectedUsers');
 
 const disconnection = (io, connectedUsers, socket) => {
-  console.log('user disconnected', connectedUsers[socket.id]);
+  if (process.env.VERBOSE === 'true')
+    console.log('user disconnected', connectedUsers[socket.id]);
   socket.removeAllListeners('chat message');
   socket.removeAllListeners('joinchatroom');
   socket.removeAllListeners('disconnect');

@@ -32,7 +32,7 @@ async function getUsers(request, response) {
     const call = await user.getAll();
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -59,7 +59,7 @@ async function getMyUserInfo(request, response) {
     ]);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -81,14 +81,14 @@ async function getUserById(request, response) {
     ]);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
 
 async function getUserByUsername(request, response) {
   const { username } = request.params;
-  console.log('username', username);
+  if (process.env.VERBOSE === 'true') console.log('username', username);
   try {
     const call = await user.getByFiltered('username', username, [
       'id',
@@ -156,7 +156,7 @@ async function getUserByUsername(request, response) {
       connected,
     });
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -171,7 +171,7 @@ async function usernameExists(request, response) {
     const call = await user.exists('username', username);
     response.status(200).json({ exists: call });
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -186,7 +186,7 @@ async function emailExists(request, response) {
     const call = await user.exists('email', email);
     response.status(200).json({ exists: call });
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -216,7 +216,7 @@ async function createUser(request, response) {
     });
     await sendSigninEmail(email, firstname, token);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -247,7 +247,7 @@ async function updateUser(request, response) {
       message: 'Your information were sucessfully updated',
     });
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -263,7 +263,7 @@ async function deleteUser(request, response) {
     const call = await user.delete(id);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -316,7 +316,7 @@ async function search(request, response) {
     });
     response.status(200).json(userSearchResult);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -389,7 +389,7 @@ async function suggestions(request, response) {
 
     response.status(200).json(userSearchResult);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }

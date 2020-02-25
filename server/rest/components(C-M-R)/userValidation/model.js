@@ -9,7 +9,8 @@ const tokgen = new TokenGenerator(256, TokenGenerator.BASE62);
 class UserValidation {
   async create({ userId, type }) {
     if (type !== 'validationKey' && type !== 'resetPassword') {
-      console.log('The type is not valid in model UserValidation.create()');
+      if (process.env.VERBOSE === 'true')
+        console.log('The type is not valid in model UserValidation.create()');
       return {
         created: false,
         error: 'The type is not valid in model UserValidation.create()',
@@ -17,9 +18,10 @@ class UserValidation {
     }
     try {
       const token = tokgen.generate();
-      console.log(
-        `INSERT INTO public."UserValidation" (userId, ${type}) VALUES (${userId}, ${token})`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `INSERT INTO public."UserValidation" (userId, ${type}) VALUES (${userId}, ${token})`,
+        );
       // await db.any(
       //   'INSERT INTO public."UserValidation" ("userId", $1:name) VALUES ($2, $3)',
       //   [type, userId, token],
@@ -30,14 +32,16 @@ class UserValidation {
       );
       return { created: true, token };
     } catch (err) {
-      console.log(err, 'in model UserValidation.create()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model UserValidation.create()');
       return { created: false, error: err };
     }
   }
 
   async verifyConfirmationToken({ token }) {
     if (token === undefined) {
-      console.log('The token is not defined');
+      if (process.env.VERBOSE === 'true')
+        console.log('The token is not defined');
       return {
         success: false,
         error: 'The token is not defined',
@@ -63,21 +67,24 @@ class UserValidation {
               error: 'The confirmation link is not valid',
             };
           }
-          console.log(error, 'in model UserValidation.create()');
+          if (process.env.VERBOSE === 'true')
+            console.log(error, 'in model UserValidation.create()');
           return {
             success: false,
             error,
           };
         });
     } catch (err) {
-      console.log(err, 'in model UserValidation.create()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model UserValidation.create()');
       return { success: false, error: err };
     }
   }
 
   async verifyForgotPasswordToken({ token }) {
     if (token === undefined) {
-      console.log('The token is not defined');
+      if (process.env.VERBOSE === 'true')
+        console.log('The token is not defined');
       return {
         success: false,
         error: 'The token is not defined',
@@ -102,14 +109,16 @@ class UserValidation {
               error: 'The confirmation link is not valid',
             };
           }
-          console.log(error, 'in model UserValidation.create()');
+          if (process.env.VERBOSE === 'true')
+            console.log(error, 'in model UserValidation.create()');
           return {
             success: false,
             error,
           };
         });
     } catch (err) {
-      console.log(err, 'in model UserValidation.create()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model UserValidation.create()');
       return { success: false, error: err };
     }
   }
@@ -119,7 +128,8 @@ class UserValidation {
       db.any('DELETE FROM public."UserValidation" WHERE "userId" = $1', userId);
       return;
     } catch (error) {
-      console.log(error, 'in model UserValidation.delete()');
+      if (process.env.VERBOSE === 'true')
+        console.log(error, 'in model UserValidation.delete()');
       return { success: false, error };
     }
   }

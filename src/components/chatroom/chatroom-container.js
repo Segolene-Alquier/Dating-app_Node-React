@@ -57,7 +57,7 @@ const ChatroomContainer = matchId => {
         setLoading(false);
       })
       .catch(error => {
-        console.log(error);
+      if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
   };
 

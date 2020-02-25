@@ -25,13 +25,9 @@ const sendSigninEmail = async (email, firstname, token) => {
     ],
   });
 
-  await request
-    // .then(result => {
-    //   console.log(result.body);
-    // })
-    .catch(err => {
-      console.log(err);
-    });
+  await request.catch(err => {
+    if (process.env.VERBOSE === 'true') console.log(err);
+  });
 };
 
 module.exports.sendSigninEmail = sendSigninEmail;

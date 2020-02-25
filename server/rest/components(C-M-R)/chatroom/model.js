@@ -24,9 +24,10 @@ class Chat {
 
   async create(match, author, content) {
     try {
-      console.log(
-        `INSERT INTO public."Message" ("match", "author", "content", "creationDate", "read") VALUES (${match}, ${author}, ${content}, Now(), false RETURNING id`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `INSERT INTO public."Message" ("match", "author", "content", "creationDate", "read") VALUES (${match}, ${author}, ${content}, Now(), false RETURNING id`,
+        );
       const picture = await user.getByFiltered('id', author, [
         'profilePicture',
       ]);
@@ -48,27 +49,31 @@ class Chat {
           };
         });
     } catch (err) {
-      console.log(err, 'in model Chatroom.create()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Chatroom.create()');
       return { created: false, error: err };
     }
   }
 
   async delete(matchId) {
     try {
-      console.log(`DELETE FROM public."Message" WHERE match = ${matchId}`);
+      if (process.env.VERBOSE === 'true')
+        console.log(`DELETE FROM public."Message" WHERE match = ${matchId}`);
       await db.any('DELETE FROM public."Message" WHERE match = $1', [matchId]);
       return { success: true, deleted: true };
     } catch (err) {
-      console.log(err, 'in model User.delete()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.delete()');
       return { deleted: false, error: err };
     }
   }
 
   async numberUnread(recipient) {
     try {
-      console.log(
-        `SELECT COUNT(*) FROM public."Message" WHERE recipient = ${recipient} AND read = false`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `SELECT COUNT(*) FROM public."Message" WHERE recipient = ${recipient} AND read = false`,
+        );
       const result = await db.any(
         `SELECT COUNT(*) FROM public."Message"
         INNER JOIN public."Match"
@@ -78,7 +83,8 @@ class Chat {
       );
       return result[0].count;
     } catch (err) {
-      console.log(err, 'in model Notification.numberUnread()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Notification.numberUnread()');
       return null;
     }
   }
@@ -104,12 +110,14 @@ class Chat {
   async getBy(type, value) {
     try {
       if (!this.isValidType(type)) {
-        console.log(`Chat.getBy(): ${type} is not an authorized type`);
+        if (process.env.VERBOSE === 'true')
+          console.log(`Chat.getBy(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(
-        `SELECT id, firstname, profilePicture FROM public."User" INNER JOIN public."Match" ON ("User".id = "Match".${type[0]} OR "User".id = "Match".${type[1]}) AND "User".id != ${value} WHERE "Match".${type[0]} = ${value} OR "Match".${type[1]} = ${value}`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `SELECT id, firstname, profilePicture FROM public."User" INNER JOIN public."Match" ON ("User".id = "Match".${type[0]} OR "User".id = "Match".${type[1]}) AND "User".id != ${value} WHERE "Match".${type[0]} = ${value} OR "Match".${type[1]} = ${value}`,
+        );
       const result = await db.any(
         `SELECT "User".id, "User".firstname, "User"."profilePicture", "Match"."lastMessage" AS "lastMessage", "Match".id AS matchId, "Message".content, "Message".read
           FROM public."User" INNER JOIN public."Match"
@@ -138,30 +146,33 @@ class Chat {
 
       return result[0].exists && accessOk;
     } catch (err) {
-      console.log(err);
+      if (process.env.VERBOSE === 'true') console.log(err);
       return null;
     }
   }
 
   async updateRead(matchId, userId) {
     try {
-      console.log(
-        `UPDATE public."Message" SET read = true WHERE match = ${matchId} AND author != ${userId} AND read = false`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `UPDATE public."Message" SET read = true WHERE match = ${matchId} AND author != ${userId} AND read = false`,
+        );
       const result = await db.any(
         `UPDATE public."Message" SET read = true WHERE match = $1 AND author != $2 AND read = false`,
         [matchId, userId],
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model Chat.getAll()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Chat.getAll()');
       return null;
     }
   }
 
   async getAll(matchId) {
     try {
-      console.log(`SELECT * FROM public."Message" WHERE match = ${matchId}`);
+      if (process.env.VERBOSE === 'true')
+        console.log(`SELECT * FROM public."Message" WHERE match = ${matchId}`);
       const result = await db.any(
         `SELECT "Message".id, "Message".match, "Message".author, "Message".content, "Message"."creationDate", "Message".read, "User"."profilePicture"
         FROM public."Message" INNER JOIN public."User"
@@ -172,7 +183,8 @@ class Chat {
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model Chat.getAll()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Chat.getAll()');
       return null;
     }
   }

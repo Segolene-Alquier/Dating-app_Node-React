@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const _ = require('lodash');
 require('dotenv').config();
 
 const app = express();
@@ -49,6 +48,7 @@ app.use('/images', require('./rest/components(C-M-R)/images/routes'));
 const server = require('http').Server(app);
 global.io = require('socket.io')(server);
 require('./socket/socket')();
+
 server.listen(3001, () => {
   console.log('Matcha is listening on port 3001!');
 });

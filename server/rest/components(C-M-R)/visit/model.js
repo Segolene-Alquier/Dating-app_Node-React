@@ -10,9 +10,10 @@ class Visit {
 
   async create(visitorId, visitedId) {
     try {
-      console.log(
-        `INSERT INTO public."Visit" (visitor, visited, date) VALUES (${visitorId}, ${visitedId} RETURNING id)`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `INSERT INTO public."Visit" (visitor, visited, date) VALUES (${visitorId}, ${visitedId} RETURNING id)`,
+        );
       return await db
         .any(
           'INSERT INTO public."Visit" (visitor, visited, date) VALUES ($1, $2, NOW()) RETURNING id',
@@ -22,7 +23,8 @@ class Visit {
           return { created: true, id: data[0].id };
         });
     } catch (err) {
-      console.log(err, 'in model Visit.create()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Visit.create()');
       return { created: false, error: err };
     }
   }
@@ -30,12 +32,14 @@ class Visit {
   async getBy(type, value) {
     try {
       if (!this.isValidType(type)) {
-        console.log(`Visit.getBy(): ${type} is not an authorized type`);
+        if (process.env.VERBOSE === 'true')
+          console.log(`Visit.getBy(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(
-        `SELECT firstname, username, birthDate, location, popularityRate, profilePicture, date FROM public."Visit" WHERE ${type} = ${value}`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `SELECT firstname, username, birthDate, location, popularityRate, profilePicture, date FROM public."Visit" WHERE ${type} = ${value}`,
+        );
       const result = await db.any(
         `SELECT firstname, username, "birthDate", location, "popularityRate", "profilePicture", date, visitor,
         EXISTS(SELECT * FROM public."Like" WHERE "likingUser" = $2 AND "likedUser" = visitor) AS liking,
@@ -57,18 +61,21 @@ class Visit {
       });
       return result;
     } catch (err) {
-      console.log(err, 'in model Visit.getBy()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Visit.getBy()');
       return null;
     }
   }
 
   async getAll() {
     try {
-      console.log('SELECT * FROM public."Visit"');
+      if (process.env.VERBOSE === 'true')
+        console.log('SELECT * FROM public."Visit"');
       const result = await db.any('SELECT * FROM public."Visit"');
       return result;
     } catch (err) {
-      console.log(err, 'in model Visit.getAll()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Visit.getAll()');
       return null;
     }
   }
@@ -77,19 +84,22 @@ class Visit {
     try {
       if (!value) return false;
       if (!this.isValidType(type)) {
-        console.log(`Visit.exists(): ${type} is not an authorized type`);
+        if (process.env.VERBOSE === 'true')
+          console.log(`Visit.exists(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(
-        `SELECT exists(SELECT from public."Visit" WHERE ${type} = ${value})`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `SELECT exists(SELECT from public."Visit" WHERE ${type} = ${value})`,
+        );
       const result = await db.none(
         `SELECT exists(SELECT from public."Visit" WHERE id = ALL($2));`,
         [value],
       );
       return result[0].exists;
     } catch (err) {
-      console.log(err, 'in model Visit.exists()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Visit.exists()');
       return null;
     }
   }

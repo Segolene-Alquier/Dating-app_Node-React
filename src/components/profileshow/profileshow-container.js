@@ -34,7 +34,7 @@ const ProfileShowContainer = visitedUsername => {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
   };
 
@@ -56,7 +56,7 @@ const ProfileShowContainer = visitedUsername => {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
   };
 
@@ -92,7 +92,7 @@ const ProfileShowContainer = visitedUsername => {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
   };
 
@@ -111,7 +111,7 @@ const ProfileShowContainer = visitedUsername => {
         return response.data;
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
 
   if (_.isEmpty(visitedProfile) && loading === false) {

@@ -8,7 +8,7 @@ async function getMatchsFromCurrentUser(request, response) {
     const call = await matchs.getBy(['user1', 'user2'], id);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -19,7 +19,7 @@ async function getMatchById(request, response) {
     const call = await matchs.getBy('id', id);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }

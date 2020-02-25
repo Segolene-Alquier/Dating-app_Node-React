@@ -61,7 +61,7 @@ const VisitContainer = () => {
         return response.data;
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
 
   if (_.isEmpty(visitedProfile) && loaded === false) {

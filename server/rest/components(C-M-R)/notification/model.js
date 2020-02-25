@@ -10,9 +10,10 @@ class Notification {
 
   async create(recipient, sender, type) {
     try {
-      console.log(
-        `INSERT INTO public."Notification" (recipient, sender, event) VALUES (${recipient}, ${sender}, ${type}, RETURNING id)`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `INSERT INTO public."Notification" (recipient, sender, event) VALUES (${recipient}, ${sender}, ${type}, RETURNING id)`,
+        );
       return await db
         .any(
           'INSERT INTO public."Notification" (recipient, sender, event) VALUES ($1, $2, $3) RETURNING id',
@@ -26,39 +27,44 @@ class Notification {
           };
         });
     } catch (err) {
-      console.log(err, 'in model Notification.create()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Notification.create()');
       return { created: false, error: err };
     }
   }
 
   async updateRead(recipient) {
     try {
-      console.log(
-        `UPDATE public."Notification" SET read = true WHERE recipient = ${recipient}`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `UPDATE public."Notification" SET read = true WHERE recipient = ${recipient}`,
+        );
       const result = await db.any(
         `UPDATE public."Notification" SET read = true WHERE recipient = $1`,
         [recipient],
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model Notification.updateRead()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Notification.updateRead()');
       return null;
     }
   }
 
   async numberUnread(recipient) {
     try {
-      console.log(
-        `SELECT COUNT(*) FROM public."Notification" WHERE recipient = ${recipient} AND read = false`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `SELECT COUNT(*) FROM public."Notification" WHERE recipient = ${recipient} AND read = false`,
+        );
       const result = await db.any(
         `SELECT COUNT(*) FROM public."Notification" WHERE recipient = $1 AND read = false`,
         [recipient],
       );
       return result[0].count;
     } catch (err) {
-      console.log(err, 'in model Notification.numberUnread()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Notification.numberUnread()');
       return null;
     }
   }
@@ -66,12 +72,16 @@ class Notification {
   async getBy(type, value) {
     try {
       if (!this.isValidType(type)) {
-        console.log(`Notification.getBy(): ${type} is not an authorized type`);
+        if (process.env.VERBOSE === 'true')
+          console.log(
+            `Notification.getBy(): ${type} is not an authorized type`,
+          );
         return null;
       }
-      console.log(
-        `SELECT "Notification".id, "Notification".recipient, "Notification".sender, "Notification".event, "Notification".date, "Notification".read, "User".firstname, "User".profilePicture  FROM public."Notification" INNER JOIN public."User" WHERE ${type} = ${value} ORDER BY id DESC`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `SELECT "Notification".id, "Notification".recipient, "Notification".sender, "Notification".event, "Notification".date, "Notification".read, "User".firstname, "User".profilePicture  FROM public."Notification" INNER JOIN public."User" WHERE ${type} = ${value} ORDER BY id DESC`,
+        );
       const result = await db.any(
         `SELECT "Notification".id, "Notification".recipient, "Notification".sender, "Notification".event, "Notification".date, "Notification".read, "User".firstname, "User".username, "User"."profilePicture"
         FROM public."Notification" INNER JOIN public."User" ON("Notification".sender = "User".id)
@@ -80,51 +90,58 @@ class Notification {
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model Notification.getBy()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Notification.getBy()');
       return null;
     }
   }
 
   async getAll() {
     try {
-      console.log('SELECT * FROM public."Notification"');
+      if (process.env.VERBOSE === 'true')
+        console.log('SELECT * FROM public."Notification"');
       const result = await db.any('SELECT * FROM public."Notification"');
       return result;
     } catch (err) {
-      console.log(err, 'in model Notification.getAll()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Notification.getAll()');
       return null;
     }
   }
 
   async exists(likingUser, notificationdUser) {
     try {
-      console.log(
-        `SELECT exists(SELECT from public."Notification" WHERE "likingUser" = ${likingUser} AND "notificationdUser" = ${notificationdUser})`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `SELECT exists(SELECT from public."Notification" WHERE "likingUser" = ${likingUser} AND "notificationdUser" = ${notificationdUser})`,
+        );
       const result = await db.any(
         `SELECT exists(SELECT from public."Notification" WHERE "likingUser" = $1 AND "notificationdUser" = $2);`,
         [likingUser, notificationdUser],
       );
       return result[0].exists;
     } catch (err) {
-      console.log(err, 'in model Notification.exists()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model Notification.exists()');
       return null;
     }
   }
 
   async delete(likingUser, notificationdUser) {
     try {
-      console.log(
-        `DELETE FROM public."Notification" WHERE "likingUser" = ${likingUser} AND "notificationdUser" = ${notificationdUser}`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `DELETE FROM public."Notification" WHERE "likingUser" = ${likingUser} AND "notificationdUser" = ${notificationdUser}`,
+        );
       const result = await db.any(
         'DELETE FROM public."Notification" WHERE "likingUser" = $1  AND "notificationdUser" = $2 RETURNING EXISTS(SELECT from public."Notification" WHERE "notificationdUser" = $1 AND "likingUser" = $2) AS unmatch',
         [likingUser, notificationdUser],
       );
-      console.log(result[0].unmatch);
+      if (process.env.VERBOSE === 'true') console.log(result[0].unmatch);
       return { success: true, deleted: true, unmatch: result[0].unmatch };
     } catch (err) {
-      console.log(err, 'in model User.delete()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.delete()');
       return { deleted: false, error: err };
     }
   }

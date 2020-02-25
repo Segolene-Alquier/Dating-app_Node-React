@@ -12,7 +12,7 @@ async function getMatchsFromCurrentUser(request, response) {
     const call = await messages.getBy(['user1', 'user2'], id);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -42,7 +42,7 @@ async function getMessagesFromMatchId(request, response) {
         firstname: otherUserInfo[0].firstname,
         username: otherUserInfo[0].username,
       };
-      console.log('call', call);
+      if (process.env.VERBOSE === 'true') console.log('call', call);
       messages.updateRead(matchId, userId);
       response.status(200).json(call);
     } else {
@@ -52,7 +52,7 @@ async function getMessagesFromMatchId(request, response) {
       });
     }
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -63,7 +63,7 @@ async function numberOfUnreadMessages(request, response) {
     const call = await messages.numberUnread(id);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }

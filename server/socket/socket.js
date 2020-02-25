@@ -11,14 +11,15 @@ const socketRouter = () => {
       joinChatroom(match, getConnectedUsers()[socket.id], socket);
     });
     socket.on('error', function(err) {
-      // console.log(err.stack);
+      if (process.env.VERBOSE === 'true') console.log(err.stack);
     });
     socket.on('disconnect', function() {
       disconnection(io, getConnectedUsers(), socket);
     });
 
     socket.on('chat message', function(msg, match) {
-      console.log('new msg', msg, match, getConnectedUsers()[socket.id]);
+      if (process.env.VERBOSE === 'true')
+        console.log('new msg', msg, match, getConnectedUsers()[socket.id]);
       newMessage(msg, match, getConnectedUsers()[socket.id], socket, io);
     });
   });

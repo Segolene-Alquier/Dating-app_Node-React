@@ -345,9 +345,9 @@ class UserInputTests {
 
 const saveVisit = (userIdVisitor, userIdVisited) => {
   const visit = new Visit();
-  visit
-    .create(userIdVisitor, userIdVisited)
-    .then(response => console.log(response));
+  visit.create(userIdVisitor, userIdVisited).then(response => {
+    if (process.env.VERBOSE === 'true') console.log(response);
+  });
 };
 
 const checkIfProfileCompleted = userid => {

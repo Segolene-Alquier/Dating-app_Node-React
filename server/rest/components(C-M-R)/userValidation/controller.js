@@ -15,7 +15,7 @@ async function verifyConfirmationToken(request, response) {
     });
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -27,7 +27,7 @@ async function verifyForgotPasswordToken(request, response) {
     });
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -38,7 +38,7 @@ async function forgotPassword(request, response) {
     const userRequest = await user.getBy('email', email);
     if (userRequest.length) {
       const { id, firstname } = userRequest[0];
-      console.log(id);
+      if (process.env.VERBOSE === 'true') console.log(id);
       const call = await uv.create({ userId: id, type: 'resetPassword' });
       if (call.created) {
         sendForgotPasswordEmail(email, firstname, call.token);
@@ -53,7 +53,7 @@ async function forgotPassword(request, response) {
       });
     }
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -64,7 +64,7 @@ async function forgotPasswordUpdate(request, response) {
     const call = await uv.verifyForgotPasswordToken({
       token: request.params.token,
     });
-    console.log(call);
+    if (process.env.VERBOSE === 'true') console.log(call);
     const { success, userId } = call;
     if (success) {
       const hashedPassword = bcrypt.hashSync(password, 10);
@@ -75,7 +75,7 @@ async function forgotPasswordUpdate(request, response) {
       response.status(206).send({ success: false, err: call.error });
     }
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }

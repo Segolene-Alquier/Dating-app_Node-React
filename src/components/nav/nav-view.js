@@ -86,7 +86,7 @@ const Nav = () => {
           setTotalNotifications(parseInt(result.data, 10));
         })
         .catch(error => {
-          console.log(error);
+          if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
         });
     };
 
@@ -102,7 +102,7 @@ const Nav = () => {
           setTotalMessages(parseInt(result.data, 10));
         })
         .catch(error => {
-          console.log(error);
+          if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
         });
     };
     fetchTotalNotifications();
@@ -121,7 +121,7 @@ const Nav = () => {
         setNotifications(result.data);
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
   };
 

@@ -7,7 +7,7 @@ async function getInterests(request, response) {
     const call = await interests.getAll();
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -18,7 +18,7 @@ async function getInterestById(request, response) {
     const call = await interests.getBy('id', id);
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }

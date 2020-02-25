@@ -22,7 +22,7 @@ const ChatContainer = () => {
         return response.data;
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
   };
 

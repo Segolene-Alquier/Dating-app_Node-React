@@ -12,7 +12,8 @@ class User {
   async getBy(type, value) {
     try {
       if (!this.isValidType(type)) {
-        console.log(`User.getBy(): ${type} is not an authorized type`);
+        if (process.env.VERBOSE === 'true')
+          console.log(`User.getBy(): ${type} is not an authorized type`);
         return null;
       }
       console.log(`SELECT * FROM public."User" WHERE ${type} = ${value}`);
@@ -22,7 +23,8 @@ class User {
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model User.getBy()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.getBy()');
       return null;
     }
   }
@@ -30,19 +32,22 @@ class User {
   async getByFiltered(type, value, inputs) {
     try {
       if (!this.isValidType(type)) {
-        console.log(`User.getBy(): ${type} is not an authorized type`);
+        if (process.env.VERBOSE === 'true')
+          console.log(`User.getBy(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(
-        `SELECT ${inputs} FROM public."User" WHERE ${type} = ${value}`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `SELECT ${inputs} FROM public."User" WHERE ${type} = ${value}`,
+        );
       const result = await db.any(
         `SELECT $1:name FROM public."User" WHERE $2:name = $3`,
         [inputs, type, value],
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model User.getBy()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.getBy()');
       return null;
     }
   }
@@ -110,7 +115,8 @@ class User {
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model User.searchUser()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.searchUser()');
       return null;
     }
   }
@@ -179,23 +185,25 @@ class User {
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model User.searchUser()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.searchUser()');
       return null;
     }
   }
 
   async updateById(id, values) {
     try {
-      console.log(values);
+      if (process.env.VERBOSE === 'true') console.log(values);
       const query = `${pgp.helpers.update(
         values,
         values,
         `User`,
       )} WHERE id = $/id/`;
-      console.log(query, id);
-      console.log(await db.any(query, {id}));
+      if (process.env.VERBOSE === 'true') console.log(query, id);
+      await db.any(query, { id });
     } catch (err) {
-      console.log(err, 'in model User.updateById()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.updateById()');
     }
   }
 
@@ -206,7 +214,8 @@ class User {
         [id],
       );
     } catch (err) {
-      console.log(err, 'in model User.updateIfNotExist()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.updateIfNotExist()');
       return err;
     }
   }
@@ -223,7 +232,8 @@ class User {
         [id],
       );
     } catch (err) {
-      console.log(err, 'in model User.updatePopularityRate()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.updatePopularityRate()');
       return err;
     }
   }
@@ -231,19 +241,22 @@ class User {
   async addElementToArrayById(id, type, value) {
     try {
       if (!this.isValidType(type)) {
-        console.log(`User.getBy(): ${type} is not an authorized type`);
+        if (process.env.VERBOSE === 'true')
+          console.log(`User.getBy(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(
-        `UPDATE public."User" SET ${type} = ${value} WHERE id = ${id}`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `UPDATE public."User" SET ${type} = ${value} WHERE id = ${id}`,
+        );
       const result = await db.any(
         'UPDATE public."User" SET $1:name = $1:name || $2 WHERE id = $3',
         [type, [value], id],
       );
       return result;
     } catch (err) {
-      console.log(err, 'in model User.addElementToArrayById()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.addElementToArrayById()');
       return null;
     }
   }
@@ -251,20 +264,22 @@ class User {
   async deleteElementToArrayById(id, type, value) {
     try {
       if (!this.isValidType(type)) {
-        console.log(`User.getBy(): ${type} is not an authorized type`);
+        if (process.env.VERBOSE === 'true')
+          console.log(`User.getBy(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(
-        `UPDATE public."User" SET ${type} = ${value} WHERE id = ${id}`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `UPDATE public."User" SET ${type} = ${value} WHERE id = ${id}`,
+        );
       const result = await db.any(
         'UPDATE public."User" SET $1:name = array_remove($1:name, $2), "profilePicture" = NULLIF("profilePicture", $2) WHERE id = $3',
         [type, value, id],
       );
-      console.log('RESULT OF deleteElementToArrayById', result);
       return result;
     } catch (err) {
-      console.log(err, 'in model User.deleteElementToArrayById()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.deleteElementToArrayById()');
       return null;
     }
   }
@@ -272,32 +287,36 @@ class User {
   async exists(type, value) {
     try {
       if (!value) return false;
-      // console.log(type)
       if (!this.isValidType(type)) {
-        console.log(`User.exists(): ${type} is not an authorized type`);
+        if (process.env.VERBOSE === 'true')
+          console.log(`User.exists(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(
-        `SELECT exists(SELECT from public."User" WHERE ${type} = ${value})`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `SELECT exists(SELECT from public."User" WHERE ${type} = ${value})`,
+        );
       const result = await db.any(
         `SELECT exists(SELECT from public."User" WHERE $1:name = $2);`,
         [type, value],
       );
       return result[0].exists;
     } catch (err) {
-      console.log(err, 'in model User.exists()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.exists()');
       return null;
     }
   }
 
   async getAll() {
     try {
-      console.log('SELECT * FROM public."User"');
+      if (process.env.VERBOSE === 'true')
+        console.log('SELECT * FROM public."User"');
       const result = await db.any('SELECT * FROM public."User"');
       return result;
     } catch (err) {
-      console.log(err, 'in model User.getAll()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.getAll()');
       return null;
     }
   }
@@ -305,9 +324,10 @@ class User {
   async create({ firstname, surname, username, password, email }) {
     try {
       const hashedPassword = bcrypt.hashSync(password, 10);
-      console.log(
-        `INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${hashedPassword}, ${email}) RETURNING id`,
-      );
+      if (process.env.VERBOSE === 'true')
+        console.log(
+          `INSERT INTO public."User" (firstname, surname, username, password, email) VALUES (${firstname}, ${surname}, ${username}, ${hashedPassword}, ${email}) RETURNING id`,
+        );
       return await db
         .any(
           'INSERT INTO public."User" (firstname, surname, username, password, email) VALUES ($1, $2, $3, $4, $5) RETURNING id',
@@ -317,14 +337,16 @@ class User {
           return { created: true, id: data[0].id };
         });
     } catch (err) {
-      console.log(err, 'in model User.create()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.create()');
       return { created: false, error: err };
     }
   }
 
   async delete(id) {
     try {
-      console.log(`DELETE FROM public."User" WHERE id = ${id}`);
+      if (process.env.VERBOSE === 'true')
+        console.log(`DELETE FROM public."User" WHERE id = ${id}`);
       await db.any(
         'DELETE FROM public."Block" WHERE "blockedUser" = $1 OR "blockingUser" = $1 ',
         [id],
@@ -356,7 +378,8 @@ class User {
       await db.any('DELETE FROM public."User" WHERE id = $1 ', [id]);
       return { deleted: true };
     } catch (err) {
-      console.log(err, 'in model User.delete()');
+      if (process.env.VERBOSE === 'true')
+        console.log(err, 'in model User.delete()');
       return { deleted: false, error: err };
     }
   }

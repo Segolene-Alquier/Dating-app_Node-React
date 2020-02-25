@@ -10,7 +10,8 @@ const newNotification = (recipient, sender, type) => {
       return user === recipient;
     }),
   );
-  console.log('recipientSocketIds', recipientSocketIds);
+  if (process.env.VERBOSE === 'true')
+    console.log('recipientSocketIds', recipientSocketIds);
   notification.create(recipient, sender, type);
   recipientSocketIds.forEach(socketId => {
     io.to(socketId).emit('new notification', sender, type);

@@ -11,12 +11,13 @@ export const isTokenExpired = token => {
   try {
     const decoded = decode(token);
     if (decoded.exp < currentTime) {
-      console.log('Your token is expired');
+      if (process.env.REACT_APP_VERBOSE === 'true')
+        console.log('Your token is expired');
       return true;
     }
     return false;
   } catch (err) {
-    console.log(err);
+    if (process.env.REACT_APP_VERBOSE === 'true') console.log(err);
     return true;
   }
 };

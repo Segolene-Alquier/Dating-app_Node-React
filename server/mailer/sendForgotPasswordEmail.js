@@ -26,7 +26,7 @@ const sendForgotPasswordEmail = async (email, firstname, token) => {
   });
 
   await request.catch(err => {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
   });
 };
 

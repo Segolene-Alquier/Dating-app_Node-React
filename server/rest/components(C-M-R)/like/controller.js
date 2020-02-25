@@ -24,7 +24,7 @@ async function getLikesFromCurrentUser(request, response) {
     });
     response.status(200).json(call);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
@@ -69,7 +69,7 @@ async function likeUnlikeUserId(request, response) {
     user.updatePopularityRate(likedUser);
     response.status(200).json(query);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }

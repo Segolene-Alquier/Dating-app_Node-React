@@ -28,7 +28,7 @@ const UseProfileForm = (userData, token) => {
         return response.data;
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
 
   if (_.isEmpty(profile)) {
@@ -279,7 +279,7 @@ const UseProfileForm = (userData, token) => {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
     setShowModal(false);
   };
@@ -332,7 +332,7 @@ const UseProfileForm = (userData, token) => {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
   };
 
@@ -379,7 +379,8 @@ const UseProfileForm = (userData, token) => {
             localStorage.removeItem('token');
             window.location = '/?message=delete_success';
           } else {
-            console.log(response.data);
+            if (process.env.REACT_APP_VERBOSE === 'true')
+              console.log(response.data);
           }
         });
     }

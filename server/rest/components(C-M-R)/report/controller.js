@@ -26,7 +26,7 @@ async function reportUserId(request, response) {
     }
     return response.status(200).json(query);
   } catch (err) {
-    console.log(err);
+    if (process.env.VERBOSE === 'true') console.log(err);
     response.status(206).send(err);
   }
 }
