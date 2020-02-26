@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
+const port = process.env.PORT || 3001;
 const app = express();
 
 app.use(bodyParser.json());
@@ -38,7 +39,6 @@ app.use(
   '/notification',
   require('./rest/components(C-M-R)/notification/routes'),
 );
-
 app.use(
   '/validation',
   require('./rest/components(C-M-R)/userValidation/routes'),
@@ -49,6 +49,6 @@ const server = require('http').Server(app);
 global.io = require('socket.io')(server);
 require('./socket/socket')();
 
-server.listen(3001, () => {
-  console.log('Matcha is listening on port 3001!');
+server.listen(port, () => {
+  console.log(`Matcha is listening on port ${port}!`);
 });
