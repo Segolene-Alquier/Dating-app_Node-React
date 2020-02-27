@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-const port = process.env.PORT || 3001;
+const port = 3001;
 const app = express();
 const path = require('path');
 //Static file declarationapp.use(express.static(path.join(__dirname, './../src/build')));
