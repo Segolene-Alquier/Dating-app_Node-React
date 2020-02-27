@@ -15,6 +15,7 @@
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
+    "concurrently": "^5.1.0",
     "date-fns": "^2.9.0",
     "dotenv": "^8.2.0",
     "eslint-plugin-flowtype": "^4.6.0",
@@ -53,7 +54,11 @@
     "uuid-token-generator": "^1.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "client-install": "npm install",
+    "start": "node ./server/index.js",
+    "client": "npm start",
+    "server": "nodemon ./server/index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
