@@ -55,7 +55,7 @@
   },
   "scripts": {
     "client-install": "npm install",
-    "start": "concurrently \"npm run server\" \"npm run prodclient\"",
+    "start": "npm run dev",
     "client": "react-scripts start",
     "server": "node ./server/index.js",
     "prodclient": "npx serve -s build",
