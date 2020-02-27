@@ -16,7 +16,8 @@ class User {
           console.log(`User.getBy(): ${type} is not an authorized type`);
         return null;
       }
-      console.log(`SELECT * FROM public."User" WHERE ${type} = ${value}`);
+      if (process.env.VERBOSE === 'true')
+        console.log(`SELECT * FROM public."User" WHERE ${type} = ${value}`);
       const result = await db.any(
         `SELECT * FROM public."User" WHERE $1:name = $2`,
         [type, value],
