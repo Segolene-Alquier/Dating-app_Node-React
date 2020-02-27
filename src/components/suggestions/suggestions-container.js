@@ -21,7 +21,7 @@ const SuggestionsContainer = () => {
   const handleLike = likedId => {
     axios
       .get(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
         {
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -134,7 +134,7 @@ const SuggestionsContainer = () => {
   const fetchSuggestions = (suggestionsQuery = suggestionsOptions) => {
     axios
       .post(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/users/suggestions`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/users/suggestions`,
         suggestionsQuery,
         {
           headers: {

@@ -41,7 +41,7 @@ const useLoginForm = callback => {
       const location = await userLocation();
       axios
         .post(
-          `http://${process.env.REACT_APP_PUBLIC_API_URL}/auth/login`,
+          `${process.env.REACT_APP_PUBLIC_API_URL}/auth/login`,
           {
             username,
             password,

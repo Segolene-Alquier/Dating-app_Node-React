@@ -18,7 +18,7 @@ const UseProfileForm = (userData, token) => {
 
   const fetchInterests = () =>
     axios
-      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/interests`, {
+      .get(`${process.env.REACT_APP_PUBLIC_API_URL}/interests`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,
@@ -214,7 +214,7 @@ const UseProfileForm = (userData, token) => {
       event.preventDefault();
       axios
         .put(
-          `http://${process.env.REACT_APP_PUBLIC_API_URL}/users`,
+          `${process.env.REACT_APP_PUBLIC_API_URL}/users`,
           changedFields,
           {
             headers: {
@@ -253,7 +253,7 @@ const UseProfileForm = (userData, token) => {
   const sendCroppedImageServer = formData => {
     axios
       .post(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/images/upload`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/images/upload`,
         formData,
         {
           headers: {
@@ -302,7 +302,7 @@ const UseProfileForm = (userData, token) => {
   const handleDeleteImage = url => {
     axios
       .post(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/images/delete`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/images/delete`,
         { url },
         {
           headers: {
@@ -368,7 +368,7 @@ const UseProfileForm = (userData, token) => {
     );
     if (confirmation) {
       axios
-        .delete(`http://${process.env.REACT_APP_PUBLIC_API_URL}/users/`, {
+        .delete(`${process.env.REACT_APP_PUBLIC_API_URL}/users/`, {
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
             'x-access-token': token,

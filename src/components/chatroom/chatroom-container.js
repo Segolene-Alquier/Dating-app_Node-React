@@ -32,7 +32,7 @@ const ChatroomContainer = matchId => {
 
   const fetchMessagesFromConversation = () => {
     axios
-      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/chat/${matchId}`, {
+      .get(`${process.env.REACT_APP_PUBLIC_API_URL}/chat/${matchId}`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,

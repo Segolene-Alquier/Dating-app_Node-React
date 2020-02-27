@@ -11,7 +11,7 @@ const ChatContainer = () => {
 
   const fetchCurrentUserMatches = () => {
     axios
-      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/chat/`, {
+      .get(`${process.env.REACT_APP_PUBLIC_API_URL}/chat/`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,

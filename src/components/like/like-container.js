@@ -14,7 +14,7 @@ const LikeContainer = () => {
   const handleLike = likedId => {
     axios
       .get(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
         {
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -51,7 +51,7 @@ const LikeContainer = () => {
 
   const fetchLikeHistory = () =>
     axios
-      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/`, {
+      .get(`${process.env.REACT_APP_PUBLIC_API_URL}/likes/`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,

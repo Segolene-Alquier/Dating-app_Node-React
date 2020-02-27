@@ -6,7 +6,7 @@ const UserValidation = ({ computedMatch }) => {
   const { token } = computedMatch.params;
   axios
     .get(
-      `http://${process.env.REACT_APP_PUBLIC_API_URL}/validation/newaccount/${token}`,
+      `${process.env.REACT_APP_PUBLIC_API_URL}/validation/newaccount/${token}`,
       {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',

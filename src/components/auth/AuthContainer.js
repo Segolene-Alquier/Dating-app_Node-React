@@ -27,7 +27,7 @@ export const getUserData = async token => {
     return null;
   }
   const userData = await axios.get(
-    `http://${process.env.REACT_APP_PUBLIC_API_URL}/auth/checkToken`,
+    `${process.env.REACT_APP_PUBLIC_API_URL}/auth/checkToken`,
     {
       headers: {
         'Content-type': 'application/json; charset=UTF-8',

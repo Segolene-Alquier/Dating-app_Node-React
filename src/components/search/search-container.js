@@ -21,7 +21,7 @@ const SearchContainer = () => {
   const handleLike = likedId => {
     axios
       .get(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
         {
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -126,7 +126,7 @@ const SearchContainer = () => {
   const fetchSearch = (searchQuery = searchOptions) => {
     axios
       .post(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/users/search`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/users/search`,
         searchQuery,
         {
           headers: {

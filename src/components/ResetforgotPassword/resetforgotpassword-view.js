@@ -51,7 +51,7 @@ const ResetForgotPassword = ({ computedMatch }) => {
   if (!validToken) {
     axios
       .get(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/validation/forgotpassword/${token}`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/validation/forgotpassword/${token}`,
         {
           headers: {
             'Content-type': 'application/json; charset=UTF-8',

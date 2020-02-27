@@ -14,7 +14,7 @@ const ProfileShowContainer = visitedUsername => {
   const handleBlock = (blockedId, blocked, setBlocked) => {
     axios
       .post(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/block/block-unblock/${blockedId}`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/block/block-unblock/${blockedId}`,
         {},
         {
           headers: {
@@ -41,7 +41,7 @@ const ProfileShowContainer = visitedUsername => {
   const handleReport = (reportedId, reported, setReported) => {
     axios
       .post(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/report/${reportedId}`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/report/${reportedId}`,
         {},
         {
           headers: {
@@ -63,7 +63,7 @@ const ProfileShowContainer = visitedUsername => {
   const handleLike = (likedId, setLiked) => {
     axios
       .get(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/likes/like-unlike/${likedId}`,
         {
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -99,7 +99,7 @@ const ProfileShowContainer = visitedUsername => {
   const fetchVisitedProfile = () =>
     axios
       .get(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/users/profile/${visitedUsername}`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/users/profile/${visitedUsername}`,
         {
           headers: {
             'Content-type': 'application/json; charset=UTF-8',

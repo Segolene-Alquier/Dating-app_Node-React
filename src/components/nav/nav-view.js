@@ -74,7 +74,7 @@ const Nav = () => {
     const fetchTotalNotifications = async () => {
       await axios
         .get(
-          `http://${process.env.REACT_APP_PUBLIC_API_URL}/notification/total`,
+          `${process.env.REACT_APP_PUBLIC_API_URL}/notification/total`,
           {
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
@@ -92,7 +92,7 @@ const Nav = () => {
 
     const fetchTotalMessages = async () => {
       await axios
-        .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/chat/total`, {
+        .get(`${process.env.REACT_APP_PUBLIC_API_URL}/chat/total`, {
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
             'x-access-token': token,
@@ -111,7 +111,7 @@ const Nav = () => {
 
   const fetchNotifications = async () => {
     await axios
-      .get(`http://${process.env.REACT_APP_PUBLIC_API_URL}/notification`, {
+      .get(`${process.env.REACT_APP_PUBLIC_API_URL}/notification`, {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
           'x-access-token': token,

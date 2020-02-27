@@ -11,7 +11,7 @@ const useForgotPasswordForm = callback => {
   const sendForgotPassword = email => {
     axios
       .post(
-        `http://${process.env.REACT_APP_PUBLIC_API_URL}/validation/forgotpasswordcreate`,
+        `${process.env.REACT_APP_PUBLIC_API_URL}/validation/forgotpasswordcreate`,
         {
           email,
         },

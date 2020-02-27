@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     userData,
   };
 
-  const socket = io(`http://${process.env.REACT_APP_PUBLIC_API_URL}`, {
+  const socket = io(`${process.env.REACT_APP_PUBLIC_API_URL}`, {
     query: { token },
   });
   const socketContext = { socket };
