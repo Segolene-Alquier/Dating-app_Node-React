@@ -66,6 +66,7 @@ const Login = () => {
             variant="outlined"
             required
             autoFocus
+            label="Username"
           />
 
           <TextField
@@ -80,6 +81,7 @@ const Login = () => {
             id="password"
             required
             autoFocus
+            label="Password"
           />
           <Button
             type="submit"
