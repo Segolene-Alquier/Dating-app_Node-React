@@ -68,7 +68,7 @@ const LikeContainer = () => {
     Promise.all([userData, fetchLikeHistory()]).then(values => {
       setLikedProfile(values[1]);
       setLikerProfile(values[0].data);
-      setLoaded(true);
+    setLoaded(true);
     });
   }
 

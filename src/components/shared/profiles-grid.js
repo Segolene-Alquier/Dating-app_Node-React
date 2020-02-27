@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import _ from 'lodash';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -21,6 +23,13 @@ const ProfilesGrid = ({
     displayMoreProfiles();
     // eslint-disable-next-line
   }, [profiles]);
+  if (_.isEmpty(profiles) && (type === "like" || type === "visit")) {
+    return (
+      <Box className={classes.emptyPageWrapper}>
+        <Typography className={classes.emptyPageText} variant="h3">Sorry, there is nothing to display yet <span role="img" aria-label="sad emoji">😢</span>. But don't worry, it's coming !</Typography>
+      </Box>
+      )
+  }
   return (
     <div className={classes.wrapper}>
       <Container>

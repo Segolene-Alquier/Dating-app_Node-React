@@ -1,12 +1,11 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-
 import LikeContainer from './like-container';
 import Title from '../shared/title';
 import ProfilesGrid from '../shared/profiles-grid';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
@@ -28,6 +27,15 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  emptyPageWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  emptyPageText: {
+    maxWidth: "700px",
+    margin: theme.spacing(2),
   },
 }));
 
@@ -55,6 +63,7 @@ const Like = ({ computedMatch }) => {
         profiles={likedProfile}
         currentUserProfile={likerProfile}
         handleLike={handleLike}
+        type="like"
       />
     </>
   );
