@@ -54,10 +54,11 @@
     "uuid-token-generator": "^1.0.0"
   },
   "scripts": {
-    "client-install": "npm run dev",
-    "start": "npx serve -s build",
+    "client-install": "npm install",
+    "start": "concurrently \"npm run server\" \"npm run prodclient\"",
     "client": "react-scripts start",
     "server": "node ./server/index.js",
+    "prodclient": "npx serve -s build",
     "build": "react-scripts build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
