@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-  const allowedOrigins = ['http://localhost:3000', 'http://ypetitjean.fr:3000', 'https://maatcha.herokuapp.com/'];
+  const allowedOrigins = ['http://localhost:3000', 'http://ypetitjean.fr:3000', 'https://maatcha.herokuapp.com'];
   const { origin } = req.headers;
   if (allowedOrigins.indexOf(origin) > -1) {
     res.header('Access-Control-Allow-Origin', origin);

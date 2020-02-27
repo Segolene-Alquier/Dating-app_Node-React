@@ -1,1 +1,1 @@
-web: npm run prodclient
+web: npm run server
