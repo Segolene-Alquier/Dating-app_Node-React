@@ -26,8 +26,10 @@ const ChatroomContainer = matchId => {
   };
 
   const sendMessage = () => {
-    socketContext.socket.emit('chat message', message, matchId);
-    setMessage('');
+    if (message !== '') {
+      socketContext.socket.emit('chat message', message, matchId);
+      setMessage('');
+    }
   };
 
   const fetchMessagesFromConversation = () => {
@@ -57,7 +59,7 @@ const ChatroomContainer = matchId => {
         setLoading(false);
       })
       .catch(error => {
-      if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
+        if (process.env.REACT_APP_VERBOSE === 'true') console.log(error);
       });
   };
 
