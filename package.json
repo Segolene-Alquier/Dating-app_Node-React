@@ -58,9 +58,10 @@
     "start": "npm run dev",
     "client": "react-scripts start",
     "server": "node ./server/index.js",
+    "serverlocal": "npx nodemon ./server/index.js --ignore './src/' localhost 3001",
     "prodclient": "npx serve -s build",
     "build": "react-scripts build",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run serverlocal\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

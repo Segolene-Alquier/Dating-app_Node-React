@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CurrentPictures from './current-pictures';
 import FormCheckBox from './formCheckBox';
 import InputTextShort from './inputTextShort';
@@ -112,29 +113,24 @@ const TabPanelProfileAbout = ({
                 handleChangeProfileImage={handleChangeProfileImage}
               />
               {profile.images && profile.images.length < 5 ? (
-                <Grid
-                  item
-                  xs={6}
-                  sm={4}
-                  xl={4}
-                  className={classes.pictureContainer}
-                >
-                  <div className={classes.pictureButtonContainer}>
-                    <Box
-                      bgcolor="secondary.main"
-                      className={classes.modifyPictureButton}
-                    >
-                      <p>Upload a picture</p>
-                      <input
-                        label="upload file"
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        onChange={handleFileUpload}
-                        className={classes.uploadInput}
-                      />
-                    </Box>
-                  </div>
-                </Grid>
+                <Box className={classes.modifyPictureButton}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    size="large"
+                    startIcon={<AddAPhotoIcon />}
+                  >
+                    Upload a picture
+                  </Button>
+                  <input
+                    label="upload file"
+                    type="file"
+                    accept="image/png, image/jpeg"
+                    onChange={handleFileUpload}
+                    className={classes.uploadInput}
+                  />
+                </Box>
               ) : null}
             </Grid>
           </Grid>

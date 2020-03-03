@@ -6,13 +6,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import SettingsIcon from '@material-ui/icons/Settings';
 import InfoIcon from '@material-ui/icons/Info';
 import queryString from 'query-string';
+import { toast } from 'react-toastify';
+import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import { AuthContext } from '../app/AuthContext';
 import UseProfileForm from './profile-container';
 import UpperBoxProfile from './components/upperBoxProfile';
 import TabPanelProfileAbout from './components/tabPanelProfileAbout';
 import TabPanelProfileParameters from './components/tabPanelProfileParameters';
-import { toast } from 'react-toastify';
-import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import ModalCrop from './components/modal';
 
 const useStyles = makeStyles(theme => ({
@@ -141,10 +141,10 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'white',
+    // color: 'white',
     padding: theme.spacing(1),
     textAlign: 'center',
-    fontSize: '1em',
+    // fontSize: '1em',
   },
   uploadInput: {
     fontSize: '100px',

@@ -1,10 +1,10 @@
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable func-names */
 /* eslint-disable class-methods-use-this */
+const _ = require('lodash');
 const Gender = require('../gender/model');
 const Visit = require('../visit/model');
 const User = require('../user/model');
-const _ = require('lodash');
 
 const genderInstance = new Gender();
 
@@ -108,12 +108,13 @@ class UserInputTests {
 
   passwordFormat({ input }) {
     return new Promise(function(resolve) {
-      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+      const regex = /^(?=.*\d).{6,15}$/g;
       if (!input) resolve({ boolean: false, error: 'This password is empty!' });
       if (input.match(regex)) resolve({ boolean: true });
       resolve({
         boolean: false,
-        error: 'This password is not enough secured!',
+        error:
+          'The Password must contain between 6 and 15 characters and one number',
       });
     });
   }

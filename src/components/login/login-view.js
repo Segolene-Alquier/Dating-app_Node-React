@@ -80,7 +80,6 @@ const Login = () => {
             variant="outlined"
             id="password"
             required
-            autoFocus
             label="Password"
           />
           <Button
@@ -100,7 +99,7 @@ const Login = () => {
             </Grid>
             <Grid item>
               <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
+                Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
