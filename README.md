@@ -13,10 +13,11 @@ Matcha is a dating app with the following features:
 
 👉 The project is hosted on Heroku: https://maatcha.herokuapp.com/ 
 
-`💡 If you don't want to go through the sign-up process, here are a few login credentials you can use:
+```💡 If you don't want to go through the sign-up process, here are a few login credentials you can use:
 * maëlle16675 // xLDUD5AOSsLL2rs
 * romain81397 // K1XZ_qxOGYsQnr1
-* noémie36222 // ac3i707y193nqWs`
+* noémie36222 // ac3i707y193nqWs
+```
 
 ## The stack
 ### Back
