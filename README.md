@@ -1,4 +1,4 @@
-# 💘 Matcha is a dating app built with Node (Express), React, Postgres, Socket.io & Material-UI
+# 💘 Dating app built with Node, React, Postgres, Socket.io & Material-UI
 
 ## The project
 
