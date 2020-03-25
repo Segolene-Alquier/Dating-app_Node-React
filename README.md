@@ -1,5 +1,5 @@
 # 💘 Dating app
-## Built with Node, React, Postgres, Socket.io & Material-UI {align=center}
+### Built with Node, React, Postgres, Socket.io & Material-UI
 
 ## The project
 
