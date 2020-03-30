@@ -39,7 +39,7 @@ Matcha is a dating app with the following features:
 ## How we've been working
 * Planning the project and user stories on Trello : [The Project Board](https://trello.com/b/RLNAgAuw/matcha-launch)
 * Designing the database on dbdiagram.io
-[Database-structure]: https://pasteboard.co/J1tk3f8.png
+* [![JfcVO7.png](https://iili.io/JfcVO7.png)](https://freeimage.host/i/capture-decran-2020-03-30-121118.JfcVO7)
 
 ## Credits
 
