@@ -36,10 +36,19 @@ Matcha is a dating app with the following features:
 * [Google maps]()
 * [Mailjet](https://www.mailjet.com/)
 
+## What it looks like
+
+[![Dashboard](https://iili.io/Jfl9Xn.png)](https://freeimage.host/i/capture-decran-2020-03-30-123639.Jfl9Xn)
+[![Search-matches](https://iili.io/JflHss.png)](https://freeimage.host/i/capture-decran-2020-03-30-130950.JflHss)
+[![Chatroom](https://iili.io/JfldqG.png)](https://freeimage.host/i/capture-decran-2020-03-30-131939.JfldqG)
+[![Notifications](https://iili.io/Jfl21f.png)](https://freeimage.host/i/capture-decran-2020-03-30-131952.Jfl21f)
+[![Profile](https://iili.io/Jfl3g4.png)](https://freeimage.host/i/capture-decran-2020-03-30-132035.Jfl3g4)
+
 ## How we've been working
 * Planning the project and user stories on Trello : [The Project Board](https://trello.com/b/RLNAgAuw/matcha-launch)
 * Designing the database on dbdiagram.io
-[![JfcVO7.png](https://iili.io/JfcVO7.png)](https://freeimage.host/i/capture-decran-2020-03-30-121118.JfcVO7)
+[![Database-diagram](https://iili.io/JfcVO7.png)](https://freeimage.host/i/capture-decran-2020-03-30-121118.JfcVO7)
+* Designing simple wireframes on Figma : [The Wireframes](https://www.figma.com/file/daD5AHhiB3XmfUPdi4PhsS/Matcha?node-id=0%3A1)
 
 ## Credits
 
