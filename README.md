@@ -26,15 +26,17 @@ Matcha is a dating app with the following features:
 * [Node](https://nodejs.org/en/)
 * [Express](https://expressjs.com/)
 * [Postgres](https://www.postgresql.org/)
-* [Socket.io](https://socket.io/)
+* [Socket.io](https://socket.io/) : real-time engine (chat + notifications)
+* [AWS](https://aws.amazon.com/fr/s3/) : images hosting
 
 ### Front
 * [React](https://reactjs.org/)
-* [Material-Ui](https://material-ui.com/)
+* [Material-Ui](https://material-ui.com/) : React UI framework
 
 ### API we used
-* [Google maps]()
+* [Google maps](https://developers.google.com/maps/documentation/javascript/tutorial)
 * [Mailjet](https://www.mailjet.com/)
+* [Faker](https://github.com/marak/Faker.js/) : to generate fake profiles for the seed
 
 ## What it looks like
 
