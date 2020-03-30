@@ -39,10 +39,10 @@ Matcha is a dating app with the following features:
 ## What it looks like
 
 [![Dashboard](https://iili.io/Jfl9Xn.png)](https://freeimage.host/i/capture-decran-2020-03-30-123639.Jfl9Xn)
+[![Profile](https://iili.io/Jfl3g4.png)](https://freeimage.host/i/capture-decran-2020-03-30-132035.Jfl3g4)
 [![Search-matches](https://iili.io/JflHss.png)](https://freeimage.host/i/capture-decran-2020-03-30-130950.JflHss)
 [![Chatroom](https://iili.io/JfldqG.png)](https://freeimage.host/i/capture-decran-2020-03-30-131939.JfldqG)
 [![Notifications](https://iili.io/Jfl21f.png)](https://freeimage.host/i/capture-decran-2020-03-30-131952.Jfl21f)
-[![Profile](https://iili.io/Jfl3g4.png)](https://freeimage.host/i/capture-decran-2020-03-30-132035.Jfl3g4)
 
 ## How we've been working
 * Planning the project and user stories on Trello : [The Project Board](https://trello.com/b/RLNAgAuw/matcha-launch)
