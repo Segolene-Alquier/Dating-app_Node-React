@@ -36,6 +36,11 @@ Matcha is a dating app with the following features:
 * [Google maps]()
 * [Mailjet](https://www.mailjet.com/)
 
+## How we've been working
+* Planning the project and user stories on Trello : [The Project Board](https://trello.com/b/RLNAgAuw/matcha-launch)
+* Designing the database on dbdiagram.io
+[Database-structure]: https://pasteboard.co/J1tk3f8.png
+
 ## Credits
 
 🎨💻 Built and designed by [@yann120](https://github.com/yann120) & [@Segolene-Alquier](https://github.com/Segolene-Alquier/)
