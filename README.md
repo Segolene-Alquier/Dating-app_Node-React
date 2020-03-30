@@ -4,11 +4,11 @@
 ## The project
 
 Matcha is a dating app with the following features:
-* non-binary gender & sexual orientation choices
-* matching algorithm based on preferences, distance, common interests and popularity rates
-* real-time notifications
-* chat
-* possibility to block or report a user
+* 🌈 non-binary gender & sexual orientation choices
+* 💘 matching algorithm based on preferences, distance, common interests and popularity rates
+* 🛎 real-time notifications
+* 💌 chat
+* 🚫 possibility to block or report a user
 
 ## How to quickly try it?
 
@@ -45,11 +45,11 @@ Matcha is a dating app with the following features:
 [![Notifications](https://iili.io/Jfl21f.png)](https://freeimage.host/i/capture-decran-2020-03-30-131952.Jfl21f)
 
 ## How we've been working
-* Planning the project and user stories on Trello : [The Project Board](https://trello.com/b/RLNAgAuw/matcha-launch)
-* Designing the database on dbdiagram.io
+* 🗓 Planning the project and user stories on Trello : [The Project Board](https://trello.com/b/RLNAgAuw/matcha-launch)
+* 🗄 Designing the database on dbdiagram.io
 [![Database-diagram](https://iili.io/JfcVO7.png)](https://freeimage.host/i/capture-decran-2020-03-30-121118.JfcVO7)
-* Designing simple wireframes on Figma : [The Wireframes](https://www.figma.com/file/daD5AHhiB3XmfUPdi4PhsS/Matcha?node-id=0%3A1)
+* 🎨 Designing simple wireframes on Figma : [The Wireframes](https://www.figma.com/file/daD5AHhiB3XmfUPdi4PhsS/Matcha?node-id=0%3A1)
 
 ## Credits
 
-🎨💻 Built and designed by [@yann120](https://github.com/yann120) & [@Segolene-Alquier](https://github.com/Segolene-Alquier/)
+👨🏻‍💻👩🏻‍💻Built and designed by [@yann120](https://github.com/yann120) & [@Segolene-Alquier](https://github.com/Segolene-Alquier/)
