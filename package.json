@@ -29,7 +29,7 @@
     "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "multiparty": "^4.2.1",
     "node-mailjet": "^3.3.1",
