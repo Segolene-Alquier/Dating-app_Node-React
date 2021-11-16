@@ -9,7 +9,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.43",
     "@material-ui/pickers": "^3.2.10",
-    "aws-sdk": "^2.624.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.0",
     "bluebird": "^3.7.2",
